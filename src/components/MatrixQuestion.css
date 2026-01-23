@@ -1,0 +1,50 @@
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.table-container {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table-container th,
+.table-container td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.table-container th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.table-container tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table-container tr:hover {
+  background-color: #ddd;
+}
+
+.table-container th,
+.table-container td:first-child {
+  text-align: center;
+  padding-left: 15px;
+}
+
+.table-container th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.table-container td:first-child {
+  font-weight: bold;
+}

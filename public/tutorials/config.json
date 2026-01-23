@@ -1,0 +1,29 @@
+{
+  "steps": [
+    {
+      "title": "Getting Started",
+      "file": "01-getting-started.md"
+    },
+    {
+      "title": "A bit of theory",
+      "file": "02-theory.md"
+    },
+    {
+      "title": "Main functionalities",
+      "file": "03-main-functionalities.md"
+    },
+    {
+      "title": "Your first training monitoring",
+      "file": "04-first-monitoring.md"
+    },
+    {
+      "title": "A more advanced monitoring",
+      "file": "05-advanced-monitoring.md"
+    }
+  ],
+  "buttons": {
+    "back": "Back",
+    "next": "Next",
+    "startAgain": "Start Again"
+  }
+}

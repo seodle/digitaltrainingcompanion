@@ -1,0 +1,3413 @@
+[
+    {
+        "term": "signup_firstname_required",
+        "definition": "First name is required",
+        "context": "asked to the user when the first name wasn't entered during the signup",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_create_account",
+        "definition": "Create an account",
+        "context": "title when the user creates his account",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_success",
+        "definition": "Thanks for signing up! Please check your inbox to complete your registration. The confirmation email may take a few minutes to appear. Check your spam folder otherwise.",
+        "context": "This message is shown if he user succesfully signed up",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_first_name",
+        "definition": "First Name",
+        "context": "required field during signup",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_last_name",
+        "definition": "Last Name",
+        "context": "required field during signup",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_email",
+        "definition": "Email",
+        "context": "required field during signup",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_signup",
+        "definition": "Sign up, it's free!",
+        "context": "label to sign up",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_signin",
+        "definition": "Sign in",
+        "context": "label to sign in",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_password",
+        "definition": "Password",
+        "context": "required field during signup",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dtc_description",
+        "definition": "Evaluate training programs using evidence-based data",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dtc_description_2",
+        "definition": "Create assessments, visualize results, improve your training programs, all with just a few clicks",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_3",
+        "definition": "The Solution for More Efficient Evaluations!",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dtc_description_4",
+        "definition": "Create and Share Monitoring Sessions",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dtc_description_5",
+        "definition": "Easily organize and share monitorings. All your assessments are just two clicks away, organized and ready to edit or share, with high-resolution QR codes, URL links, and paper-pencil versions readily available.",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dtc_description_6",
+        "definition": "Design evidence-based assessments",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dtc_description_7",
+        "definition": "Assessment creation is pre-configured with key indicators derived from scientific literature. Use AI to generate learning questions and leverage RAG technology to seamlessly link them to your preferred skills framework. Additionally, we can integrate your custom competency frameworks on demand. For more information, please contact us.",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dtc_description_8",
+        "definition": "Get Immediate Feedback for Informed Actions",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dtc_description_9",
+        "definition": "View results instantly upon completing assessments, with an at-a-glance overview of the outcomes for all your evaluations. Easily export detailed reports and comprehensive data for in-depth analysis and better-informed decision-making.",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dtc_description_10",
+        "definition": "Maintain a Continuous Improvement Log",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dtc_description_11",
+        "definition": "Utilize our user-friendly logbook to track vital observations and changes, enhancing your training continuously.",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_try_platform",
+        "definition": "Try the Platform",
+        "context": "Adressed to a potential new user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_contact_us_at",
+        "definition": "Contact us at: ",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_already_have_account",
+        "definition": "I already have an account",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_survey_description",
+        "definition": "Involved in digital competencies training? Participate in our survey to help us!",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_survey_participate",
+        "definition": "Participate in the Survey",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_survey_time",
+        "definition": "3 min - Anonymous",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_survey_view_results",
+        "definition": "View your results and those of other respondents instantly!",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_table_assessment",
+        "definition": "Assessments for:  ",
+        "context": "title for the table assessment",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_monitoring_title",
+        "definition": "Monitorings",
+        "context": "title for the table monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_qr_code_section",
+        "definition": "Share my assessments",
+        "context": "title for the section to share assessments",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_reset",
+        "definition": "Reset",
+        "context": "button to reset a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_validate",
+        "definition": "Validate",
+        "context": "button to validate a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_cancel",
+        "definition": "Cancel",
+        "context": "button to cancel an action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_add_option",
+        "definition": "Add option",
+        "context": "Button to add an option in a multi choice questionnary",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_option",
+        "definition": "Option",
+        "context": "name of a field",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_short_name",
+        "definition": "Short name",
+        "context": "name of a field",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_question_title",
+        "definition": "Question title",
+        "context": "name of a field",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_edit_question",
+        "definition": "Edit question",
+        "context": "indication that the user is editing a question",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_correct_answer",
+        "definition": "Choose the correct answer",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_explanation",
+        "definition": "Explanation",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_automatically_recode_competencies",
+        "definition": "Automatically recode competencies",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_add_competencies_manually",
+        "definition": "Add competencies manually",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_competency_area",
+        "definition": "Choose a competency area",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_competency",
+        "definition": "Choose a competency",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_activity",
+        "definition": "Choose an activity",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_learning_type",
+        "definition": "Learning type",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_knowledge",
+        "definition": "Knowledge",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_skill",
+        "definition": "Skill",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_duplicate_question",
+        "definition": "Click here to duplicate the question",
+        "context": "indication to explain what a button will do",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_edit_question",
+        "definition": "Click here to edit the question",
+        "context": "indication to explain what a button will do",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_remove_question",
+        "definition": "Click here to remove the question",
+        "context": "indication to explain what a button will do",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_move_question_up",
+        "definition": "Click here to move the question up",
+        "context": "indication to explain what a button will do",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_move_question_down",
+        "definition": "Click here to move the question down",
+        "context": "indication to explain what a button will do",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_make_question_optional",
+        "definition": "Click here to make the question optional",
+        "context": "indication to explain what a button will do",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_make_question_mandatory",
+        "definition": "Click here to make the question mandatory",
+        "context": "indication to explain what a button will do",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_evaluate",
+        "definition": "Evaluate",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_create_sections",
+        "definition": "Create sections",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_add_worshop",
+        "definition": "Add a workshop",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_create_new_question",
+        "definition": "Create a new question",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_workshop",
+        "definition": "Choose the section",
+        "context": "when building a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_logout",
+        "definition": "Logout",
+        "context": "Message to logout",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_resources",
+        "definition": "Resources",
+        "context": "Label for resources",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_home",
+        "definition": "Home",
+        "context": "Label for home",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_design",
+        "definition": "Design",
+        "context": "label for design",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_results",
+        "definition": "Results",
+        "context": "label for results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_summaries",
+        "definition": "Summaries",
+        "context": "label for summaries",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_logbooks",
+        "definition": "Logbooks",
+        "context": "label for logbooks",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tutorial",
+        "definition": "Tutorial",
+        "context": "label for tutorial",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_frameworks",
+        "definition": "Frameworks",
+        "context": "label for framworks",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_monitor",
+        "definition": "Monitor",
+        "context": "label for monitor",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_report_bug",
+        "definition": "Report a bug",
+        "context": "label for report a bug",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_email_address_copied",
+        "definition": "Email address copied to clipboard!",
+        "context": "label for email copied",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signin_email_success",
+        "definition": "Your email is confirmed, please sign in",
+        "context": "message when email if confirmed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signin_email_sent",
+        "definition": "An email has been sent to you",
+        "context": "message when forgotten password",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signin_email_error",
+        "definition": "Invalid email or password",
+        "context": "message when invalid email or password",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_forgot_password",
+        "definition": "Forgot or Change Password?",
+        "context": "label for forgotten or change password",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signin_forgot_password",
+        "definition": "Forgot password or change password?",
+        "context": "label for forgotten or change password",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_firstname_required",
+        "definition": "First name is required",
+        "context": "message for first name required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_lastname_required",
+        "definition": "Last name is required",
+        "context": "message for last name required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_message_cookie_banner",
+        "definition": "This site uses cookies to enable authentication. Your preferences are stored locally in your browser. They are neither shared nor accessible by third-party sites.",
+        "context": "message for cookie banner",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_text_accept_button_cookie_banner",
+        "definition": "Accept",
+        "context": "text for cookie banner button",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_email_required",
+        "definition": "Email is required",
+        "context": "label for email required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_minimum_password_characters_required",
+        "definition": "Password must be at least 8 characters",
+        "context": "label for minimum password characters required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_password_required",
+        "definition": "Password is required",
+        "context": "label for password required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_platform_mode_required",
+        "definition": "Platform mode is required",
+        "context": "label for platform mode required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_status_required",
+        "definition": "Status is required",
+        "context": "label for status required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_error",
+        "definition": "An unexpected error occurred. Please try again.",
+        "context": "message for signup error",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_welcome",
+        "definition": "Welcome",
+        "context": "label for welcome",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signin_label_redirection_button",
+        "definition": "Sign in",
+        "context": "label for sign in",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_platform_mode_note",
+        "definition": "Only educational mode is available for now",
+        "context": "label for platform mode note",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_education",
+        "definition": "Education",
+        "context": "label for education mode",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_enterprise",
+        "definition": "Enterprise",
+        "context": "label for enterprise mode",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_teacher_trainer",
+        "definition": "Trainer",
+        "context": "label for teacher-trainer",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_teacher",
+        "definition": "Teacher",
+        "context": "label for teacher",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_platform_mode",
+        "definition": "Platform mode",
+        "context": "label for platform mode",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_label_button",
+        "definition": "Sign up",
+        "context": "label for sign up",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_status_note",
+        "definition": "Only teacher-trainer mode is available for now",
+        "context": "label for status note",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_session",
+        "definition": "Session",
+        "context": "label for session",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_type",
+        "definition": "Type",
+        "context": "label for type",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_status",
+        "definition": "I am using the application as a ",
+        "context": "label for status",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_creation_date",
+        "definition": "Creation Date",
+        "context": "label for creation date",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_last_modification",
+        "definition": "Last Modification",
+        "context": "label for last modification",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_share",
+        "definition": "Share",
+        "context": "label for share",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_actions",
+        "definition": "Actions",
+        "context": "label for actions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_button_new_assessment",
+        "definition": "New assessment",
+        "context": "label for new monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_new_assessment",
+        "definition": "New assessment",
+        "context": "label for new assessment",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_create_new_assessment",
+        "definition": "Create new assessment",
+        "context": "label for create new assessment",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "new_assessment_type_assessment",
+        "definition": "Select a type of assessment",
+        "context": "label for session",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "new_assessment_day",
+        "definition": "Concerns session no.",
+        "context": "label for trainee characteristics",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_assessment_type_trainee_characteristics",
+        "definition": "Trainee characteristics",
+        "context": "label for training characteristics",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_assessment_type_training_characteristics",
+        "definition": "Training characteristics",
+        "context": "label for immediate reactions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_assessment_type_immediate_reactions",
+        "definition": "Immediate reactions",
+        "context": "label for learning",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_assessment_type_learning",
+        "definition": "Learning",
+        "context": "label for organizational conditions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_assessment_type_organizational_conditions",
+        "definition": "Organizational conditions",
+        "context": "label for organizational conditions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_assessment_type_behavioral_changes",
+        "definition": "Behavioral changes",
+        "context": "label for behavioral changes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_assessment_type_sustainability_conditions",
+        "definition": "Sustainability conditions",
+        "context": "label for sustainability conditions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_assessment_type_student_characteristics",
+        "definition": "Student characteristics",
+        "context": "label for student characteristics",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_assessment_type_student_learning_outcomes",
+        "definition": "Student learning outcomes",
+        "context": "label for student learning outcomes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "new_assessment_create",
+        "definition": "Create",
+        "context": "label for create",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_button_new_monitoring",
+        "definition": "New monitoring",
+        "context": "label for new monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "new_monitoring_create_new_monitoring",
+        "definition": "Create New Monitoring",
+        "context": "label for create monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "new_monitoring_description",
+        "definition": "Description",
+        "context": "label for description",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "new_monitoring_create",
+        "definition": "Create",
+        "context": "label for name",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_monitorings_description",
+        "definition": "Description",
+        "context": "label for creation date",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_monitorings_creation_date",
+        "definition": "Creation date",
+        "context": "label for last modification",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_monitorings_last_modification",
+        "definition": "Last Modification",
+        "context": "label for last modification",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_monitorings_actions",
+        "definition": "Actions",
+        "context": "label for actions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "new_assessment_error_creation",
+        "definition": "Mandatory fields cannot be empty",
+        "context": "label for creation error",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "new_assessment_error_duplicate",
+        "definition": "An assessment with this name already exists for session",
+        "context": "label for duplicate error",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "new_monitoring_error_creation",
+        "definition": "Mandatory fields cannot be empty",
+        "context": "label for creation error",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "new_monitoring_error_duplicate",
+        "definition": "A monitoring with this name already exists",
+        "context": "label for duplicate error",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_monitoring_button_new_monitoring",
+        "definition": "New monitoring",
+        "context": "label for new montoring button",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dashboard_share_open_assessments_together",
+        "definition": "The assessments will be presented in this order:",
+        "context": "message for sharing assessments",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dashboard_qrcode",
+        "definition": "QR code",
+        "context": "label for QR code",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dashboard_link",
+        "definition": "Link",
+        "context": "label for link",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_edit",
+        "definition": "Edit",
+        "context": "label for edit",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_preview",
+        "definition": "Preview",
+        "context": "label for preview",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_actions_open",
+        "definition": "Open",
+        "context": "label for open",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_actions_make_copy",
+        "definition": "Make a copy",
+        "context": "label for make copy",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_close",
+        "definition": "Close",
+        "context": "label for close",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_status_draft",
+        "definition": "Draft",
+        "context": "label for draft",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_status_open",
+        "definition": "Open",
+        "context": "label for open",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_status_close",
+        "definition": "Closed",
+        "context": "label for close",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_delete",
+        "definition": "Delete",
+        "context": "label for delete",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_button_import_monitoring",
+        "definition": "Import monitoring",
+        "context": "button to import a monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "load_code_dialog_title",
+        "definition": "Import a monitoring with your code",
+        "context": "title of the dialog box to import a monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_code_dialog_enter",
+        "definition": "Enter the 6 digits code",
+        "context": "explanation about entering the sharing code",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_code_already_redeemed",
+        "definition": "The code was already redeened",
+        "context": "error message when the code is already redeemed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_code_does_not_exist",
+        "definition": "The code does not exist",
+        "context": "error message when the code does not exist",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_import",
+        "definition": "Import",
+        "context": "label import",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_button_share_monitoring",
+        "definition": "Share monitoring",
+        "context": "button to share a monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_source",
+        "definition": "Source",
+        "context": "simple label. This is used to show the source of import",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_source_imported",
+        "definition": "Imported",
+        "context": "if the object was imported from elsehwere",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_source_owned",
+        "definition": "Owned",
+        "context": "if the object was created and therefore owned by the user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_source",
+        "definition": "Indicates if the monitoring is imported or owned. Imported monitoring (with a sharing code) cannot be modified.",
+        "context": "Explanation about the source of the monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_my_results",
+        "definition": "My Results",
+        "context": "Title of the page showing the results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_export_report_csv",
+        "definition": "Export Data as CSV",
+        "context": "If the user click on this button, will export the report as a csv",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_generating_report",
+        "definition": "Generating Report...",
+        "context": "showing that the report is currently being generated",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_download_report_pdf",
+        "definition": "Download Report as PDF",
+        "context": "If the user click on this button, will export the report as a pdf",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_monitoring",
+        "definition": "Choose a monitoring",
+        "context": "ask the user to choose a monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_session",
+        "definition": "Choose a session",
+        "context": "ask the user to choose a session",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_submit",
+        "definition": "Submit",
+        "context": "button to submit a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_next",
+        "definition": "Next",
+        "context": "button to go to the next form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_name",
+        "definition": "Name",
+        "context": "label for the name",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_enter_displayname",
+        "definition": "Enter Your Name or Nickname",
+        "context": "To ask the user to enter the name or nickname",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_survey_no_longer_available",
+        "definition": "This survey is no longer available",
+        "context": "Label saying that the survey is no longer available",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_survey_not_yet_available",
+        "definition": "This survey is not yet available",
+        "context": "Label saying that the survey is not yet available",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_questions_required_in_survey",
+        "definition": "Some questions are required to validate the survey",
+        "context": "Label saying that some questions are required to validate the survey",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_teacher",
+        "definition": "Data from...",
+        "context": "Label for a picker to choose along a list of teachers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_no_account_yet",
+        "definition": "Do not have an account?",
+        "context": "Ask if the user has an account?",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_has_account_already",
+        "definition": "Have an account already?",
+        "context": "Ask if the user already has an account?",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_info_update_password",
+        "definition": "Enter the email associated with your account to change your password.",
+        "context": "Adressed to a user to ask him info to change his\/her password",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_new_password",
+        "definition": "New password",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_confirm_new_password",
+        "definition": "Confirm the new password",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_create_new_password",
+        "definition": "Create a new password",
+        "context": "Title of the page to update the password",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_passwords_dont_match",
+        "definition": "Les mots de passe ne correspondent pas",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "lael_change_password_success",
+        "definition": "Votre mot de passe a \u00e9t\u00e9 modifi\u00e9 avec succ\u00e8s",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_regulate",
+        "definition": "Regulate",
+        "context": "Adressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_confirmation",
+        "definition": "Confirmation",
+        "context": "title of an alert for confirmation",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ask_confirmation",
+        "definition": "Are you sure you want to proceed? This action cannot be undone.",
+        "context": "message in the alert for confirmation",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_continue",
+        "definition": "Continue",
+        "context": "for a button",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_open",
+        "definition": "Open",
+        "context": "label for a button",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_delete_all_answers",
+        "definition": "Delete all answers",
+        "context": "label for a button",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_copy",
+        "definition": "Copy",
+        "context": "label for a button",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_delete_account_question",
+        "definition": "Are you sure you want us to delete your account?",
+        "context": "to inform the user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_delete_account_consequences",
+        "definition": "All data, including shared monitoring will be lost. This action cannot be undone.",
+        "context": "to inform the user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_delete_account",
+        "definition": "Delete my account",
+        "context": "to inform the user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_my_account",
+        "definition": "My account",
+        "context": "Name of a menu",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_settings",
+        "definition": "Settings",
+        "context": "Name of a menu",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_user_info",
+        "definition": "User information",
+        "context": "Name of a menu",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_platform_info",
+        "definition": "Platform information",
+        "context": "Name of a menu",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_version_platform",
+        "definition": "Platform version",
+        "context": "Name of a menu",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_name_platform",
+        "definition": "Platform name",
+        "context": "Name of a menu",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_download_pdf",
+        "definition": "Download the PDF to answer the questionnaire on paper",
+        "context": "give indication to the user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_download_qr",
+        "definition": "Download the QR code containing the link to the questionnaire",
+        "context": "give indication to the user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_copy_link",
+        "definition": "Copy the URL to access the questionnaire",
+        "context": "give indication to the user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_linked",
+        "definition": "Establish a connection between the users' answers across the assessments.",
+        "context": "give indication to the user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_tooltip_linked_off",
+        "definition": "Establish a connection between the currently opened assessment and others.",
+        "context": "give indication to the user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_question_type_text",
+        "definition": "Open ended question",
+        "context": "Option type",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_question_type_radio_ordered",
+        "definition": "Single choice (ordered)",
+        "context": "Option type",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_question_type_radio_unordered",
+        "definition": "Single choice (unordered)",
+        "context": "Option type",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_question_type_checkbox",
+        "definition": "Multiple choices",
+        "context": "Option type",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_question_type_single_text",
+        "definition": "Text only",
+        "context": "Option type",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_category",
+        "definition": "Choose the section",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_question_type",
+        "definition": "Question Type",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_framework",
+        "definition": "Choose a framework",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_elementary_competency",
+        "definition": "Choose an elementary competency",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_answer_options",
+        "definition": "Answer Options",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_number_questions",
+        "definition": "Choose the number of questions",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_give_explanation",
+        "definition": "Give an explanation",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_automatic_encoding_competencies",
+        "definition": "Automatic encoding of competencies",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_enter_question",
+        "definition": "Enter your question",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_enter_question_short_name",
+        "definition": "Enter a short name for your question",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_create_questions_with_ai",
+        "definition": "Create MCQ with AI",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_no_data_available",
+        "definition": "No data available",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_respondents",
+        "definition": "Respondent(s)",
+        "context": "Displayed in a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_add_log_entry",
+        "definition": "Add a new log entry",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_enter_description",
+        "definition": "Enter a description",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_log_type_observation",
+        "definition": "Observation",
+        "context": "type of log ",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_type_change",
+        "definition": "Change",
+        "context": "type of log ",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_choose_log_type",
+        "definition": "Choose the type of log",
+        "context": "addressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_type_general",
+        "definition": "General",
+        "context": "type of log ",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_concerns",
+        "definition": "Concerns...",
+        "context": "addressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_day",
+        "definition": "Day",
+        "context": "addressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_my_logbooks",
+        "definition": "My Logbooks",
+        "context": "Title of a page",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_my_training_activity",
+        "definition": "My observations and improvements",
+        "context": "title of the entire logbook",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_sharing_status",
+        "definition": "Sharing status",
+        "context": "Title of a column",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_message_thanks",
+        "definition": "Thank you for your participation",
+        "context": "addressed to a user at the end of a questionnaire",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_clear_filter",
+        "definition": "Clear filter",
+        "context": "addressed to a user",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dashboard_share_code_reporting_grades",
+        "definition": "Paper-and-pencil code",
+        "context": "This message is shown to display the paper-pencil code",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_page_qr_code",
+        "definition": "Page",
+        "context": "translation of page ",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_no_entries",
+        "definition": "No entries",
+        "context": "translations of no entries ",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_learning",
+        "definition": " Learning",
+        "context": " translations of learning",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_add_workshop",
+        "definition": " Add a section",
+        "context": " translations of section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_add_section_title",
+        "definition": " Add a section title",
+        "context": " translations of title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_anonymous",
+        "definition": "Anonymous",
+        "context": "To enter questions in an anonymous way",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "tooltip_anonymous",
+        "definition": "Click here to answer the question anonymously",
+        "context": "explanation on the button anonymous",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_question_type_radio_unordered_learning",
+        "definition": "MCQ",
+        "context": " translation of MCQ",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "instruction_ai_prompt",
+        "definition": "Please provide a description or content of the activity (up to 10000 characters)",
+        "context": "instruction on how to use the ai",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "tooltip_framework_selector",
+        "definition": "Enables you to connect your questions to competency frameworks. Interested in adding a framework? Reach out to us at contact@digitaltrainingcompanion.ch",
+        "context": "indication about the framework selection",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_add",
+        "definition": "Add",
+        "context": "to add a question",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_attitude",
+        "definition": "Attitude",
+        "context": "addressed to an adult",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_adoption_type",
+        "definition": "Adoption Type",
+        "context": "addressed to an adult",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_actual_use_training_content",
+        "definition": "Actual use of training content",
+        "context": "addressed to an adult",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_transfer_digital_skills",
+        "definition": "Transfer of digital skills",
+        "context": "addressed to an adult",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_unshare_monitoring",
+        "definition": "Remove imported monitoring",
+        "context": "addressed to an adult",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "complete_survey_linking_code",
+        "definition": "Do you have a linking code ?",
+        "context": "complete survey linking code",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "complete_survey_validate_linking_code",
+        "definition": "VALIDATE",
+        "context": "validate code",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "complete_survey_or",
+        "definition": "or",
+        "context": "choice",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "complete_survey_generate_linking_code",
+        "definition": "GENERATE NEW CODE",
+        "context": "generate code",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_edit_context",
+        "definition": "Edit context",
+        "context": "label edit context",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_question_context",
+        "definition": "Modify context",
+        "context": "label question content",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_last_modified",
+        "definition": "Last modification",
+        "context": "label last modified logbook",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_log_isCompleted",
+        "definition": "Mark as completed",
+        "context": "label log isCompleted",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_log_completed",
+        "definition": "Completed on:",
+        "context": "label log completed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_select_assessment",
+        "definition": "Choose an assessment",
+        "context": "label select assessment",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_display_names",
+        "definition": "Choose the participants",
+        "context": "label display names",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_sandbox_mode",
+        "definition": "Sandox Mode",
+        "context": "label sandox mode",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_copied",
+        "definition": "Copied",
+        "context": "label copied",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_copy_code",
+        "definition": "Copy",
+        "context": "label copy code",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_preview_back",
+        "definition": "Back",
+        "context": "label preview back",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_iframe_code_copied",
+        "definition": "Code copied! Embed this question on your website.",
+        "context": "label iframe code copied",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_iframe_no_api_key",
+        "definition": "Please create an API key in settings first",
+        "context": "label iframe no api key",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "api_key",
+        "definition": "API key",
+        "context": "api key",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "create_api_key",
+        "definition": "Create API key",
+        "context": "create api key",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "no_api_key_created",
+        "definition": "No API key created yet",
+        "context": "no api key created",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "create_new_api_key",
+        "definition": "Create API key",
+        "context": "create new api key",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "key_name",
+        "definition": "Key name",
+        "context": "key name",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "key_name_create",
+        "definition": "Create",
+        "context": "key name create",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "cancel_key_create",
+        "definition": "Cancel",
+        "context": "cancel key create",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "key_api",
+        "definition": "Key",
+        "context": "key api",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "created_key_api",
+        "definition": "Created",
+        "context": "created key api",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "actions_key_api",
+        "definition": "Actions",
+        "context": "actions key api",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "delete_key_api",
+        "definition": "Delete API key",
+        "context": "delete api key",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "delete_key_api_message",
+        "definition": "Are you sure you want to delete this API key? This action cannot be undone.",
+        "context": "delete key api message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "api_key_created_successfully",
+        "definition": "API key created successfully",
+        "context": "api key created successfully",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "api_key_deleted_successfully",
+        "definition": "API key deleted successfully",
+        "context": "api key deleted successfully",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "userId",
+        "definition": "User Id",
+        "context": "userId",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "codes_redeemed",
+        "definition": "Codes redeemed",
+        "context": "codes redeemed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_go_dashboard",
+        "definition": "Go to my dashboard",
+        "context": "label go dashboard",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_share",
+        "definition": "Share",
+        "context": "label share",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_stop_sharing",
+        "definition": "Stop sharing",
+        "context": "label_stop_sharing",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_click_to_edit_name",
+        "definition": "Click to edit title",
+        "context": "label click to edit name",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_click_to_edit_description",
+        "definition": "Click to edit description",
+        "context": "label click to edit description",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_search_monitoring",
+        "definition": "Search monitorings...",
+        "context": "label search monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_dashboard_title",
+        "definition": "My monitorings",
+        "context": "label dashboard title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status1",
+        "definition": "Click to change status",
+        "context": "table assessment tooltip status1",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status2",
+        "definition": "Only the owner can change status",
+        "context": "table assessment tooltip status2",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessments_today",
+        "definition": "Today",
+        "context": "table assessments today",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessments_yesterday",
+        "definition": "Yesterday",
+        "context": "table assessments yesterday",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_all",
+        "definition": "All",
+        "context": "table assessment all",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_mine",
+        "definition": "Mine",
+        "context": "table assessment mine",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_others",
+        "definition": "Others",
+        "context": "table assessment others",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessments_dates",
+        "definition": "Dates",
+        "context": "table_assessments_dates",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_edit_preview",
+        "definition": "Edit\/Preview",
+        "context": "label edit preview",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessments_more",
+        "definition": "More",
+        "context": "table assessments more",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_delete_assessment_message",
+        "definition": "Are you sure you want to delete this assessment? This action cannot be undone and will permanently remove all associated answers.",
+        "context": "warning delete assessment message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_delete_assessment",
+        "definition": "Delete Assessment",
+        "context": "warning delete assessment",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_delete_answers",
+        "definition": "Delete All Answers",
+        "context": "warning delete answers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_delete_answers_message",
+        "definition": "Are you sure you want to delete all answers? This action cannot be undone.",
+        "context": "warning delete answers message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_delete_monitoring",
+        "definition": "Delete monitoring",
+        "context": "warning delete monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_delete_monitoring_message",
+        "definition": "Are you sure you want to delete the monitoring? This action will also delete all assessments and is irreversible.",
+        "context": "warning delete monitoring message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_stop_sharing",
+        "definition": "Stop sharing the monitoring",
+        "context": "warning stop sharing",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "warning_stop_sharing_message",
+        "definition": "Are you sure you want to stop sharing the monitoring?",
+        "context": "warning stop sharing message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_stop_sharing",
+        "definition": "Stop sharing",
+        "context": "label stop sharing",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_shared",
+        "definition": "Shared",
+        "context": "label shared",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_user_imported",
+        "definition": "Users having imported the monitoring:",
+        "context": "label user imported",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessments_owner",
+        "definition": "Owned by",
+        "context": "table assessments owner",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_no_monitorings_found",
+        "definition": "Create or import a monitoring to start.",
+        "context": "label no monitorings found",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "tooltip_link_answers",
+        "definition": "Allows creating an identifier to link participant's responses across different questionnaires. The identifier appears in a specific column in the .csv export",
+        "context": "tooltip link answers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "error_cannot_share_unowned_assessments",
+        "definition": "You cannot share an assessment that does not belong to you or the monitoring owner",
+        "context": "error cannot share unowned assessments",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_accept",
+        "definition": "I accept",
+        "context": "label accept",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_i_accept_the",
+        "definition": "Please read and accept the",
+        "context": "label i accept the",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_legal_terms",
+        "definition": "Legal Notice and General Terms of Use",
+        "context": "label legal terms",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_i_accept_the2",
+        "definition": "",
+        "context": "label i accept the2",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_status_assessment",
+        "definition": "Status",
+        "context": "label status assessment",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "info_create_questions_with_ai",
+        "definition": "The confidentiality of your data is our top priority. When you use the AI through our platform, your data is securely processed on Infomaniak's Swiss servers and is neither stored nor used for model training. For more information, please visit https:\/\/www.infomaniak.com\/en\/hosting\/ai-tools .",
+        "context": "info create questions with ai",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "tooltip_unlink_answers",
+        "definition": "Disable participant tracking ID",
+        "context": "tooltip unlink answers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "placeholder_ai_prompt_student",
+        "definition": "Example :\n\n\"How to Decrypt an Encrypted Message?\"\nCycle 2 (7th-8th grade) - Digital Education and Basic Cryptography\n\nPedagogical Objectives\nKey Skills :\nUnderstand how the Caesar cipher and brute-force attacks work.\nBuild a decryption tool (Caesar roller) to test all possible keys.\nApply cryptanalysis to decode messages without a key.\nCross-Curricular Skills :\nCollaborative group work.\nProblem-solving and critical thinking.\nEthical reflection on protecting personal data online.\nDisciplinary Links :\nMSN 22 \u2013 Numbers; MSN 25 \u2013 Modeling\nStep 1: Understanding the Caesar Cipher\nDuration : 20 minutes\nMaterials :\n\nCaesar disk (Sheet 1 and 1.1).\nSheet 2: Words to decrypt.\nSheet 2.1: Decryption key answers.\nSheet 2.2: Customizable word lists.\nProcedure :\n\nExplanation of the Caesar Cipher :\nDefinition: A mono-alphabetic substitution method where letters are shifted by a fixed number of positions (e.g., A \u2192 D with a shift of 3).\nLimitations: Only 25 possible keys, vulnerable to basic decryption methods (e.g., brute-force attack or frequency analysis).\nPractical Workshop :\nStudents decode words using the Caesar cipher technique. However, some words resist decoding, prompting students to discover how to decrypt them.\nProblem Posed :\nCertain words cannot be decrypted correctly (e.g., DQODQMFUAZ with key 9 \u2192 RECREATION , but incorrect key provided).\nKey Question : Why do some words fail to decrypt properly?\nStep 2: Building a Decryption Tool (Caesar Roller)\nDuration : 20 minutes\nMaterials :\n\nSheet 3: Alphabet strips to cut out.\nCylinder (e.g., tin can), scissors, tape.\nProcedure :\n\nBuilding the Roller :\nMeasure the cylinder\u2019s circumference.\nPrint the alphabet strips (Sheet 3) and assemble them around the cylinder.\nAlign the letters to visualize all possible shifts simultaneously.\nPractical Test :\nDecode resistant words (e.g., RGIVJ DZUZ with key 17 \u2192 AFTERNOON ).\nStep 3: Decrypting Without a Key (Collective Challenge)\nDuration : 5 minutes\nMaterials : Caesar rollers built by students.\n\nActivity :\n\nChallenge : Decrypt the mystery phrase:\nLEKI DU HUKIIYHUP ZQCQYI Q TUSXYVVHUH SU CUIIQWU\nKey: 16 \u2192 Answer: \"YOU WILL NEVER SUCCEED IN DECRYPTING THIS MESSAGE.\" \nConclusion :\nBrute-force attacks allow testing all possible keys quickly, but this is only feasible manually for simple ciphers. Complex encryption requires powerful computers.\nStep 4: Creating Encrypted Messages (Extension)\nDuration : 30 minutes\nMaterials : Caesar disks and rollers.\n\nActivity :\n\nStudents create their own encrypted phrases using the Caesar disk and share them without providing the key. Classmates attempt to decrypt them using the roller.\nDeepening: Protecting Personal Data\nContext :\n\nIssues :\nPersonal data (age, location) is collected by websites to target users with ads.\nEncryption protects sensitive data stored on secure servers.\nGuided Questions :\n\nWhy is sharing your age online risky?\nHow can you tell if your data is encrypted?\nAssessment of Learning\nKnowledge Questions :\nWhat is the maximum key for the Caesar cipher?\nWhat is a brute-force attack?\nPractical Exercises :\nDecode UZIVTKZFE with key 17 \u2192 DIRECTION .\nExplain how the Caesar roller works.\nMaterials and Additional Resources\nSheets Provided :\nSheets 1-4: Caesar disks, alphabet strips, answer keys.\nSheet 2.2: Blank templates for customizing word lists.\nOnline Tools :\nWebsites for automating encryption\/decryption: [Links provided].\nCore Values Addressed\nResponsibility :\nProtecting personal data online.\nScientific Curiosity :\nUnderstanding the historical limitations of encryption methods (e.g., Caesar vs. Vigen\u00e8re).",
+        "context": "placeholder ai prompt student",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "placeholder_ai_prompt_learning",
+        "definition": "Example :\n\nTeacher Training: Implementing Explicit Learning\n \n\"Mastering Explicit Learning: A Structured Method to Maximize Student Outcomes\"\nIntroduction:\nExplicit learning is an evidence-based pedagogical approach that emphasizes clarity, structure, and logical progression in teaching. This method allows teachers to effectively convey knowledge while fostering deep understanding among students.\n \nDefinition of Explicit Learning\nDefinition:\nExplicit learning is a direct instructional strategy where the teacher actively guides students through a structured learning process. It is based on five fundamental principles:\n1.\tClarity of learning objectives.\n2.\tTeacher modeling.\n3.\tGuided practice with immediate feedback.\n4.\tProgressive independent practice.\n5.\tContinuous assessment to adjust teaching.\nConcrete Example:\nIn mathematics, to teach fraction multiplication:\n\u2022\tClear objective: \"Today, we will learn how to multiply two fractions.\"\n\u2022\tModeling: The teacher solves an example step by step on the board.\n\u2022\tGuided practice: Students solve a problem together with the teacher's guidance.\n\u2022\tIndependent practice: Students solve exercises individually.\n\u2022\tAssessment: The teacher observes common mistakes and adjusts teaching if necessary.\n \nSkill 1 - Setting Clear Learning Objectives\nDefinition:\nLearning objectives must be specific, measurable, and understandable for students. They serve as the starting point for every teaching session.\nMethodology:\n1.\tFormulate objectives in simple and concrete sentences.\nExample: \"By the end of this lesson, you will be able to identify the main characteristics of an isosceles triangle.\"\n2.\tExplain why this learning is important.\nExample: \"This will help you solve more complex geometry problems.\"\nPractical Application:\nBefore starting a grammar lesson (e.g., direct and indirect objects), write on the board:\n\u2022\tObjective: \"You will learn to identify and correctly use direct and indirect objects in a sentence.\"\n\u2022\tWhy: \"This will improve your writing and linguistic analysis skills.\"\n \nSkill 2 - Teacher Modeling\nDefinition:\nModeling involves explicitly showing students how to complete a task by breaking it down into steps and explaining the reasoning behind each action.\nMethodology:\n1.\tPrepare a concrete example to solve in front of the students.\n2.\tThink aloud to verbalize your thought process (\"I wonder if...\").\n3.\tHighlight potential errors and explain how to avoid them.\nConcrete Example:\nIn science, to explain the classification of living organisms:\n\u2022\tThe teacher projects an image of a plant and an animal.\n\u2022\tThey explain step by step how to classify these organisms based on their characteristics (e.g., presence or absence of chlorophyll).\n\u2022\tThey verbalize: \"I notice this plant has green leaves, which means it probably contains chlorophyll.\"\n \nSkill 3 - Guided Practice with Immediate Feedback\nDefinition:\nGuided practice allows students to immediately apply what they have learned under the teacher\u2019s supervision, who provides constructive feedback.\nMethodology:\n1.\tProvide a simple problem or task.\n2.\tObserve students as they work.\n3.\tOffer precise and immediate feedback to correct errors.\nConcrete Example:\nIn reading, to teach text comprehension:\n\u2022\tThe teacher reads a short excerpt with the students.\n\u2022\tStudents answer simple questions about the text.\n\u2022\tThe teacher moves around the classroom, listens to responses, and immediately corrects misunderstandings.\n \nSkill 4 - Progressive Independent Practice\nDefinition:\nIndependent practice allows students to consolidate their skills by working alone or in small groups, with tasks of increasing difficulty.\nMethodology:\n1.\tStart with easy exercises to build confidence.\n2.\tGradually increase the complexity of tasks.\n3.\tEncourage students to reflect on their own learning process.\nConcrete Example:\nIn history, to teach the causes of the French Revolution:\n\u2022\tStep 1: Students read a simplified text and answer closed-ended questions.\n\u2022\tStep 2: They analyze a more complex historical document.\n\u2022\tStep 3: They prepare an oral presentation on the major causes.\n \nSkill 5 - Continuous Assessment and Adaptation\nDefinition:\nContinuous assessment allows the teacher to track student progress and adjust teaching based on their specific needs.\nMethodology:\n1.\tUse varied tools (quizzes, observations, discussions).\n2.\tIdentify areas of difficulty and plan targeted interventions.\n3.\tAdjust objectives and methods if necessary.\nConcrete Example:\nIn English, to teach irregular verbs:\n\u2022\tThe teacher gives a quick quiz after each lesson.\n\u2022\tIf they notice several students confuse \"go\" and \"went,\" they organize an additional guided practice session.\n\u2022\tThey then adjust their schedule to include more review sessions.\n \nConclusion and Next Steps\nConclusion:\nExplicit learning is a powerful method to ensure all students progress, regardless of their initial level. It requires rigorous planning and clear communication between the teacher and students.\nNext Steps:\n1.\tTry integrating one or two components of explicit learning into your next lessons.\n2.\tShare your experiences with colleagues to enrich your practices.\n3.\tJoin a working group to deepen your skills in explicit learning.\n\n",
+        "context": "placeholder ai prompt learning",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_no_sessions_available",
+        "definition": "Empty",
+        "context": "label no sessions available",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_trial_version",
+        "definition": "Registration gives you access to a sandbox trial version.",
+        "context": "label trial version",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_deleted_data",
+        "definition": "The data from the sandbox accounts can be deleted at any time.",
+        "context": "label deleted data",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_contact",
+        "definition": "To enjoy full access, contact us at",
+        "context": "label contact",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "sandbox_user_ai_restriction",
+        "definition": "Not available for sandbox users. Contact us to upgrade: contact@digitaltrainingcompanion.ch",
+        "context": "sandbox user ai restriction",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "sandbox_user_monitoring_limit",
+        "definition": "Sandbox users can only create one monitoring",
+        "context": "Monitoring restrictions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sandbox_user_assessment_type_limit",
+        "definition": "Sandbox users can only create one assessment of each type",
+        "context": " Assessment restrictions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sandbox_user_cannot_import",
+        "definition": "Monitoring import is not available for sandbox users",
+        "context": "sandbox_user_cannot_import",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "sandbox_user_cannot_copy",
+        "definition": "Copy is not available for sandbox users",
+        "context": "sandbox_user_cannot_copy",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "info_shortname_graph_display",
+        "definition": "Please use a meaningful unique short name. This name will be used to display results in graphs.",
+        "context": "info_shortname_graph_display",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_move_to_workshop",
+        "definition": "Move in",
+        "context": "label_move_to_workshop",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_auto_suggestions",
+        "definition": "Option auto-suggest",
+        "context": " label_auto_suggestions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_options",
+        "definition": "Options",
+        "context": "label_options",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_generating_options",
+        "definition": "Loading options",
+        "context": "label_generating_options",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_move_question_to_workshop",
+        "definition": "Change the section",
+        "context": "label_tooltip_move_question_to_workshop",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_title",
+        "definition": "Our offers",
+        "context": "pricing.header.button",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_integration_title",
+        "definition": "Integration of Tailored Functionalities",
+        "context": "pricing_integration_title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_integration_description",
+        "definition": "Collaborative development of functionalities tailored to your specific needs",
+        "context": "pricing_integration_description",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_integration_feature1",
+        "definition": "Co-construct or enhance functionalities together with our team, customized to your unique requirements",
+        "context": "pricing_integration_feature1",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_framework_feature1",
+        "definition": "The professional competency frameworks of your choice are integrated into the platform\n",
+        "context": "pricing_integration_feature2",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_contact_button",
+        "definition": "Contact us",
+        "context": "pricing_contact_button",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_training_title",
+        "definition": "Training and support",
+        "context": "pricing_training_title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_training_description",
+        "definition": "Benefit from personalized support to maximize the impact of your training",
+        "context": "pricing_training_description",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_training_feature1",
+        "definition": "Complete training on the use of the platform",
+        "context": "pricing_training_feature1",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_training_feature2",
+        "definition": "Personalized support for implementation",
+        "context": "pricing_training_feature2",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_training_feature3",
+        "definition": "Ongoing support to optimize the impact of your training in the field",
+        "context": "pricing_training_feature3",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_research_title",
+        "definition": "Research projects",
+        "context": "pricing_research_title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_research_description",
+        "definition": "Integrate our platform into your research for comprehensive tracking of your training impact",
+        "context": "pricing_research_description",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_research_feature1",
+        "definition": "All-in-one solution for tracking and evaluating your training",
+        "context": "pricing_research_feature1",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_research_feature2",
+        "definition": "Tools for real-time impact data collection and analysis",
+        "context": "pricing_research_feature2",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_research_feature3",
+        "definition": "Dedicated support for setting up and using the data",
+        "context": "pricing_research_feature3",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_framework_title",
+        "definition": "Integration of Competency Frameworks",
+        "context": "pricing_framework_title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_framework_description",
+        "definition": "Enhance your assessments through the integration of competency frameworks",
+        "context": "pricing_framework_description",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_contact_copied",
+        "definition": "E-mail copied to clipboard",
+        "context": "pricing_contact_copied",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_refresh_answers",
+        "definition": "Refresh",
+        "context": "label_refresh_answers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_maximum_password_characters_exceeded",
+        "definition": "Password must not exceed 255 characters",
+        "context": "label_maximum_password_characters_exceeded",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_password_lowercase_required",
+        "definition": "Password must contain at least one lowercase letter",
+        "context": "label_password_lowercase_required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_password_uppercase_required",
+        "definition": "Password must contain at least one uppercase letter",
+        "context": "label_password_uppercase_required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_password_number_required",
+        "definition": "Password must contain at least one number",
+        "context": "label_password_number_required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_password_symbol_required",
+        "definition": "Password must contain at least one special character",
+        "context": "label_password_symbol_required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_invalid_email",
+        "definition": "Please enter a valid email",
+        "context": "label_invalid_email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "signup_email_already_exists",
+        "definition": "An account with this email address already exists. Please use a different email or sign in if you already have an account",
+        "context": "signup_email_already_exists",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_terms_required",
+        "definition": "You must accept the Legal Notice and General Terms of Use to continue",
+        "context": "label_terms_required",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_regroup_as_matrix",
+        "definition": "Regroup questions in a matrix",
+        "context": " label_regroup_as_matrix",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_matrix_title",
+        "definition": "Enter a matrix name",
+        "context": "label_matrix_title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_add_matrix_question",
+        "definition": "Add question",
+        "context": "LABEL_ADD_MATRIX_QUESTION",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_matrix_question",
+        "definition": "Edit matrix",
+        "context": "label_matrix_question",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_news",
+        "definition": "News",
+        "context": "label_news",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "news_section_title",
+        "definition": "Latest Updates & News",
+        "context": "news_section_title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "news_section_subtitle",
+        "definition": "Stay informed about the latest features, improvements, and events",
+        "context": "news_section_subtitle",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "news_new_badge",
+        "definition": "New",
+        "context": "news_new_badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_questions_validated",
+        "definition": "",
+        "context": "label_questions_validated",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "tooltip_validate_before_submit",
+        "definition": "Please validate all answers before submitting",
+        "context": "tooltip shown when submit button is disabled due to missing validation",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_questions_validated",
+        "definition": "questions validated",
+        "context": "progress indicator showing how many questions have been validated",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_ai_summary",
+        "definition": "Summary of responses",
+        "context": "label_ai_summary",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_all_responses",
+        "definition": "Response details",
+        "context": " label_all_responses:",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_no_summary_available",
+        "definition": "No summary available",
+        "context": "label_no_summary_available",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_generating_summary",
+        "definition": "Generating summary...",
+        "context": "label_generating_summary",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "tooltip_enable_reorder",
+        "definition": "Default view: enable assessment reordering",
+        "context": "tooltip_enable_reorder",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    }
+]

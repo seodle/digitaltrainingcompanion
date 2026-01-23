@@ -1,0 +1,12 @@
+.custom-tooltip {
+  position: absolute;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%);
+  width: 300px; /* Set a fixed width */
+  height: auto; /* Allow height to adjust based on content */
+}
