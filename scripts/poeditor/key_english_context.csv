@@ -1,0 +1,6 @@
+key,english,context
+sandbox_user_ai_restriction,Sandbox user cannot use AI features,AI features restrictions
+sandbox_user_monitoring_limit,Sandbox users can only create one monitoring,Monitoring restrictions
+sandbox_user_assessment_type_limit, Sandbox users can only create one assessment of each type per monitoring, Assessment restrictions
+
+

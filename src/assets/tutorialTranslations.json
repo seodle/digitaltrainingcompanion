@@ -1,0 +1,2569 @@
+{
+  "en": {
+    "steps": [
+      "Getting Started",
+      "A bit of theory",
+      "Main functionalities",
+      "Your first training monitoring",
+      "A more advanced monitoring"
+    ],
+    "buttons": {
+      "back": "Back",
+      "next": "Next",
+      "startAgain": "Start Again"
+    },
+    "content": {
+      "gettingStarted": {
+        "title": "Getting Started",
+        "welcome": "Welcome to the Digital Training Companion documentation!",
+        "subtitle": "This tutorial will introduce you to the main functionalities that you can use to monitor your training sessions. By the end of this tutorial, you'll be able to:",
+        "capabilities": [
+          "Gain a comprehensive understanding of the theoretical model used in this application.",
+          "Create and manage monitorings and assessments.",
+          "Share your assessments with your trainer colleagues and teachers.",
+          "Visualize your session-to-session results.",
+          "Track the progress of your teachers over time.",
+          "Maintain a logbook to document observations and plan improvements for training sessions.",
+          "Generate detailed PDF reports and export raw data for further analysis."
+        ]
+      },
+      "theory": {
+        "title": "A bit of theory",
+        "questions": [
+          "How thoroughly do you evaluate your training programs?",
+          "How do you ensure your training is effective when teachers return to their roles?",
+          "If they struggle to apply what they've learned, how can you support them?",
+          "Ultimately, how can you prove that your training positively impacts the field?"
+        ],
+        "mainText": [
+          "To answer these questions, you need to assess various evaluation levels throughout the training sessions and beyond, not just participants' satisfaction immediately after a session. The Kirkpatrick model is a widely recognized framework that focuses on four of these levels: reaction, learning, behavior, and results.",
+          "Another researcher, Guskey, later adapted this model for education. These models offer a comprehensive and longitudinal view of training effectiveness and provide insights needed to make informed improvements."
+        ],
+        "neglectText": "However, such evaluation models are often neglected. Most assessments focus solely on immediate participant satisfaction due to the time and effort required to collect data and a lack of dedicated tools. For instance, in the corporate world, 20% of companies don't evaluate training at all, while 80% only measure satisfaction. Meanwhile, executives indicate that business leaders see the lack of concrete measures as a recurring challenge, weakening the effectiveness of their training programs. In education, similar trends exist; studies show that most assessments focus only on participant perceptions and satisfaction while neglecting learning and practical application.",
+        "gapText": "This gap underscores the importance of a robust and ongoing evaluation process that captures training effectiveness on multiple levels.",
+        "modelText": "To provide the necessary information, we've developed this web apllication using a revised version of Guskey's model. Our model includes nine levels that help you organize and collect the right information quickly, from training sessions to the concrete results achieved by teachers in the field. It gives you the ability to gather accurate data to support teachers when applying their training in real-world scenarios and helps you collect crucial information to continuously improve your training programs.",
+        "finalText": "For each level, specific indicators need to be measured, reflecting those typically found to influence the subsequent levels. The application offers standard indicators for certain levels. These indicators are not exhaustive and can be adjusted to your specific training conditions and needs."
+      },
+      "mainFunctionalities": {
+        "title": "Main functionalities",
+        "introduction": "On the menu to the left, you'll find five feature sections:",
+        "sections": {
+          "design": {
+            "title": "The DESIGN section",
+            "description1": "The DESIGN section includes",
+            "description2": "Monitorings",
+            "description3": ", the management page for your monitorings and assessments.",
+            "monitoringDefinition1": "A ",
+            "monitoringDefinition2": "monitoring ",
+            "monitoringDefinition3": "is a collection of assessments.",
+            "monitoringDefinition4": " It can include one or more assessments from the various levels of the previously described model (see ",
+            "monitoringDefinition5": "A bit of theory",
+            "monitoringDefinition6": "). Thus, a monitoring encompasses all assessments that can be conducted for a given training program.",
+            "creating_monitoring": {
+              "title": "Creating a Monitoring",
+              "steps": [
+                {
+                  "text": "Click on the",
+                  "bold": "NEW MONITORING",
+                  "suffix": "button."
+                },
+                "Enter a name and description for your monitoring.",
+                {
+                  "text": "Click",
+                  "bold": "CREATE."
+                }
+              ],
+              "note": "You now have a monitoring set up, but it doesn't yet contain any assessments."
+            },
+            "managing_monitoring": {
+              "title": "Managing Your Monitoring",
+              "instructions": "To edit a monitoring's name or description, simply click on the text you wish to change. You can only modify monitorings that you have created yourself.",
+              "actions": {
+                "intro": {
+                  "prefix": "For additional options, go to the",
+                  "bold": "Actions",
+                  "suffix": "menu, where you can:"
+                },
+                "options": [
+                  {
+                    "action": "Delete",
+                    "description": "the entire monitoring"
+                  },
+                  {
+                    "action": "Delete all answers",
+                    "description": "from participants for this monitoring"
+                  }
+                ]
+              },
+              "warning": "Deleting a monitoring or all answers is irreversible. Please use these options carefully."
+            },
+            "sharing_monitoring": {
+              "title": "Sharing a Monitoring",
+              "steps": [
+                {
+                  "text": "Click on",
+                  "bold": "SHARE MONITORING"
+                },
+                {
+                  "text": "Give the",
+                  "bold": "6-digit code",
+                  "suffix": "to other trainers or teachers"
+                },
+                {
+                  "text": "The recipient can use this code to access the monitoring"
+                }
+              ]
+            },
+            "importing_monitoring": {
+              "title": "Importing a Monitoring",
+              "steps": [
+                {
+                  "text": "Click on",
+                  "bold": "IMPORT MONITORING"
+                },
+                {
+                  "text": "Enter the",
+                  "bold": "6-digit code",
+                  "suffix": "you received from the trainer"
+                }
+              ],
+              "roleNote": {
+                "title": "Sharing mode differs based on the role assigned:",
+                "roles": {
+                  "trainer": {
+                    "mode": "Trainer mode",
+                    "description": "The full monitoring with all assessments is shared"
+                  },
+                  "teacher": {
+                    "mode": "Teacher mode",
+                    "description": "Only the \"Students characteristics\" and \"Student learning outcomes\" assessment types are shared"
+                  }
+                }
+              }
+            },
+            "assessmentDefinition": {
+              "text": "An",
+              "bold": "assessment",
+              "suffix": "specifically addresses questions related to one of the various levels of the previously described model. Each assessment can be presented as a survey page, allowing for easier categorization of responses and clearer display of results."
+            },
+            "creating": {
+              "title": "Creating an Assessment",
+              "steps": {
+                "basic": [
+                  {
+                    "text": "Click on the",
+                    "bold": "NEW ASSESSMENT",
+                    "suffix": "button."
+                  },
+                  "Enter a session number for your monitoring. This allows you to separate different sets of assessments by training session (e.g., Day 1, Day 2). The session number affects the visualization of results and can be modified later.",
+                  "Enter a name and select a type for your assessment. The type determines the kind of information you'll gather from teachers and impacts how results are displayed on the dashboard."
+                ],
+                "assessmentTypes": {
+                  "title": "Assessment types include:",
+                  "types": {
+                    "trainee": {
+                      "name": "Trainee characteristics",
+                      "description": "Gather information about teachers that may impact your training session (e.g., motivation levels). Usually collected before or at the beginning of training."
+                    },
+                    "training": {
+                      "name": "Training characteristics",
+                      "description": "Collect feedback on the form of the training session at its conclusion."
+                    },
+                    "immediate": {
+                      "name": "Immediate reactions",
+                      "note": "(Guskey model, level 1)",
+                      "description": "Assess participants' personal reactions to the training content."
+                    },
+                    "learning": {
+                      "name": "Learning",
+                      "note": "(Guskey model, level 2)",
+                      "description": "Evaluate what teachers have learned from your sessions."
+                    },
+                    "organizational": {
+                      "name": "Organizational conditions",
+                      "note": "(Guskey model, level 3)",
+                      "description": "Gather information about field conditions."
+                    },
+                    "behavioral": {
+                      "name": "Behavioral changes",
+                      "note": "(Guskey model, level 4)",
+                      "description": "Assess if teachers have applied their learning."
+                    },
+                    "sustainability": {
+                      "name": "Sustainability conditions",
+                      "description": "Collect data on factors influencing the long-term sustainability of practices."
+                    },
+                    "student": {
+                      "name": "Student characteristics",
+                      "description": "Gather information about students who will benefit from learning activities."
+                    },
+                    "outcomes": {
+                      "name": "Student learning outcomes",
+                      "note": "(Guskey model, level 5)",
+                      "description": "Assess student learning after implementation."
+                    }
+                  }
+                },
+                "final": {
+                  "text": "Click",
+                  "bold": "CREATE",
+                  "suffix": ". Your assessment appears in the assessments table."
+                }
+              }
+            },
+            "managing_assessment": {
+              "title": "Managing Your Assessments",
+              "steps": {
+                "editing_session": {
+                  "title": "Editing session number",
+                  "description": "Click on the number you wish to change. Note: You can only modify assessments you have created."
+                },
+                "editing_name": {
+                  "title": "Editing assessment name",
+                  "description": "Click on the text you wish to change. Again, this is limited to assessments you've created."
+                },
+                "changing_status": {
+                  "title": "Changing assessment status",
+                  "description": "Click on the button indicating",
+                  "statuses": ["DRAFT", "OPEN", "CLOSED"]
+                },
+                "additions": {
+                  "title": "Additional options",
+                  "description": "Access the",
+                  "menuName": "Actions",
+                  "suffix": "menu for the following"
+                },
+                "additional_options": [
+                  {
+                    "text": "Delete",
+                    "suffix": "the entire assessment"
+                  },
+                  {
+                    "text": "Delete all answers",
+                    "suffix": "from participants for this assessment"
+                  }
+                ],
+                "sharing_assessment": {
+                  "title": "Sharing an assessment",
+                  "description": "Click the checkbox in the Share column. Sharing functionalities will then appear in the sharing space on the right."
+                }
+              },
+              "warning": "Deleting an assessment or all answers is irreversible. Please use these options carefully."
+            },
+            "creating_assessment_content": {
+              "title": "Creating the Content of your Assessment",
+              "draft_status": "To create the content of your assessment, ensure it's in DRAFT status, then go to Actions and select Edit",
+              "kinds_assessments1": "You can create different kinds of questions in your assessment. For Trainee characteristics, Training characteristics, Immediate reactions, Organizational conditions, Behavioral changes, Sustainability conditions and Student characteristics, the following types of questions are available:",
+              "types1": [
+                {
+                  "title": "Open ended",
+                  "description": "This type allows you to create a simple open-ended question."
+                },
+                {
+                  "title": "Single choice (ordered)",
+                  "description": "This type enables you to create a question with predefined answer options in a specific order."
+                },
+                {
+                  "title": "Single choice (unordered)",
+                  "description": "Similar to radio-ordered, but the order of options is not significant."
+                },
+                {
+                  "title": "Multiple choice",
+                  "description": "This type allows respondents to select multiple answers from a list of predefined options."
+                },
+                {
+                  "title": "Text only",
+                  "description": "This type is not a question in itself, but it allows you to create formattable text, links, and images."
+                }
+              ],
+              "warning1": "For the Single choice (ordered) type, always arrange the answer options from negative to positive, from top to bottom.",
+              "kinds_assessments2": "For the types Learning and Student Learning Outcomes, the following types of questions are available:",
+              "types2": [
+                {
+                  "title": "Open ended"
+                },
+                {
+                  "title": "MCQ (Multiple Choice Question)",
+                  "description": "Single correct answer questions."
+                },
+                {
+                  "title": "Text only"
+                }
+              ],
+              "reminder": "Example questions are provided when you start editing an assessment.",
+              "warning2": "Remember to click the VALIDATE button at the bottom of the page after completing your questionnaire.",
+              "ia_creation": "You can also create your questionnaire directly using AI. To do this, simply copy and paste the desired content from your training into the designated area."
+            },
+            "sharing_assessment": {
+              "title": "Sharing your assessments",
+              "description1": "The ",
+              "description2": "sharing space ",
+              "description3": "allows you to incorporate assessments into your survey. Each assessment becomes a separate page, and you can easily add them by selecting the checkboxes in the Share column. As soon as you check a box, that assessment automatically becomes part of your survey.",
+              "QR_code": "Below the QR code, you'll find several sharing options:",
+              "QR_code_options": [
+                "Generate a URL link to your survey",
+                "Download the QR code in a larger format",
+                "Download a paper-and-pencil version (PDF) for offline use",
+                "Enable participant ID tracking - participants enter a unique code before starting the survey, allowing you to track their responses across different assessments",
+                "Access the paper-and-pencil entry code - use this code to manually input data collected from printed surveys"
+              ]
+            }
+          },
+          "monitor": {
+            "title": "The MONITOR section",
+            "description": "The MONITOR section includes the subsection \"Results\" that allows you to visualize and analyze data collected from your assessments.",
+            "dataSelection": {
+              "title": "Data Selection",
+              "description": "At the top of the page, you'll find two dropdown menus:",
+              "options": [
+                {
+                  "title": "Choose a monitoring",
+                  "description": "Select which monitoring you want to analyze"
+                },
+                {
+                  "title": "Choose a session",
+                  "description": "Pick the specific training session to view"
+                }
+              ]
+            },
+            "results_dashboard": {
+              "title": "Results Dashboard",
+              "description": "The dashboard is organized into different tabs corresponding to the assessment types:",
+              "types": [
+                "TRAINEE CHARACTERISTICS",
+                "TRAINING CHARACTERISTICS",
+                "IMMEDIATE REACTIONS",
+                "LEARNING",
+                "ORGANIZATIONAL CONDITIONS",
+                "BEHAVIORAL CHANGES",
+                "SUSTAINABILITY CONDITIONS",
+                "STUDENT CHARACTERISTICS",
+                "STUDENT LEARNING OUTCOMES"
+              ]
+            },
+            "data_visualization": {
+              "title": "Data Visualization",
+              "description": "Results are presented through various visualization types depending on the question format:",
+              "types": [
+                {
+                  "title": "Single choice (unordered) and Multiple choices",
+                  "description": "Light blue bars"
+                },
+                {
+                  "title": "Single choice (ordered)",
+                  "description": "Color-coded bars from red (negative) to green (positive)"
+                },
+                {
+                  "title": "Open-ended questions",
+                  "description": "Text responses are displayed in a scrollable format"
+                },
+                {
+                  "title": "Learning questions",
+                  "description": "Incorrect answers are displayed in red, correct answer in green"
+                }
+              ]
+            },
+            "additional_features": {
+              "title": "Additional Features",
+              "features": [
+                {
+                  "title": "Filtering",
+                  "description": "Use the \"Filter by teacher\" dropdown to focus on specific subsets of your data"
+                },
+                {
+                  "title": "Interactive elements",
+                  "items": [
+                    "Use tabs to quickly switch between different assessment types",
+                    "Hover over chart elements to see detailed values"
+                  ]
+                }
+              ]
+            },
+            "export_features": {
+              "title": "Export Features",
+              "description": "Two export options are available in the top right corner:",
+              "options": [
+                {
+                  "title": "DOWNLOAD REPORT AS PDF",
+                  "description": "Generate a comprehensive PDF report of your results"
+                },
+                {
+                  "title": "EXPORT DATA AS CSV",
+                  "description": "Download raw data for further analysis in other tools"
+                }
+              ]
+            },
+            "bestPractices": {
+              "title": "Best Practices for Monitoring",
+              "items": [
+                "Regularly check results during training sessions to make quick adjustments",
+                "Compare results across different sessions to track progress",
+                "Use the export features to create reports for stakeholders",
+                "Pay attention to both quantitative data and qualitative feedback in open-ended responses"
+              ]
+            },
+            "reminder": "Remember to check your results regularly throughout your training program. This will help you identify areas that need attention and make timely adjustments to your training approach."
+          },
+          "regulate": {
+            "title": "The REGULATE section",
+            "description": "The REGULATE section includes the subsection \"Logbooks\" that helps you track observations and plan improvements throughout your training program. This section is essential for maintaining detailed records and making data-driven adjustments to your training approach.",
+            "creating_logs": {
+              "title": "Creating Log Entries",
+              "addLogs": "To add a new log entry, you'll need to provide:",
+              "infos": [
+                {
+                  "title": "Description",
+                  "description": "A clear, concise description of your observation or needed change"
+                },
+                {
+                  "title": "Session",
+                  "description": "The training session number the entry relates to"
+                },
+                {
+                  "title": "Assessment Type",
+                  "description": "Select from available assessment types (e.g., Trainee characteristics, Learning, Organizational conditions)"
+                },
+                {
+                  "title": "Type of Log",
+                  "description": "Choose between 'Observation' or 'Change to make'"
+                }
+              ]
+            },
+            "logTypes": {
+              "title": "Types of Logs",
+              "types": {
+                "observations": {
+                  "title": "Observations",
+                  "description": "Record important findings from your monitoring results, such as:",
+                  "examples": [
+                    "Patterns in participant responses",
+                    "Successful teaching approaches",
+                    "Areas where participants excel"
+                  ]
+                },
+                "changes": {
+                  "title": "Changes to make",
+                  "description": "Document necessary adjustments or improvements, such as:",
+                  "examples": [
+                    "Areas needing additional support or explanation",
+                    "Modifications to teaching methods",
+                    "Resource or material adjustments"
+                  ]
+                }
+              }
+            },
+            "timeline": {
+              "title": "Training Activity Timeline",
+              "description": "The \"My Training Activity\" section displays your log entries in chronological order, organized by:",
+              "items": [
+                "Session number",
+                "Assessment type",
+                "Type of log (indicated by different icons)",
+                "Description of the observation or change needed"
+              ]
+            },
+            "bestPractices": {
+              "title": "Best Practices for Logging",
+              "items": [
+                "Create logs immediately after reviewing monitoring results",
+                "Be specific and concise in your descriptions",
+                "Regular log entries help track the evolution of your training program",
+                "Use the timeline to identify patterns and trends over time",
+                "Balance observations with actionable changes"
+              ]
+            },
+            "reminder": "💡 Maintaining a detailed logbook is crucial for continuous improvement. Regular entries help you track progress, identify patterns, and make informed decisions about your training program."
+          },
+          "resources": {
+            "title": "The RESOURCES section",
+            "description": "The RESOURCES section provides materials and guidance to help you make the most of the platform."
+          },
+          "settings": {
+            "title": "The SETTINGS section",
+            "description": "The SETTINGS section includes the subsection \"My account\" that allows you to manage your account information and platform settings.",
+            "userInfo": {
+              "title": "User Information",
+              "description": "In this section, you can view your personal information:",
+              "items": [
+                "Full name",
+                "Email address",
+                "User status (Teacher-trainer or Teacher)",
+                "User ID (for technical support)",
+                "List of redeemed codes"
+              ]
+            },
+            "platformInfo": {
+              "title": "Platform Information",
+              "description": "This section displays technical details about the platform:",
+              "items": ["Platform name", "Current version number"]
+            },
+            "accountManagement": {
+              "title": "Account Management",
+              "description": "You have the option to delete your account if needed. Please note:",
+              "notes": [
+                "Account deletion is permanent",
+                "All your data will be removed",
+                "Shared monitorings and assessments will remain available to other users"
+              ],
+              "warning": "Deleting your account cannot be undone. Please make sure to export any important data before proceeding with account deletion."
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "de": {
+    "steps": [
+      "Erste Schritte",
+      "Ein bisschen Theorie",
+      "Hauptfunktionalitäten",
+      "Ihr erstes Trainingsmonitoring",
+      "Ein fortgeschritteneres Monitoring"
+    ],
+    "buttons": {
+      "back": "Zurück",
+      "next": "Weiter",
+      "startAgain": "Neu starten"
+    },
+    "content": {
+      "gettingStarted": {
+        "title": "Erste Schritte",
+        "welcome": "Willkommen in der Dokumentation des DTC (Digital Training Companion)!",
+        "subtitle": "Dieses Tutorial wird Sie in die wichtigsten Funktionen einführen, die Sie für das Monitoring Ihrer Unterrichtseinheiten nutzen können. Am Ende dieses Tutorials werden Sie in der Lage sein:",
+        "capabilities": [
+          "Ein umfassendes Verständnis des in dieser Anwendung verwendeten theoretischen Modells zu erlangen.",
+          "Monitorings und Bewertungen zu erstellen und zu verwalten.",
+          "Ihre Einschätzungen mit Ihren Trainerkolleg:innenen und Lehrern , wenn Sie Trainer sind, und mit Ihren Lernenden, wenn Sie Lehrer sind, zu teilen.",
+          "Ihre Ergebnisse von Unterrichtseinheit zu Unterrichtseinheit zu visualisieren.",
+          "Die Fortschritte Ihrer Lehrer oder Lernenden im Laufe der Zeit zu verfolgen.",
+          "Ein Logbuch zu führen, um Beobachtungen zu dokumentieren und Verbesserungen für Unterrichtseinheiten zu planen.",
+          "Detaillierte PDF-Berichte zu generieren und Rohdaten für weitere Analysen zu exportieren."
+        ]
+      },
+      "theory": {
+        "title": "Ein bisschen Theorie",
+        "questions": [
+          "Wie gründlich evaluieren Sie Ihre Unterrichtssequenzen?",
+          "Wie stellen Sie sicher, dass Ihr Training effektiv ist, wenn Lehrer in ihre Rollen zurückkehren?",
+          "Wenn sie Schwierigkeiten haben, das Gelernte anzuwenden, wie können Sie sie dabei unterstützen?",
+          "Letztendlich, wie können Sie beweisen, dass Ihr Training positive Auswirkungen auf das Praxisfeld hat?"
+        ],
+        "mainText": [
+          "Um diese Fragen zu beantworten, müssen Sie verschiedene Evaluationsebenen während der Unterrichtseinheiten und darüber hinaus bewerten, nicht nur die Zufriedenheit der Teilnehmer unmittelbar nach einer Unterrichtseinheit. Das Kirkpatrick-Modell ist ein weithin anerkannter Rahmen, der sich auf vier dieser Ebenen konzentriert: Reaktion, Lernen, Verhalten und Ergebnisse.",
+          "Ein anderer Forscher, Guskey, passte dieses Modell später für den Bildungskontext an. Diese Modelle bieten eine umfassende und longitudinale Sicht auf die Trainingseffektivität und liefern die nötigen Erkenntnisse für fundierte Verbesserungen."
+        ],
+        "neglectText": "Allerdings werden solche Evaluationsmodelle oft vernachlässigt. Die meisten Bewertungen konzentrieren sich ausschließlich auf die unmittelbare Zufriedenheit der Teilnehmenden, aufgrund des hohen (Zeit-)Aufwands sowie dem Mangel an passenden Messinstrumenten. In der Unternehmenswelt beispielsweise evaluieren 20% der Unternehmen das Training überhaupt nicht, während 80% nur die Zufriedenheit messen. Gleichzeitig geben Führungskräfte an, dass Geschäftsführer den Mangel an konkreten Maßnahmen als wiederkehrende Herausfoderung sehen, welche die Effektivität ihrer Unterrichtssequenz schwächt. Im Bildungsbereich existieren ähnliche Trends: Studien zeigen, dass sich die meisten Bewertungen nur auf Teilnehmerwahrnehmungen und Zufriedenheit konzentrieren, während das Lernen und die praktische Anwendung vernachlässigt werden.",
+        "gapText": "Diese Lücke verdeutlicht die Bedeutung eines fundierten und kontinuierlichen Evaluationsprozesses, der die Trainingseffektivität auf mehreren Ebenen erfasst.",
+        "modelText": "Um die notwendigen Informationen bereitzustellen, haben wir eine überarbeitete Version des Guskey-Modells entwickelt. Unser Modell umfasst neun Ebenen, die Ihnen helfen, die richtigen Informationen schnell zu organisieren und zu sammeln, von den Schulungen bis hin zu den in der Praxis erzielten Ergebnissen der Lehrpersonen . Das Modell gibt Ihnen die Möglichkeit, genaue Daten zu sammeln, um Lehrende/Lehrpersonen bei der Anwendung ihres erworbenen Wissens in konkreten Szenarien zu unterstützen und hilft Ihnen, wichtige Informationen zu sammeln, welche eine kontinuierliche Verbesserung ihrer Trainingsprogramme ermöglichen..",
+        "finalText": "Für jede Ebene müssen spezifische Indikatoren gemessen werden, die typischerweise die nachfolgenden Ebenen beeinflussen. Die Anwendung bietet Standardindikatoren für bestimmte Ebenen. Diese Indikatoren sind nicht abschliessend und können an Ihre spezifischen Trainingsbedingungen und Bedürfnisse angepasst werden."
+      },
+      "mainFunctionalities": {
+        "title": "Hauptfunktionalitäten",
+        "introduction": "Im Menü auf der linken Seite finden Sie fünf Funktionsbereiche:",
+        "sections": {
+          "design": {
+            "title": "Der DESIGN-Bereich",
+            "description1": "Der DESIGN-Bereich beinhaltet",
+            "description2": "Monitorings",
+            "description3": ", die Verwaltungsseite für Ihre Monitorings und Bewertungen.",
+            "monitoringDefinition1": "Ein ",
+            "monitoringDefinition2": "Monitoring ",
+            "monitoringDefinition3": "ist eine Sammlung von Bewertungen.",
+            "monitoringDefinition4": " Es kann eine oder mehrere Bewertungen aus den verschiedenen Ebenen des zuvor beschriebenen Modells enthalten (siehe ",
+            "monitoringDefinition5": "Ein bisschen Theorie",
+            "monitoringDefinition6": "). Somit umfasst ein Monitoring alle Bewertungen, die für ein bestimmtes Trainingsprogramm durchgeführt werden können.",
+            "creating_monitoring": {
+              "title": "Erstellen eines Monitorings",
+              "steps": [
+                {
+                  "text": "Klicken Sie auf den",
+                  "bold": "NEUES MONITORING",
+                  "suffix": "Button."
+                },
+                "Geben Sie einen Namen und eine Beschreibung für Ihr Monitoring ein.",
+                {
+                  "text": "Klicken Sie auf",
+                  "bold": "ERSTELLEN."
+                }
+              ],
+              "note": "Sie haben nun ein Monitoring erstellt. Es sind noch keine Bewertungen vorhanden."
+            },
+            "managing_monitoring": {
+              "title": "Verwaltung Ihres Monitorings",
+              "instructions": "Um den Namen oder die Beschreibung eines Monitorings zu bearbeiten, klicken Sie einfach auf den Text, den Sie ändern möchten. Sie können nur Monitorings modifizieren, die Sie selbst erstellt haben.",
+              "actions": {
+                "intro": {
+                  "prefix": "Für weitere Optionen gehen Sie zum",
+                  "bold": "Aktionen",
+                  "suffix": "Menü, mit den folgenden Möglichkeiten:"
+                },
+                "options": [
+                  {
+                    "action": "Löschen",
+                    "description": "des gesamten Monitorings"
+                  },
+                  {
+                    "action": "Alle Antworten löschen",
+                    "description": "von Teilnehmern für dieses Monitoring"
+                  }
+                ]
+              },
+              "warning": "Das Löschen eines Monitorings oder aller Antworten ist unwiderruflich. Bitte verwenden Sie diese Optionen mit Bedacht."
+            },
+            "sharing_monitoring": {
+              "title": "Teilen eines Monitorings",
+              "steps": [
+                {
+                  "text": "Klicken Sie auf",
+                  "bold": "MONITORING TEILEN"
+                },
+                {
+                  "text": "Geben Sie den",
+                  "bold": "6-stelligen Code",
+                  "suffix": "an andere Trainer oder Lehrer weiter"
+                },
+                {
+                  "text": "Der Empfänger kann diesen Code verwenden, um auf das Monitoring zuzugreifen"
+                }
+              ]
+            },
+            "importing_monitoring": {
+              "title": "Importieren eines Monitorings",
+              "steps": [
+                {
+                  "text": "Klicken Sie auf",
+                  "bold": "MONITORING IMPORTIEREN"
+                },
+                {
+                  "text": "Geben Sie den",
+                  "bold": "6-stelligen Code",
+                  "suffix": "ein, den Sie vom Trainer erhalten haben"
+                }
+              ],
+              "roleNote": {
+                "title": "Der Freigabemodus hängt von der Ihnen zugeteilten Rolle ab:",
+                "roles": {
+                  "trainer": {
+                    "mode": "Trainer-Modus",
+                    "description": "Das vollständige Monitoring mit allen Bewertungen wird geteilt"
+                  },
+                  "teacher": {
+                    "mode": "Lehrer-Modus",
+                    "description": "Nur die Bewertungstypen \"Schülermerkmale\" und \"Lernergebnisse der Schüler\" werden geteilt"
+                  }
+                }
+              }
+            },
+            "assessmentDefinition": {
+              "text": "Eine",
+              "bold": "Bewertung",
+              "suffix": "befasst sich gezielt mit Fragen zu einer der verschiedenen Ebenen des zuvor beschriebenen Modells. Jede Bewertung kann als Umfrageseite dargestellt werden, was eine einfachere Kategorisierung der Antworten und eine übersichtlichere Anzeige der Ergebnisse ermöglicht."
+            },
+            "creating": {
+              "title": "Erstellen einer Bewertung",
+              "steps": {
+                "basic": [
+                  {
+                    "text": "Klicken Sie auf den",
+                    "bold": "NEUE BEWERTUNG",
+                    "suffix": "Button."
+                  },
+                  "Geben Sie eine Klassennummer für Ihr Monitoring ein. Dies ermöglicht es Ihnen, verschiedene Bewertungen nach Unterrichtseinheit zu trennen (z.B. Tag 1, Tag 2). Die Klassennummer beeinflusst die Visualisierung der Ergebnisse und kann später geändert werden.",
+                  "Geben Sie einen Namen ein und wählen Sie einen Typ für Ihre Bewertung. Der Typ bestimmt die Art der Informationen, die Sie von Lehrern sammeln, und beeinflusst, wie Ergebnisse im Dashboard angezeigt werden."
+                ],
+                "assessmentTypes": {
+                  "title": "Bewertungstypen umfassen:",
+                  "types": {
+                    "trainee": {
+                      "name": "Teilnehmermerkmale",
+                      "description": "Sammeln Sie Informationen über Lehrer, die Ihre Trainingseinheit beeinflussen können (z.B. Motivationsniveau). Wird normalerweise vor oder zu Beginn des Trainings erhoben."
+                    },
+                    "training": {
+                      "name": "Unterrichtmerkmale",
+                      "description": "Sammeln Sie am Ende der Trainingseinheit Feedback."
+                    },
+                    "immediate": {
+                      "name": "Unmittelbare Reaktionen",
+                      "note": "(Guskey-Modell, Ebene 1)",
+                      "description": "Bewerten Sie die persönlichen Reaktionen der Teilnehmer auf den Unterrichtsinhalt."
+                    },
+                    "learning": {
+                      "name": "Lernen",
+                      "note": "(Guskey-Modell, Ebene 2)",
+                      "description": "Evaluieren Sie, was Lehrer aus Ihren Klassen gelernt haben."
+                    },
+                    "organizational": {
+                      "name": "Organisatorische Bedingungen",
+                      "note": "(Guskey-Modell, Ebene 3)",
+                      "description": "Sammeln Sie Informationen über die Praxisbedingungen."
+                    },
+                    "behavioral": {
+                      "name": "Verhaltensänderungen",
+                      "note": "(Guskey-Modell, Ebene 4)",
+                      "description": "Bewerten Sie, ob Lehrer das Gelernte angewendet haben."
+                    },
+                    "sustainability": {
+                      "name": "Nachhaltigkeitsbedingungen",
+                      "description": "Sammeln Sie Daten zu Faktoren, die die langfristige Nachhaltigkeit von Praktiken beeinflussen."
+                    },
+                    "student": {
+                      "name": "Schülermerkmale",
+                      "description": "Sammeln Sie Informationen über Schüler, die von den Lernaktivitäten profitieren werden."
+                    },
+                    "outcomes": {
+                      "name": "Lernergebnisse der Schüler",
+                      "note": "(Guskey-Modell, Ebene 5)",
+                      "description": "Bewerten Sie den Lernfortschritt der Schüler nach der Implementierung."
+                    }
+                  }
+                },
+                "final": {
+                  "text": "Klicken Sie auf",
+                  "bold": "ERSTELLEN",
+                  "suffix": ". Ihre Bewertung erscheint in der Bewertungstabelle."
+                }
+              }
+            },
+            "managing_assessment": {
+              "title": "Verwaltung Ihrer Bewertungen",
+              "steps": {
+                "editing_session": {
+                  "title": "Bearbeiten der Klassennummer",
+                  "description": "Klicken Sie auf die Nummer, die Sie ändern möchten. Hinweis: Sie können nur Bewertungen modifizieren, die Sie erstellt haben."
+                },
+                "editing_name": {
+                  "title": "Bearbeiten des Bewertungsnamens",
+                  "description": "Klicken Sie auf den Text, den Sie ändern möchten. Auch dies ist auf Bewertungen beschränkt, die Sie erstellt haben."
+                },
+                "changing_status": {
+                  "title": "Ändern des Bewertungsstatus",
+                  "description": "Klicken Sie auf die Schaltfläche, die den Status anzeigt:",
+                  "statuses": ["ENTWURF", "OFFEN", "GESCHLOSSEN"]
+                },
+                "additions": {
+                  "title": "Weitere Optionen",
+                  "description": "Greifen Sie auf das",
+                  "menuName": "Aktionen",
+                  "suffix": "Menü zu für folgende Möglichkeiten"
+                },
+                "additional_options": [
+                  {
+                    "text": "Löschen",
+                    "suffix": "der gesamten Bewertung"
+                  },
+                  {
+                    "text": "Alle Antworten löschen",
+                    "suffix": "von Teilnehmern für diese Bewertung"
+                  }
+                ],
+                "sharing_assessment": {
+                  "title": "Teilen einer Bewertung",
+                  "description": "Klicken Sie auf das Kontrollkästchen in der Spalte 'Teilen'. Die Freigabefunktionen erscheinen dann im Freigabebereich auf der rechten Seite."
+                }
+              },
+              "warning": "Das Löschen einer Bewertung oder sämtlicher Antworten ist unwiderruflich. Bitte verwenden Sie diese Optionen mit Bedacht."
+            },
+            "creating_assessment_content": {
+              "title": "Erstellen des Inhalts Ihrer Bewertung",
+              "draft_status": "Um den Inhalt Ihrer Bewertung zu erstellen, stellen Sie sicher, dass sie sich im ENTWURF-Status befindet. Gehen Sie dann zu Aktionen und wählen Sie Bearbeiten",
+              "kinds_assessments1": "Sie können verschiedene Arten von Fragen in Ihrer Bewertung erstellen. Für die Typen Teilnehmermerkmale, Unterrichtmerkmale, Unmittelbare Reaktionen, Organisatorische Bedingungen, Verhaltensänderungen, Nachhaltigkeitsbedingungen und Schülermerkmale stehen folgende Fragetypen zur Verfügung:",
+              "types1": [
+                {
+                  "title": "Offene Frage",
+                  "description": "Dieser Typ ermöglicht es Ihnen, eine offene Frage zu erstellen."
+                },
+                {
+                  "title": "Einzelauswahl (geordnet)",
+                  "description": "Dieser Typ ermöglicht es Ihnen, eine Frage mit vordefinierten Antwortoptionen in einer bestimmten Reihenfolge zu erstellen."
+                },
+                {
+                  "title": "Einzelauswahl (ungeordnet)",
+                  "description": "Ähnlich wie bei geordneter Einzelauswahl, aber die Reihenfolge der Optionen ist nicht von Bedeutung."
+                },
+                {
+                  "title": "Mehrfachauswahl",
+                  "description": "Dieser Typ ermöglicht es den Befragten, mehrere Antworten aus einer Liste vordefinierter Optionen auszuwählen."
+                },
+                {
+                  "title": "Nur Text",
+                  "description": "Dies ist keine Frage an sich, sondern ermöglicht es Ihnen, formatierbaren Text, Links und Bilder zu erstellen."
+                }
+              ],
+              "warning1": "Ordnen Sie bei der Einzelauswahl (geordnet) die Antwortoptionen immer von negativ nach positiv, d.h. von oben nach unten an.",
+              "kinds_assessments2": "Für die Typen Lernen und Lernergebnisse der Schüler stehen folgende Fragetypen zur Verfügung:",
+              "types2": [
+                {
+                  "title": "Offene Frage"
+                },
+                {
+                  "title": "Multiple Choice",
+                  "description": "Fragen mit einer einzigen richtigen Antwort."
+                },
+                {
+                  "title": "Nur Text"
+                }
+              ],
+              "reminder": "Beispielfragen werden bereitgestellt, wenn Sie mit der Bearbeitung einer Bewertung beginnen.",
+              "warning2": "Denken Sie daran, nach Fertigstellung Ihres Fragebogens auf die VALIDIEREN-Schaltfläche am unteren Rand der Seite zu klicken.",
+              "ia_creation": "Sie können Ihren Fragebogen auch direkt mithilfe von KI erstellen. Kopieren Sie dazu einfach den gewünschten Inhalt aus Ihrem Training in den dafür vorgesehenen Bereich."
+            },
+            "sharing_assessment": {
+              "title": "Teilen Ihrer Bewertungen",
+              "description1": "Der ",
+              "description2": "Freigabebereich ",
+              "description3": "ermöglicht es Ihnen, Bewertungen in Ihre Umfrage einzubinden. Jede Bewertung wird zu einer separaten Seite, welche Sie einfach durch das Auswählen der Kontrollkästchen in der Spalte 'Teilen' hinzufügen können. Sobald Sie ein Kästchen markieren, wird diese Bewertung automatisch Teil Ihrer Umfrage.",
+              "QR_code": "Unter dem QR-Code finden Sie mehrere Freigabeoptionen:",
+              "QR_code_options": [
+                "Generieren Sie einen URL-Link zu Ihrer Umfrage",
+                "Laden Sie den QR-Code in einem größeren Format herunter",
+                "Laden Sie eine Papier-und-Stift-Version (PDF) für die Offline-Nutzung herunter",
+                "Aktivieren Sie die Teilnehmer-ID-Verfolgung - Teilnehmer geben vor Beginn der Umfrage einen individuellen Code ein, sodass Sie ihre Antworten über verschiedene Bewertungen hinweg verfolgen können",
+                "Greifen Sie auf den Papier-und-Stift-Eingabecode zu - verwenden Sie diesen Code, um Daten, die mit den Papier-Fragebogen gesammelt wurden, manuell einzugeben"
+              ]
+            }
+          },
+          "monitor": {
+            "title": "Der MONITOR-Bereich",
+            "description": "Der MONITOR-Bereich enthält den Unterabschnitt \"Ergebnisse\", der es Ihnen ermöglicht, die aus Ihren Bewertungen gesammelten Daten zu visualisieren und zu analysieren.",
+            "dataSelection": {
+              "title": "Datenauswahl",
+              "description": "Am oberen Rand der Seite finden Sie zwei Dropdown-Menüs:",
+              "options": [
+                {
+                  "title": "Monitoring auswählen",
+                  "description": "Wählen Sie aus, welches Monitoring Sie analysieren möchten"
+                },
+                {
+                  "title": "Klasse auswählen",
+                  "description": "Wählen Sie die spezifische Unterrichtseinheit zur Ansicht aus"
+                }
+              ]
+            },
+            "results_dashboard": {
+              "title": "Ergebnis-Dashboard",
+              "description": "Das Dashboard ist in verschiedene Registerkarten unterteilt, die den verschiedenen Bewertungstypen entsprechen:",
+              "types": [
+                "TEILNEHMERMERKMALE",
+                "UNTERRICHTSMERKMALE",
+                "UNMITTELBARE REAKTIONEN",
+                "LERNEN",
+                "ORGANISATORISCHE BEDINGUNGEN",
+                "VERHALTENSÄNDERUNGEN",
+                "NACHHALTIGKEITSBEDINGUNGEN",
+                "SCHÜLERMERKMALE",
+                "LERNERGEBNISSE DER SCHÜLER"
+              ]
+            },
+            "data_visualization": {
+              "title": "Datenvisualisierung",
+              "description": "Die Ergebnisse werden je nach Frageformat durch verschiedene Visualisierungstypen dargestellt:",
+              "types": [
+                {
+                  "title": "Einzelauswahl (ungeordnet) und Mehrfachauswahl",
+                  "description": "Hellblaue Balken"
+                },
+                {
+                  "title": "Einzelauswahl (geordnet)",
+                  "description": "Farbcodierte Balken von rot (negativ) bis grün (positiv)"
+                },
+                {
+                  "title": "Offene Fragen",
+                  "description": "Textantworten werden in einem scrollbaren Format angezeigt"
+                },
+                {
+                  "title": "Lernfragen",
+                  "description": "Falsche Antworten werden in rot, richtige Antworten in grün angezeigt"
+                }
+              ]
+            },
+            "additional_features": {
+              "title": "Zusätzliche Funktionen",
+              "features": [
+                {
+                  "title": "Filterung",
+                  "description": "Verwenden Sie das Dropdown-Menü \"Nach Lehrer filtern\" oder “Nach Lernende filtern”, um sich auf bestimmte Teilmengen Ihrer Daten zu konzentrieren"
+                },
+                {
+                  "title": "Interaktive Elemente",
+                  "items": [
+                    "Verwenden Sie Registerkarten, um schnell zwischen verschiedenen Bewertungstypen zu wechseln",
+                    "Fahren Sie mit der Maus über Diagrammelemente, um detaillierte Werte zu sehen"
+                  ]
+                }
+              ]
+            },
+            "export_features": {
+              "title": "Export-Funktionen",
+              "description": "In der oberen rechten Ecke stehen zwei Exportoptionen zur Verfügung:",
+              "options": [
+                {
+                  "title": "BERICHT ALS PDF HERUNTERLADEN",
+                  "description": "Generieren Sie einen umfassenden PDF-Bericht Ihrer Ergebnisse"
+                },
+                {
+                  "title": "DATEN ALS CSV EXPORTIEREN",
+                  "description": "Laden Sie Rohdaten für weitere Analysen mit anderen Tools herunter"
+                }
+              ]
+            },
+            "bestPractices": {
+              "title": "Best Practices für das Monitoring",
+              "items": [
+                "Überprüfen Sie regelmäßig die Ergebnisse während der UnterrichtssequenzKlassen, um zeitnahe Anpassungen vornehmen zu können",
+                "Vergleichen Sie Ergebnisse über verschiedene Klassen hinweg, um den Fortschritt zu verfolgen",
+                "Nutzen Sie die Exportfunktionen, um Berichte für Stakeholder zu erstellen",
+                "Achten Sie sowohl auf quantitative Daten als auch auf qualitatives Feedback aus offenen Antworten"
+              ]
+            },
+            "reminder": "Denken Sie daran, Ihre Ergebnisse während Ihrer Unterrichtssequenzen regelmässig zu überprüfen. Dies hilft Ihnen, Bereiche zu identifizieren, die Ihre Aufmerksamkeit benötigen, und zeitnah Anpassungen an Ihrem Unterrichtansatz vorzunehmen."
+          },
+          "regulate": {
+            "title": "Der REGULATE-Bereich",
+            "description": "Der REGULATE-Bereich enthält den Unterabschnitt \"Logbücher\", der Ihnen hilft, Beobachtungen zu verfolgen und Verbesserungen während Ihrer Unterrichtssequenzen zu planen. Dieser Bereich ist essenziell um genaue Aufzeichnungen führen zu können und datenbasierter Anpassungen an Ihrem Trainingsansatz vornehmen zu können.",
+            "creating_logs": {
+              "title": "Erstellen von Klassentagebucheinträgen",
+              "addLogs": "Um einen neuen Logbucheintrag hinzuzufügen, müssen Sie Folgendes angeben:",
+              "infos": [
+                {
+                  "title": "Beschreibung",
+                  "description": "Eine klare, präzise Beschreibung Ihrer Beobachtung oder der erforderlichen Änderungen"
+                },
+                {
+                  "title": "Sitzung",
+                  "description": "Die Nummer der Trainingssitzung, auf die sich der Eintrag bezieht"
+                },
+                {
+                  "title": "Bewertungstyp",
+                  "description": "Wählen Sie aus den verfügbaren Bewertungstypen aus (z.B. Teilnehmermerkmale, Lernen, Organisatorische Bedingungen)"
+                },
+                {
+                  "title": "Art des Logs",
+                  "description": "Wählen Sie zwischen 'Beobachtung' oder 'Durchzuführende Änderung'"
+                }
+              ]
+            },
+            "logTypes": {
+              "title": "Arten von Logs",
+              "types": {
+                "observations": {
+                  "title": "Beobachtungen",
+                  "description": "Zeichnen Sie wichtige Erkenntnisse aus Ihren Monitoring-Ergebnissen auf, wie zum Beispiel:",
+                  "examples": [
+                    "Muster in den Teilnehmerantworten",
+                    "Erfolgreiche Lehransätze",
+                    "Bereiche, in denen Teilnehmer besonders gut sind"
+                  ]
+                },
+                "changes": {
+                  "title": "Durchzuführende Änderungen",
+                  "description": "Dokumentieren Sie notwendige Anpassungen oder Verbesserungen, wie zum Beispiel:",
+                  "examples": [
+                    "Bereiche, die zusätzliche Unterstützung oder Erklärung benötigen",
+                    "Änderungen an Lehrmethoden",
+                    "Anpassungen von Ressourcen oder Materialien"
+                  ]
+                }
+              }
+            },
+            "timeline": {
+              "title": "Unterrichtsaktivitäts-Timeline",
+              "description": "Der Bereich \"Meine Unterrichtsaktivität\" zeigt Ihre Logbucheinträge in chronologischer Reihenfolge, geordnet nach:",
+              "items": [
+                "Klassennummer",
+                "Bewertungstyp",
+                "Art des Logs (durch verschiedene Symbole gekennzeichnet)",
+                "Beschreibung der Beobachtung oder der benötigten Änderung"
+              ]
+            },
+            "bestPractices": {
+              "items": [
+                "Erstellen Sie Logs unmittelbar nach der Überprüfung der Monitoring-Ergebnisse",
+                "Seien Sie spezifisch und prägnant in Ihren Beschreibungen",
+                "Regelmäßige Logbucheinträge helfen, die Entwicklung Ihrer Unterrichtssequenzen zu verfolgen",
+                "Nutzen Sie die Timeline, um Muster und Trends im Zeitverlauf zu erkennen",
+                "Balancieren Sie Beobachtungen mit umsetzbaren Änderungen"
+              ]
+            },
+            "reminder": "Die Führung eines detaillierten Logbuchs ist entscheidend für kontinuierliche Verbesserungen. Regelmäßige Einträge helfen Ihnen, Fortschritte zu verfolgen, Muster zu erkennen und fundierte Entscheidungen über Ihre Unterrichtssequenzen zu treffen."
+          },
+          "resources": {
+            "title": "Der RESOURCES-Bereich",
+            "description": "Der RESOURCES-Bereich stellt Materialien und Anleitungen zur Verfügung, die Ihnen helfen, die Plattform optimal zu nutzen."
+          },
+          "settings": {
+            "title": "Der SETTINGS-Bereich",
+            "description": "Der SETTINGS-Bereich enthält den Unterabschnitt \"Mein Konto\", der es Ihnen ermöglicht, Ihre Kontoinformationen und Plattformeinstellungen zu verwalten.",
+            "userInfo": {
+              "title": "Benutzerinformationen",
+              "description": "In diesem Bereich können Sie Ihre persönlichen Informationen einsehen:",
+              "items": [
+                "Vollständiger Name",
+                "E-Mail-Adresse",
+                "Benutzerstatus (Lehrer-Trainer oder Lehrer)",
+                "Benutzer-ID (für technischen Support)",
+                "Liste der eingelösten Codes"
+              ]
+            },
+            "platformInfo": {
+              "title": "Plattforminformationen",
+              "description": "Dieser Sektion zeigt technische Details zur Plattform:",
+              "items": ["Plattformname", "Aktuelle Versionsnummer"]
+            },
+            "accountManagement": {
+              "title": "Kontoverwaltung",
+              "description": "Sie haben bei Bedarf die Möglichkeit, Ihr Konto zu löschen. Bitte beachten Sie:",
+              "notes": [
+                "Die Kontolöschung ist endgültig",
+                "Alle Ihre Daten werden entfernt",
+                "Geteilte Monitorings und Bewertungen bleiben für andere Benutzer verfügbar"
+              ],
+              "warning": "Das Löschen Ihres Kontos kann nicht rückgängig gemacht werden. Bitte stellen Sie sicher, dass Sie wichtige Daten exportieren, bevor Sie mit der Kontolöschung fortfahren."
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "fr": {
+    "steps": [
+      "Premiers pas",
+      "Un peu de théorie",
+      "Fonctionnalités principales",
+      "Votre premier suivi de formation",
+      "Un suivi plus avancé"
+    ],
+    "buttons": {
+      "back": "Retour",
+      "next": "Suivant",
+      "startAgain": "Recommencer"
+    },
+    "content": {
+      "gettingStarted": {
+        "title": "Premiers pas",
+        "welcome": "Bienvenue dans la documentation du Compagnon Digital de Formation !",
+        "subtitle": "Ce tutoriel vous présentera les principales fonctionnalités que vous pouvez utiliser pour suivre vos sessions de formation. À la fin de ce tutoriel, vous serez capable de :",
+        "capabilities": [
+          "Comprendre le modèle théorique utilisé dans cette application.",
+          "Créer et gérer des suivis et des évaluations.",
+          "Partager vos évaluations avec vos collègues formateurs et enseignants.",
+          "Visualiser vos résultats session par session.",
+          "Suivre les progrès de vos enseignants dans le temps.",
+          "Tenir un journal de bord pour documenter les observations et planifier les améliorations des sessions de formation.",
+          "Générer des rapports PDF détaillés et exporter des données brutes pour une analyse plus approfondie."
+        ]
+      },
+      "theory": {
+        "title": "Un peu de théorie",
+        "questions": [
+          "Dans quelle mesure évaluez-vous vos programmes de formation ?",
+          "Comment vous assurez-vous que votre formation est efficace lorsque les enseignants retournent à leurs fonctions ?",
+          "S'ils ont du mal à appliquer ce qu'ils ont appris, comment pouvez-vous les soutenir ?",
+          "En fin de compte, comment pouvez-vous prouver que votre formation a un impact positif sur le terrain ?"
+        ],
+        "mainText": [
+          "Pour répondre à ces questions, vous devez évaluer différents niveaux tout au long des sessions de formation et au-delà, pas seulement la satisfaction des participants immédiatement après une session. Le modèle de Kirkpatrick est un cadre largement reconnu qui se concentre sur quatre de ces niveaux : réaction, apprentissage, comportement et résultats.",
+          "Un autre chercheur, Guskey, a plus tard adapté ce modèle pour l'éducation. Ces modèles offrent une vue complète et longitudinale de l'efficacité de la formation et fournissent les insights nécessaires pour apporter des améliorations éclairées."
+        ],
+        "neglectText": "Cependant, de tels modèles d'évaluation sont souvent négligés. La plupart des évaluations se concentrent uniquement sur la satisfaction immédiate des participants en raison du temps et des efforts nécessaires pour collecter les données et du manque d'outils dédiés. Par exemple, dans le monde de l'entreprise, 20% des entreprises n'évaluent pas du tout la formation, tandis que 80% ne mesurent que la satisfaction. Pendant ce temps, les dirigeants indiquent que les responsables d'entreprise considèrent le manque de mesures concrètes comme un défi récurrent, affaiblissant l'efficacité de leurs programmes de formation. Dans l'éducation, des tendances similaires existent : les études montrent que la plupart des évaluations se concentrent uniquement sur les perceptions et la satisfaction des participants tout en négligeant l'apprentissage et l'application pratique.",
+        "gapText": "Cet écart souligne l'importance d'un processus d'évaluation robuste et continu qui capture l'efficacité de la formation à plusieurs niveaux.",
+        "modelText": "Pour fournir les informations nécessaires, nous avons développé une version révisée du modèle de Guskey et cette application web. Notre modèle comprend neuf niveaux qui vous aident à organiser et à collecter rapidement les bonnes informations, des sessions de formation aux résultats concrets obtenus par les enseignants sur le terrain. Il vous donne la capacité de recueillir des données précises pour soutenir les enseignants lors de l'application de leur formation dans des scénarios réels et vous aide à collecter des informations cruciales pour améliorer continuellement vos programmes de formation.",
+        "finalText": "Pour chaque niveau, des indicateurs spécifiques doivent être mesurés, reflétant ceux qui influencent typiquement les niveaux suivants. L'application propose des indicateurs standards pour certains niveaux. Ces indicateurs ne sont pas exhaustifs et peuvent être ajustés en fonction de vos conditions et besoins de formation spécifiques."
+      },
+      "mainFunctionalities": {
+        "title": "Fonctionnalités principales",
+        "introduction": "Dans le menu à gauche, vous trouverez cinq sections de fonctionnalités :",
+        "sections": {
+          "design": {
+            "title": "La section CONCEVOIR",
+            "description1": "La section CONCEVOIR comprend",
+            "description2": "Monitorages",
+            "description3": ", la page de gestion de vos suivis et évaluations.",
+            "monitoringDefinition1": "Un ",
+            "monitoringDefinition2": "monitorage ",
+            "monitoringDefinition3": "est une collection d'évaluations.",
+            "monitoringDefinition4": " Il peut inclure une ou plusieurs évaluations des différents niveaux du modèle précédemment décrit (voir ",
+            "monitoringDefinition5": "Un peu de théorie",
+            "monitoringDefinition6": "). Ainsi, un suivi englobe toutes les évaluations qui peuvent être menées pour un programme de formation donné.",
+            "creating_monitoring": {
+              "title": "Création d'un suivi",
+              "steps": [
+                {
+                  "text": "Cliquez sur le bouton",
+                  "bold": "NOUVEAU SUIVI",
+                  "suffix": "."
+                },
+                "Saisissez un nom et une description pour votre suivi.",
+                {
+                  "text": "Cliquez sur",
+                  "bold": "CRÉER."
+                }
+              ],
+              "note": "Vous avez maintenant un suivi configuré, mais il ne contient pas encore d'évaluations."
+            },
+            "managing_monitoring": {
+              "title": "Gestion de votre suivi",
+              "instructions": "Pour modifier le nom ou la description d'un suivi, cliquez simplement sur le texte que vous souhaitez modifier. Vous ne pouvez modifier que les suivis que vous avez créés vous-même.",
+              "actions": {
+                "intro": {
+                  "prefix": "Pour des options supplémentaires, allez dans le menu",
+                  "bold": "Actions",
+                  "suffix": ", où vous pouvez :"
+                },
+                "options": [
+                  {
+                    "action": "Supprimer",
+                    "description": "l'ensemble du suivi"
+                  },
+                  {
+                    "action": "Supprimer toutes les réponses",
+                    "description": "des participants pour ce suivi"
+                  }
+                ]
+              },
+              "warning": "La suppression d'un suivi ou de toutes les réponses est irréversible. Veuillez utiliser ces options avec précaution."
+            },
+            "sharing_monitoring": {
+              "title": "Partage d'un suivi",
+              "steps": [
+                {
+                  "text": "Cliquez sur",
+                  "bold": "PARTAGER LE SUIVI"
+                },
+                {
+                  "text": "Donnez le",
+                  "bold": "code à 6 chiffres",
+                  "suffix": "aux autres formateurs ou enseignants"
+                },
+                {
+                  "text": "Le destinataire peut utiliser ce code pour accéder au suivi"
+                }
+              ]
+            },
+            "importing_monitoring": {
+              "title": "Importation d'un suivi",
+              "steps": [
+                {
+                  "text": "Cliquez sur",
+                  "bold": "IMPORTER UN SUIVI"
+                },
+                {
+                  "text": "Saisissez le",
+                  "bold": "code à 6 chiffres",
+                  "suffix": "que vous avez reçu du formateur"
+                }
+              ],
+              "roleNote": {
+                "title": "Le comportement de partage diffère selon votre rôle :",
+                "roles": {
+                  "trainer": {
+                    "mode": "Mode formateur",
+                    "description": "Le suivi complet avec toutes les évaluations est partagé"
+                  },
+                  "teacher": {
+                    "mode": "Mode enseignant",
+                    "description": "Seuls les types d'évaluation \"Caractéristiques des élèves\" et \"Résultats d'apprentissage des élèves\" sont partagés"
+                  }
+                }
+              }
+            },
+            "assessmentDefinition": {
+              "text": "Une",
+              "bold": "évaluation",
+              "suffix": "aborde spécifiquement les questions liées à l'un des différents niveaux du modèle précédemment décrit. Chaque évaluation peut représenter une page d'enquête, permettant une catégorisation plus facile des réponses et un affichage plus clair des résultats."
+            },
+            "creating": {
+              "title": "Création d'une évaluation",
+              "steps": {
+                "basic": [
+                  {
+                    "text": "Cliquez sur le bouton",
+                    "bold": "NOUVELLE ÉVALUATION",
+                    "suffix": "."
+                  },
+                  "Saisissez un numéro de session pour votre suivi. Cela vous permet de séparer différents ensembles d'évaluations par session de formation (par exemple, Jour 1, Jour 2). Le numéro de session affecte la visualisation des résultats et peut être modifié ultérieurement.",
+                  "Saisissez un nom et sélectionnez un type pour votre évaluation. Le type détermine le type d'informations que vous recueillerez auprès des enseignants et impacte la façon dont les résultats sont affichés sur le tableau de bord."
+                ],
+                "assessmentTypes": {
+                  "title": "Les types d'évaluation comprennent :",
+                  "types": {
+                    "trainee": {
+                      "name": "Caractéristiques des stagiaires",
+                      "description": "Recueillez des informations sur les enseignants qui peuvent impacter votre session de formation (par exemple, niveaux de motivation). Généralement collectées avant ou au début de la formation."
+                    },
+                    "training": {
+                      "name": "Caractéristiques de la formation",
+                      "description": "Recueillez des retours sur la forme de la session de formation à sa conclusion."
+                    },
+                    "immediate": {
+                      "name": "Réactions immédiates",
+                      "note": "(modèle Guskey, niveau 1)",
+                      "description": "Évaluez les réactions personnelles des participants au contenu de la formation."
+                    },
+                    "learning": {
+                      "name": "Apprentissage",
+                      "note": "(modèle Guskey, niveau 2)",
+                      "description": "Évaluez ce que les enseignants ont appris de vos sessions."
+                    },
+                    "organizational": {
+                      "name": "Conditions organisationnelles",
+                      "note": "(modèle Guskey, niveau 3)",
+                      "description": "Recueillez des informations sur les conditions sur le terrain."
+                    },
+                    "behavioral": {
+                      "name": "Changements comportementaux",
+                      "note": "(modèle Guskey, niveau 4)",
+                      "description": "Évaluez si les enseignants ont appliqué leur apprentissage."
+                    },
+                    "sustainability": {
+                      "name": "Conditions de durabilité",
+                      "description": "Collectez des données sur les facteurs influençant la durabilité à long terme des pratiques."
+                    },
+                    "student": {
+                      "name": "Caractéristiques des élèves",
+                      "description": "Recueillez des informations sur les élèves qui bénéficieront des activités d'apprentissage."
+                    },
+                    "outcomes": {
+                      "name": "Résultats d'apprentissage des élèves",
+                      "note": "(modèle Guskey, niveau 5)",
+                      "description": "Évaluez l'apprentissage des élèves après la mise en œuvre."
+                    }
+                  }
+                },
+                "final": {
+                  "text": "Cliquez sur",
+                  "bold": "CRÉER",
+                  "suffix": ". Votre évaluation apparaît dans le tableau des évaluations."
+                }
+              }
+            },
+            "managing_assessment": {
+              "title": "Gestion de vos évaluations",
+              "steps": {
+                "editing_session": {
+                  "title": "Modification du numéro de session",
+                  "description": "Cliquez sur le numéro que vous souhaitez modifier. Note : Vous ne pouvez modifier que les évaluations que vous avez créées."
+                },
+                "editing_name": {
+                  "title": "Modification du nom de l'évaluation",
+                  "description": "Cliquez sur le texte que vous souhaitez modifier. Là encore, cela est limité aux évaluations que vous avez créées."
+                },
+                "changing_status": {
+                  "title": "Modification du statut de l'évaluation",
+                  "description": "Cliquez sur le bouton indiquant",
+                  "statuses": ["BROUILLON", "OUVERT", "FERMÉ"]
+                },
+                "additions": {
+                  "title": "Options supplémentaires",
+                  "description": "Accédez au menu",
+                  "menuName": "Actions",
+                  "suffix": "pour ce qui suit"
+                },
+                "additional_options": [
+                  {
+                    "text": "Supprimer",
+                    "suffix": "l'évaluation entière"
+                  },
+                  {
+                    "text": "Supprimer toutes les réponses",
+                    "suffix": "des participants pour cette évaluation"
+                  }
+                ],
+                "sharing_assessment": {
+                  "title": "Partage d'une évaluation",
+                  "description": "Cochez la case dans la colonne Partager. Les fonctionnalités de partage apparaîtront alors dans l'espace de partage à droite."
+                }
+              },
+              "warning": "La suppression d'une évaluation ou de toutes les réponses est irréversible. Veuillez utiliser ces options avec précaution."
+            },
+            "creating_assessment_content": {
+              "draft_status": "Pour créer le contenu de votre évaluation, assurez-vous qu'elle est en statut BROUILLON, puis allez dans Actions et sélectionnez Modifier",
+              "kinds_assessments1": "Vous pouvez créer différents types de questions dans votre évaluation. Pour les types Caractéristiques des stagiaires, Caractéristiques de la formation, Réactions immédiates, Conditions organisationnelles, Changements comportementaux, Conditions de durabilité et Caractéristiques des élèves, les types de questions suivants sont disponibles :",
+              "types1": [
+                {
+                  "title": "Question ouverte",
+                  "description": "Ce type vous permet de créer une simple question ouverte."
+                },
+                {
+                  "title": "Choix unique (ordonné)",
+                  "description": "Ce type vous permet de créer une question avec des options de réponse prédéfinies dans un ordre spécifique."
+                },
+                {
+                  "title": "Choix unique (non ordonné)",
+                  "description": "Similaire au choix unique ordonné, mais l'ordre des options n'est pas significatif."
+                },
+                {
+                  "title": "Choix multiple",
+                  "description": "Ce type permet aux répondants de sélectionner plusieurs réponses dans une liste d'options prédéfinies."
+                },
+                {
+                  "title": "Texte uniquement",
+                  "description": "Ce type n'est pas une question en soi, mais il vous permet de créer du texte formaté, des liens et des images."
+                }
+              ],
+              "warning1": "Pour le type Choix unique (ordonné), arrangez toujours les options de réponse du négatif au positif, de haut en bas.",
+              "kinds_assessments2": "Pour les types Apprentissage et Résultats d'apprentissage des élèves, les types de questions suivants sont disponibles :",
+              "types2": [
+                {
+                  "title": "Question ouverte"
+                },
+                {
+                  "title": "QCM (Question à Choix Multiple)",
+                  "description": "Questions à réponse unique correcte."
+                },
+                {
+                  "title": "Texte uniquement"
+                }
+              ],
+              "reminder": "Des questions exemples sont fournies lorsque vous commencez à éditer une évaluation.",
+              "warning2": "N'oubliez pas de cliquer sur le bouton VALIDER au bas de la page après avoir complété votre questionnaire.",
+              "ia_creation": "Vous pouvez également créer votre questionnaire directement en utilisant l'IA. Pour cela, copiez-collez simplement le contenu souhaité de votre formation dans la zone prévue à cet effet."
+            },
+            "sharing_assessment": {
+              "title": "Partage de vos évaluations",
+              "description1": "L'",
+              "description2": "espace de partage ",
+              "description3": "vous permet d'incorporer des évaluations dans votre enquête. Chaque évaluation devient une page distincte, et vous pouvez facilement les ajouter en cochant les cases dans la colonne Partager. Dès que vous cochez une case, cette évaluation devient automatiquement partie de votre enquête.",
+              "QR_code": "Sous le code QR, vous trouverez plusieurs options de partage :",
+              "QR_code_options": [
+                "Générer un lien URL vers votre enquête",
+                "Télécharger le code QR dans un format plus grand",
+                "Télécharger une version papier (PDF) pour une utilisation hors ligne",
+                "Activer le suivi des identifiants participants - les participants saisissent un code unique avant de commencer l'enquête, permettant de suivre leurs réponses à travers différentes évaluations",
+                "Accéder au code de saisie papier - utilisez ce code pour saisir manuellement les données collectées à partir des enquêtes imprimées"
+              ]
+            }
+          },
+          "monitor": {
+            "title": "La section MONITORER",
+            "description": "La section MONITORER comprend la sous-section \"Résultats\" qui vous permet de visualiser et d'analyser les données collectées à partir de vos évaluations.",
+            "dataSelection": {
+              "title": "Sélection des données",
+              "description": "En haut de la page, vous trouverez deux menus déroulants :",
+              "options": [
+                {
+                  "title": "Choisir un suivi",
+                  "description": "Sélectionnez quel suivi vous souhaitez analyser"
+                },
+                {
+                  "title": "Choisir une session",
+                  "description": "Sélectionnez la session de formation spécifique à visualiser"
+                }
+              ]
+            },
+            "results_dashboard": {
+              "title": "Tableau de bord des résultats",
+              "description": "Le tableau de bord est organisé en différents onglets correspondant aux types d'évaluation :",
+              "types": [
+                "CARACTÉRISTIQUES DES STAGIAIRES",
+                "CARACTÉRISTIQUES DE LA FORMATION",
+                "RÉACTIONS IMMÉDIATES",
+                "APPRENTISSAGE",
+                "CONDITIONS ORGANISATIONNELLES",
+                "CHANGEMENTS COMPORTEMENTAUX",
+                "CONDITIONS DE DURABILITÉ",
+                "CARACTÉRISTIQUES DES ÉLÈVES",
+                "RÉSULTATS D'APPRENTISSAGE DES ÉLÈVES"
+              ]
+            },
+            "data_visualization": {
+              "title": "Visualisation des données",
+              "description": "Les résultats sont présentés à travers différents types de visualisation selon le format de la question :",
+              "types": [
+                {
+                  "title": "Choix unique (non ordonné) et Choix multiple",
+                  "description": "Barres bleu clair"
+                },
+                {
+                  "title": "Choix unique (ordonné)",
+                  "description": "Barres codées en couleur du rouge (négatif) au vert (positif)"
+                },
+                {
+                  "title": "Questions ouvertes",
+                  "description": "Les réponses textuelles sont affichées dans un format défilant"
+                },
+                {
+                  "title": "Questions d'apprentissage",
+                  "description": "Les réponses incorrectes sont affichées en rouge, la réponse correcte en vert"
+                }
+              ]
+            },
+            "additional_features": {
+              "title": "Fonctionnalités supplémentaires",
+              "features": [
+                {
+                  "title": "Filtrage",
+                  "description": "Utilisez le menu déroulant \"Filtrer par enseignant\" pour vous concentrer sur des sous-ensembles spécifiques de vos données"
+                },
+                {
+                  "title": "Éléments interactifs",
+                  "items": [
+                    "Utilisez les onglets pour basculer rapidement entre différents types d'évaluation",
+                    "Survolez les éléments du graphique pour voir les valeurs détaillées"
+                  ]
+                }
+              ]
+            },
+            "export_features": {
+              "title": "Fonctionnalités d'exportation",
+              "description": "Deux options d'exportation sont disponibles dans le coin supérieur droit :",
+              "options": [
+                {
+                  "title": "TÉLÉCHARGER LE RAPPORT EN PDF",
+                  "description": "Générez un rapport PDF complet de vos résultats"
+                },
+                {
+                  "title": "EXPORTER LES DONNÉES EN CSV",
+                  "description": "Téléchargez les données brutes pour une analyse plus approfondie dans d'autres outils"
+                }
+              ]
+            },
+            "bestPractices": {
+              "title": "Meilleures pratiques pour le suivi",
+              "items": [
+                "Vérifiez régulièrement les résultats pendant les sessions de formation pour effectuer des ajustements rapides",
+                "Comparez les résultats entre différentes sessions pour suivre les progrès",
+                "Utilisez les fonctionnalités d'exportation pour créer des rapports pour les parties prenantes",
+                "Prêtez attention aux données quantitatives et aux retours qualitatifs dans les réponses ouvertes"
+              ]
+            },
+            "reminder": "N'oubliez pas de vérifier régulièrement vos résultats tout au long de votre programme de formation. Cela vous aidera à identifier les domaines qui nécessitent une attention et à apporter des ajustements opportuns à votre approche de formation."
+          },
+          "regulate": {
+            "title": "La section REGULER",
+            "description": "La section REGULER comprend la sous-section \"Carnets de bord\" qui vous aide à suivre les observations et à planifier les améliorations tout au long de votre programme de formation. Cette section est essentielle pour maintenir des enregistrements détaillés et apporter des ajustements basés sur les données à votre approche de formation.",
+            "creating_logs": {
+              "title": "Création d'entrées de journal",
+              "addLogs": "Pour ajouter une nouvelle entrée de journal, vous devrez fournir :",
+              "infos": [
+                {
+                  "title": "Description",
+                  "description": "Une description claire et concise de votre observation ou du changement nécessaire"
+                },
+                {
+                  "title": "Session",
+                  "description": "Le numéro de la session de formation à laquelle l'entrée se rapporte"
+                },
+                {
+                  "title": "Type d'évaluation",
+                  "description": "Sélectionnez parmi les types d'évaluation disponibles (par exemple, Caractéristiques des stagiaires, Apprentissage, Conditions organisationnelles)"
+                },
+                {
+                  "title": "Type de journal",
+                  "description": "Choisissez entre 'Observation' ou 'Changement à faire'"
+                }
+              ]
+            },
+            "logTypes": {
+              "title": "Types de journaux",
+              "types": {
+                "observations": {
+                  "title": "Observations",
+                  "description": "Enregistrez les conclusions importantes de vos résultats de suivi, telles que :",
+                  "examples": [
+                    "Modèles dans les réponses des participants",
+                    "Approches pédagogiques réussies",
+                    "Domaines où les participants excellent"
+                  ]
+                },
+                "changes": {
+                  "title": "Changements à faire",
+                  "description": "Documentez les ajustements ou améliorations nécessaires, tels que :",
+                  "examples": [
+                    "Domaines nécessitant un soutien ou une explication supplémentaire",
+                    "Modifications des méthodes d'enseignement",
+                    "Ajustements des ressources ou du matériel"
+                  ]
+                }
+              }
+            },
+            "timeline": {
+              "title": "Chronologie des activités de formation",
+              "description": "La section \"Mon activité de formation\" affiche vos entrées de journal par ordre chronologique, organisées par :",
+              "items": [
+                "Numéro de session",
+                "Type d'évaluation",
+                "Type de journal (indiqué par différentes icônes)",
+                "Description de l'observation ou du changement nécessaire"
+              ]
+            },
+            "bestPractices": {
+              "title": "Meilleures pratiques pour la tenue de journal",
+              "items": [
+                "Créez des entrées de journal immédiatement après l'examen des résultats de suivi",
+                "Soyez spécifique et concis dans vos descriptions",
+                "Des entrées régulières aident à suivre l'évolution de votre programme de formation",
+                "Utilisez la chronologie pour identifier les modèles et les tendances dans le temps",
+                "Équilibrez les observations avec des changements réalisables"
+              ]
+            },
+            "reminder": "💡 Tenir un journal détaillé est crucial pour l'amélioration continue. Des entrées régulières vous aident à suivre les progrès, identifier les modèles et prendre des décisions éclairées concernant votre programme de formation."
+          },
+          "resources": {
+            "title": "La section RESSOURCES",
+            "description": "La section RESSOURCES fournit des matériaux et des conseils pour vous aider à tirer le meilleur parti de la plateforme."
+          },
+          "settings": {
+            "title": "La section PARAMETRES",
+            "description": "La section PARAMETRES comprend la sous-section \"Mon compte\" qui vous permet de gérer vos informations de compte et les paramètres de la plateforme.",
+            "userInfo": {
+              "title": "Informations utilisateur",
+              "description": "Dans cette section, vous pouvez consulter vos informations personnelles :",
+              "items": [
+                "Nom complet",
+                "Adresse e-mail",
+                "Statut utilisateur (Enseignant-formateur ou Enseignant)",
+                "ID utilisateur (pour le support technique)",
+                "Liste des codes utilisés"
+              ]
+            },
+            "platformInfo": {
+              "title": "Informations sur la plateforme",
+              "description": "Cette section affiche les détails techniques de la plateforme :",
+              "items": ["Nom de la plateforme", "Numéro de version actuel"]
+            },
+            "accountManagement": {
+              "title": "Gestion du compte",
+              "description": "Vous avez la possibilité de supprimer votre compte si nécessaire. Veuillez noter :",
+              "notes": [
+                "La suppression du compte est permanente",
+                "Toutes vos données seront supprimées",
+                "Les suivis et évaluations partagés resteront disponibles pour les autres utilisateurs"
+              ],
+              "warning": "La suppression de votre compte ne peut pas être annulée. Assurez-vous d'exporter toutes les données importantes avant de procéder à la suppression du compte."
+            }
+          }
+        }
+      }
+    }
+  },
+  "es": {
+    "steps": [
+      "Primeros pasos",
+      "Un poco de teoría",
+      "Funciones principales",
+      "Tu primer monitoreo de formación",
+      "Un monitoreo más avanzado"
+    ],
+    "buttons": {
+      "back": "Atrás",
+      "next": "Siguiente",
+      "startAgain": "Reiniciar"
+    },
+    "content": {
+      "gettingStarted": {
+        "title": "Primeros pasos",
+        "welcome": "¡Bienvenido a la documentación del Compañero Digital de Formación!",
+        "subtitle": "Este tutorial te presentará las principales funciones que puedes utilizar para seguir tus sesiones de formación. Al finalizar este tutorial, podrás:",
+        "capabilities": [
+          "Comprender el modelo teórico utilizado en esta aplicación.",
+          "Crear y gestionar monitoreos y evaluaciones.",
+          "Compartir tus evaluaciones con colegas docentes y formadores/as.",
+          "Visualizar tus resultados sesión por sesión.",
+          "Seguir el progreso de tus docentes a lo largo del tiempo.",
+          "Llevar un diario para documentar observaciones y planificar mejoras en las sesiones de formación.",
+          "Generar informes PDF detallados y exportar datos sin procesar para un análisis más profundo."
+        ]
+      },
+      "theory": {
+        "title": "Un poco de teoría",
+        "questions": [
+          "¿En qué medida evalúas tus programas de formación?",
+          "¿Cómo te aseguras de que tu formación sea eficaz cuando los docentes regresan a sus funciones?",
+          "Si tienen dificultades para aplicar lo aprendido, ¿cómo puedes apoyarlos?",
+          "En última instancia, ¿cómo puedes demostrar que tu formación tiene un impacto positivo en el campo?"
+        ],
+        "mainText": [
+          "Para responder a estas preguntas, es necesario evaluar diferentes niveles a lo largo de las sesiones de formación y más allá, no solo la satisfacción inmediata de los participantes tras una sesión. El modelo de Kirkpatrick es un marco ampliamente reconocido que se enfoca en cuatro de estos niveles: reacción, aprendizaje, comportamiento y resultados.",
+          "Otro investigador, Guskey, adaptó posteriormente este modelo para el ámbito educativo. Estos modelos ofrecen una visión completa y longitudinal de la eficacia de la formación y proporcionan los elementos necesarios para realizar mejoras fundamentadas."
+        ],
+        "neglectText": "Sin embargo, este tipo de modelos de evaluación a menudo se pasan por alto. La mayoría de las evaluaciones se centran únicamente en la satisfacción inmediata de los participantes, debido al tiempo y esfuerzo que implica la recopilación de datos y a la falta de herramientas específicas. Por ejemplo, en el ámbito empresarial, el 20% de las empresas no evalúan la formación en absoluto, mientras que el 80% solo mide la satisfacción. Al mismo tiempo, los responsables afirman que la ausencia de medidas concretas es un problema recurrente que debilita la eficacia de los programas de formación. En educación, se observan tendencias similares: los estudios muestran que la mayoría de las evaluaciones se enfocan solo en la percepción y la satisfacción de los participantes, dejando de lado el aprendizaje y su aplicación práctica.",
+        "gapText": "Esta brecha pone de manifiesto la importancia de un proceso de evaluación sólido y continuo que permita captar la eficacia de la formación en varios niveles.",
+        "modelText": "Para proporcionar la información necesaria, hemos desarrollado una versión revisada del modelo de Guskey junto con esta aplicación web. Nuestro modelo incluye nueve niveles que te ayudan a organizar y recopilar rápidamente la información adecuada, desde las sesiones de formación hasta los resultados concretos obtenidos por los docentes en el terreno. Esto te permite reunir datos precisos para apoyar a los docentes en la aplicación de su formación en contextos reales y te ayuda a recopilar información clave para mejorar continuamente tus programas de formación.",
+        "finalText": "Para cada nivel deben medirse indicadores específicos, que reflejan los que normalmente influyen en los niveles siguientes. La aplicación ofrece indicadores estándar para ciertos niveles. Estos no son exhaustivos y pueden adaptarse a tus condiciones y necesidades formativas específicas."
+      },
+      "mainFunctionalities": {
+        "title": "Funciones principales",
+        "introduction": "En el menú a la izquierda, encontrarás cinco secciones de funcionalidades:",
+        "sections": {
+          "design": {
+            "title": "La sección DISEÑO",
+            "description1": "La sección DISEÑO incluye",
+            "description2": "Monitoreos",
+            "description3": ", la página de gestión de tus monitoreos y evaluaciones.",
+            "monitoringDefinition1": "Un ",
+            "monitoringDefinition2": "monitoreo ",
+            "monitoringDefinition3": "es una colección de evaluaciones.",
+            "monitoringDefinition4": " Puede incluir una o más evaluaciones de los diferentes niveles del modelo previamente descrito (ver ",
+            "monitoringDefinition5": "Un poco de teoría",
+            "monitoringDefinition6": "). Así, un monitoreo abarca todas las evaluaciones que pueden realizarse para un programa de formación determinado.",
+            "creating_monitoring": {
+              "title": "Creación de un monitoreo",
+              "steps": [
+                {
+                  "text": "Haz clic en el botón",
+                  "bold": "NUEVO MONITOREO",
+                  "suffix": "."
+                },
+                "Introduce un nombre y una descripción para tu monitoreo.",
+                {
+                  "text": "Haz clic en",
+                  "bold": "CREAR."
+                }
+              ],
+              "note": "Ahora tienes un monitoreo configurado, pero aún no contiene evaluaciones."
+            },
+            "managing_monitoring": {
+              "title": "Gestión de tu monitoreo",
+              "instructions": "Para modificar el nombre o la descripción de un monitoreo, simplemente haz clic en el texto que deseas cambiar. Solo puedes modificar los monitoreos que hayas creado tú mismo.",
+              "actions": {
+                "intro": {
+                  "prefix": "Para opciones adicionales, dirígete al menú",
+                  "bold": "Acciones",
+                  "suffix": ", donde puedes:"
+                },
+                "options": [
+                  {
+                    "action": "Eliminar",
+                    "description": "el monitoreo completo"
+                  },
+                  {
+                    "action": "Eliminar todas las respuestas",
+                    "description": "de los participantes para este monitoreo"
+                  }
+                ]
+              },
+              "warning": "Eliminar un monitoreo o todas las respuestas es irreversible. Usa estas opciones con precaución."
+            },
+            "sharing_monitoring": {
+              "title": "Compartir un monitoreo",
+              "steps": [
+                {
+                  "text": "Haz clic en",
+                  "bold": "COMPARTIR MONITOREO"
+                },
+                {
+                  "text": "Proporciona el",
+                  "bold": "código de 6 dígitos",
+                  "suffix": "a otros/as docentes o formadores/as"
+                },
+                {
+                  "text": "La persona destinataria puede usar este código para acceder al monitoreo"
+                }
+              ]
+            },
+            "importing_monitoring": {
+              "title": "Importar un monitoreo",
+              "steps": [
+                {
+                  "text": "Haz clic en",
+                  "bold": "IMPORTAR MONITOREO"
+                },
+                {
+                  "text": "Introduce el",
+                  "bold": "código de 6 dígitos",
+                  "suffix": "que recibiste de la persona formadora"
+                }
+              ],
+              "roleNote": {
+                "title": "El comportamiento de compartir varía según tu rol:",
+                "roles": {
+                  "trainer": {
+                    "mode": "Modo formador-a",
+                    "description": "Se comparte el monitoreo completo con todas las evaluaciones"
+                  },
+                  "teacher": {
+                    "mode": "Modo docente",
+                    "description": "Solo se comparten los tipos de evaluación \"Características del alumnado\" y \"Resultados de aprendizaje del alumnado\""
+                  }
+                }
+              }
+            },
+
+            "assessmentDefinition": {
+              "text": "Una",
+              "bold": "evaluación",
+              "suffix": " aborda específicamente las cuestiones relacionadas con uno de los distintos niveles del modelo previamente descrito. Cada evaluación puede representarse como una página de encuesta, lo que permite una categorización más fácil de las respuestas y una visualización más clara de los resultados."
+            },
+            "creating": {
+              "title": "Creación de una evaluación",
+              "steps": {
+                "basic": [
+                  {
+                    "text": "Haz clic en el botón",
+                    "bold": "NUEVA EVALUACIÓN",
+                    "suffix": "."
+                  },
+                  "Introduce un número de sesión para tu monitoreo. Esto te permite separar diferentes conjuntos de evaluaciones por sesión de formación (por ejemplo, Día 1, Día 2). El número de sesión afecta la visualización de resultados y puede modificarse posteriormente.",
+                  "Introduce un nombre y selecciona un tipo para tu evaluación. El tipo determina qué tipo de información recopilarás procedente del profesorado y afecta cómo se muestran los resultados en el panel."
+                ],
+                "assessmentTypes": {
+                  "title": "Los tipos de evaluación incluyen:",
+                  "types": {
+                    "trainee": {
+                      "name": "Características de las personas en prácticas",
+                      "description": "Recopila información sobre el profesorado que pueda influir en tu sesión de formación (por ejemplo, niveles de motivación). Generalmente se recopila antes o al inicio de la formación."
+                    },
+                    "training": {
+                      "name": "Características de la formación",
+                      "description": "Recoge retroalimentación sobre la forma de la sesión de formación al finalizar."
+                    },
+                    "immediate": {
+                      "name": "Reacciones inmediatas",
+                      "note": "(modelo de Guskey, nivel 1)",
+                      "description": "Evalúa las reacciones personales de las personas participantes respecto al contenido de la formación."
+                    },
+                    "learning": {
+                      "name": "Aprendizaje",
+                      "note": "(modelo de Guskey, nivel 2)",
+                      "description": "Evalúa lo que el profesorado ha aprendido durante tus sesiones."
+                    },
+                    "organizational": {
+                      "name": "Condiciones organizativas",
+                      "note": "(modelo de Guskey, nivel 3)",
+                      "description": "Recopila información sobre las condiciones en el terreno."
+                    },
+                    "behavioral": {
+                      "name": "Cambios de comportamiento",
+                      "note": "(modelo de Guskey, nivel 4)",
+                      "description": "Evalúa si el profesorado ha aplicado su aprendizaje."
+                    },
+                    "sustainability": {
+                      "name": "Condiciones de sostenibilidad",
+                      "description": "Recoge datos sobre los factores que influyen en la sostenibilidad a largo plazo de las prácticas."
+                    },
+                    "student": {
+                      "name": "Características del alumnado",
+                      "description": "Recopila información sobre el alumnado que se beneficiará de las actividades de aprendizaje."
+                    },
+                    "outcomes": {
+                      "name": "Resultados de aprendizaje del alumnado",
+                      "note": "(modelo de Guskey, nivel 5)",
+                      "description": "Evalúa el aprendizaje del alumnado tras la implementación."
+                    }
+                  }
+                },
+                "final": {
+                  "text": "Haz clic en",
+                  "bold": "CREAR",
+                  "suffix": ". Tu evaluación aparecerá en la tabla de evaluaciones."
+                }
+              }
+            },
+            "managing_assessment": {
+              "title": "Gestión de tus evaluaciones",
+              "steps": {
+                "editing_session": {
+                  "title": "Editar número de sesión",
+                  "description": "Haz clic en el número que deseas modificar. Nota: Solo puedes modificar evaluaciones que tú hayas creado."
+                },
+                "editing_name": {
+                  "title": "Editar nombre de la evaluación",
+                  "description": "Haz clic en el texto que deseas modificar. Esto también se limita a las evaluaciones que tú has creado."
+                },
+                "changing_status": {
+                  "title": "Cambiar el estado de la evaluación",
+                  "description": "Haz clic en el botón que indica",
+                  "statuses": ["BORRADOR", "ABIERTO", "CERRADO"]
+                },
+                "additions": {
+                  "title": "Opciones adicionales",
+                  "description": "Accede al menú",
+                  "menuName": "Acciones",
+                  "suffix": "para lo siguiente"
+                },
+                "additional_options": [
+                  {
+                    "text": "Eliminar",
+                    "suffix": "la evaluación completa"
+                  },
+                  {
+                    "text": "Eliminar todas las respuestas",
+                    "suffix": "de las personas participantes para esta evaluación"
+                  }
+                ],
+                "sharing_assessment": {
+                  "title": "Compartir una evaluación",
+                  "description": "Marca la casilla en la columna Compartir. Las funcionalidades de compartir aparecerán entonces en el espacio de la derecha."
+                }
+              },
+
+              "warning": "Eliminar una evaluación o todas las respuestas es irreversible. Usa estas opciones con precaución."
+            },
+            "creating_assessment_content": {
+              "title": "Crear contenido de tu evaluación",
+              "draft_status": "Para crear el contenido de tu evaluación, asegúrate de que esté en estado BORRADOR, luego ve a Acciones y selecciona Modificar",
+              "kinds_assessments1": "Puedes crear diferentes tipos de preguntas en tu evaluación. Para los tipos Características de las personas en prácticas, Características de la formación, Reacciones inmediatas, Condiciones organizativas, Cambios de comportamiento, Condiciones de sostenibilidad y Características del alumnado, los siguientes tipos de preguntas están disponibles:",
+              "types1": [
+                {
+                  "title": "Pregunta abierta",
+                  "description": "Este tipo te permite crear una simple pregunta abierta."
+                },
+                {
+                  "title": "Selección única (ordenada)",
+                  "description": "Este tipo te permite crear una pregunta con opciones de respuesta predefinidas en un orden específico."
+                },
+                {
+                  "title": "Selección única (no ordenada)",
+                  "description": "Similar a la selección única ordenada, pero el orden de las opciones no es significativo."
+                },
+                {
+                  "title": "Selección múltiple",
+                  "description": "Este tipo permite a los encuestados seleccionar varias respuestas de una lista de opciones predefinidas."
+                },
+                {
+                  "title": "Solo texto",
+                  "description": "Este tipo no es una pregunta en sí, pero te permite crear texto con formato, enlaces e imágenes."
+                }
+              ],
+              "warning1": "Para el tipo Selección única (ordenada), organiza siempre las opciones de respuesta de negativa a positiva, de arriba hacia abajo.",
+              "kinds_assessments2": "Para los tipos Aprendizaje y Resultados de aprendizaje del alumnado, los siguientes tipos de preguntas están disponibles:",
+              "types2": [
+                {
+                  "title": "Pregunta abierta"
+                },
+                {
+                  "title": "QCM (Pregunta de opción múltiple)",
+                  "description": "Preguntas con una única respuesta correcta."
+                },
+                {
+                  "title": "Solo texto"
+                }
+              ],
+
+              "reminder": "Se proporcionan preguntas de ejemplo cuando comienzas a editar una evaluación.",
+              "warning2": "No olvides hacer clic en el botón VALIDAR al final de la página después de completar tu cuestionario.",
+              "ia_creation": "También puedes crear tu cuestionario directamente usando la IA. Para ello, simplemente copia y pega el contenido deseado de tu formación en el área correspondiente."
+            },
+            "sharing_assessment": {
+              "title": "Compartir tus evaluaciones",
+              "description1": "El",
+              "description2": "área para compartir ",
+              "description3": "te permite incorporar evaluaciones en tu encuesta. Cada evaluación se convierte en una página distinta, y puedes añadirlas fácilmente marcando las casillas en la columna Compartir. En cuanto marcas una casilla, esa evaluación pasa automáticamente a formar parte de tu encuesta.",
+              "QR_code": "Debajo del código QR, encontrarás varias opciones de compartir:",
+              "QR_code_options": [
+                "Generar un enlace URL a tu encuesta",
+                "Descargar el código QR en un formato más grande",
+                "Descargar una versión impresa (PDF) para uso sin conexión",
+                "Activar el monitoreo de identificadores de participantes: los participantes introducen un código único antes de comenzar la encuesta, lo que permite rastrear sus respuestas en distintas evaluaciones",
+                "Acceder al código de ingreso manual: utiliza este código para introducir manualmente los datos recogidos de las encuestas impresas"
+              ]
+            }
+          },
+          "monitor": {
+            "title": "La sección MONITOREAR",
+            "description": "La sección MONITOREAR incluye la subsección \"Resultados\" que te permite visualizar y analizar los datos recopilados de tus evaluaciones.",
+            "dataSelection": {
+              "title": "Selección de datos",
+              "description": "En la parte superior de la página, encontrarás dos menús desplegables:",
+              "options": [
+                {
+                  "title": "Elegir un monitoreo",
+                  "description": "Selecciona qué monitoreo deseas analizar"
+                },
+                {
+                  "title": "Elegir una sesión",
+                  "description": "Selecciona la sesión de formación específica a visualizar"
+                }
+              ]
+            },
+            "results_dashboard": {
+              "title": "Panel de resultados",
+              "description": "El panel está organizado en diferentes pestañas que corresponden a los tipos de evaluación:",
+
+              "types": [
+                "CARACTERÍSTICAS DEL PROFESORADO",
+                "CARACTERÍSTICAS DE LA FORMACIÓN",
+                "REACCIONES INMEDIATAS",
+                "APRENDIZAJE",
+                "CONDICIONES ORGANIZATIVAS",
+                "CAMBIOS DE COMPORTAMIENTO",
+                "CONDICIONES DE SOSTENIBILIDAD",
+                "CARACTERÍSTICAS DEL ALUMNADO",
+                "RESULTADOS DE APRENDIZAJE DEL ALUMNADO"
+              ]
+            },
+            "data_visualization": {
+              "title": "Visualización de datos",
+              "description": "Los resultados se presentan mediante diferentes tipos de visualización según el formato de la pregunta:",
+              "types": [
+                {
+                  "title": "Selección única (no ordenada) y Selección múltiple",
+                  "description": "Barras azul claro"
+                },
+                {
+                  "title": "Selección única (ordenada)",
+                  "description": "Barras codificadas por colores del rojo (negativo) al verde (positivo)"
+                },
+                {
+                  "title": "Preguntas abiertas",
+                  "description": "Las respuestas en formato texto se muestran en un formato desplazable"
+                },
+                {
+                  "title": "Preguntas de aprendizaje",
+                  "description": "Las respuestas incorrectas se muestran en rojo, la respuesta correcta en verde"
+                }
+              ]
+            },
+            "additional_features": {
+              "title": "Funciones adicionales",
+              "features": [
+                {
+                  "title": "Filtrado",
+                  "description": "Utiliza el menú desplegable \"Filtrar por docente\" para centrarte en subconjuntos específicos de tus datos"
+                },
+                {
+                  "title": "Elementos interactivos",
+                  "items": [
+                    "Usa las pestañas para cambiar rápidamente entre diferentes tipos de evaluación",
+                    "Pasa el cursor sobre los elementos del gráfico para ver los valores detallados"
+                  ]
+                }
+              ]
+            },
+            "export_features": {
+              "title": "Funciones de exportación",
+              "description": "Hay dos opciones de exportación disponibles en la esquina superior derecha:",
+              "options": [
+                {
+                  "title": "DESCARGAR EL INFORME EN PDF",
+                  "description": "Genera un informe PDF completo de tus resultados"
+                },
+                {
+                  "title": "EXPORTAR LOS DATOS EN CSV",
+                  "description": "Descarga los datos sin procesar para un análisis más detallado en otras herramientas"
+                }
+              ]
+            },
+            "bestPractices": {
+              "title": "Mejores prácticas para el monitoreo",
+              "items": [
+                "Revisa regularmente los resultados durante las sesiones de formación para hacer ajustes rápidos",
+                "Compara los resultados entre diferentes sesiones para seguir el progreso",
+                "Utiliza las funciones de exportación para crear informes para las partes interesadas",
+                "Presta atención tanto a los datos cuantitativos como a los comentarios cualitativos en las respuestas abiertas"
+              ]
+            },
+            "reminder": "No olvides revisar regularmente tus resultados a lo largo de tu programa de formación. Esto te ayudará a identificar las áreas que necesitan atención y a realizar ajustes oportunos en tu enfoque formativo."
+          },
+          "regulate": {
+            "title": "La sección REGULAR",
+            "description": "La sección REGULAR incluye la subsección \"Diarios de monitoreo\" que te ayuda a registrar observaciones y planificar mejoras a lo largo de tu programa de formación. Esta sección es esencial para mantener registros detallados y realizar ajustes basados en datos en tu enfoque formativo.",
+            "creating_logs": {
+              "title": "Creación de entradas de diario",
+              "addLogs": "Para agregar una nueva entrada de diario, deberás proporcionar:",
+              "infos": [
+                {
+                  "title": "Descripción",
+                  "description": "Una descripción clara y concisa de tu observación o del cambio necesario"
+                },
+                {
+                  "title": "Sesión",
+                  "description": "El número de la sesión de formación a la que se refiere la entrada"
+                },
+                {
+                  "title": "Tipo de evaluación",
+                  "description": "Selecciona entre los tipos de evaluación disponibles (por ejemplo, Características de las personas en prácticas, Aprendizaje, Condiciones organizativas)"
+                },
+                {
+                  "title": "Tipo de diario",
+                  "description": "Elige entre 'Observación' o 'Cambio a realizar'"
+                }
+              ]
+            },
+            "logTypes": {
+              "title": "Tipos de diarios",
+              "types": {
+                "observations": {
+                  "title": "Observaciones",
+                  "description": "Registra las conclusiones importantes de tus resultados de monitoreo, tales como:",
+                  "examples": [
+                    "Patrones en las respuestas de los participantes",
+                    "Enfoques pedagógicos exitosos",
+                    "Áreas donde los participantes se destacan"
+                  ]
+                },
+                "changes": {
+                  "title": "Cambios a realizar",
+                  "description": "Documenta los ajustes o mejoras necesarias, tales como:",
+                  "examples": [
+                    "Ámbitos que requieren apoyo o explicación adicional",
+                    "Modificaciones en los métodos de enseñanza",
+                    "Ajustes en los recursos o el material"
+                  ]
+                }
+              }
+            },
+            "timeline": {
+              "title": "Cronología de actividades de formación",
+              "description": "La sección 'Mi actividad de formación' muestra tus entradas de diario en orden cronológico, organizadas por:",
+              "items": [
+                "Número de sesión",
+                "Tipo de evaluación",
+                "Tipo de diario (indicado por diferentes iconos)",
+                "Descripción de la observación o del cambio necesario"
+              ]
+            },
+            "bestPractices": {
+              "title": "Mejores prácticas para la gestión del diario",
+              "items": [
+                "Crea entradas de diario inmediatamente después de revisar los resultados de monitoreo",
+                "Sé específico y conciso en tus descripciones",
+                "Las entradas regulares ayudan a seguir la evolución de tu programa de formación",
+                "Utiliza la cronología para identificar patrones y tendencias a lo largo del tiempo",
+                "Equilibra las observaciones con cambios factibles"
+              ]
+            },
+            "reminder": "💡 Llevar un diario detallado es crucial para la mejora continua. Las entradas regulares te ayudan a seguir los avances, identificar patrones y tomar decisiones fundamentadas sobre tu programa de formación."
+          },
+          "resources": {
+            "title": "La sección RECURSOS",
+            "description": "La sección RECURSOS proporciona materiales y consejos para ayudarte a sacar el máximo partido a la plataforma."
+          },
+          "settings": {
+            "title": "La sección CONFIGURACIÓN",
+            "description": "La sección CONFIGURACIÓN incluye la subsección 'Mi cuenta', que te permite gestionar tu información personal y los parámetros de la plataforma.",
+            "userInfo": {
+              "title": "Información de la persona usuaria",
+              "description": "En esta sección puedes consultar tu información personal:",
+              "items": [
+                "Nombre completo",
+                "Dirección de correo electrónico",
+                "Estado de la persona usuaria (Formador-a o Docente)",
+                "ID de la persona usuaria (para soporte técnico)",
+                "Lista de códigos utilizados"
+              ]
+            },
+            "platformInfo": {
+              "title": "Información sobre la plataforma",
+              "description": "Esta sección muestra los detalles técnicos de la plataforma:",
+              "items": ["Nombre de la plataforma", "Número de versión actual"]
+            },
+            "accountManagement": {
+              "title": "Gestión de la cuenta",
+              "description": "Tienes la posibilidad de eliminar tu cuenta si es necesario. Ten en cuenta lo siguiente:",
+              "notes": [
+                "La eliminación de la cuenta es permanente",
+                "Todos tus datos serán eliminados",
+                "Los monitoreos y evaluaciones compartidos seguirán estando disponibles para otras personas usuarias"
+              ],
+              "warning": "La eliminación de tu cuenta no se puede deshacer. Asegúrate de exportar todos los datos importantes antes de proceder."
+            }
+          }
+        }
+      }
+    }
+  },
+  "it": {
+    "steps": [
+      "Iniziare",
+      "Un po' di teoria",
+      "Funzionalità principali",
+      "Il tuo primo monitoring di formazione",
+      "Un monitoring più avanzato"
+    ],
+    "buttons": {
+      "back": "Indietro",
+      "next": "Avanti",
+      "startAgain": "Ricominciare"
+    },
+    "content": {
+      "gettingStarted": {
+        "title": "Iniziare",
+        "welcome": "Benvenuto/a nella documentazione di Digital Training Companion!",
+        "subtitle": "Questo tutorial ti introdurrà alle principali funzionalità che puoi utilizzare per monitorare le tue sessioni di formazione. Al termine di questo tutorial, sarai in grado di:",
+        "capabilities": [
+          "Acquisire una comprensione completa del modello teorico utilizzato in questa applicazione.",
+          "Creare e gestire monitorings e assessments.",
+          "Condividere i tuoi assessments con colleghi formatori e insegnanti.",
+          "Visualizzare i tuoi risultati sessione per sessione.",
+          "Monitorare i progressi dei tuoi insegnanti nel tempo.",
+          "Mantenere un logbook per documentare osservazioni e pianificare miglioramenti per le sessioni di formazione.",
+          "Generare report PDF dettagliati ed esportare dati grezzi per ulteriori analisi."
+        ]
+      },
+      "theory": {
+        "title": "Un po' di teoria",
+        "questions": [
+          "Con quale accuratezza valuti i tuoi programmi di formazione?",
+          "Come garantisci che la tua formazione sia efficace quando gli insegnanti tornano al loro ruolo?",
+          "Se incontrano difficoltà nell'applicare ciò che hanno appreso, come puoi sostenerli?",
+          "In definitiva, come puoi dimostrare che la tua formazione ha un impatto positivo sul campo?"
+        ],
+        "mainText": [
+          "Per rispondere a queste domande, è necessario valutare vari livelli di valutazione durante e oltre le sessioni di formazione, non solo la soddisfazione dei partecipanti subito dopo una sessione. Il modello di Kirkpatrick è un framework ampiamente riconosciuto che si concentra su quattro di questi livelli: reazione, apprendimento, comportamento e risultati.",
+          "Un altro ricercatore, Guskey, ha successivamente adattato questo modello per l'educazione. Questi modelli offrono una visione completa e longitudinale dell'efficacia della formazione e forniscono le informazioni necessarie per apportare miglioramenti informati."
+        ],
+        "neglectText": "Tuttavia, tali modelli di valutazione sono spesso trascurati. La maggior parte delle valutazioni si concentra esclusivamente sulla soddisfazione immediata dei partecipanti a causa del tempo e dello sforzo richiesti per raccogliere dati e della mancanza di strumenti dedicati. Ad esempio, nel mondo aziendale, il 20% delle aziende non valuta affatto la formazione, mentre l'80% misura solo la soddisfazione. Nel frattempo, i dirigenti indicano che i leader aziendali vedono la mancanza di misure concrete come una sfida ricorrente, che indebolisce l'efficacia dei loro programmi di formazione. Nell'istruzione esistono tendenze simili; gli studi mostrano che la maggior parte delle valutazioni si concentra solo sulle percezioni e sulla soddisfazione dei partecipanti, trascurando l'apprendimento e l'applicazione pratica.",
+        "gapText": "Questa lacuna sottolinea l'importanza di un processo di valutazione robusto e continuo che catturi l'efficacia della formazione su più livelli.",
+        "modelText": "Per fornire le informazioni necessarie, abbiamo sviluppato questa applicazione web utilizzando una versione rivista del modello di Guskey. Il nostro modello include nove livelli che ti aiutano a organizzare e raccogliere rapidamente le informazioni giuste, dalle sessioni di formazione ai risultati concreti ottenuti dagli insegnanti sul campo. Ti dà la possibilità di raccogliere dati accurati per supportare gli insegnanti nell'applicazione della loro formazione in scenari reali e ti aiuta a raccogliere informazioni cruciali per migliorare continuamente i tuoi programmi di formazione.",
+        "finalText": "Per ogni livello, è necessario misurare indicatori specifici, che riflettono quelli tipicamente ritenuti influenzare i livelli successivi. L'applicazione offre indicatori standard per determinati livelli. Questi indicatori non sono esaustivi e possono essere adattati alle tue specifiche condizioni e esigenze di formazione."
+      },
+      "mainFunctionalities": {
+        "title": "Funzionalità principali",
+        "introduction": "Nel menu a sinistra troverai cinque sezioni di funzionalità:",
+        "sections": {
+          "design": {
+            "title": "La sezione PROGETTAZIONE",
+            "description1": "La sezione PROGETTAZIONE include",
+            "description2": "Monitoraggi",
+            "description3": ", la pagina di gestione per i tuoi monitoraggi e valutazioni.",
+            "monitoringDefinition1": "Un ",
+            "monitoringDefinition2": "monitoraggio ",
+            "monitoringDefinition3": "è una raccolta di assessments.",
+            "monitoringDefinition4": " Può includere uno o più assessments dei vari livelli del modello precedentemente descritto (vedi ",
+            "monitoringDefinition5": "Un po' di teoria",
+            "monitoringDefinition6": "). Pertanto, un monitoraggio comprende tutti gli assessments che possono essere condotti per un dato programma di formazione.",
+            "creating_monitoring": {
+              "title": "Creare un Monitoraggio",
+              "steps": [
+                {
+                  "text": "Clicca sul pulsante",
+                  "bold": "NEW MONITORAGGIO"
+                },
+                "Inserisci un nome e una descrizione per il tuo monitoraggio.",
+                {
+                  "text": "Clicca",
+                  "bold": "CREA"
+                }
+              ],
+              "note": "Ora hai configurato un monitoraggio, ma non contiene ancora alcun valutazione."
+            },
+            "managing_monitoring": {
+              "title": "Gestire il tuo Monitoraggio",
+              "instructions": "Per modificare il nome o la descrizione di un monitoraggio, clicca semplicemente sul testo che desideri cambiare. Puoi modificare solo i monitoraggi che hai creato tu stesso.",
+              "actions": {
+                "intro": {
+                  "prefix": "Per opzioni aggiuntive, vai al menu",
+                  "bold": "Più",
+                  "suffix": ", dove puoi:"
+                },
+                "options": [
+                  {
+                    "action": "Cancella",
+                    "description": "l'intero monitoraggio"
+                  },
+                  {
+                    "action": "Cancella tutte le risposte",
+                    "description": "dei partecipanti per questo monitoraggio"
+                  }
+                ]
+              },
+              "warning": "L'eliminazione di un monitoraggio o di tutte le risposte è irreversibile. Utilizza queste opzioni con attenzione."
+            },
+            "sharing_monitoring": {
+              "title": "Condividere un Monitoraggio",
+              "steps": [
+                {
+                  "text": "Clicca su",
+                  "bold": "CONDIVIDI"
+                },
+                {
+                  "text": "Dai il",
+                  "bold": "codice a 6 cifre",
+                  "suffix": "ad altri formatori o insegnanti"
+                },
+                {
+                  "text": "Il destinatario può utilizzare questo codice per accedere al monitoraggio"
+                }
+              ]
+            },
+            "importing_monitoring": {
+              "title": "Importare un Monitoraggio",
+              "steps": [
+                {
+                  "text": "Clicca su",
+                  "bold": "MONITORAGGIO DELLO IMPORTAZIONI"
+                },
+                {
+                  "text": "Inserisci il",
+                  "bold": "codice a 6 cifre",
+                  "suffix": "ricevuto dal formatore"
+                }
+              ],
+              "roleNote": {
+                "title": "La modalità di condivisione varia in base al ruolo assegnato:",
+                "roles": {
+                  "trainer": {
+                    "mode": "Modalità formatore",
+                    "description": "Viene condiviso l'intero monitoraggio con tutte le valutazioni"
+                  },
+                  "teacher": {
+                    "mode": "Modalità insegnante",
+                    "description": "Vengono condivisi solo i tipi di valutazione \"Caratteristiche dello studente\" e \"Risultati di apprendimento degli studenti\""
+                  }
+                }
+              }
+            },
+            "assessmentDefinition": {
+              "text": "Una",
+              "bold": "valutazione",
+              "suffix": "affronta specificamente le domande relative a uno dei vari livelli del modello precedentemente descritto. Ogni assessment può essere presentato come una pagina di survey, consentendo una più facile categorizzazione delle risposte e una visualizzazione più chiara dei risultati."
+            },
+            "creating": {
+              "title": "Creare una Valutazione",
+              "steps": {
+                "basic": [
+                  {
+                    "text": "Clicca sul pulsante",
+                    "bold": "NUOVA VALUTAZIONE"
+                  },
+                  "Inserisci un numero di sessione per il tuo monitoraggio. Questo ti permette di separare diversi set di valutazioni per sessione di formazione (es. Giorno 1, Giorno 2). Il numero di sessione influisce sulla visualizzazione dei risultati e può essere modificato in seguito.",
+                  "Inserisci un nome e seleziona un tipo per la tua valutazione. Il tipo determina il tipo di informazioni che raccoglierai dagli insegnanti e influisce su come i risultati vengono visualizzati sulla dashboard."
+                ],
+                "assessmentTypes": {
+                  "title": "I tipi di assessment includono:",
+                  "types": {
+                    "trainee": {
+                      "name": "Caratteristiche dell'apprendista",
+                      "description": "Raccogli informazioni sugli insegnanti che potrebbero influenzare la tua sessione di formazione (es. livelli di motivazione). Solitamente raccolte prima o all'inizio della formazione."
+                    },
+                    "training": {
+                      "name": "Caratteristiche della formazione",
+                      "description": "Raccogli feedback sulla forma della sessione di formazione alla sua conclusione."
+                    },
+                    "immediate": {
+                      "name": "Reazioni immediate",
+                      "note": "(Modello Guskey, livello 1)",
+                      "description": "Valuta le reazioni personali dei partecipanti al contenuto della formazione."
+                    },
+                    "learning": {
+                      "name": "Apprendimento",
+                      "note": "(Modello Guskey, livello 2)",
+                      "description": "Valuta ciò che gli insegnanti hanno appreso dalle tue sessioni."
+                    },
+                    "organizational": {
+                      "name": "Condizioni organizzative",
+                      "note": "(Modello Guskey, livello 3)",
+                      "description": "Raccogli informazioni sulle condizioni sul campo."
+                    },
+                    "behavioral": {
+                      "name": "Cambiamenti di comportamento",
+                      "note": "(Modello Guskey, livello 4)",
+                      "description": "Valuta se gli insegnanti hanno applicato ciò che hanno appreso."
+                    },
+                    "sustainability": {
+                      "name": "Condizioni di sostenibilità",
+                      "description": "Raccogli dati sui fattori che influenzano la sostenibilità a lungo termine delle pratiche."
+                    },
+                    "student": {
+                      "name": "Caratteristiche dello studente",
+                      "description": "Raccogli informazioni sugli studenti che beneficeranno delle attività di apprendimento."
+                    },
+                    "outcomes": {
+                      "name": "Risultati di apprendimento degli studenti",
+                      "note": "(Modello Guskey, livello 5)",
+                      "description": "Valuta l'apprendimento degli studenti dopo l'implementazione."
+                    }
+                  }
+                },
+                "final": {
+                  "text": "Clicca",
+                  "bold": "CREA",
+                  "suffix": ". La tua valutazione apparirà nella tabella delle valutazioni."
+                }
+              }
+            },
+            "managing_assessment": {
+              "title": "Gestire le tue Valutazioni",
+              "steps": {
+                "editing_session": {
+                  "title": "Modificare il numero di sessione",
+                  "description": "Clicca sul numero che desideri cambiare. Nota: puoi modificare solo gli assessments che hai creato."
+                },
+                "editing_name": {
+                  "title": "Modificare il nome della valutazione",
+                  "description": "Clicca sul testo che desideri cambiare. Anche in questo caso, questo è limitato alle valutazioni che hai creato."
+                },
+                "changing_status": {
+                  "title": "Cambiare lo stato della valutazione",
+                  "description": "Clicca sul pulsante che indica",
+                  "statuses": ["BOZZA", "APRI", "CHIUDI"]
+                },
+                "additions": {
+                  "title": "Opzioni aggiuntive",
+                  "description": "Accedi al menu",
+                  "menuName": "Più",
+                  "suffix": "per le seguenti opzioni"
+                },
+                "additional_options": [
+                  {
+                    "text": "Cancella",
+                    "suffix": "l'intera valutazione"
+                  },
+                  {
+                    "text": "Cancella tutte le risposte",
+                    "suffix": "dei partecipanti per questa valutazione"
+                  }
+                ],
+                "sharing_assessment": {
+                  "title": "Condividere una valutazione",
+                  "description": "Seleziona la casella di controllo nella colonna con l'icona condividi. Le funzionalità di condivisione appariranno quindi nello spazio di condivisione a destra."
+                }
+              },
+              "warning": "L'eliminazione di una valutazione o di tutte le risposte è irreversibile. Utilizza queste opzioni con attenzione."
+            },
+            "creating_assessment_content": {
+              "title": "Creare il Contenuto della tua Valutazione",
+              "draft_status": "Per creare il contenuto del tuo assessment, assicurati che sia in stato DRAFT, poi clicca sull'icona della penna.",
+              "kinds_assessments1": "Puoi creare diversi tipi di domande nel tuo assessment. Per Caratteristiche dell'apprendista, Caratteristiche della formazione, Reazioni immediate, Condizioni organizzative, Cambiamenti di comportamento, Condizioni di sostenibilità e Caratteristiche dello studente, sono disponibili i seguenti tipi di domande:",
+              "types1": [
+                {
+                  "title": "Domanda a risposta aperta",
+                  "description": "Questo tipo ti permette di creare una semplice domanda aperta."
+                },
+                {
+                  "title": "Scelta singola (ordinata)",
+                  "description": "Questo tipo ti consente di creare una domanda con opzioni di risposta predefinite in un ordine specifico."
+                },
+                {
+                  "title": "Scelta singola (non ordinata)",
+                  "description": "Simile a radio-ordered, ma l'ordine delle opzioni non è significativo."
+                },
+                {
+                  "title": "Scelte multiple",
+                  "description": "Questo tipo permette ai rispondenti di selezionare più risposte da un elenco di opzioni predefinite."
+                },
+                {
+                  "title": "Solo testo",
+                  "description": "Questo tipo non è una domanda in sé, ma ti permette di creare testo formattabile, link e immagini."
+                }
+              ],
+              "warning1": "Per il tipo Scelta singola (ordinata), disponi sempre le opzioni di risposta dal negativo al positivo, dall'alto verso il basso.",
+              "kinds_assessments2": "Per i tipi Apprendimento e Risultati di apprendimento degli studenti, sono disponibili i seguenti tipi di domande:",
+              "types2": [
+                {
+                  "title": "Domanda a risposta aperta"
+                },
+                {
+                  "title": "Scelte multiple",
+                  "description": "Domande con una o più risposte corrette."
+                },
+                {
+                  "title": "Solo testo"
+                }
+              ],
+              "reminder": "Esempi di domande sono forniti quando inizi a modificare un assessment.",
+              "warning2": "Ricorda di cliccare il pulsante VALIDARE in fondo alla pagina dopo aver completato il tuo questionario.",
+              "ia_creation": "Puoi anche creare il tuo questionario direttamente utilizzando l'IA. Per farlo, copia e incolla semplicemente il contenuto desiderato dalla tua formazione nell'area designata."
+            },
+            "sharing_assessment": {
+              "title": "Condividere le tue valutazioni",
+              "description1": "Lo spazio ",
+              "description2": "Convidere le mie valutazioni ",
+              "description3": "ti permette di incorporare valutazioni nel tuo survey. Ogni valutazione diventa una pagina separata, e puoi aggiungerli facilmente selezionando le caselle di controllo nella colonna con l'icona condividi. Non appena selezioni una casella, quella valutazione diventa automaticamente parte del tuo survey.",
+              "QR_code": "Sotto il QR code troverai diverse opzioni di condivisione:",
+              "QR_code_options": [
+                "Genera un link URL al tuo survey",
+                "Scarica il QR code in un formato più grande",
+                "Scarica una versione cartacea (PDF) per l'uso offline",
+                "Abilita il tracciamento dell'ID partecipante - i partecipanti inseriscono un codice unico prima di iniziare il survey, permettendoti di tracciare le loro risposte tra diversi assessments",
+                "Accedi al codice di inserimento cartaceo - usa questo codice per inserire manualmente i dati raccolti dai survey stampati"
+              ]
+            }
+          },
+          "monitor": {
+            "title": "La sezione MONITORAGGIO",
+            "description": "La sezione MONITORAGGIO include la sottosezione \"Risultati\" che ti permette di visualizzare e analizzare i dati raccolti dalle tue valutazioni.",
+            "dataSelection": {
+              "title": "Selezione Dati",
+              "description": "In cima alla pagina troverai due menu a discesa:",
+              "options": [
+                {
+                  "title": "Scegli un monitoraggio",
+                  "description": "Seleziona quale monitoraggio vuoi analizzare"
+                },
+                {
+                  "title": "Scegli una sessione",
+                  "description": "Scegli la specifica sessione di formazione da visualizzare"
+                }
+              ]
+            },
+            "results_dashboard": {
+              "title": "Dashboard Risultati",
+              "description": "La dashboard è organizzata in diverse schede corrispondenti ai tipi di valutazione:",
+              "types": [
+                "CARATTERISTICHE DELLO STUDENTE",
+                "CARATTERISTICHE DELLA FORMAZIONE",
+                "REAZIONI IMMEDIATE",
+                "APPRENDIMENTO",
+                "CONDIZIONI ORGANIZZATIVE",
+                "CAMBIAMENTI DI COMPORTAMENTO",
+                "CONDIZIONI DI SOSTENIBILITÀ",
+                "CARATTERISTICHE DELLO STUDENTE",
+                "RISULTATI DI APPRENDIMENTO DELLO STUDENTE"
+              ]
+            },
+            "data_visualization": {
+              "title": "Visualizzazione Dati",
+              "description": "I risultati sono presentati attraverso diversi tipi di visualizzazione a seconda del formato della domanda:",
+              "types": [
+                {
+                  "title": "Scelta singola (non ordinata) e Scelte multiple",
+                  "description": "Barre azzurre"
+                },
+                {
+                  "title": "Scelta singola (ordinata)",
+                  "description": "Barre con codifica colore dal rosso (negativo) al verde (positivo)"
+                },
+                {
+                  "title": "Domanda a risposta aperta",
+                  "description": "Le risposte testuali sono visualizzate in un formato scorrevole"
+                },
+                {
+                  "title": "Domanda di apprendimento",
+                  "description": "Le risposte errate sono visualizzate in rosso, quelle corrette in verde"
+                }
+              ]
+            },
+            "additional_features": {
+              "title": "Funzionalità Aggiuntive",
+              "features": [
+                {
+                  "title": "Filtraggio",
+                  "description": "Usa il menu a discesa \"Dati da...\" per concentrarti su sottoinsiemi specifici dei tuoi dati"
+                },
+                {
+                  "title": "Elementi interattivi",
+                  "items": [
+                    "Usa le schede per passare rapidamente tra diversi tipi di assessment",
+                    "Passa il mouse sugli elementi del grafico per vedere i valori dettagliati"
+                  ]
+                }
+              ]
+            },
+            "export_features": {
+              "title": "Funzionalità di Esportazione",
+              "description": "Due opzioni di esportazione sono disponibili nell'angolo in alto a destra:",
+              "options": [
+                {
+                  "title": "SCARICA REPORT IN DOC o DOC",
+                  "description": "Genera un report DOC o DOC completo dei tuoi risultati"
+                },
+                {
+                  "title": "SCARICA DATI IN CSV",
+                  "description": "Scarica i dati grezzi per ulteriori analisi in altri strumenti"
+                }
+              ]
+            },
+            "bestPractices": {
+              "title": "Migliori Pratiche per il Monitoraggio",
+              "items": [
+                "Controlla regolarmente i risultati durante le sessioni di formazione per apportare rapidi aggiustamenti",
+                "Confronta i risultati tra diverse sessioni per tracciare i progressi",
+                "Usa le funzionalità di esportazione per creare report per gli stakeholder",
+                "Presta attenzione sia ai dati quantitativi che al feedback qualitativo nelle risposte aperte"
+              ]
+            },
+            "reminder": "Ricorda di controllare regolarmente i tuoi risultati durante il tuo programma di formazione. Questo ti aiuterà a identificare le aree che necessitano attenzione e a fare aggiustamenti tempestivi al tuo approccio formativo."
+          },
+          "regulate": {
+            "title": "La sezione REGOLARE",
+            "description": "La sezione REGOLARE include la sottosezione \"Diari di bordo\" che ti aiuta a tracciare osservazioni e pianificare miglioramenti durante il tuo programma di formazione. Questa sezione è essenziale per mantenere registri dettagliati e fare aggiustamenti basati sui dati al tuo approccio formativo.",
+            "creating_logs": {
+              "title": "Creare Voci di Log",
+              "addLogs": "Per aggiungere una nuova voce di log, dovrai fornire:",
+              "infos": [
+                {
+                  "title": "Descrizione",
+                  "description": "Una descrizione chiara e concisa della tua osservazione o del cambiamento necessario"
+                },
+                {
+                  "title": "Sessione",
+                  "description": "Il numero della sessione di formazione a cui la voce si riferisce"
+                },
+                {
+                  "title": "Tipo di valutazione",
+                  "description": "Seleziona tra i tipi di valutazione disponibili (es. Caratteristiche dell'apprendista, Apprendimento, Condizioni organizzative)"
+                },
+                {
+                  "title": "Tipo di Log",
+                  "description": "Scegli tra 'Osservazione' o 'Cambia'"
+                }
+              ]
+            },
+            "logTypes": {
+              "title": "Tipi di Log",
+              "types": {
+                "observations": {
+                  "title": "Osservazione",
+                  "description": "Registra risultati importanti dai tuoi risultati di monitoraggio, come:",
+                  "examples": [
+                    "Modelli nelle risposte dei partecipanti",
+                    "Approcci didattici di successo",
+                    "Aree in cui i partecipanti eccellono"
+                  ]
+                },
+                "changes": {
+                  "title": "Cambia",
+                  "description": "Documenta gli aggiustamenti o i miglioramenti necessari, come:",
+                  "examples": [
+                    "Aree che necessitano di supporto o spiegazioni aggiuntive",
+                    "Modifiche ai metodi di insegnamento",
+                    "Aggiustamenti alle risorse o ai materiali"
+                  ]
+                }
+              }
+            },
+            "timeline": {
+              "title": "Timeline dell'Attività di Formazione",
+              "description": "La sezione \"Le mie osservazioni e i miei miglioramenti\" mostra le tue voci di log in ordine cronologico, organizzate per:",
+              "items": [
+                "Numero di sessione",
+                "Tipo di valutazione",
+                "Tipo di log (indicato da icone diverse)",
+                "Descrizione dell'osservazione o del cambiamento necessario"
+              ]
+            },
+            "bestPractices": {
+              "title": "Migliori Pratiche per la Registrazione",
+              "items": [
+                "Crea log immediatamente dopo aver esaminato i risultati del monitoraggio",
+                "Sii specifico e conciso nelle tue descrizioni",
+                "Le voci di log regolari aiutano a tracciare l'evoluzione del tuo programma di formazione",
+                "Usa la timeline per identificare modelli e tendenze nel tempo",
+                "Bilancia le osservazioni con cambiamenti azionabili"
+              ]
+            },
+            "reminder": "Mantenere un logbook dettagliato è cruciale per il miglioramento continuo. Le voci regolari ti aiutano a tracciare i progressi, identificare modelli e prendere decisioni informate sul tuo programma di formazione."
+          },
+          "resources": {
+            "title": "La sezione RISORSE",
+            "description": "La sezione RISORSE fornisce materiali e linee guida per aiutarti a sfruttare al meglio la piattaforma."
+          },
+          "settings": {
+            "title": "La sezione IMPOSTAZIONI",
+            "description": "La sezione IMPOSTAZIONI include la sottosezione \"Il mio account\" che ti permette di gestire le informazioni del tuo account e le impostazioni della piattaforma.",
+            "userInfo": {
+              "title": "Informazioni Utente",
+              "description": "In questa sezione puoi visualizzare le tue informazioni personali:",
+              "items": [
+                "Nome completo",
+                "Indirizzo email",
+                "Stato utente (Teacher-trainer o Teacher)",
+                "ID utente (per il supporto tecnico)",
+                "Elenco dei codici riscattati"
+              ]
+            },
+            "platformInfo": {
+              "title": "Informazioni sulla Piattaforma",
+              "description": "Questa sezione mostra dettagli tecnici sulla piattaforma:",
+              "items": ["Nome piattaforma", "Numero di versione corrente"]
+            },
+            "accountManagement": {
+              "title": "Gestione Account",
+              "description": "Hai la possibilità di eliminare il tuo account se necessario. Nota che:",
+              "notes": [
+                "L'eliminazione dell'account è permanente",
+                "Tutti i tuoi dati saranno rimossi",
+                "I monitorings e assessments condivisi rimarranno disponibili per altri utenti"
+              ],
+              "warning": "L'eliminazione del tuo account non può essere annullata. Assicurati di esportare eventuali dati importanti prima di procedere con l'eliminazione dell'account."
+            }
+          }
+        }
+      }
+    }
+  }
+}

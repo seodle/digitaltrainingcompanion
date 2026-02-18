@@ -1,0 +1,262 @@
+{
+  "Trainee characteristics": [
+    {
+      "type": "FormControl",
+      "id": "questionType",
+      "name": "questionType",
+      "label": "Question Type",
+      "options": [
+        "text",
+        "radio-ordered",
+        "radio-unordered",
+        "checkbox",
+        "single-text"
+      ]
+    },
+    {
+      "type": "SingleText",
+      "id": "description",
+      "name": "description",
+      "label": ""
+    },
+    {
+      "type": "TextField",
+      "id": "question",
+      "name": "question",
+      "label": "Enter your question"
+    },
+    {
+      "type": "TextField",
+      "id": "shortName",
+      "name": "shortName",
+      "label": "Enter a short name for your question"
+    }
+  ],
+  "Training characteristics": [
+    {
+      "type": "FormControl",
+      "id": "questionType",
+      "name": "questionType",
+      "label": "Question Type",
+      "options": [
+        "text",
+        "radio-ordered",
+        "radio-unordered",
+        "checkbox",
+        "single-text"
+      ]
+    },
+    {
+      "type": "TextField",
+      "id": "question",
+      "name": "question",
+      "label": "Enter your question"
+    },
+    {
+      "type": "TextField",
+      "id": "shortName",
+      "name": "shortName",
+      "label": "Enter a short name for your question"
+    },
+    {
+      "type": "SingleText",
+      "id": "description",
+      "name": "description",
+      "label": ""
+    }
+  ],
+  "Behavioral changes": [
+    {
+      "type": "FormControl",
+      "id": "questionType",
+      "name": "questionType",
+      "label": "Question Type",
+      "options": [
+        "text",
+        "radio-ordered",
+        "radio-unordered",
+        "checkbox",
+        "single-text"
+      ]
+    },
+    {
+      "type": "TextField",
+      "id": "question",
+      "name": "question",
+      "label": "Enter your question"
+    },
+    {
+      "type": "TextField",
+      "id": "shortName",
+      "name": "shortName",
+      "label": "Enter a short name for your question"
+    },
+    {
+      "type": "SingleText",
+      "id": "description",
+      "name": "description",
+      "label": ""
+    }
+  ],
+  "Immediate reactions": [
+    {
+      "type": "FormControl",
+      "id": "questionType",
+      "name": "questionType",
+      "label": "Question Type",
+      "options": [
+        "text",
+        "radio-ordered",
+        "radio-unordered",
+        "checkbox",
+        "single-text"
+      ]
+    },
+    {
+      "type": "TextField",
+      "id": "question",
+      "name": "question",
+      "label": "Enter your question"
+    },
+    {
+      "type": "TextField",
+      "id": "shortName",
+      "name": "shortName",
+      "label": "Enter a short name for your question"
+    },
+    {
+      "type": "SingleText",
+      "id": "description",
+      "name": "description",
+      "label": ""
+    }
+  ],
+  "Sustainability conditions": [
+    {
+      "type": "FormControl",
+      "id": "questionType",
+      "name": "questionType",
+      "label": "Question Type",
+      "options": [
+        "text",
+        "radio-ordered",
+        "radio-unordered",
+        "checkbox",
+        "single-text"
+      ]
+    },
+    {
+      "type": "TextField",
+      "id": "question",
+      "name": "question",
+      "label": "Enter your question"
+    },
+    {
+      "type": "TextField",
+      "id": "shortName",
+      "name": "shortName",
+      "label": "Enter a short name for your question"
+    },
+    {
+      "type": "SingleText",
+      "id": "description",
+      "name": "description",
+      "label": ""
+    }
+  ],
+  "Student characteristics": [
+    {
+      "type": "FormControl",
+      "id": "questionType",
+      "name": "questionType",
+      "label": "Question Type",
+      "options": [
+        "text",
+        "radio-ordered",
+        "radio-unordered",
+        "checkbox",
+        "single-text"
+      ]
+    },
+    {
+      "type": "TextField",
+      "id": "question",
+      "name": "question",
+      "label": "Enter your question"
+    },
+    {
+      "type": "TextField",
+      "id": "shortName",
+      "name": "shortName",
+      "label": "Enter a short name for your question"
+    },
+    {
+      "type": "SingleText",
+      "id": "description",
+      "name": "description",
+      "label": ""
+    }
+  ],
+  "Organizational conditions": [
+    {
+      "type": "FormControl",
+      "id": "questionType",
+      "name": "questionType",
+      "label": "Question Type",
+      "options": [
+        "text",
+        "radio-ordered",
+        "radio-unordered",
+        "checkbox",
+        "single-text"
+      ]
+    },
+    {
+      "type": "TextField",
+      "id": "question",
+      "name": "question",
+      "label": "Enter your question"
+    },
+    {
+      "type": "TextField",
+      "id": "shortName",
+      "name": "shortName",
+      "label": "Enter a short name for your question"
+    },
+
+    {
+      "type": "SingleText",
+      "id": "description",
+      "name": "description",
+      "label": ""
+    }
+  ],
+  "Learning": [
+    {
+      "type": "TextField",
+      "id": "question",
+      "name": "question",
+      "label": "Enter your question"
+    },
+    {
+      "type": "TextField",
+      "id": "shortName",
+      "name": "shortName",
+      "label": "Enter a short name for your question"
+    },
+    {
+      "type": "FormControl",
+      "id": "learningType",
+      "name": "learningType",
+      "label": "Learning Type",
+      "options": ["Knowledge", "Skill"]
+    },
+    {
+      "type": "DynamicFieldControl",
+      "id": "questionType",
+      "name": "questionType",
+      "label": "question Type",
+      "options": ["Text", "Multiple choices"]
+    }
+  ]
+}

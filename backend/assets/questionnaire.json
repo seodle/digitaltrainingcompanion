@@ -1,0 +1,180 @@
+[
+    {
+      "questionId": "q1",
+      "shortName": "compnum_organisation",
+      "question": "Concevez-vous (ou des membres de votre organisation) des formations aux compétences numériques au sein de votre organisation ?",
+      "questionType": "radio",
+      "choices": ["Oui", "Non", "Je ne sais pas"]
+    },
+    {
+      "questionId": "q11",
+      "shortName": "competences_ciblees",
+      "question": "Quelles compétences spécifiques sont ciblées par ces formations ?",
+      "questionType": "input"
+    },
+    {
+      "questionId": "q12",
+      "shortName": "utilisation_referentiels",
+      "question": "Utilisez-vous des référentiels de compétences numériques spécifiques pour la réalisation de vos formations ?",
+      "questionType": "radio",
+      "choices": ["Oui", "Non", "Je ne sais pas"]
+    },
+    {
+      "questionId": "q121",
+      "shortName": "quels_referentiels",
+      "question": "Lesquels ?",
+      "questionType": "input"
+    },
+    {
+      "questionId": "q122",
+      "shortName": "pas_referentiels_pourquoi",
+      "question": "Pouvez-vous nous dire pourquoi ?",
+      "questionType": "input"
+    },
+    {
+      "questionId": "q13",
+      "shortName": "frequence_formations",
+      "question": "À quelle fréquence sont réalisées ces formations ?",
+      "questionType": "radio",
+      "choices": [
+        "1 fois par jour",
+        "1 fois par semaine",
+        "1 fois par mois",
+        "1 fois par trimestre",
+        "1 fois par semestre",
+        "1 fois par an",
+        "Autre"
+      ]
+    },
+    {
+      "questionId": "q13_other",
+      "shortName": "frequence_formations_other",
+      "question": "Veuillez préciser :",
+      "questionType": "input"
+    },
+    {
+      "questionId": "q14",
+      "shortName": "evaluation_formation",
+      "question": "Réalisez-vous une évaluation ou un suivi de ces formations ?",
+      "questionType": "radio",
+      "choices": ["Oui", "Non", "Je ne sais pas"]
+    },
+    {
+      "questionId": "q141",
+      "shortName": "types_evaluation",
+      "question": "Quels types d'évaluation ou de suivi réalisez-vous ?",
+      "questionType": "checkbox",
+      "choices": [
+        "J'évalue les réactions des participants après la formation",
+        "J'évalue l'acquisition des connaissances et des compétences acquises au cours de la formation",
+        "J'évalue les conditions qui peuvent faciliter ou entraver la mise en oeuvre de ces nouvelles compétences sur le lieu de travail",
+        "J'évalue la mise en oeuvre effective des compétences acquises en formation sur le lieu de travail",
+        "J'évalue l'impact sur la productivité ou sur les compétences des bénéficiaires finaux (élèves)",
+        "J'évalue le retour sur investissement de la formation",
+        "Autre"
+      ]
+    },
+    {
+      "questionId": "q141_other",
+      "shortName": "types_evaluation_other",
+      "question": "Veuillez préciser :",
+      "questionType": "input"
+    },
+    {
+      "questionId": "q142",
+      "shortName": "outils_numeriques_evaluation",
+      "question": "Utilisez-vous des outils numériques pour vous assister dans l'évaluation de vos formations?",
+      "questionType": "radio",
+      "choices": ["Oui", "Non", "Je ne sais pas"]
+    },
+    {
+      "questionId": "q1421",
+      "shortName": "quel_outils",
+      "question": "Quels outils utilisez-vous?",
+      "questionType": "input"
+    },
+    {
+      "questionId": "q1422",
+      "shortName": "pas_outils_pourquoi",
+      "question": "Pouvez-vous nous expliquer pourquoi ?",
+      "questionType": "input"
+    },
+    {
+      "questionId": "q15",
+      "shortName": "utile_evaluation",
+      "question": "Pensez-vous que l'évaluation et le suivi des formations aux compétences numériques soient utiles ?",
+      "questionType": "radio",
+      "choices": ["Oui", "Non", "Je ne sais pas"]
+    },
+    {
+      "questionId": "q151",
+      "shortName": "utile_application_web",
+      "question": "Trouveriez-vous utile d'avoir une application web pour vous assister dans l'évaluation et le suivi de vos formations en éducation numérique ?",
+      "questionType": "radio",
+      "choices": ["Oui", "Non", "Je ne sais pas"]
+    },
+    {
+      "questionId": "q152",
+      "shortName": "fonctionnalites",
+      "question": "Quelles fonctionnalités souhaiteriez-vous que cette application vous fournisse ?",
+      "questionType": "input"
+    },
+    {
+      "questionId": "q153",
+      "shortName": "prix",
+      "question": "Quel serait à votre avis le juste prix d'un abonnement mensuel pour une application web de ce genre ? (en CHF / EUR / $)",
+      "questionType": "input"
+    },
+    {
+      "questionId": "q16",
+      "shortName": "age_formation",
+      "question": "Pour quelle(s) tranche(s) d'âge réalisez-vous ces formations ?",
+      "questionType": "checkbox",
+      "choices": [
+        "Moins de 18 ans",
+        "18-24 ans",
+        "25-34 ans",
+        "35-44 ans",
+        "45-54 ans",
+        "55 ans et plus"
+      ]
+    },
+    {
+      "questionId": "q17",
+      "shortName": "age_formateurs",
+      "question": "Dans quelle tranche d'âge vous situez-vous ?",
+      "questionType": "radio",
+      "choices": [
+        "18-24 ans",
+        "25-34 ans",
+        "35-44 ans",
+        "45-54 ans",
+        "55 ans ou plus"
+      ]
+    },
+    {
+      "questionId": "q2",
+      "shortName": "type_formateur",
+      "question": "Vous êtes :",
+      "questionType": "radio",
+      "choices": [
+        "Formateur",
+        "Responsable de la formation",
+        "Responsable de service",
+        "Dirigeant",
+        "Autre"
+      ]
+    },
+    {
+      "questionId": "q2_other",
+      "shortName": "type_formateur_autre",
+      "question": "Veuillez préciser :",
+      "questionType": "input"
+    },
+    {
+      "questionId": "q3",
+      "shortName": "organisation",
+      "question": "Dans quelle organisation travaillez-vous?",
+      "questionType": "input"
+    }
+  ]
