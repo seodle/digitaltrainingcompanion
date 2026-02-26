@@ -220,19 +220,26 @@ const getAssessmentsByMonitoringId = async (monitoringId, assessmentType) => {
  * @return {Promise<Array>} A promise that resolves to an array of newly created assessment documents.
  * @throws {Error} Throws an error if there's an issue executing the query or saving the copies.
  */
-const copyAssessmentsByMonitoringId = async (monitoringId, newMonitoringId) => {
+const copyAssessmentsByMonitoringId = async (monitoringId, newMonitoringId, requesterId, userStatus) => {
     try {
-        // Retrieve all assessments associated with the original monitoringId
-        const assessmentsToCopy = await Assessment.find({ monitoringId: monitoringId });
+        // Build filter: if requester is a Teacher, restrict to student-related assessment types
+        const filter = { monitoringId: monitoringId };
+        if (String(userStatus) === 'Teacher') {
+            filter.type = { $in: ['Student characteristics', 'Student learning outcomes'] };
+        }
+
+        // Retrieve all assessments associated with the original monitoringId (optionally filtered)
+        const assessmentsToCopy = await Assessment.find(filter);
 
         // Map over the retrieved assessments and create new assessment objects with the same properties but a new monitoringId
         const copiedAssessmentsPromises = assessmentsToCopy.map(assessment => {
             const copiedAssessment = new Assessment({
                 ...assessment.toObject(), // Convert the mongoose document to a plain object
                 _id: undefined,
+                userId: requesterId, // Set owner to current user
                 monitoringId: newMonitoringId, // Associate the new assessments with the new monitoring
-                createdAt: new Date(), // Optional: set a new creation date
-                updatedAt: new Date(), // Optional: set a new updated date
+                creationDate: new Date(), // Set a new creation date
+                lastModificationDate: new Date(), // Set a new last modification date
             });
 
             return copiedAssessment.save(); // Save each copied assessment

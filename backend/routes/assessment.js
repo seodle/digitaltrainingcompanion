@@ -64,7 +64,9 @@ router.post("/monitoring/:monitoringId/copy", requireMonitoringOwnerOrRedeemer('
 
   try {
     // Call the copyAssessmentsByMonitoringId service function
-    const copiedAssessments = await copyAssessmentsByMonitoringId(monitoringId, newMonitoringId);
+    const requesterId = req.user && req.user._id;
+    const userStatus = req.user && req.user.userStatus;
+    const copiedAssessments = await copyAssessmentsByMonitoringId(monitoringId, newMonitoringId, requesterId, userStatus);
 
     // Send a response with the copied assessments
     res.status(201).json(copiedAssessments);
