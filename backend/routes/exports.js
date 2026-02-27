@@ -29,7 +29,8 @@ router.post('/pdf', async (req, res) => {
             language,
             status,
             userId,
-            sandbox
+            sandbox,
+            req.headers.authorization
         );
 
         // Send the file
@@ -60,7 +61,8 @@ router.post('/docx', async (req, res) => {
             language,
             status,
             userId,
-            sandbox
+            sandbox,
+            req.headers.authorization
         );
 
         // Send the file

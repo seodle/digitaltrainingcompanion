@@ -196,6 +196,7 @@ async function processMessageToAPI(message, type) {
       {
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
       }
     );
@@ -723,6 +724,7 @@ export const fetchSuggestedOptions = async (questionTitle, numberOfOptions, exis
       {
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
       }
     );

@@ -23,7 +23,7 @@ router.post('/infomaniak/chat', async (req, res) => {
         };
 
         const response = await axios.post(
-            'https://api.infomaniak.com/1/ai/{INFOMANIAK_AI_ENDPOINT_ID}/openai/chat/completions',
+            `https://api.infomaniak.com/1/ai/${INFOMANIAK_AI_ENDPOINT_ID}/openai/chat/completions`,
             requestBody,
             {
                 headers: {
@@ -100,7 +100,7 @@ router.post('/suggest-options', async (req, res) => {
         };
 
         const response = await axios.post(
-            'https://api.infomaniak.com/1/ai/{INFOMANIAK_AI_ENDPOINT_ID}/openai/chat/completions',
+            `https://api.infomaniak.com/1/ai/${INFOMANIAK_AI_ENDPOINT_ID}/openai/chat/completions`,
             requestBody,
             {
                 headers: {
@@ -233,7 +233,7 @@ router.post('/generate-text-summary', async (req, res) => {
         };
 
         const response = await axios.post(
-            'https://api.infomaniak.com/1/ai/{INFOMANIAK_AI_ENDPOINT_ID}/openai/chat/completions',
+            `https://api.infomaniak.com/1/ai/${INFOMANIAK_AI_ENDPOINT_ID}/openai/chat/completions`,
             requestBody,
             {
                 headers: {

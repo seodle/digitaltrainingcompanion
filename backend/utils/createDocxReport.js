@@ -224,7 +224,8 @@ async function createDocxResults(
     language,
     status,
     userId,
-    sandbox
+    sandbox,
+    authHeader
 ) {
     const aggregatedData = await aggregateResponses(assessments);
     const children = [];
@@ -414,6 +415,11 @@ async function createDocxResults(
                                         questionText: questionData.questionText,
                                         language: language,
                                         sandbox: sandbox
+                                    }, {
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            Authorization: authHeader,
+                                        }
                                     });
                                     textAnalysis = response.data.summary || "";
                                 } catch (error) {
@@ -428,6 +434,11 @@ async function createDocxResults(
                                         questionText: questionData.questionText,
                                         language: language,
                                         sandbox: sandbox
+                                    }, {
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            Authorization: authHeader,
+                                        }
                                     });
                                     textAnalysis = response.data.summary || "";
                                 } catch (error) {

@@ -21,7 +21,7 @@ const ASSESSMENT_TYPE_ORDER = {
     'Student learning outcomes': 9
 };
 
-async function createPdfReport(assessments, filePath, monitoringName, selectedDay, language, status, userId, sandbox) {
+async function createPdfReport(assessments, filePath, monitoringName, selectedDay, language, status, userId, sandbox, authHeader) {
     const doc = new PDFDocument();
     const stream = fs.createWriteStream(filePath);
     doc.pipe(stream);
@@ -139,6 +139,11 @@ async function createPdfReport(assessments, filePath, monitoringName, selectedDa
                                         questionText: questionData.questionText,
                                         language: language,
                                         sandbox: sandbox
+                                    }, {
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            Authorization: authHeader,
+                                        }
                                     });
                                     textAnalysis = response.data.summary || "";
                                 } catch (error) {
@@ -153,6 +158,11 @@ async function createPdfReport(assessments, filePath, monitoringName, selectedDa
                                         questionText: questionData.questionText,
                                         language: language,
                                         sandbox: sandbox
+                                    }, {
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            Authorization: authHeader,
+                                        }
                                     });
                                     textAnalysis = response.data.summary || "";
                                 } catch (error) {
