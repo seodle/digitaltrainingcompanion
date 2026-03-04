@@ -119,9 +119,10 @@ router.get('/last', async (req, res) => {
 });
 
 // Delete all answers for a specific assessment and user
-router.delete("/assessment/:assessmentId", requireAssessmentOwner, async (req, res) => {
+router.delete("/assessment/:assessmentId", requireAssessmentOwner('assessmentId'), async (req, res) => {
   try {
-    const { assessmentId, userId } = req.params;
+    const { assessmentId } = req.params;
+    const userId = req.user && req.user._id;
     const result = await deleteAnswersFromAssessment(assessmentId, userId);
     return res.json({ message: result.message });
   } catch (error) {
