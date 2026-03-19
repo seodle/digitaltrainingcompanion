@@ -167,7 +167,11 @@ const getMonitoringsByUserId = async (userId) => {
  */
 const getMonitoringById = async (monitoringId) => {
   try {
-    const monitoring = await Monitoring.findById(monitoringId);
+    const monitoring = await Monitoring.findById(monitoringId).populate({
+      path: 'userId',
+      select: 'firstName lastName',
+      model: 'Users'
+    });
     if (!monitoring) {
       throw new Error("Monitoring not found");
     }

@@ -78,29 +78,46 @@ const MonitoringCard = ({
 
 useEffect(() => {
   const fetchUsersWhoRedeemed = async () => {
-    // Only owners can fetch followers
-    if (monitoring.sharingCode && isOwner) {
+    if (monitoring.sharingCode) {
       setIsLoadingUsers(true);
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `${BACKEND_URL}/monitorings/${monitoring._id}/followers`,
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
-        );
-        setUsersWhoRedeemed(response.data.usersRedeemed);
-        setOwnerInfo(response.data.owner);
+        if (isOwner) {
+          const response = await axios.get(
+            `${BACKEND_URL}/monitorings/${monitoring._id}/followers`,
+            {
+              headers: { Authorization: `Bearer ${token}` }
+            }
+          );
+          setUsersWhoRedeemed(Array.isArray(response.data.usersRedeemed) ? response.data.usersRedeemed : []);
+          setOwnerInfo(response.data.owner || null);
+        } else {
+          const response = await axios.get(
+            `${BACKEND_URL}/monitorings/${monitoring._id}`,
+            {
+              headers: { Authorization: `Bearer ${token}` }
+            }
+          );
+          const owner = response.data?.userId;
+          const isOwnerObject = owner && typeof owner === 'object' && owner.firstName && owner.lastName;
+          setUsersWhoRedeemed([]);
+          setOwnerInfo(isOwnerObject ? owner : null);
+        }
       } catch (error) {
         console.error('Error fetching users who redeemed code:', error);
+        setUsersWhoRedeemed([]);
+        setOwnerInfo(null);
       } finally {
         setIsLoadingUsers(false);
       }
+    } else {
+      setUsersWhoRedeemed([]);
+      setOwnerInfo(null);
     }
   };
 
   fetchUsersWhoRedeemed();
-}, [monitoring.sharingCode, isOwner]);
+}, [monitoring._id, monitoring.sharingCode, isOwner]);
 
 const generateTooltipContent = () => {
   if (isLoadingUsers) {
@@ -115,18 +132,20 @@ const generateTooltipContent = () => {
       </Box>
     );
   }
-  
-  if (usersWhoRedeemed.length === 0) {
+
+  if (!isOwner) {
     return (
-      <Box sx={{ 
+      <Box sx={{
         p: 1.5,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 1 
+        minWidth: 200,
+        maxWidth: 300
       }}>
-        <Typography 
-        variant="body2">{getMessage("label_no_users_imported")}  //No users have imported this monitoring yet
-        </Typography> 
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {`${getMessage("table_assessments_owner")}:`}
+        </Typography>
+        <Typography variant="body2" sx={{ fontWeight: 500 }}>
+          {ownerInfo ? `${ownerInfo.firstName} ${ownerInfo.lastName}` : '-'}
+        </Typography>
       </Box>
     );
   }
@@ -137,21 +156,6 @@ const generateTooltipContent = () => {
       minWidth: 200,
       maxWidth: 300
     }}>
-      {ownerInfo && currentUser._id !== monitoring.userId && (
-        <Box sx={{
-          mb: 2,
-          pb: 1,
-          borderBottom: '1px solid',
-          borderColor: 'grey.200',
-        }}>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Owner:
-          </Typography>
-          <Typography variant="body2" sx={{ fontWeight: 500 }}>
-            {`${ownerInfo.firstName} ${ownerInfo.lastName}`}
-          </Typography>
-        </Box>
-      )}
       <Typography 
         variant="subtitle2" 
         sx={{ 
@@ -690,7 +694,7 @@ const WarningDialog = () => (
                 </Typography>
             </Tooltip>
             )}
-            {monitoring.sharingCode && usersWhoRedeemed.length > 0 && (
+            {monitoring.sharingCode && (
             <Tooltip 
                 title={generateTooltipContent()}
                 placement="top"

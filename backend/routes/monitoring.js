@@ -155,7 +155,7 @@ router.get("/:monitoringId", requireMonitoringOwnerOrRedeemer('monitoringId'), a
 });
 
 /**
- * GET users who follow a monitoring (redeemed its sharing code) + anonymized owner info
+ * GET users who follow a monitoring (redeemed its sharing code) + owner info
  * Owner-only access
  * Mounted at /monitorings
  * Path: /:monitoringId/followers
