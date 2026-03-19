@@ -251,6 +251,48 @@ const requireApiKeyOwner = (paramName = 'apiKeyId') => {
     };
 };
 
+// Ensure authenticated user has both aiBeacon + Moodle API keys configured.
+// We use the *CreatedAt timestamps since the encrypted keys fields are usually `select: false`.
+const requireAiBeaconAndMoodleApiKeys = () => {
+    return async (req, res, next) => {
+        try {
+            const requesterId = req.user && req.user._id;
+            if (!requesterId) {
+                return res.status(401).json({ error: 'Authentication required' });
+            }
+
+            // The actual key fields are `select: false`, so explicitly include them.
+            const user = await User.findById(requesterId).select(
+                '+aiBeaconApiKey +moodleApiKey aiBeaconApiKeyCreatedAt moodleApiKeyCreatedAt'
+            );
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            const aiBeaconKey = typeof user.getAiBeaconApiKey === 'function'
+                ? String(user.getAiBeaconApiKey() || '').trim()
+                : String(user.aiBeaconApiKey || '').trim();
+            const moodleKey = typeof user.getMoodleApiKey === 'function'
+                ? String(user.getMoodleApiKey() || '').trim()
+                : String(user.moodleApiKey || '').trim();
+
+            // Prefer checking real keys; fall back to timestamps if needed.
+            const hasAiBeacon = !!aiBeaconKey || !!user.aiBeaconApiKeyCreatedAt;
+            const hasMoodle = !!moodleKey || !!user.moodleApiKeyCreatedAt;
+            if (!hasAiBeacon || !hasMoodle) {
+                return res.status(403).json({
+                    error: 'Missing AI Beacon API key and/or Moodle API key',
+                });
+            }
+
+            return next();
+        } catch (err) {
+            console.error('AI Beacon + Moodle keys check failed:', err);
+            return res.status(500).json({ error: 'Server error' });
+        }
+    };
+};
+
 module.exports = {
     getUser,
     requireAdmin,
@@ -259,7 +301,8 @@ module.exports = {
     requireMonitoringOwnerOrRedeemer,
     requireAssessmentOwner,
     requireLogOwner,
-    requireApiKeyOwner
+    requireApiKeyOwner,
+    requireAiBeaconAndMoodleApiKeys
 };
 
 

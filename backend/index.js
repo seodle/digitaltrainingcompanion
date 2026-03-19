@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const cors = require('cors');
 
 // Middleware
-const { getUser, requireAdmin } = require('./middleware/authorization.js');
+const { getUser, requireAdmin, requireAiBeaconAndMoodleApiKeys } = require('./middleware/authorization.js');
 
 // Routes
 const registerRoutes = require("./routes/register");
@@ -23,6 +23,7 @@ const semanticSimiliaritySearch = require("./routes/semanticSimilaritySearch.js"
 const exportsRoutes = require("./routes/exports");
 const apiKeysRoutes = require("./routes/apiKeys");
 const aiToolsRoutes = require("./routes/aiTools");
+const aiBeaconRoutes = require("./routes/aiBeacon");
 const questionWidgetRoutes = require('./routes/questionWidget');
 const adminRoutes = require('./routes/admin');
 
@@ -107,6 +108,7 @@ app.use("/logs", getUser, logRoutes);
 app.use("/export", getUser, exportsRoutes);
 app.use("/api-keys", getUser, apiKeysRoutes);
 app.use("/ai-tools", getUser, aiToolsRoutes);
+app.use("/aiBeacon", getUser, requireAiBeaconAndMoodleApiKeys(), aiBeaconRoutes);
 app.use("/semantic", getUser, semanticSimiliaritySearch);
 
 // ADMIN-ONLY ROUTES (JWT + ADMIN RIGHTS REQUIRED)
@@ -132,10 +134,10 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log(`DB connected! (Using ${isDevelopment ? "local" : "cloud"} database on ${dbURI})`);
+    console.log(`DB connected! (Using ${isDevelopment ? "local" : "cloud"} database)`);
   })
   .catch((err) => {
-    console.error(`Failed to connect to the database at ${dbURI}`, err);
+    console.error("Failed to connect to the database", err);
   });
 
 

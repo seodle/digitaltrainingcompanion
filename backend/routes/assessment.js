@@ -1,5 +1,9 @@
 const router = require("express").Router();
-const { requireMonitoringOwnerOrRedeemer, requireMonitoringOwner, requireAssessmentOwner } = require('../middleware/authorization');
+const {
+  requireMonitoringOwnerOrRedeemer,
+  requireMonitoringOwner,
+  requireAssessmentOwner,
+} = require('../middleware/authorization');
 const Monitoring = require('../models/monitoringModel');
 
 const { createAssessment, updateAssessment, deleteAssessment, updateAssessmentSurvey, copyAssessmentsByMonitoringId, resequenceAssessments, getAssessmentsByMonitoringId } = require('../services/assessmentService');
@@ -18,9 +22,10 @@ require("dotenv").config();
 */
 router.post("/", async (req, res) => {
   const assessmentData = req.body;
+  const requesterId = req.user && req.user._id;
 
   try {
-    const result = await createAssessment(assessmentData);
+    const result = await createAssessment(assessmentData, { requesterId });
     res.json(result);
   } catch (error) {
     const statusCode = error.message === "Assessment not found" ? 404 : 500;

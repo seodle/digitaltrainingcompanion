@@ -7,12 +7,13 @@ const { requireApiKeyOwner } = require('../middleware/authorization');
 router.get('/', async (req, res) => {
     try {
         const apiKeys = await ApiKey.find({ userId: req.user._id })
+            .select("+key")
             .sort({ createdAt: -1 });
 
         const formattedKeys = apiKeys.map(key => {
             const keyObj = key.toObject();
             try {
-                const fullKey = keyObj.key;
+                const fullKey = key.getDecryptedKey();
                 return {
                     ...keyObj,
                     displayKey: `${fullKey.substring(0, 8)}...${fullKey.substring(fullKey.length - 4)}`,

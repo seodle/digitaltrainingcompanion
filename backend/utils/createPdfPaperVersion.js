@@ -13,8 +13,6 @@ async function createPdfPaperVersion(userId, monitoringId, assessmentIds, isLink
     const stream = fs.createWriteStream(filePath);
     const qrCodeDataUrl = await QRCode.toDataURL(`${FRONTEND_URL}/reporting?user=${userId}&monitoring=${monitoringId}&${assessmentsQuery}&link=${isLinked}&lng=${lng}&sandbox=${sandbox}`);
 
-    console.log(`${FRONTEND_URL}/reporting?user=${userId}&monitoring=${monitoringId}&${assessmentsQuery}&link=${isLinked}&lng=${lng}&sandbox=${sandbox}`);
-
     const qrCodeBuffer = Buffer.from(qrCodeDataUrl.split(',')[1], 'base64');
 
     return new Promise((resolve, reject) => {

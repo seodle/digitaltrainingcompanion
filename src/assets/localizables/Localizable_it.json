@@ -1098,6 +1098,15 @@
         "fuzzy": 1
     },
     {
+        "term": "label_select_course",
+        "definition": "Seleziona un corso",
+        "context": "placeholder for course select",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
         "term": "new_monitoring_create",
         "definition": "Crea",
         "context": "label for name",
@@ -1299,6 +1308,42 @@
         "term": "label_button_import_monitoring",
         "definition": "Monitoraggio delle importazioni",
         "context": "button to import a monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_button_sync_course_from_moodle",
+        "definition": "Sincronizza corso Moodle",
+        "context": "button to sync monitoring course from Moodle",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_select_your_content",
+        "definition": "Seleziona i tuoi contenuti",
+        "context": "title of modal listing Moodle course contents to import as assessments",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ai_beacon_auto_detect",
+        "definition": "Rilevamento automatico",
+        "context": "AI Beacon course output language option",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_language",
+        "definition": "Lingua",
+        "context": "Short label for language selector",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -2394,6 +2439,15 @@
         "fuzzy": 0
     },
     {
+        "term": "external_platforms",
+        "definition": "Piattaforme esterne",
+        "context": "external platforms",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "create_new_api_key",
         "definition": "Creare la chiave API",
         "context": "create new api key",
@@ -2406,6 +2460,15 @@
         "term": "key_name",
         "definition": "Nome chiave",
         "context": "key name",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "platform_name",
+        "definition": "Nome piattaforma",
+        "context": "platform name",
         "term_plural": "",
         "reference": "",
         "comment": "",

@@ -25,7 +25,7 @@ export const AuthUserProvider = ({ children }) => {
 
     const fetchUserDetails = async (token) => {
         try {
-            const response = await axios.get(`${BACKEND_URL}/users/currentUser`, {
+            const response = await axios.get(`${BACKEND_URL}/users/me`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setCurrentUser(response.data); // Sets the current user on successful fetch

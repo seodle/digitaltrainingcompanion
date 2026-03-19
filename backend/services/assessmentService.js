@@ -1,5 +1,9 @@
 const Assessment = require('../models/assessmentModel');
 const mongoose = require('mongoose');
+const {
+    generateAssessmentAnalyses,
+    mapAiBeaconAssessmentAnalysisToQuestions,
+} = require('./aiBeacon.service');
 
 /**
  * Create an assessement and add it to the db
@@ -8,9 +12,14 @@ const mongoose = require('mongoose');
  * @return {Promise<Object>} A promise that resolves to an object containing the ID of the newly created assessment.
  * @throws {Error} Throws an error if the monitoring document is not found or if there is an error saving the updates to the database.
  */
-const createAssessment = async (assessmentData) => {
+const createAssessment = async (
+    assessmentData,
+    { requesterId, enableAiBeaconEnrichment = false } = {}
+) => {
 
     try {
+        const contentIds = assessmentData.content_ids;
+
         // Compute next position on the server to avoid relying on client-side counts
         const nextPosition = (await Assessment.countDocuments({ monitoringId: assessmentData.monitoringId })) + 1;
 
@@ -30,6 +39,35 @@ const createAssessment = async (assessmentData) => {
         // save it to the db
         const createdAssessement = await newAssessment.save();
         console.log("New Assessement created successfully");
+
+        // Step 1: assessment is created first (empty survey).
+        // Step 2: if Moodle contents are selected, trigger AI Beacon enrichment flow.
+        // Mapping of AI response into questions is intentionally deferred.
+        if (
+            enableAiBeaconEnrichment &&
+            Array.isArray(contentIds) &&
+            contentIds.length > 0
+        ) {
+            try {
+                const { analysis } = await generateAssessmentAnalyses({
+                    userId: requesterId || assessmentData.userId,
+                    courseId: assessmentData.courseId,
+                    analysisTypes: ['assessment_generation'],
+                    contentIds,
+                });
+
+                const mappedQuestions = mapAiBeaconAssessmentAnalysisToQuestions(analysis);
+                
+                if (mappedQuestions.length > 0) {
+                    createdAssessement.questions = mappedQuestions;
+                    createdAssessement.lastModificationDate = new Date();
+                    const savedAssessment = await createdAssessement.save();
+                }
+            } catch (analysisError) {
+                console.error("AI Beacon enrichment failed:", analysisError);
+            }
+        }
+
         return createdAssessement; // Return the created assessement document
 
     } catch (error) {

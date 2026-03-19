@@ -35,7 +35,7 @@ import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
     const { getMessage } = useMessageService();
-    const { currentUser } = useAuthUser();
+    const { currentUser, setCurrentUser } = useAuthUser();
     const navigate = useNavigate();
 
     // States
@@ -52,6 +52,11 @@ const Settings = () => {
         severity: 'success'
     });
     const [copiedKey, setCopiedKey] = useState(null);
+    const [aiBeaconKeyDialogOpen, setAiBeaconKeyDialogOpen] = useState(false);
+    const [moodleKeyDialogOpen, setMoodleKeyDialogOpen] = useState(false);
+    const [aiBeaconApiKeyDraft, setAiBeaconApiKeyDraft] = useState('');
+    const [moodleApiKeyDraft, setMoodleApiKeyDraft] = useState('');
+    const [isSavingExternalPlatformKey, setIsSavingExternalPlatformKey] = useState(false);
 
     // Fetch API keys when component mounts
     useEffect(() => {
@@ -195,7 +200,7 @@ const Settings = () => {
         setIsLoading(true);
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`${BACKEND_URL}/users/currentUser`, {
+            await axios.delete(`${BACKEND_URL}/users/me`, {
                 headers: { Authorization: `Bearer ${token}` },
                 timeout: 5000
             });
@@ -208,6 +213,70 @@ const Settings = () => {
             );
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const saveExternalPlatformKey = async (platform) => {
+        setIsSavingExternalPlatformKey(true);
+        try {
+            const token = localStorage.getItem("token");
+
+            const payload =
+                platform === 'aiBeacon'
+                    ? { aiBeaconApiKey: aiBeaconApiKeyDraft.trim() || null }
+                    : { moodleApiKey: moodleApiKeyDraft.trim() || null };
+
+            const response = await axios.put(`${BACKEND_URL}/users/externalPlatformKeys`, payload, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (response?.data) {
+                setCurrentUser(response.data);
+            }
+
+            if (platform === 'aiBeacon') {
+                setAiBeaconKeyDialogOpen(false);
+                setAiBeaconApiKeyDraft('');
+            } else {
+                setMoodleKeyDialogOpen(false);
+                setMoodleApiKeyDraft('');
+            }
+
+            showNotification(getMessage('api_key_created_successfully'));
+        } catch (error) {
+            showNotification(
+                error.response?.data?.error || getMessage('signup_error'),
+                'error'
+            );
+        } finally {
+            setIsSavingExternalPlatformKey(false);
+        }
+    };
+
+    const handleDeleteExternalPlatformKey = async (platform) => {
+        setIsSavingExternalPlatformKey(true);
+        try {
+            const token = localStorage.getItem("token");
+
+            const payload =
+                platform === 'aiBeacon'
+                    ? { aiBeaconApiKey: null }
+                    : { moodleApiKey: null };
+
+            const response = await axios.put(`${BACKEND_URL}/users/externalPlatformKeys`, payload, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (response?.data) {
+                setCurrentUser(response.data);
+            }
+        } catch (error) {
+            showNotification(
+                error.response?.data?.error || getMessage('signup_error'),
+                'error'
+            );
+        } finally {
+            setIsSavingExternalPlatformKey(false);
         }
     };
 
@@ -244,8 +313,9 @@ const Settings = () => {
                     </Typography>
                 </Box>
 
-                {/* API Keys Section */}
-                <Box mt="20px" ml="20px" mr="20px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
+                <Box display="flex" flexWrap="wrap" gap="20px" alignItems="stretch" mt="20px" ml="20px" mr="20px">
+                    {/* API Keys Section */}
+                    <Box flex="1 1 400px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                         <Typography variant="h6" fontWeight="bold">
                             {`${getMessage('api_key')}`}
@@ -324,6 +394,142 @@ const Settings = () => {
                             </TableBody>
                         </Table>
                     )}
+                </Box>
+
+                    {/* External Platforms Section */}
+                    <Box flex="1 1 400px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                        <Typography variant="h6" fontWeight="bold">
+                            {`${getMessage('external_platforms')}`}
+                        </Typography>
+                    </Box>
+
+                    {isSavingExternalPlatformKey ? (
+                        <Box display="flex" justifyContent="center" p={3}>
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        <Table aria-label="External platforms table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>{`${getMessage('platform_name')}`}</TableCell>
+                                    <TableCell>{`${getMessage('key_api')}`}</TableCell>
+                                    <TableCell>{`${getMessage('created_key_api')}`}</TableCell>
+                                    <TableCell>{`${getMessage('actions_key_api')}`}</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>AI Beacon</TableCell>
+                                    <TableCell>
+                                        {currentUser?.aiBeaconApiKeyCreatedAt ? (
+                                            <Box display="flex" alignItems="center" gap={1}>
+                                                <Typography
+                                                    variant="body2"
+                                                    component="span"
+                                                    sx={{ fontFamily: 'monospace' }}
+                                                >
+                                                    XXXXXXXXXX
+                                                </Typography>
+                                            </Box>
+                                        ) : (
+                                            ''
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {currentUser?.aiBeaconApiKeyCreatedAt
+                                            ? new Date(currentUser.aiBeaconApiKeyCreatedAt).toLocaleDateString()
+                                            : ''}
+                                    </TableCell>
+                                    <TableCell>
+                                        {currentUser?.aiBeaconApiKeyCreatedAt ? (
+                                            <IconButton
+                                                onClick={() => handleDeleteExternalPlatformKey('aiBeacon')}
+                                                disabled={isSavingExternalPlatformKey}
+                                                color="error"
+                                                aria-label="Delete API key AI Beacon"
+                                                size="small"
+                                                sx={{ padding: '2px' }}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        ) : (
+                                            <IconButton
+                                                onClick={() => setAiBeaconKeyDialogOpen(true)}
+                                                disabled={isSavingExternalPlatformKey}
+                                                aria-label="Import API key AI Beacon"
+                                                size="small"
+                                                sx={{
+                                                    backgroundColor: '#F7941E',
+                                                    color: 'white',
+                                                    '&:hover': { backgroundColor: '#D17A1D' },
+                                                    padding: '2px',
+                                                    borderRadius: '4px'
+                                                }}
+                                            >
+                                                <AddIcon fontSize="small" />
+                                            </IconButton>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell>Moodle</TableCell>
+                                    <TableCell>
+                                        {currentUser?.moodleApiKeyCreatedAt ? (
+                                            <Box display="flex" alignItems="center" gap={1}>
+                                                <Typography
+                                                    variant="body2"
+                                                    component="span"
+                                                    sx={{ fontFamily: 'monospace' }}
+                                                >
+                                                    XXXXXXXXXX
+                                                </Typography>
+                                            </Box>
+                                        ) : (
+                                            ''
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {currentUser?.moodleApiKeyCreatedAt
+                                            ? new Date(currentUser.moodleApiKeyCreatedAt).toLocaleDateString()
+                                            : ''}
+                                    </TableCell>
+                                    <TableCell>
+                                        {currentUser?.moodleApiKeyCreatedAt ? (
+                                            <IconButton
+                                                onClick={() => handleDeleteExternalPlatformKey('moodle')}
+                                                disabled={isSavingExternalPlatformKey}
+                                                color="error"
+                                                aria-label="Delete API key Moodle"
+                                                size="small"
+                                                sx={{ padding: '2px' }}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        ) : (
+                                            <IconButton
+                                                onClick={() => setMoodleKeyDialogOpen(true)}
+                                                disabled={isSavingExternalPlatformKey}
+                                                aria-label="Import API key Moodle"
+                                                size="small"
+                                                sx={{
+                                                    backgroundColor: '#F7941E',
+                                                    color: 'white',
+                                                    '&:hover': { backgroundColor: '#D17A1D' },
+                                                    padding: '2px',
+                                                    borderRadius: '4px'
+                                                }}
+                                            >
+                                                <AddIcon fontSize="small" />
+                                            </IconButton>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    )}
+                    </Box>
                 </Box>
 
                 {/* Delete Account Section */}
@@ -422,6 +628,96 @@ const Settings = () => {
                             }}
                         >
                             {isLoading ? <CircularProgress size={24} /> : `${getMessage('label_delete')}`}
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+                {/* AI Beacon API Key Dialog */}
+                <Dialog
+                    open={aiBeaconKeyDialogOpen}
+                    onClose={() => !isSavingExternalPlatformKey && setAiBeaconKeyDialogOpen(false)}
+                    aria-labelledby="ai-beacon-key-dialog-title"
+                >
+                    <DialogTitle id="ai-beacon-key-dialog-title">
+                        {`AI Beacon - ${getMessage('api_key')}`}
+                    </DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            label={`${getMessage('api_key')}`}
+                            fullWidth
+                            variant="outlined"
+                            value={aiBeaconApiKeyDraft}
+                            onChange={(e) => setAiBeaconApiKeyDraft(e.target.value)}
+                            disabled={isSavingExternalPlatformKey}
+                            aria-label="AI Beacon API key"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            onClick={() => setAiBeaconKeyDialogOpen(false)}
+                            disabled={isSavingExternalPlatformKey}
+                            aria-label="Cancel AI Beacon API key"
+                        >
+                            {getMessage('cancel_key_create')}
+                        </Button>
+                        <Button
+                            onClick={() => saveExternalPlatformKey('aiBeacon')}
+                            disabled={isSavingExternalPlatformKey}
+                            aria-label="Save AI Beacon API key"
+                            sx={{
+                                backgroundColor: '#F7941E',
+                                color: 'white',
+                                '&:hover': { backgroundColor: '#D17A1D' }
+                            }}
+                        >
+                        {isSavingExternalPlatformKey ? <CircularProgress size={24} /> : getMessage('label_submit')}
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+                {/* Moodle API Key Dialog */}
+                <Dialog
+                    open={moodleKeyDialogOpen}
+                    onClose={() => !isSavingExternalPlatformKey && setMoodleKeyDialogOpen(false)}
+                    aria-labelledby="moodle-key-dialog-title"
+                >
+                    <DialogTitle id="moodle-key-dialog-title">
+                        {`Moodle - ${getMessage('api_key')}`}
+                    </DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            label={`${getMessage('api_key')}`}
+                            fullWidth
+                            variant="outlined"
+                            value={moodleApiKeyDraft}
+                            onChange={(e) => setMoodleApiKeyDraft(e.target.value)}
+                            disabled={isSavingExternalPlatformKey}
+                            aria-label="Moodle API key"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            onClick={() => setMoodleKeyDialogOpen(false)}
+                            disabled={isSavingExternalPlatformKey}
+                            aria-label="Cancel Moodle API key"
+                        >
+                            {getMessage('cancel_key_create')}
+                        </Button>
+                        <Button
+                            onClick={() => saveExternalPlatformKey('moodle')}
+                            disabled={isSavingExternalPlatformKey}
+                            aria-label="Save Moodle API key"
+                            sx={{
+                                backgroundColor: '#F7941E',
+                                color: 'white',
+                                '&:hover': { backgroundColor: '#D17A1D' }
+                            }}
+                        >
+                        {isSavingExternalPlatformKey ? <CircularProgress size={24} /> : getMessage('label_submit')}
                         </Button>
                     </DialogActions>
                 </Dialog>

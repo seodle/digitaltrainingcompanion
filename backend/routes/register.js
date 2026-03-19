@@ -16,7 +16,6 @@ router.post("/register", async (req, res) => {
   const userData = req.body;
   const result = await registerUser(userData);
 
-  console.log(result)
   res.status(result.status).send({ message: result.message });
 });
 

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { requireMonitoringOwnerOrRedeemer } = require('../middleware/authorization');
+const Users = require("../models/userModel");
 
 const {
   startFollowingMonitoring,
@@ -45,7 +46,7 @@ router.put("/monitorings/:monitoringId/stopFollowing", requireMonitoringOwnerOrR
 });
 
 
-router.get("/currentUser", async (req, res) => {
+router.get("/me", async (req, res) => {
   try {
     const userId = req.user && req.user._id;
     if (!userId) {
@@ -58,7 +59,65 @@ router.get("/currentUser", async (req, res) => {
   }
 });
 
-router.delete("/currentUser", async (req, res) => {
+router.put("/externalPlatformKeys", async (req, res) => {
+  try {
+    const userId = req.user && req.user._id;
+    if (!userId) {
+      return res.status(401).json({ error: 'Authentication required' });
+    }
+
+    // Whitelist: only allow updating fields we explicitly support.
+    const allowedFields = ["aiBeaconApiKey", "moodleApiKey"];
+    const createdAtFieldForKeyField = {
+      aiBeaconApiKey: "aiBeaconApiKeyCreatedAt",
+      moodleApiKey: "moodleApiKeyCreatedAt"
+    };
+    const incoming = req.body || {};
+    const update = {};
+
+    for (const field of allowedFields) {
+      if (Object.prototype.hasOwnProperty.call(incoming, field)) {
+        const value = incoming[field];
+        update[field] = value;
+
+        // If the key is set/rotated, update the "createdAt" stamp.
+        // If the key is removed (null/empty), clear the stamp too.
+        if (Object.prototype.hasOwnProperty.call(createdAtFieldForKeyField, field)) {
+          update[createdAtFieldForKeyField[field]] = value ? new Date() : null;
+        }
+      }
+    }
+
+    // LMS connection is user-scoped and tied to external platform credentials.
+    // Reset cached value whenever either key is rotated/changed.
+    if (
+      Object.prototype.hasOwnProperty.call(incoming, "aiBeaconApiKey") ||
+      Object.prototype.hasOwnProperty.call(incoming, "moodleApiKey")
+    ) {
+      update.lmsConnectionId = null;
+    }
+
+    if (Object.keys(update).length === 0) {
+      return res.status(400).json({ error: "No updatable fields provided" });
+    }
+
+    const updatedUser = await Users.findByIdAndUpdate(
+      userId,
+      { $set: update },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.json(updatedUser);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+router.delete("/me", async (req, res) => {
   try {
     const userId = req.user && req.user._id;
     if (!userId) {
@@ -68,9 +127,8 @@ router.delete("/currentUser", async (req, res) => {
     const deletedUser = await deleteUser(userId);
     if (deletedUser) {
       return res.json({ message: "User and associated data deleted successfully" });
-    } else {
-      return res.status(404).json({ error: "User not found" });
     }
+    return res.status(404).json({ error: "User not found" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

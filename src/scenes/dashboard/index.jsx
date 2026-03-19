@@ -14,9 +14,17 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Alert
+  Alert,
+  CircularProgress,
+  TableContainer,
+  Paper,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Checkbox
 } from "@mui/material";
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, Globe2 } from "lucide-react";
 
 // dependencies
 import { loadMonitoringAndAssessments } from "../../utils/ObjectsUtils";
@@ -34,6 +42,7 @@ import { FRONTEND_URL, BACKEND_URL } from "../../config";
 import { useMessageService } from '../../services/MessageService';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useAuthUser } from '../../contexts/AuthUserContext';
+import { hasAiBeaconAndMoodleApiKeys } from '../../utils/aibeacon';
 import { AssessmentType, OptionTypes, UserType } from '../../utils/enums';
 
 const Dashboard = () => {
@@ -49,6 +58,10 @@ const Dashboard = () => {
   const [monitorings, setMonitorings] = useState([]);
   const [newMonitoringName, setNewMonitoringName] = useState('');
   const [newMonitoringDescription, setNewMonitoringDescription] = useState('');
+  const [newMonitoringCourseId, setNewMonitoringCourseId] = useState('');
+  const [courseOptions, setCourseOptions] = useState([]);
+  const [coursesLoading, setCoursesLoading] = useState(false);
+  const [coursesError, setCoursesError] = useState('');
   const [openMonitoringDialog, setOpenMonitoringDialog] = useState(false);
   const [openLoadCodeDialog, setOpenLoadCodeDialog] = useState(false);
   const [loadCode, setLoadCode] = useState('');
@@ -68,6 +81,15 @@ const Dashboard = () => {
   const [newAssessmentName, setNewAssessmentName] = useState('');
   const [newAssessmentType, setNewAssessmentType] = useState('');
   const [openAssessmentDialog, setOpenAssessmentDialog] = useState(false);
+  const [moodleCourseContents, setMoodleCourseContents] = useState([]);
+  const [isLoadingMoodleCourseContents, setIsLoadingMoodleCourseContents] = useState(false);
+  const [moodleCourseContentsError, setMoodleCourseContentsError] = useState('');
+  const [selectedMoodleContentIds, setSelectedMoodleContentIds] = useState([]);
+  const [aiBeaconOutputLanguage, setAiBeaconOutputLanguage] = useState('auto');
+  const [aiBeaconLanguageError, setAiBeaconLanguageError] = useState('');
+  const [aiBeaconLanguageSaving, setAiBeaconLanguageSaving] = useState(false);
+  const [isCreatingAssessment, setIsCreatingAssessment] = useState(false);
+  const [isSyncingCourse, setIsSyncingCourse] = useState(false);
 
   const [openAssesmentCount, setOpenAssessmentsCount] = useState(0);
 
@@ -82,6 +104,7 @@ const Dashboard = () => {
   const { languageCode } = useLanguage();
   const { currentUser } = useAuthUser();
   const [isLoading, setIsLoading] = useState(true);
+  const showCourseField = hasAiBeaconAndMoodleApiKeys(currentUser);
   const [isLinked, setIsLinked] = useState(false);
   const [isCodeVisible, setIsCodeVisible] = useState(false);
   const [generatedCode, setGeneratedCode] = useState('');
@@ -166,6 +189,57 @@ const Dashboard = () => {
 
     fetchMonitoringsAndAssessments();
   }, [currentUser, navigate]);
+
+  // Load courses for the "New monitoring" modal (only when external keys exist).
+  useEffect(() => {
+    if (!openMonitoringDialog) return;
+    if (!showCourseField) return;
+
+    // If we already loaded courses for this modal session, reuse them.
+    if (courseOptions.length > 0) return;
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setCoursesError("No authentication token available.");
+      return;
+    }
+
+    let cancelled = false;
+    const loadCourses = async () => {
+      setCoursesLoading(true);
+      setCoursesError("");
+      try {
+        const coursesRes = await axios.get(
+          `${BACKEND_URL}/aiBeacon/courses`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        const coursesRaw = coursesRes.data?.courses;
+        if (!Array.isArray(coursesRaw)) {
+          throw new Error("Unexpected response format while loading courses.");
+        }
+
+        if (!cancelled) {
+          setCourseOptions(coursesRaw);
+        }
+      } catch (e) {
+        console.error("Failed to load courses for New monitoring:", e);
+        if (!cancelled) {
+          setCoursesError("Failed to load courses. Please try again.");
+          setCourseOptions([]);
+        }
+      } finally {
+        if (!cancelled) setCoursesLoading(false);
+      }
+    };
+
+    loadCourses();
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openMonitoringDialog, showCourseField]);
 
   // Save the current monitoring ID in localStorage whenever it changes
   useEffect(() => {
@@ -269,6 +343,13 @@ const Dashboard = () => {
       userId: currentUser._id,
       name: newMonitoringName,
       description: newMonitoringDescription,
+      courseMoodleId: showCourseField && newMonitoringCourseId ? newMonitoringCourseId : null,
+      courseName:
+        showCourseField && newMonitoringCourseId
+          ? courseOptions.find(c => c.id === newMonitoringCourseId)?.name || null
+          : null,
+      courseAiBeaconId: null,
+      courseSyncedAt: null,
       creationDate: new Date(),
       lastModification: new Date(),
       options: [
@@ -294,6 +375,14 @@ const Dashboard = () => {
     setCurrentMonitoringId(serverMonitoringId);
     setMonitorings(prev => [...prev, newMonitoring]);
 
+    if (newMonitoring.courseMoodleId) {
+      await handleSyncCourseFromMoodle({
+        monitoringId: serverMonitoringId,
+        moodleCourseId: newMonitoring.courseMoodleId,
+        currentCourseAiBeaconId: newMonitoring.courseAiBeaconId,
+      });
+    }
+
     setNewMonitoringName('');
     setNewMonitoringDescription('');
     handleCloseMonitoringDialog();
@@ -301,6 +390,60 @@ const Dashboard = () => {
     console.error("Error adding monitoring:", error);
   }
 };
+
+  const handleSyncCourseFromMoodle = async ({
+    monitoringId = currentMonitoringId,
+    moodleCourseId: explicitMoodleCourseId,
+    currentCourseAiBeaconId: explicitCourseAiBeaconId,
+  } = {}) => {
+    const monitoring = monitorings.find(
+      (entry) => entry._id === monitoringId
+    );
+    const moodleCourseId = explicitMoodleCourseId ?? monitoring?.courseMoodleId;
+    if (!moodleCourseId) return;
+
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    setIsSyncingCourse(true);
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/aiBeacon/courses/${encodeURIComponent(moodleCourseId)}/sync`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (response?.status < 300 && response?.data?.success === true) {
+        const syncedCourses = Array.isArray(response?.data?.syncedCourses)
+          ? response.data.syncedCourses
+          : [];
+        const syncedCourse = syncedCourses.find(
+          (course) => String(course?.courseMoodleId) === String(moodleCourseId)
+        );
+        const resolvedAiBeaconId =
+          syncedCourse?.courseAiBeaconId ??
+          explicitCourseAiBeaconId ??
+          monitoring?.courseAiBeaconId;
+
+        setMonitorings((prev) =>
+          prev.map((entry) =>
+            entry._id === monitoringId
+              ? {
+                  ...entry,
+                  courseSyncedAt: new Date().toISOString(),
+                  ...(resolvedAiBeaconId
+                    ? { courseAiBeaconId: String(resolvedAiBeaconId) }
+                    : {}),
+                }
+              : entry
+          )
+        );
+      }
+    } catch (syncError) {
+      console.error("Failed to sync course from Moodle:", syncError);
+    } finally {
+      setIsSyncingCourse(false);
+    }
+  };
 
   /**
    * Handle creation of a new assessment
@@ -338,7 +481,13 @@ const Dashboard = () => {
     }
 
     try {
+      setIsCreatingAssessment(true);
       const token = localStorage.getItem("token");
+      const shouldCreateWithAiBeacon =
+        hasAiBeaconAndMoodleApiKeys(currentUser) &&
+        newAssessmentType === AssessmentType.LEARNING &&
+        selectedMoodleContentIds.length > 0 &&
+        !!selectedMonitoring?.courseAiBeaconId;
 
       const newAssessment = {
         monitoringId: currentMonitoringId,
@@ -349,11 +498,15 @@ const Dashboard = () => {
         status: "Draft",
         creationDate: new Date(),
         lastModification: new Date(),
-        options: statusToOptions["Draft"]
+        options: statusToOptions["Draft"],
+        ...(selectedMoodleContentIds.length > 0 ? { content_ids: selectedMoodleContentIds } : {}),
+        ...(selectedMonitoring?.courseAiBeaconId ? { courseId: selectedMonitoring.courseAiBeaconId } : {})
       };
 
       const response = await axios.post(
-        `${BACKEND_URL}/assessments`,
+        shouldCreateWithAiBeacon
+          ? `${BACKEND_URL}/aiBeacon/assessments`
+          : `${BACKEND_URL}/assessments`,
         newAssessment,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -368,17 +521,26 @@ const Dashboard = () => {
     } catch (error) {
       console.error("Error adding assessment:", error);
       setError("Failed to add assessment. Please try again.");
+    } finally {
+      setIsCreatingAssessment(false);
     }
   };
 
   const handleCloseMonitoringDialog = () => {
     setOpenMonitoringDialog(false);
     setError(null);
+    setNewMonitoringCourseId("");
+    setCoursesError("");
   };
 
   const handleCloseAssessmentDialog = () => {
     setOpenAssessmentDialog(false);
     setError(null);
+    setMoodleCourseContents([]);
+    setMoodleCourseContentsError('');
+    setSelectedMoodleContentIds([]);
+    setAiBeaconOutputLanguage('auto');
+    setAiBeaconLanguageError('');
   };
 
   const filteredMonitorings = monitorings
@@ -391,6 +553,107 @@ const Dashboard = () => {
   const selectedMonitoring = monitorings.find(
     m => m._id === expandedMonitoring
   );
+  const showAiBeaconContentsInAssessmentModal =
+    showCourseField &&
+    openAssessmentDialog &&
+    newAssessmentType === AssessmentType.LEARNING &&
+    !!selectedMonitoring?.courseAiBeaconId &&
+    !!selectedMonitoring?.courseSyncedAt;
+
+  useEffect(() => {
+    if (showAiBeaconContentsInAssessmentModal) {
+      setSelectedMoodleContentIds([]);
+      setAiBeaconOutputLanguage('auto');
+      setAiBeaconLanguageError('');
+    }
+  }, [showAiBeaconContentsInAssessmentModal]);
+
+  const handleAiBeaconOutputLanguageChange = async (event) => {
+    const language = event.target.value;
+    const courseAiBeaconId = selectedMonitoring?.courseAiBeaconId;
+    const previous = aiBeaconOutputLanguage;
+    if (!courseAiBeaconId || aiBeaconLanguageSaving) return;
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setAiBeaconLanguageError('Could not save language.');
+      return;
+    }
+
+    setAiBeaconOutputLanguage(language);
+    setAiBeaconLanguageError('');
+    setAiBeaconLanguageSaving(true);
+    try {
+      await axios.put(
+        `${BACKEND_URL}/aiBeacon/courses/${encodeURIComponent(courseAiBeaconId)}`,
+        { language },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    } catch (e) {
+      setAiBeaconOutputLanguage(previous);
+      const msg = e?.response?.data?.error || e?.response?.data?.message;
+      setAiBeaconLanguageError(typeof msg === 'string' ? msg : 'Could not save language.');
+    } finally {
+      setAiBeaconLanguageSaving(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!showAiBeaconContentsInAssessmentModal) {
+      setMoodleCourseContents([]);
+      setMoodleCourseContentsError('');
+      setSelectedMoodleContentIds([]);
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setMoodleCourseContents([]);
+      setMoodleCourseContentsError('No authentication token available.');
+      return;
+    }
+
+    let cancelled = false;
+    const loadCourseContents = async () => {
+      setIsLoadingMoodleCourseContents(true);
+      setMoodleCourseContentsError('');
+      try {
+        const response = await axios.get(
+          `${BACKEND_URL}/aiBeacon/courses/${encodeURIComponent(selectedMonitoring.courseAiBeaconId)}/contents`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const contents = Array.isArray(response?.data?.contents)
+          ? response.data.contents
+          : [];
+        if (!cancelled) {
+          setMoodleCourseContents(contents);
+        }
+      } catch (e) {
+        if (!cancelled) {
+          setMoodleCourseContents([]);
+          setMoodleCourseContentsError('Failed to load Moodle course contents.');
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoadingMoodleCourseContents(false);
+        }
+      }
+    };
+
+    loadCourseContents();
+    return () => {
+      cancelled = true;
+    };
+  }, [showAiBeaconContentsInAssessmentModal, selectedMonitoring?.courseAiBeaconId]);
+
+  const toggleMoodleContentSelected = (contentId) => {
+    if (contentId == null) return;
+    setSelectedMoodleContentIds((prev) =>
+      prev.includes(contentId)
+        ? prev.filter((id) => id !== contentId)
+        : [...prev, contentId]
+    );
+  };
 
   const scroll = direction => {
     const container = scrollContainerRef.current;
@@ -607,6 +870,39 @@ const Dashboard = () => {
                 onChange={e => setNewMonitoringDescription(e.target.value)}
                 disabled={currentUser?.sandbox && monitorings.length >= 1}
               />
+              {showCourseField && (
+                <Box mt="20px">
+                  <Select
+                    value={newMonitoringCourseId}
+                    margin="dense"
+                    size="small"
+                    fullWidth
+                    onChange={e => setNewMonitoringCourseId(e.target.value)}
+                    disabled={coursesLoading}
+                    displayEmpty
+                  >
+                    <MenuItem value="">
+                      {getMessage("label_select_course")}
+                    </MenuItem>
+                    {courseOptions.map(course => (
+                      <MenuItem key={course.id} value={course.id}>
+                        {course.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+
+                  {coursesLoading && (
+                    <Box display="flex" justifyContent="flex-start" mt={1}>
+                      <CircularProgress size={20} />
+                    </Box>
+                  )}
+                  {coursesError && (
+                    <Box mt="10px">
+                      <Alert severity="error">{coursesError}</Alert>
+                    </Box>
+                  )}
+                </Box>
+              )}
               {error && error !== getMessage("sandbox_user_monitoring_limit") && (
                 <Box mt="15px">
                   <Alert severity="error">
@@ -673,7 +969,7 @@ const Dashboard = () => {
           {/* Create Assessment Dialog */}
           <Dialog
             open={openAssessmentDialog}
-            onClose={handleCloseAssessmentDialog}
+            onClose={isCreatingAssessment ? undefined : handleCloseAssessmentDialog}
           >
             <DialogTitle variant="h3">
               {getMessage("label_create_new_assessment")}
@@ -705,6 +1001,7 @@ const Dashboard = () => {
                         : Math.max(1, parseInt(e.target.value, 10) || 1);
                     setNewAssessmentDay(value);
                   }}
+                  disabled={isCreatingAssessment}
                 />
               </Box>
 
@@ -722,6 +1019,7 @@ const Dashboard = () => {
                 labelId="type-label"
                 fullWidth
                 onChange={e => setNewAssessmentType(e.target.value)}
+                disabled={isCreatingAssessment}
               >
                 {currentUser.userStatus === UserType.TEACHER_TRAINER
                   ? [
@@ -820,8 +1118,173 @@ const Dashboard = () => {
                   type="text"
                   fullWidth
                   onChange={e => setNewAssessmentName(e.target.value)}
+                  disabled={isCreatingAssessment}
                 />
               </Box>
+
+              {showAiBeaconContentsInAssessmentModal && (
+                <Box mb="20px">
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 2,
+                      flexWrap: 'wrap',
+                      mb: 2,
+                    }}
+                  >
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ whiteSpace: 'nowrap' }}
+                    >
+                      {getMessage('label_language')}
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        gap: 0.5,
+                        minWidth: 120,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                          flexWrap: 'wrap',
+                          justifyContent: 'flex-end',
+                        }}
+                      >
+                        <Select
+                          size="small"
+                          value={aiBeaconOutputLanguage}
+                          onChange={handleAiBeaconOutputLanguageChange}
+                          disabled={!selectedMonitoring?.courseAiBeaconId || aiBeaconLanguageSaving || isCreatingAssessment}
+                          inputProps={{
+                            'aria-label': getMessage('label_language'),
+                          }}
+                          sx={{
+                            minWidth: 148,
+                            boxShadow: 'none',
+                            '.MuiOutlinedInput-notchedOutline': { borderColor: 'divider' },
+                          }}
+                          renderValue={(value) => {
+                            if (value === 'auto') {
+                              return (
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+                                  <Globe2 size={18} aria-hidden />
+                                  {getMessage('label_ai_beacon_auto_detect')}
+                                </Box>
+                              );
+                            }
+                            const flagClass =
+                              value === 'en'
+                                ? 'fi fi-gb'
+                                : value === 'de'
+                                  ? 'fi fi-de'
+                                  : value === 'fr'
+                                    ? 'fi fi-fr'
+                                    : 'fi fi-it';
+                            const native =
+                              value === 'en'
+                                ? 'English'
+                                : value === 'fr'
+                                  ? 'Français'
+                                  : value === 'de'
+                                    ? 'Deutsch'
+                                    : 'Italiano';
+                            return (
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <span className={flagClass} aria-hidden />
+                                {native}
+                              </Box>
+                            );
+                          }}
+                        >
+                          <MenuItem value="auto">
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <Globe2 size={18} aria-hidden />
+                              {getMessage('label_ai_beacon_auto_detect')}
+                            </Box>
+                          </MenuItem>
+                          <MenuItem value="en">
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <span className="fi fi-gb" aria-hidden />
+                              English
+                            </Box>
+                          </MenuItem>
+                          <MenuItem value="fr">
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <span className="fi fi-fr" aria-hidden />
+                              Français
+                            </Box>
+                          </MenuItem>
+                          <MenuItem value="de">
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <span className="fi fi-de" aria-hidden />
+                              Deutsch
+                            </Box>
+                          </MenuItem>
+                          <MenuItem value="it">
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <span className="fi fi-it" aria-hidden />
+                              Italiano
+                            </Box>
+                          </MenuItem>
+                        </Select>
+                      </Box>
+                      {aiBeaconLanguageError ? (
+                        <Typography variant="caption" color="error" sx={{ textAlign: 'right' }}>
+                          {aiBeaconLanguageError}
+                        </Typography>
+                      ) : null}
+                    </Box>
+                  </Box>
+                  <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                    {getMessage('label_select_your_content')}
+                  </Typography>
+                  {isLoadingMoodleCourseContents ? (
+                    <Box display="flex" justifyContent="center" py={2}>
+                      <CircularProgress size={22} />
+                    </Box>
+                  ) : moodleCourseContentsError ? (
+                    <Alert severity="error">{moodleCourseContentsError}</Alert>
+                  ) : moodleCourseContents.length === 0 ? (
+                    <Typography color="text.secondary">No course contents found.</Typography>
+                  ) : (
+                    <TableContainer component={Paper} variant="outlined" sx={{ mt: 1, maxHeight: 220 }}>
+                      <Table size="small" stickyHeader>
+                        <TableBody>
+                          {moodleCourseContents.map((content, index) => {
+                            const contentId =
+                              content.id != null && content.id !== ''
+                                ? Number(content.id)
+                                : null;
+                            return (
+                              <TableRow key={String(contentId ?? index)}>
+                                <TableCell padding="checkbox" sx={{ width: 48 }}>
+                                  <Checkbox
+                                    size="small"
+                                    checked={contentId != null && selectedMoodleContentIds.includes(contentId)}
+                                    disabled={!contentId || isCreatingAssessment}
+                                    onChange={() => toggleMoodleContentSelected(contentId)}
+                                  />
+                                </TableCell>
+                                <TableCell>{content.name || '-'}</TableCell>
+                              </TableRow>
+                            );
+                          })}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  )}
+                </Box>
+              )}
 
               {error && (
                 <Box mt="15px">
@@ -838,7 +1301,7 @@ const Dashboard = () => {
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={handleCloseAssessmentDialog}>
+              <Button onClick={handleCloseAssessmentDialog} disabled={isCreatingAssessment}>
                 {getMessage("label_cancel")}
               </Button>
               <Box sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
@@ -847,8 +1310,10 @@ const Dashboard = () => {
                   variant="contained"
                   color="primary"
                   sx={buttonStyle}
+                  disabled={isCreatingAssessment}
+                  startIcon={isCreatingAssessment ? <CircularProgress size={18} color="inherit" /> : undefined}
                 >
-                  {getMessage("new_assessment_create")}
+                  {isCreatingAssessment ? "Creating..." : getMessage("new_assessment_create")}
                 </Button>
               </Box>
             </DialogActions>
@@ -861,8 +1326,15 @@ const Dashboard = () => {
                 <AssessmentsTable
                   assessments={assessments}
                   setAssessments={setAssessments}
+                  setMonitorings={setMonitorings}
                   monitorings={monitorings}
                   currentMonitoringId={currentMonitoringId}
+                  onSyncCourseFromMoodle={handleSyncCourseFromMoodle}
+                  isSyncingCourse={isSyncingCourse}
+                  showSyncCourseButton={
+                    showCourseField &&
+                    !!selectedMonitoring?.courseMoodleId
+                  }
                   currentAssessmentId={currentAssessmentId}
                   setCurrentAssessmentId={setCurrentAssessmentId}
                   setIsOpen={setIsOpen}

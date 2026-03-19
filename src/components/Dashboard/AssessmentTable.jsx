@@ -24,7 +24,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Button
+  Button,
+  CircularProgress,
+  Select
 } from '@mui/material';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import {
@@ -36,7 +38,8 @@ import {
   Edit2,
   Eye,
   GripVertical,
-  X
+  X,
+  RefreshCw
 } from 'lucide-react';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import ShareIcon from '@mui/icons-material/Share';
@@ -53,12 +56,17 @@ import { useMessageService } from '../../services/MessageService';
 import { useAuthUser } from '../../contexts/AuthUserContext';
 import { AssessmentType, OptionTypes, UserType } from '../../utils/enums';
 import { localizeAssessmentType } from '../../utils/ObjectsUtils';
+import { buttonStyle } from '../styledComponents';
 
 const AssessmentTable = ({ 
     assessments,
     setAssessments,
+    setMonitorings,
     monitorings,
     currentMonitoringId,
+    onSyncCourseFromMoodle,
+    isSyncingCourse = false,
+    showSyncCourseButton = false,
     currentAssessmentId,
     setCurrentAssessmentId,
     setIsOpen,
@@ -899,6 +907,14 @@ const handleAssessmentPreview = (assessment) => {
     setRowsPerPage(-1);
   };
 
+  const currentMonitoring = monitorings.find(
+    monitoring => monitoring._id === currentMonitoringId
+  );
+  const courseAiBeaconId = currentMonitoring?.courseAiBeaconId;
+  const lastCourseSyncAt = currentMonitoring?.courseSyncedAt
+    ? new Date(currentMonitoring.courseSyncedAt).toLocaleString()
+    : null;
+
   const handleDragEnd = async (result) => {
     if (!result.destination) return;
 
@@ -964,6 +980,30 @@ const handleAssessmentPreview = (assessment) => {
               <ToggleButton value="others">{getMessage('table_assessment_others')}</ToggleButton>
             </ToggleButtonGroup>
           </Box>
+          {showSyncCourseButton && (
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 0.75 }}>
+              <Button
+                variant="contained"
+                startIcon={
+                  isSyncingCourse ? (
+                    <CircularProgress size={16} color="inherit" />
+                  ) : (
+                    <RefreshCw size={16} />
+                  )
+                }
+                sx={buttonStyle}
+                onClick={() => onSyncCourseFromMoodle?.({ monitoringId: currentMonitoringId })}
+                disabled={isSyncingCourse || !onSyncCourseFromMoodle}
+              >
+                {isSyncingCourse
+                  ? `${getMessage('label_button_sync_course_from_moodle')}...`
+                  : getMessage('label_button_sync_course_from_moodle')}
+              </Button>
+              <Typography variant="caption" color="text.secondary">
+                {lastCourseSyncAt ? `Last sync: ${lastCourseSyncAt}` : 'Last sync: -'}
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Box>
 

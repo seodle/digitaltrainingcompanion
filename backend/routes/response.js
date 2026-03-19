@@ -73,7 +73,6 @@ router.get("/monitoring/:monitoringId/displayNames", requireMonitoringOwnerOrRed
 
     const displayNames = await getPseudoByAssessmentIds(ids, req.user._id);
 
-    console.log("displayNames: ", displayNames)
 
 
     if (displayNames.length === 0) {

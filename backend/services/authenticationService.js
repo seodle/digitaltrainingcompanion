@@ -23,7 +23,7 @@ const imageUrl = "https://digitaltrainingcompanion.ch/static/media/logo.f1c87519
 const authenticateUser = async (email, password) => {
 
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).select("+password");
         if (!user) {
             return { status: 'error', message: 'Invalid email or password' };
         }
@@ -125,7 +125,7 @@ const initiatePasswordReset = async (email) => {
 
     try {
         // get the user associated to the given email address
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).select("+passwordResetToken +passwordResetExpires");
 
         if (!user) {
             return { status: 'error', message: "No user registered with this email" };
@@ -183,7 +183,7 @@ const resetPassword = async (token, newPassword) => {
         const user = await User.findOne({
             passwordResetToken: passwordResetToken,
             passwordResetExpires: { $gt: Date.now() },
-        });
+        }).select("+passwordResetToken +passwordResetExpires");
 
         if (!user) {
             return { status: 'error', message: "Invalid or expired token." };
@@ -214,7 +214,7 @@ const verifyEmail = async (token) => {
             return { status: 400, message: "No verification token provided" };
         }
 
-        const user = await User.findOne({ verificationToken: token });
+        const user = await User.findOne({ verificationToken: token }).select("+verificationToken");
         if (!user) {
             return { status: 400, message: "Invalid verification token" };
         }

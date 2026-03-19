@@ -15,7 +15,7 @@ const verifyApiKey = async (req, res, next) => {
         }
 
         // Find and verify the API key
-        const key = await ApiKey.findOne({ key: apiKey });
+        const key = await ApiKey.findByPlainKey(apiKey);
 
         if (!key) {
             return res.status(401).json({ error: 'Invalid API key' });
@@ -512,7 +512,6 @@ router.post('/embed/assessment/:assessmentId/question/:questionId/responses', ve
         const { assessmentId, questionId } = req.params;
         const { answer, displayName } = req.body;
 
-        console.log('Submitting response:', { assessmentId, questionId, answer, displayName });
 
         if (!answer) {
             return res.status(400).json({ error: 'Answer is required' });
@@ -547,7 +546,6 @@ router.post('/embed/assessment/:assessmentId/question/:questionId/responses', ve
                 .sort((a, b) => a.matrixPosition - b.matrixPosition);
 
             // Store one response per matrix question (aligned with standard survey storage)
-            console.log('Original answer from iframe:', answer);
 
             matrixQuestions.forEach((matrixQ, index) => {
                 const matrixAnswer = Array.isArray(answer) ? answer[index] : undefined;
@@ -608,7 +606,6 @@ router.post('/embed/assessment/:assessmentId/question/:questionId/responses', ve
 
         // Save the response
         await response.save();
-        console.log('Response saved successfully:', response);
 
         // Update the assessment's lastModificationDate
         assessment.lastModificationDate = new Date();

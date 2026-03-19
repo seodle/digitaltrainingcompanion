@@ -37,7 +37,7 @@ router.post('/infomaniak/chat', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         console.error('Full error details:', JSON.stringify(error.response?.data, null, 2));
-        console.error('Request payload:', JSON.stringify(error.config?.data, null, 2));
+        console.error('Request failed while calling Infomaniak API');
 
         res.status(error.response?.status || 500).json({
             error: 'Error communicating with Infomaniak API',

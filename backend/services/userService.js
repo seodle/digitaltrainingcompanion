@@ -109,10 +109,10 @@ const deleteUser = async (userId) => {
         const deletedUser = await Users.findOneAndDelete({ _id: userId });
 
         if (deletedUser) {
-            console.log("User deleted successfully:", deletedUser);
+            console.log("User deleted successfully");
             return { message: "User deleted successfully" }; // Return success message
         } else {
-            console.log("No user found with the given id:", userId);
+            console.log("No user found with the given id");
             return { error: "No user found with the given id" }; // Return error if user not found
         }
     } catch (error) {
