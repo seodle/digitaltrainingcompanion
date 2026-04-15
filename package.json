@@ -39,6 +39,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^10.12.18",
     "fullcalendar": "^6.1.6",
+    "html-to-draftjs": "^1.5.0",
     "i18next": "^23.5.1",
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.2",
