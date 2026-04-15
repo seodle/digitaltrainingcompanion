@@ -68,7 +68,7 @@ const SurveyQuestion = ({
             
             setIsAnswerCorrect(hasAllCorrectAnswers);
             
-            if (assessmentType === "Learning") {
+            if (assessmentType === "Learning" || assessmentType === "Student learning outcomes") {
               if (explanation) {
                   setShowValidateButton(true);
                   setShowExplanation(false);
@@ -82,7 +82,7 @@ const SurveyQuestion = ({
             const isCorrect = correctAnswer.includes(option.value);
             setIsAnswerCorrect(isCorrect);
             
-            if (assessmentType === "Learning") {
+            if (assessmentType === "Learning" || assessmentType === "Student learning outcomes") {
               if (explanation) {
                   setShowValidateButton(true);
                   setShowExplanation(false);
@@ -263,8 +263,8 @@ const SurveyQuestion = ({
           />
         )}
 
-        {/* Display validate button for Learning type assessments */}
-        {showValidateButton && assessmentType === "Learning" && explanation && (
+        {/* Display validate button for Learning and Student learning outcomes type assessments */}
+        {showValidateButton && (assessmentType === "Learning" || assessmentType === "Student learning outcomes") && explanation && (
           <Box display="flex" gap="10px" marginTop="20px">
             <Button 
               variant="contained"

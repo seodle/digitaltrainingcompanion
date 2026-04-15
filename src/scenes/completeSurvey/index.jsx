@@ -321,9 +321,9 @@ const CompleteSurvey = () => {
         });
     }, []);
 
-    // Check if all Learning type questions with explanations have been validated
+    // Check if all Learning and student learning outcomes type questions with explanations have been validated
     const canSubmit = useMemo(() => {
-        if (assessmentType !== "Learning") return true;
+        if (assessmentType !== "Learning" && assessmentType !== "Student learning outcomes") return true;
         
         const learningQuestionsWithExplanations = surveyData.filter(
             question => question.explanation && question.explanation.trim() !== ""
@@ -517,8 +517,8 @@ const CompleteSurvey = () => {
                                         </Box>
                                     )}
                                     
-                                    {/* Show validation progress for Learning type assessments */}
-                                    {assessmentType === "Learning" && (
+                                    {/* Show validation progress for Learning and Student learning outcomes type assessments */}
+                                    {(assessmentType === "Learning" || assessmentType === "Student learning outcomes") && (
                                         <Box mt={2} display="flex" justifyContent="center">
                                             <Typography variant="body2" color="textSecondary">
                                                 {(() => {
@@ -536,7 +536,7 @@ const CompleteSurvey = () => {
                                     <Box mt={2} display="flex" justifyContent="center">
                                         {surveyData.length > 0 && (
                                             <Tooltip 
-                                                title={!canSubmit && assessmentType === "Learning" ? getMessage('tooltip_validate_before_submit') : ""}
+                                                title={!canSubmit && (assessmentType === "Learning" || assessmentType === "Student learning outcomes") ? getMessage('tooltip_validate_before_submit') : ""}
                                                 arrow
                                             >
                                                 <span>
