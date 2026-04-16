@@ -1,8 +1,9 @@
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import React, { useState, useEffect } from 'react';
 import { Typography, Box, IconButton, Grid, TextField, Button, FormControlLabel, Switch, Alert, CircularProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { questionContainerStyle } from './styledComponents';
+import { questionContainerStyle, toolbarConfig } from './styledComponents';
 import { addOption, removeOption, changeOption, saveEdits } from '../utils/SurveyUtils';
 import { getMatrixQuestions } from '../utils/matrixUtils';
 import SurveyQuestion from './SurveyQuestion';
@@ -12,6 +13,10 @@ import { QuestionType } from '../utils/enums';
 import { fetchSuggestedOptions } from '../utils/QuestionUtils';
 import { useAuthUser } from '../contexts/AuthUserContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, ContentState, convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 
 // for i18n
 import { useMessageService } from '../services/MessageService';
@@ -101,6 +106,25 @@ const EditQuestionView = ({ question, matrixQuestions, setQuestions, setEditingQ
     const { languageCode } = useLanguage();
     const [autoSuggestionsEnabled, setAutoSuggestionsEnabled] = useState(false);
     const [generatingOptions, setGeneratingOptions] = useState(false);
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+    const createEditorStateFromHtml = (html = "") => {
+        const rawHtml = (html || "").trim();
+        if (!rawHtml) {
+            return EditorState.createEmpty();
+        }
+
+        const draftBlocks = htmlToDraft(rawHtml);
+        const { contentBlocks, entityMap } = draftBlocks;
+        const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+        return EditorState.createWithContent(contentState);
+    };
+
+    useEffect(() => {
+        if (question.questionType === 'single-text') {
+            setEditorState(createEditorStateFromHtml(question.context));
+        }
+    }, [question.questionId, question.questionType]);
 
     const handleChange = (prop, value, matrixQuestionId = null, newQuestionIndex = null) => {
         if (prop === 'shortName' && value.length > 30) {
@@ -379,22 +403,26 @@ const EditQuestionView = ({ question, matrixQuestions, setQuestions, setEditingQ
                 )}
                 {question.questionType === 'single-text' && (
                     <Grid item xs={12}>
-                        <Box>
-                            <TextField
-                            fullWidth
-                            multiline
-                            rows={6}
-                            variant="outlined"
-                            value={question.context}
-                            onChange={(e) => {
-                                handleChange('context', e.target.value);
-                            }}
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    fontFamily: "monospace"
-                                }
-                            }}
-                        />
+                        <Box
+                            border={1}
+                            borderColor="grey.400"
+                            p={2}
+                            borderRadius={1}
+                        >
+                            <Editor
+                                editorState={editorState}
+                                toolbarClassName="toolbarClassName"
+                                wrapperClassName="wrapperClassName"
+                                editorClassName="editorClassName"
+                                onEditorStateChange={(nextEditorState) => {
+                                    setEditorState(nextEditorState);
+                                    handleChange(
+                                        'context',
+                                        draftToHtml(convertToRaw(nextEditorState.getCurrentContent()))
+                                    );
+                                }}
+                                toolbar={toolbarConfig}
+                            />
                         </Box>
                     </Grid>    
                 )}
