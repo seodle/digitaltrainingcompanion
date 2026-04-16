@@ -321,19 +321,22 @@ const CompleteSurvey = () => {
         });
     }, []);
 
-    // Check if all Learning and student learning outcomes type questions with explanations have been validated
+    // Learning / Student learning outcomes: submit only after every visible question is validated
     const canSubmit = useMemo(() => {
-        if (assessmentType !== "Learning" && assessmentType !== "Student learning outcomes") return true;
-        
-        const learningQuestionsWithExplanations = surveyData.filter(
-            question => question.explanation && question.explanation.trim() !== ""
-        );
-        
-        if (learningQuestionsWithExplanations.length === 0) return true;
-        
-        return learningQuestionsWithExplanations.every(
-            question => validatedQuestions.has(`q${question.questionId}`)
-        );
+        if (assessmentType !== "Learning" && assessmentType !== "Student learning outcomes") {
+            return true;
+        }
+
+        // Same field names as MemoizedSurveyQuestion: one per standalone question, one per matrix (first row only)
+        const fieldNamesToValidate = surveyData
+            .filter((q) => !q.matrixId || q.matrixPosition === 0)
+            .map((q) => `q${q.questionId}`);
+
+        if (fieldNamesToValidate.length === 0) {
+            return true;
+        }
+
+        return fieldNamesToValidate.every((fieldName) => validatedQuestions.has(fieldName));
     }, [assessmentType, surveyData, validatedQuestions]);
 
   const preventEnterKey = (event) => {
@@ -521,9 +524,14 @@ const CompleteSurvey = () => {
                                     {(assessmentType === "Learning" || assessmentType === "Student learning outcomes") && (
                                         <Box mt={2} display="flex" justifyContent="center">
                                             <Typography variant="body2" color="textSecondary">
-                                                {(() => {
-                                                    const totalQuestions = surveyData.filter(q => q.explanation && q.explanation.trim() !== "").length;
-                                                    const validatedCount = validatedQuestions.size;
+                                            {(() => {
+                                                    const fieldNamesToValidate = surveyData
+                                                        .filter((q) => !q.matrixId || q.matrixPosition === 0)
+                                                        .map((q) => `q${q.questionId}`);
+                                                    const totalQuestions = fieldNamesToValidate.length;
+                                                    const validatedCount = fieldNamesToValidate.filter((name) =>
+                                                        validatedQuestions.has(name)
+                                                    ).length;
                                                     if (totalQuestions > 0) {
                                                         return `${validatedCount}/${totalQuestions} ${getMessage('label_questions_validated')}`;
                                                     }

@@ -45,9 +45,11 @@ const SurveyQuestion = ({
 
   const isOptionDisabled = useCallback(() => {
     const assessmentTypesToDisable = ["Learning", "Student learning outcomes"];
-    // Return a boolean explicitly
-    return Boolean(disabled || (assessmentTypesToDisable.includes(assessmentType) && explanation && showExplanation));
-  }, [disabled, assessmentType, showExplanation, explanation]);
+    return Boolean(
+      disabled ||
+      (assessmentTypesToDisable.includes(assessmentType) && isValidated)
+    );
+  }, [disabled, assessmentType, isValidated]);
 
   const handleAnswerSelect = useCallback((event, option) => {
     if (!isOptionDisabled()) {
@@ -69,31 +71,28 @@ const SurveyQuestion = ({
             setIsAnswerCorrect(hasAllCorrectAnswers);
             
             if (assessmentType === "Learning" || assessmentType === "Student learning outcomes") {
-              if (explanation) {
-                  setShowValidateButton(true);
-                  setShowExplanation(false);
-              } else {
-                  setShowExplanation(hasWrongAnswer || hasAllCorrectAnswers);
-              }
+              setShowValidateButton(true);
+              setShowExplanation(false);
             }
-        } else {
-            // Handle single answer
-            setSelectedAnswers([option.value]);
-            const isCorrect = correctAnswer.includes(option.value);
+          } else {
+            const value = typeof option === 'string' ? option : option.value;
+            setSelectedAnswers([value]);
+            const answers = Array.isArray(correctAnswer)
+              ? correctAnswer
+              : correctAnswer != null && correctAnswer !== ''
+                ? [correctAnswer]
+                : [];
+            const isCorrect = answers.includes(value);
             setIsAnswerCorrect(isCorrect);
-            
+
             if (assessmentType === "Learning" || assessmentType === "Student learning outcomes") {
-              if (explanation) {
-                  setShowValidateButton(true);
-                  setShowExplanation(false);
-              } else {
-                  setShowExplanation(true);
-              }
+              setShowValidateButton(true);
+              setShowExplanation(false);
             }
         }
         setIsAnswered(true);
     }
-}, [isOptionDisabled, correctAnswer, selectedAnswers, type, assessmentType, explanation]);
+}, [isOptionDisabled, correctAnswer, selectedAnswers, type, assessmentType]);
 
   const handleValidateAnswer = useCallback(() => {
     setShowValidateButton(false);
@@ -107,9 +106,15 @@ const SurveyQuestion = ({
   }, [onQuestionValidated, fieldName]);
 
   const isCorrectAnswer = useCallback((option) => {
-    if (!displayCorrectAnswer || !correctAnswer) return false;
-    return correctAnswer.includes(option.label);
-  }, [displayCorrectAnswer, correctAnswer, type]);
+    const revealCorrect = displayCorrectAnswer || isValidated;
+    if (!revealCorrect || correctAnswer == null) return false;
+    const answers = Array.isArray(correctAnswer)
+      ? correctAnswer
+      : correctAnswer !== ''
+        ? [correctAnswer]
+        : [];
+    return answers.includes(option.label) || answers.includes(option.value);
+  }, [displayCorrectAnswer, isValidated, correctAnswer]);
 
   const correctAnswerCreateSurvey = {
     backgroundColor: '#e6ffe6', // Light green background
@@ -181,7 +186,12 @@ const SurveyQuestion = ({
                     <Typography
                       sx={{
                         fontSize: optionFontSize,
-                        ...(disabled && correctAnswer && isCorrectAnswer(option) ? correctAnswerCreateSurvey : {}),
+                        ...((disabled || isValidated) &&
+                        correctAnswer != null &&
+                        (Array.isArray(correctAnswer) ? correctAnswer.length > 0 : String(correctAnswer).trim() !== '') &&
+                        isCorrectAnswer(option)
+                        ? correctAnswerCreateSurvey
+                        : {}),
                       }}
                     >
                       {option.label}
@@ -222,7 +232,12 @@ const SurveyQuestion = ({
                     <Typography 
                       sx={{ 
                         fontSize: optionFontSize,
-                        ...(disabled && correctAnswer && isCorrectAnswer(option) ? correctAnswerCreateSurvey : {}),
+                        ...((disabled || isValidated) &&
+                        correctAnswer != null &&
+                        (Array.isArray(correctAnswer) ? correctAnswer.length > 0 : String(correctAnswer).trim() !== '') &&
+                        isCorrectAnswer(option)
+                        ? correctAnswerCreateSurvey
+                        : {}),
                       }}
                     >
                       {option.label}
@@ -264,7 +279,7 @@ const SurveyQuestion = ({
         )}
 
         {/* Display validate button for Learning and Student learning outcomes type assessments */}
-        {showValidateButton && (assessmentType === "Learning" || assessmentType === "Student learning outcomes") && explanation && (
+        {showValidateButton && (assessmentType === "Learning" || assessmentType === "Student learning outcomes") && (
           <Box display="flex" gap="10px" marginTop="20px">
             <Button 
               variant="contained"
@@ -279,7 +294,7 @@ const SurveyQuestion = ({
 
         {/* Display explanation with color based on answer correctness */}
         <Box display="flex" gap="10px" marginTop="20px">
-          {(showExplanation || disabled) && explanation && (
+            {(showExplanation || disabled) && explanation != null && String(explanation).trim() !== '' && (
             <Box display="flex" maxWidth="95%">
               <span>
                 <Button 
