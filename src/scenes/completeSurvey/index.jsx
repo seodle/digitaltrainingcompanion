@@ -329,12 +329,12 @@ const CompleteSurvey = () => {
 
         // Same field names as MemoizedSurveyQuestion: one per standalone question, one per matrix (first row only)
         const fieldNamesToValidate = surveyData
-            .filter((q) => !q.matrixId || q.matrixPosition === 0)
+            .filter((q) =>
+                !q.matrixId &&
+                q.questionType !== "text" &&
+                q.questionType !== "single-text"
+            )
             .map((q) => `q${q.questionId}`);
-
-        if (fieldNamesToValidate.length === 0) {
-            return true;
-        }
 
         return fieldNamesToValidate.every((fieldName) => validatedQuestions.has(fieldName));
     }, [assessmentType, surveyData, validatedQuestions]);
@@ -525,8 +525,13 @@ const CompleteSurvey = () => {
                                         <Box mt={2} display="flex" justifyContent="center">
                                             <Typography variant="body2" color="textSecondary">
                                             {(() => {
+                                                    // Only validateable questions with an explanation have a Validate button
                                                     const fieldNamesToValidate = surveyData
-                                                        .filter((q) => !q.matrixId || q.matrixPosition === 0)
+                                                        .filter((q) =>
+                                                            !q.matrixId &&
+                                                            q.questionType !== "text" &&
+                                                            q.questionType !== "single-text"
+                                                        )
                                                         .map((q) => `q${q.questionId}`);
                                                     const totalQuestions = fieldNamesToValidate.length;
                                                     const validatedCount = fieldNamesToValidate.filter((name) =>
