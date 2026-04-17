@@ -178,8 +178,9 @@ const SurveyQuestion = ({
                 <FormControlLabel
                   key={index}
                   value={option.value}
-                  control={<Field as={Radio} type="radio" name={fieldName} />}
+                  control={<Field as={Radio} type="radio" name={fieldName} sx={{ pt: 0.5 }} />}
                   sx={{
+                    alignItems: 'flex-start',
                     ...(estimatedLines > 2 && { mb: '15px' }),
                   }}
                   label={
@@ -209,8 +210,10 @@ const SurveyQuestion = ({
                 <FormControlLabel
                   key={index}
                   value={option.value}
+                  sx={{ alignItems: 'flex-start' }}
                   control={
-                    <Checkbox 
+                    <Checkbox
+                      sx={{ mt: '1px', pt: 0.5 }} 
                       checked={selectedAnswers.includes(option.value)}
                       onChange={(event) => {
                         // Update local state for UI
