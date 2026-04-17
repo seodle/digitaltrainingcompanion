@@ -7,6 +7,12 @@
   pointer-events: none;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transform: translate(-50%, -50%);
-  width: 300px; /* Set a fixed width */
-  height: auto; /* Allow height to adjust based on content */
+  width: 300px;
+  height: auto;
+}
+
+.pinned-tooltip {
+  border: 2px solid #57C1CA;
+  box-shadow: 0 0 14px rgba(87, 193, 202, 0.35);
+  pointer-events: auto;
 }

@@ -6,10 +6,11 @@ import { useMessageService } from '../services/MessageService';
 import './BarChartReports.css';
 import { Typography } from '@mui/material';
 
-const BarChartReports = ({ data, hide_students_name, workshopName }) => {
+const BarChartReports = ({ data, hide_students_name, workshopName, showPercentage = false }) => {
 
   const chartRef = useRef(null);
-  const [tooltipData, setTooltipData] = useState(null);
+  const [pinnedTooltipData, setPinnedTooltipData] = useState(null);
+  const [pinnedPosition, setPinnedPosition] = useState({ x: 0, y: 0 });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { getMessage } = useMessageService();
 
@@ -23,27 +24,29 @@ const BarChartReports = ({ data, hide_students_name, workshopName }) => {
   
   // Transform data and reverse the order for correct display in horizontal layout
   const transformedData = [...data]
-    .reverse()
-    .map(item => ({
+  .reverse()
+  .map(item => {
+    const total = item.counts.reduce((sum, c) => sum + c, 0);
+    const values = showPercentage && total > 0
+      ? item.counts.map(c => parseFloat(((c / total) * 100).toFixed(1)))
+      : item.counts;
+    return {
       ...item,
       shortName: item.shortName || item.question,
-      ...Object.fromEntries(item.counts.map((count, index) => [`choice_${index + 1}`, count]))
-    }));
+      ...Object.fromEntries(values.map((v, index) => [`choice_${index + 1}`, v]))
+    };
+  });
 
   // Calculate height based on number of questions
   const chartHeight = Math.max(200, data.length * 30); // 30px per question, minimum 200px
 
   useEffect(() => {
     const handleMouseMove = (event) => {
-      if (!chartRef.current || !tooltipData) return;
+      if (!chartRef.current) return;
 
       const chartBounds = chartRef.current.getBoundingClientRect();
-      
-      // Calculate relative position with padding
       const xPosRelative = (event.clientX - chartBounds.x) / chartBounds.width;
       const yPosRelative = (event.clientY - chartBounds.y) / chartBounds.height;
-      
-      // Add padding to keep tooltip within bounds
       const xPos = (0.6 * xPosRelative + 0.2) * chartBounds.width;
       const yPos = (0.1 * yPosRelative + 0.4) * chartBounds.height;
 
@@ -52,7 +55,17 @@ const BarChartReports = ({ data, hide_students_name, workshopName }) => {
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [tooltipData]);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (chartRef.current && !chartRef.current.contains(event.target)) {
+        setPinnedTooltipData(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const getBarColor = (bar) => {
   const choiceNumber = parseInt(bar.id.replace('choice_', ''), 10) - 1;
@@ -149,6 +162,7 @@ const BarChartReports = ({ data, hide_students_name, workshopName }) => {
             legendOffset: -30
           }}
           enableLabel={true}
+          label={d => showPercentage ? `${d.value}%` : `${d.value}`}
           labelSkipWidth={12}
           labelSkipHeight={12}
           axisTop={null}
@@ -156,26 +170,32 @@ const BarChartReports = ({ data, hide_students_name, workshopName }) => {
           axisBottom={null}
           labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
           role="application"
-          onMouseEnter={(bar) => {
+          onClick={(bar) => {
             const tooltipContent = handleTooltip(bar);
-            if (tooltipContent) setTooltipData(tooltipContent);
+            if (!tooltipContent) return;
+            const isSamePinned =
+              pinnedTooltipData &&
+              pinnedTooltipData.question === tooltipContent.question &&
+              pinnedTooltipData.choice === tooltipContent.choice;
+            if (isSamePinned) {
+              setPinnedTooltipData(null);
+            } else {
+              setPinnedTooltipData(tooltipContent);
+              setPinnedPosition(mousePosition);
+            }
           }}
-          onMouseLeave={() => setTooltipData(null)}
           tooltip={() => null}
           barAriaLabel={e => `${e.indexValue}: ${e.id} - ${e.value}`}
         />
-        {tooltipData && (
-          <div 
-            className="custom-tooltip" 
-            style={{ 
-              top: mousePosition.y, 
-              left: mousePosition.x 
-            }}
+        {pinnedTooltipData && (
+          <div
+            className="custom-tooltip pinned-tooltip"
+            style={{ top: pinnedPosition.y, left: pinnedPosition.x }}
           >
-            <strong>{tooltipData.question}</strong><br />
-            <span>{tooltipData.choice}: {tooltipData.value}</span><br />
+            <strong>{pinnedTooltipData.question}</strong><br />
+            <span>{pinnedTooltipData.choice}: {pinnedTooltipData.value}{showPercentage ? '%' : ''}</span><br />
             {!hide_students_name && (
-              <span>{getMessage("label_respondents")}: {tooltipData.names}</span>
+              <span>{getMessage("label_respondents")}: {pinnedTooltipData.names}</span>
             )}
           </div>
         )}

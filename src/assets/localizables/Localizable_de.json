@@ -2538,15 +2538,6 @@
         "fuzzy": 0
     },
     {
-        "term": "label_stop_following",
-        "definition": "Nicht mehr folgen",
-        "context": "label stop following",
-        "term_plural": "",
-        "reference": "",
-        "comment": "",
-        "fuzzy": 0
-    },
-    {
         "term": "label_click_to_edit_name",
         "definition": "Zum Bearbeiten des Titels klicken",
         "context": "label click to edit name",
@@ -3418,5 +3409,95 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
+    },
+    {
+        "term": "label_stop_following",
+        "definition": "Nicht mehr folgen",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "external_platforms",
+        "definition": "Externe Plattformen",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "platform_name",
+        "definition": "Plattformname",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_select_course",
+        "definition": "Kurs ausw\u00e4hlen",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_button_sync_course_from_moodle",
+        "definition": "Moodle-Kurs synchronisieren",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_select_your_content",
+        "definition": "Inhalte ausw\u00e4hlen",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_language",
+        "definition": "Sprache",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ai_beacon_auto_detect",
+        "definition": "Automatisch erkennen",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_display",
+        "definition": "Anzeige",
+        "context": "label_export",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_export",
+        "definition": "Exportieren\n",
+        "context": "label_display",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
     }
 ]

@@ -1,5 +1,7 @@
-import React from 'react';
-import { Box, FormControl, InputLabel, MenuItem } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Dialog, FormControl, IconButton, InputLabel, MenuItem } from '@mui/material';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import Select from '@mui/material/Select';
 import { useMessageService } from '../services/MessageService';
 import { AssessmentTableResultTabChoice, AssessmentTableResultGraph } from './AssessmentTabResultsComponents';
@@ -17,27 +19,26 @@ const AssessmentTabResultWithFilter = ({
     selectedUser, 
     handleChangeUser,
     aiSummaries = {},
-    loadingSummaries = {}
+    loadingSummaries = {},
+    showPercentage,
 }) => {
     const { getMessage } = useMessageService();
+    const [expanded, setExpanded] = useState(false);
 
-    return (
-        <Box 
-            gridColumn={`span ${fullScreen ? 12 : 6}`} 
-            gridRow={gridRow} 
-            sx={{ 
-                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', 
-                borderRadius: '15px', 
-                backgroundColor: '#fff',
-                position: 'relative' // Enable absolute positioning context
-            }}
-        >
-            {/* Tabs section */}
-            <AssessmentTableResultTabChoice
-                categories={categories}
-                onChange={onChange}
-                data={data}
-            />
+    const content = (isExpanded) => (
+        <Box sx={{ position: 'relative', height: '100%', backgroundColor: '#fff' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Box sx={{ flex: 1 }}>
+                    <AssessmentTableResultTabChoice
+                        categories={categories}
+                        onChange={onChange}
+                        data={data}
+                    />
+                </Box>
+                <IconButton onClick={() => setExpanded(v => !v)} size="small" sx={{ mr: 1 }}>
+                    {isExpanded ? <FullscreenExitIcon /> : <FullscreenIcon />}
+                </IconButton>
+            </Box>
 
             {/* Filter overlay */}
             <Box 
@@ -53,8 +54,8 @@ const AssessmentTabResultWithFilter = ({
                 <FormControl variant="outlined" size="small" 
                 sx={{ 
                     minWidth: 150,
-                     mt : 1.5,
-                     backgroundColor: 'rgba(255, 255, 255, 1)'}}>
+                    mt: 1.5,
+                    backgroundColor: 'rgba(255, 255, 255, 1)'}}>
                     <InputLabel id="label_set_selected_user">{getMessage("label_choose_teacher")}</InputLabel>
                     <Select
                         value={selectedUser}
@@ -74,18 +75,40 @@ const AssessmentTabResultWithFilter = ({
                 </FormControl>
             </Box>
 
-            {/* Main content */}
             <AssessmentTableResultGraph
                 categories={categories}
                 data={data}
                 groupChartData={groupChartData}
                 groupCommentData={groupCommentData}
-                fullScreen={fullScreen}
+                fullScreen={isExpanded}
                 hide_students_name={hide_students_name}
                 aiSummaries={aiSummaries}
                 loadingSummaries={loadingSummaries}
+                showPercentage={showPercentage}
             />
         </Box>
+    );
+
+    return (
+        <>
+            <Box 
+                gridColumn={`span ${fullScreen ? 12 : 6}`} 
+                gridRow={gridRow} 
+                sx={{ 
+                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', 
+                    borderRadius: '15px', 
+                    backgroundColor: '#fff',
+                    position: 'relative'
+                }}
+            >
+                {content(false)}
+            </Box>
+            <Dialog fullScreen open={expanded} onClose={() => setExpanded(false)}
+                sx={{ '& .MuiDialog-paper': { backgroundColor: '#fff' } }}
+            >
+                {content(true)}
+            </Dialog>
+        </>
     );
 };
 
