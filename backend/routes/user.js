@@ -8,6 +8,7 @@ const {
   deleteUser
 } = require('../services/userService');
 const { deleteAnswersFromUserId } = require('../services/responseService');
+const { getPlan } = require('../constants/subscriptionPlans');
 
 
 /**
@@ -71,6 +72,35 @@ router.delete("/currentUser", async (req, res) => {
     } else {
       return res.status(404).json({ error: "User not found" });
     }
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/currentUser/ai-usage", async (req, res) => {
+  try {
+    const userId = req.user && req.user._id;
+    if (!userId) {
+      return res.status(401).json({ error: 'Authentication required' });
+    }
+
+    const user = await getUserWithId(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const plan = getPlan(user.subscriptionPlan);
+    const used = user.aiCallsUsedThisMonth ?? 0;
+    const quota = plan.monthlyCallQuota;
+    const remaining = Math.max(0, quota - used);
+
+    return res.json({
+      plan: plan.id,
+      used,
+      quota,
+      remaining,
+      trialActive: user.trialActive ?? false,
+    });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
