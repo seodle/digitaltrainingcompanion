@@ -26,8 +26,7 @@ export const AssessmentTableResultTabChoice = ({ categories, onChange, data }) =
     );
 };
 
-export const AssessmentTableResultGraph = ({ categories, data, groupChartData, groupCommentData, fullScreen, hide_students_name, aiSummaries, loadingSummaries }) => {
-
+export const AssessmentTableResultGraph = ({ categories, data, groupChartData, groupCommentData, fullScreen, hide_students_name, aiSummaries, loadingSummaries, showPercentage }) => {
     return (
         categories.map((category, index) => (
             <React.Fragment key={category}>
@@ -47,11 +46,12 @@ export const AssessmentTableResultGraph = ({ categories, data, groupChartData, g
                                 </Typography>
                                 {Object.entries(workshops).map(([workshopName, items], workshopIdx) => (
                                     <BarChartReports 
-                                        data={items} 
-                                        key={`${workshopName}-${workshopIdx}`}
-                                        hide_students_name={hide_students_name} 
-                                        workshopName={workshopName !== "default" && workshopName !== assessmentName ? workshopName : ""}
-                                    />
+                                    data={items} 
+                                    key={`${workshopName}-${workshopIdx}`}
+                                    hide_students_name={hide_students_name} 
+                                    workshopName={workshopName !== "default" && workshopName !== assessmentName ? workshopName : ""}
+                                    showPercentage={showPercentage}
+                                />
                                 ))}
                             </React.Fragment>
                         ))}
@@ -59,8 +59,7 @@ export const AssessmentTableResultGraph = ({ categories, data, groupChartData, g
                 </CustomTabPanel>
 
                 <CustomTabPanel value={data} index={index * 2 + 1}>
-                    <Box style={{ height: `${fullScreen ? '55vh' : '31vh'}`, width: '95%', overflowY: 'auto', overflowX: 'auto' }}>
-                        {Object.entries(groupCommentData(category)).map(([assessmentName, workshops], assessmentIdx) => (
+                <Box style={{ height: `${fullScreen ? '95vh' : '31vh'}`, width: '95%', overflowY: 'auto', overflowX: 'auto' }}>                        {Object.entries(groupCommentData(category)).map(([assessmentName, workshops], assessmentIdx) => (
                             <React.Fragment key={`${assessmentName}-comments-${assessmentIdx}`}>
                                 <Typography align="center" color="rgb(102,102,102)" variant="h5" fontWeight="bold" mt='10px'>
                                     {assessmentName}

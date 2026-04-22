@@ -2538,15 +2538,6 @@
         "fuzzy": 0
     },
     {
-        "term": "label_stop_following",
-        "definition": "Smetti di seguire",
-        "context": "label stop following",
-        "term_plural": "",
-        "reference": "",
-        "comment": "",
-        "fuzzy": 0
-    },
-    {
         "term": "label_click_to_edit_name",
         "definition": "Clicca per modificare il titolo",
         "context": "label click to edit name",
@@ -3418,5 +3409,95 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
+    },
+    {
+        "term": "label_stop_following",
+        "definition": "Smetti di seguire",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "external_platforms",
+        "definition": "Piattaforme esterne",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "platform_name",
+        "definition": "Nome piattaforma",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_select_course",
+        "definition": "Seleziona un corso",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_button_sync_course_from_moodle",
+        "definition": "Sincronizza corso Moodle",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_select_your_content",
+        "definition": "Seleziona i tuoi contenuti",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_language",
+        "definition": "Lingua",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ai_beacon_auto_detect",
+        "definition": "Rilevamento automatico",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_display",
+        "definition": "Visualizzazione",
+        "context": "label_export",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_export",
+        "definition": "Esporta",
+        "context": "label_display",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
     }
 ]

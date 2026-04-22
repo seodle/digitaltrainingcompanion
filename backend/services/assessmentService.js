@@ -25,6 +25,8 @@ const createAssessment = async (assessmentData) => {
             status: assessmentData.status,
             creationDate: Date.now(),
             lastModificationDate: Date.now(),
+            questions: assessmentData.questions || [],
+            workshops: assessmentData.workshops || [], 
         });
 
         // save it to the db

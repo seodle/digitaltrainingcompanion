@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { InputLabel, Box, MenuItem, FormControl, Button, Typography, Tooltip, IconButton } from "@mui/material";
+import { InputLabel, Box, Divider, MenuItem, FormControl, Button, Typography, Tooltip, IconButton, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { CircularProgress } from '@mui/material';
 import Select from '@mui/material/Select';
 import jwt_decode from "jwt-decode";
@@ -52,6 +52,7 @@ const Reports = () => {
     const [isExportingPDF, setIsExportingPDF] = useState(false);
     const [isExportingDOCX, setIsExportingDOCX] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
+    const [showPercentage, setShowPercentage] = useState(false);
 
     //AI summary states
     const [aiSummaries, setAiSummaries] = useState({});
@@ -1073,7 +1074,31 @@ const Reports = () => {
                 <Box>
 
                 { /* Block buttons export pdf, docx and csv */}
-                <Box display="flex">
+                <Box display="flex" alignItems="center" gap={1.5}>
+
+                {/* Display toggle */}
+                <Box display="flex" alignItems="center" gap={1}>
+                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'nowrap' }}>
+                        {getMessage("label_display")}
+                    </Typography>
+                    <ToggleButtonGroup
+                        value={showPercentage ? 'pct' : 'count'}
+                        exclusive
+                        size="small"
+                        onChange={(_, val) => { if (val !== null) setShowPercentage(val === 'pct'); }}
+                    >
+                        <ToggleButton value="count">#</ToggleButton>
+                        <ToggleButton value="pct">%</ToggleButton>
+                    </ToggleButtonGroup>
+                </Box>
+
+                <Divider orientation="vertical" flexItem />
+
+                {/* Export buttons */}
+                <Box display="flex" alignItems="center" gap={0.5}>
+                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'nowrap', mr: 1 }}>
+                        {getMessage("label_export")}
+                    </Typography>
                     <Button
                         onClick={handleExportDocxReport}
                         variant="contained"
@@ -1087,26 +1112,17 @@ const Reports = () => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             backgroundColor: 'white',
-                            '&:hover': {
-                                backgroundColor: '#f5f5f5'
-                            }
+                            '&:hover': { backgroundColor: '#f5f5f5' }
                         }}
                         disabled={!selectedDayAssessments || selectedDayAssessments.length === 0}
                     >
                         {isExportingDOCX ? (
                             <CircularProgress size={28} />
                         ) : (
-                            <img 
-                                src={DOClogo} 
-                                alt="DOCX"
-                                style={{ 
-                                    width: '28px', 
-                                    height: '28px'
-                                }}
-                            />
+                            <img src={DOClogo} alt="DOCX" style={{ width: '28px', height: '28px' }} />
                         )}
                     </Button>
-                    
+
                     <Button
                         onClick={handleExportPdfReport}
                         variant="contained"
@@ -1120,26 +1136,16 @@ const Reports = () => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             backgroundColor: 'white',
-                            '&:hover': {
-                                backgroundColor: '#f5f5f5'
-                            }
+                            '&:hover': { backgroundColor: '#f5f5f5' }
                         }}
                         disabled={!selectedDayAssessments || selectedDayAssessments.length === 0}
                     >
                         {isExportingPDF ? (
                             <CircularProgress size={28} />
                         ) : (
-                            <img 
-                                src={PDFlogo} 
-                                alt="PDF"
-                                style={{ 
-                                    width: '28px', 
-                                    height: '28px'
-                                }}
-                            />
+                            <img src={PDFlogo} alt="PDF" style={{ width: '28px', height: '28px' }} />
                         )}
                     </Button>
-                
 
                     <Button
                         onClick={handleExportData}
@@ -1154,25 +1160,17 @@ const Reports = () => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             backgroundColor: 'white',
-                            '&:hover': {
-                                backgroundColor: '#f5f5f5'
-                            }
+                            '&:hover': { backgroundColor: '#f5f5f5' }
                         }}
                         disabled={!selectedDayAssessments || selectedDayAssessments.length === 0}
                     >
-                        <img 
-                            src={CSVlogo} 
-                            alt="CSV"
-                            style={{ 
-                                width: '28px', 
-                                height: '28px'
-                            }}
-                        />
+                        <img src={CSVlogo} alt="CSV" style={{ width: '28px', height: '28px' }} />
                     </Button>
                 </Box>
                 </Box>
 
             {/* The 4 blocks of assessment */}
+            </Box>
             </Box>
                 
                 {currentUser && currentUser.userStatus === UserType.TEACHER_TRAINER && (
@@ -1186,9 +1184,10 @@ const Reports = () => {
                             groupCommentData={groupCommentData}
                             aiSummaries={aiSummaries}
                             loadingSummaries={loadingSummaries}
+                            showPercentage={showPercentage}
                         />
 
-                        <AssessmentTabResult
+                    <AssessmentTabResult
                             categories={[AssessmentType.IMMEDIATE_REACTIONS, AssessmentType.LEARNING]}
                             gridRow="2"
                             data={valuesTabTwo}
@@ -1197,6 +1196,7 @@ const Reports = () => {
                             groupCommentData={groupCommentData}
                             aiSummaries={aiSummaries}
                             loadingSummaries={loadingSummaries}
+                            showPercentage={showPercentage}
                         />
                         
                         <AssessmentTabResult
@@ -1208,6 +1208,7 @@ const Reports = () => {
                             groupCommentData={groupCommentData}
                             aiSummaries={aiSummaries}
                             loadingSummaries={loadingSummaries}
+                            showPercentage={showPercentage}
                         />
 
                         <AssessmentTabResultWithFilter
@@ -1222,6 +1223,7 @@ const Reports = () => {
                             handleChangeUser={handleChangeUser}
                             aiSummaries={aiSummaries}
                             loadingSummaries={loadingSummaries}
+                            showPercentage={showPercentage}
                         />
                     </>
                 )}
@@ -1237,6 +1239,7 @@ const Reports = () => {
                             fullScreen={true}
                             aiSummaries={aiSummaries}
                             loadingSummaries={loadingSummaries}
+                            showPercentage={showPercentage}
                         />
                     </>
                 )}
