@@ -1,9 +1,10 @@
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import React, { useState, useEffect } from 'react';
 import { Switch, FormControlLabel, Typography, Box, IconButton, Grid, TextField, Button, Chip, FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText, Alert, CircularProgress } from '@mui/material';
 import { Delete } from "@mui/icons-material";
 import EditIcon from '@mui/icons-material/Edit';
 
-import { questionContainerStyle, formControlStyle } from './styledComponents';
+import { questionContainerStyle, formControlStyle, toolbarConfig } from './styledComponents';
 import { changeLearningType, saveEdits, addOption, changeOption, removeOption, changeCorrectAnswer } from '../utils/SurveyUtils';
 import { traineeCompetenceAreas, studentCompetenceAreas } from "../assets/frameworksData";
 import QuestionControlsView from './CreateSurveys/QuestionControlsView';
@@ -20,6 +21,10 @@ import {
     getActivities
 } from '../utils/QuestionUtils';
 import { useLanguage } from '../contexts/LanguageContext';
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, ContentState, convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 
 // for i18n
 import { useMessageService } from '../services/MessageService';
@@ -50,12 +55,31 @@ const EditQuestionView = ({
     const [localSelectedCompetency, setLocalSelectedCompetency] = useState(question.competency || '');
     const [localActivity, setLocalActivity] = useState(question.activity || '');
     const [isAutoEncodingActive, setIsAutoEncodingActive] = useState(false);
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+    const createEditorStateFromHtml = (html = "") => {
+        const rawHtml = (html || "").trim();
+        if (!rawHtml) {
+            return EditorState.createEmpty();
+        }
+
+        const draftBlocks = htmlToDraft(rawHtml);
+        const { contentBlocks, entityMap } = draftBlocks;
+        const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+        return EditorState.createWithContent(contentState);
+    };
 
     useEffect(() => {
         setLocalSelectedArea(question.area || '');
         setLocalSelectedCompetency(question.competency || '');
         setLocalActivity(question.activity || '');
     }, [question.area, question.competency, question.activity]);
+
+    useEffect(() => {
+        if (question.questionType === 'single-text') {
+            setEditorState(createEditorStateFromHtml(question.context));
+        }
+    }, [question.questionId, question.questionType]);
 
     const handleChange = (prop, value) => {
         if (prop === 'shortName' && value.length > 30) {
@@ -332,20 +356,25 @@ const EditQuestionView = ({
             <Grid container spacing={2}>
                 {question.questionType === 'single-text' ? (
                     <Grid item xs={12}>
-                        <Box>
-                            <TextField
-                                fullWidth
-                                multiline
-                                rows={6}
-                                variant="outlined"
-                                value={question.context}
-                                onChange={e => handleChange('context', e.target.value)}
-                                InputProps={{
-                                    style: { 
-                                        backgroundColor: 'white',
-                                        fontFamily: "monospace"
-                                    }
+                        <Box
+                            border={1}
+                            borderColor="grey.400"
+                            p={2}
+                            borderRadius={1}
+                        >
+                            <Editor
+                                editorState={editorState}
+                                toolbarClassName="toolbarClassName"
+                                wrapperClassName="wrapperClassName"
+                                editorClassName="editorClassName"
+                                onEditorStateChange={(nextEditorState) => {
+                                    setEditorState(nextEditorState);
+                                    handleChange(
+                                        'context',
+                                        draftToHtml(convertToRaw(nextEditorState.getCurrentContent()))
+                                    );
                                 }}
+                                toolbar={toolbarConfig}
                             />
                         </Box>
                     </Grid>
