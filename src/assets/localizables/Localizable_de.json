@@ -3499,5 +3499,707 @@
         "reference": "",
         "comment": "",
         "fuzzy": 0
+    },
+    {
+        "term": "pricing_section_title",
+        "definition": "W\u00e4hlen Sie Ihren Plan",
+        "context": "Title of the pricing section on the home page",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_section_subtitle",
+        "definition": "Kostenlos starten",
+        "context": " upgrade when you need.",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_on_quote",
+        "definition": "Auf Anfrage",
+        "context": "Displayed instead of a price when pricing is custom (research plan)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_per_month",
+        "definition": "\/ Monat",
+        "context": "Price suffix shown next to the monthly price",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_free_label",
+        "definition": "Kostenlos",
+        "context": "Label shown as the price for free plans",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_free",
+        "definition": "Jetzt kostenlos starten",
+        "context": "CTA button on free plans",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_pro",
+        "definition": "W\u00e4hlen Sie Pro",
+        "context": "CTA button on Pro Trainer and Pro Teacher plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_pro_plus",
+        "definition": "W\u00e4hlen Sie Pro+",
+        "context": "CTA button on Pro+ Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_ultra",
+        "definition": "W\u00e4hlen Sie Ultra",
+        "context": "CTA button on Ultra Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_contact",
+        "definition": "Kontaktieren Sie uns",
+        "context": "CTA button on Institution and Research plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_badge_popular",
+        "definition": "Beliebt",
+        "context": "Badge shown on highlighted\/recommended plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_trainer_label",
+        "definition": "Sie sind ein Trainer",
+        "context": "Tab label for the trainer audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_trainer_desc",
+        "definition": "Erstellen und teilen Sie \u00dcberwachungen und greifen Sie auf KI-Funktionen zu.",
+        "context": "Description shown under the trainer tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_teacher_label",
+        "definition": "Sie sind ein Lehrer",
+        "context": "Tab label for the teacher audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_teacher_desc",
+        "definition": "Nutzen Sie Utilisez Digital Training Companion in Ihrem Klassenzimmer.",
+        "context": "Description shown under the teacher tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_institution_label",
+        "definition": "Sie sind eine Institution",
+        "context": "Tab label for the institution audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_institution_desc",
+        "definition": "Stellen Sie Ihren Mitarbeitern Digital Training Companion. Unbegrenzten Benutzern.",
+        "context": "Description shown under the institution tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_research_label",
+        "definition": "Sie sind eine Forschungseinrichtung",
+        "context": "Tab label for the research audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_research_desc",
+        "definition": "Verwendung des Digital Training Companion in einem Forschungsprojekt mit dem Center LEARN der EPFL. Individuelle Bedingungen.",
+        "context": "Description shown under the research tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f1",
+        "definition": "Erstellen Sie \u00dcberwachungen und Bewertungen",
+        "context": "Feature listed on the Free Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f2",
+        "definition": "Antworten sammeln",
+        "context": "Feature listed on the Free Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f3",
+        "definition": "Ergebnisse visualisieren",
+        "context": "Feature listed on the Free Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f4",
+        "definition": "Keine KI-Funktionen",
+        "context": "Feature listed on the Free Trainer plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f5",
+        "definition": "Keine \u00dcberwachungsfreigabe",
+        "context": "Feature listed on the Free Trainer plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f6",
+        "definition": "Kein Rohdatenexport",
+        "context": "Feature listed on the Free Trainer plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f1",
+        "definition": "1500 KI-calls enthalten",
+        "context": "Feature listed on the Pro Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f2",
+        "definition": "Vollst\u00e4ndige KI-Funktionen",
+        "context": "Feature listed on Pro and above trainer plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f3",
+        "definition": "\u00dcberwachungen teilen und importieren",
+        "context": "Feature listed on Pro and above trainer plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f4",
+        "definition": "Rohdatenexport",
+        "context": "Feature listed on Pro and above trainer plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_plus_trainer_f1",
+        "definition": "5000 KI-calls enthalten",
+        "context": "Feature listed on the Pro+ Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_ultra_trainer_f1",
+        "definition": "30000 KI-calls enthalten",
+        "context": "Feature listed on the Ultra Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_teacher_f1",
+        "definition": "Zugriff auf gemeinsame Bewertungen",
+        "context": "Feature listed on the Free Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_teacher_f2",
+        "definition": "KI verf\u00fcgbar, wenn in einem Pro+ Trainer-Monitoring enthalten",
+        "context": "Feature listed on the Free Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_teacher_f3",
+        "definition": "Kein Rohdatenexport",
+        "context": "Feature listed on the Free Teacher plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_teacher_f1",
+        "definition": "750 KI-calls enthalten",
+        "context": "Feature listed on the Pro Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_teacher_f2",
+        "definition": "Vollst\u00e4ndige KI-Funktionen",
+        "context": "Feature listed on the Pro Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_teacher_f3",
+        "definition": "Rohdatenexport",
+        "context": "Feature listed on the Pro Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f1_xs",
+        "definition": "30000 KI-calls pro Monat",
+        "context": "Feature listed on the Institution XS plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f1_s",
+        "definition": "80000 KI-calls pro Monat",
+        "context": "Feature listed on the Institution S plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f1_m",
+        "definition": "200.000 KI-calls pro Monat",
+        "context": "Feature listed on the Institution M plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f2",
+        "definition": "Unbegrenzte Benutzer",
+        "context": "Feature listed on all Institution plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f3",
+        "definition": "Admin-Dashboard",
+        "context": "Feature listed on all Institution plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f4",
+        "definition": "Echtzeit-Quota-Transparenz",
+        "context": "Feature listed on all Institution plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f1",
+        "definition": "Benutzerdefinierter KI-Callpool",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f2",
+        "definition": "Unbegrenzte Benutzer",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f3",
+        "definition": "Vollst\u00e4ndige KI-Funktionen",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f4",
+        "definition": "Rohdatenexport",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f5",
+        "definition": "Benutzerdefinierter Vertrag",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_005_max3",
+        "definition": "+0,005 CHF\/call dar\u00fcber",
+        "context": "Overage pricing shown below the price on Pro Trainer card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_005_max10",
+        "definition": "+0,005 CHF\/call dar\u00fcber",
+        "context": "Overage pricing shown below the price on Pro+ Trainer card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_005_max60",
+        "definition": "+0,005 CHF\/call dar\u00fcber",
+        "context": "Overage pricing shown below the price on Ultra Trainer card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_005_max150",
+        "definition": "+0,005 CHF\/call dar\u00fcber",
+        "context": "Overage pricing shown below the price on Pro Teacher card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_004_max60",
+        "definition": "+0,004 CHF\/call dar\u00fcber",
+        "context": "Overage pricing shown below the price on Institution XS card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_004_max160",
+        "definition": "+0,004 CHF\/call dar\u00fcber",
+        "context": "Overage pricing shown below the price on Institution S card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_0035_max400",
+        "definition": "+0,0035 CHF\/call dar\u00fcber",
+        "context": "Overage pricing shown below the price on Institution M card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_nav_button",
+        "definition": "Preise",
+        "context": "Navigation button in the top bar that scrolls to the pricing section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_tab_information",
+        "definition": "Informationen",
+        "context": "Tab label for the user and platform info tab in settings",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_tab_subscription",
+        "definition": "Abonnement",
+        "context": "Tab label for the subscription tab in settings",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_free_trainer",
+        "definition": "Kostenloser Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_pro_trainer",
+        "definition": "Pro Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_pro_plus_trainer",
+        "definition": "Pro+ Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_ultra_trainer",
+        "definition": "Ultra Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_free_teacher",
+        "definition": "Freier Lehrer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_pro_teacher",
+        "definition": "Pro Lehrer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_institution_xs",
+        "definition": "Institution XS",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_institution_s",
+        "definition": "Institution S",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_institution_m",
+        "definition": "Institution M",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_research",
+        "definition": "Forschung",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_trial_active",
+        "definition": "Probezeit:",
+        "context": "Label shown before the number of days remaining in the trial",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_trial_days_remaining",
+        "definition": "verbleibende(r) Tag(e)",
+        "context": "Suffix shown after the number of days remaining in the trial",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_trial_expired",
+        "definition": "Testzeitraum beendet",
+        "context": "Shown when the trial period has expired",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_calls_this_month",
+        "definition": "KI-calls in diesem Monat",
+        "context": "Label for the AI call usage progress bar in settings",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_calls_remaining",
+        "definition": "call(s) Anruf(e)",
+        "context": "Suffix shown after the number of remaining AI calls",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_not_included",
+        "definition": "KI-Funktionen sind in Ihrem kostenlosen Plan nicht enthalten.",
+        "context": "Alert shown for free plan users with no AI access",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_no_calls",
+        "definition": "In diesem Monat wurden keine KI-call get\u00e4tigt.",
+        "context": "Alert shown when a paid user has made zero calls",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_see_plans",
+        "definition": "Verf\u00fcgbare Pl\u00e4ne anzeigen",
+        "context": "CTA button that navigates to the pricing section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_usage_fetch_error",
+        "definition": "Fehler beim Abrufen der Nutzung",
+        "context": "Error message when the AI usage API call fails",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_manage_plan",
+        "definition": "Mein Plan verwalten",
+        "context": "CTA button shown to paid plan users to upgrade or downgrade their plan",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
     }
 ]

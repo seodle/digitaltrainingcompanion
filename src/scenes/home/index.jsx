@@ -13,7 +13,8 @@ import {
   Newspaper as NewsIcon,
   KeyboardArrowDown as ArrowDownIcon,
   LinkedIn as LinkedInIcon,
-  YouTube as YouTubeIcon
+  YouTube as YouTubeIcon,
+  WorkspacePremium as PricingIcon
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useMessageService } from '../../services/MessageService';
@@ -30,6 +31,7 @@ import visualizeResults from "../../assets/medias/home-visualize-results.png";
 import logbooks from "../../assets/medias/home-logbooks.png";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { buttonStyle } from '../../components/styledComponents';
+import PricingSection from '../../components/PricingSection/PricingSection';
 
 // Palette
 const palette = {
@@ -56,6 +58,13 @@ const Home = () => {
         block: 'start'
       });
     }
+  };
+
+  const scrollToPricing = () => {
+    document.getElementById('pricing-section')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
 
   // Primary Navigation
@@ -136,6 +145,32 @@ const Home = () => {
         </IconButton>
         {!isMobile && (
           <>
+          <Button
+              onClick={scrollToPricing}
+              variant="text"
+              startIcon={<PricingIcon />}
+              endIcon={<ArrowDownIcon sx={{ fontSize: '16px' }} />}
+              sx={{
+                fontSize: "0.8rem",
+                padding: "8px 16px",
+                borderRadius: "12px",
+                color: palette.green,
+                fontWeight: "600",
+                whiteSpace: "nowrap",
+                textTransform: "none",
+                border: `1px solid ${palette.green}`,
+                background: 'rgba(138, 192, 85, 0.05)',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                '&:hover': {
+                  backgroundColor: palette.green,
+                  color: 'white',
+                  transform: 'translateY(-1px)',
+                  boxShadow: '0 4px 12px rgba(138, 192, 85, 0.3)',
+                },
+              }}
+            >
+              {getMessage('pricing_nav_button')}
+            </Button>
             <Button
               onClick={scrollToNews}
               variant="text"
@@ -428,6 +463,7 @@ const Home = () => {
       <PrimaryNav />
       <Hero />
       <ImagesSection />
+      <PricingSection />
       <NewsSection />
       <Footer />
     </Box>

@@ -32,6 +32,8 @@ import axios from "axios";
 import packageJson from '../../../package.json';
 import { veryLightGray } from '../../components/styledComponents';
 import { useNavigate } from "react-router-dom";
+import { Tab, Tabs } from '@mui/material';
+import SubscriptionInfo from '../../components/Settings/SubscriptionInfo';
 
 const Settings = () => {
     const { getMessage } = useMessageService();
@@ -52,6 +54,8 @@ const Settings = () => {
         severity: 'success'
     });
     const [copiedKey, setCopiedKey] = useState(null);
+    const [activeTab, setActiveTab] = useState(0);
+    
 
     // Fetch API keys when component mounts
     useEffect(() => {
@@ -218,138 +222,168 @@ const Settings = () => {
                 <Box mt="10px" ml="10px">
                     <Topbar title={getMessage("label_my_account")} />
                 </Box>
-
-                {/* User Info Section */}
-                <Box mt="20px" ml="20px" mr="20px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
-                    <Typography variant="h6" fontWeight="bold" mb="10px">
-                        {getMessage('label_user_info')}
-                    </Typography>
-                    <Typography variant="body1">{`${currentUser.firstName} ${currentUser.lastName}`}</Typography>
-                    <Typography variant="body1">{currentUser.email}</Typography>
-                    <Typography variant="body1">{`${getMessage('label_status')}: ${currentUser.userStatus}`}</Typography>
-                    <Typography variant="body1">{`${getMessage('userId')}: ${currentUser._id}`}</Typography>
-                    <Typography variant="body1">{`${getMessage('codes_redeemed')}: ${currentUser.sharingCodeRedeemed}`}</Typography>
-                </Box>
-
-                {/* Platform Info Section */}
-                <Box mt="20px" ml="20px" mr="20px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
-                    <Typography variant="h6" fontWeight="bold" mb="10px">
-                        {getMessage('label_platform_info')}
-                    </Typography>
-                    <Typography variant="body1">
-                        {`${getMessage('label_name_platform')}: ${packageJson.name}`}
-                    </Typography>
-                    <Typography variant="body1">
-                        {`${getMessage('label_version_platform')}: ${packageJson.version}`}
-                    </Typography>
-                </Box>
-
-                {/* API Keys Section */}
-                <Box mt="20px" ml="20px" mr="20px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                        <Typography variant="h6" fontWeight="bold">
-                            {`${getMessage('api_key')}`}
-                        </Typography>
-                        {apiKeys.length === 0 && (
-                            <Button
-                                startIcon={<AddIcon />}
-                                onClick={() => setCreateKeyDialog(true)}
-                                disabled={isLoading}
-                                aria-label= {`${getMessage('no_api_key_created')}`}
-                                sx={{
-                                    backgroundColor: '#F7941E',
-                                    color: 'white',
-                                    '&:hover': { backgroundColor: '#D17A1D' }
-                                }}
-                            >
-                                 {`${getMessage('create_api_key')}`}
-                            </Button>
-                        )}
-                    </Box>
-
-                    {isLoading ? (
-                        <Box display="flex" justifyContent="center" p={3}>
-                            <CircularProgress />
-                        </Box>
-                    ) : apiKeys.length === 0 ? (
-                        <Typography variant="body1" color="textSecondary" textAlign="center" py={3}>
-                            {`${getMessage('no_api_key_created')}`}
-                        </Typography>
-                    ) : (
-                        <Table aria-label="API Keys table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>{`${getMessage('key_name')}`}</TableCell>
-                                    <TableCell>{`${getMessage('key_api')}`}</TableCell>
-                                    <TableCell>{`${getMessage('created_key_api')}`}</TableCell>
-                                    <TableCell>{`${getMessage('actions_key_api')}`}</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {apiKeys.map((key) => (
-                                    <TableRow key={key._id}>
-                                        <TableCell>{key.name}</TableCell>
-                                        <TableCell>
-                                            <Box display="flex" alignItems="center" gap={1}>
-                                                <Typography variant="body2" component="span" sx={{ fontFamily: 'monospace' }}>
-                                                    {`${key.key.substring(0, 8)}...${key.key.substring(key.key.length - 4)}`}
-                                                </Typography>
-                                                <IconButton 
-                                                    size="small" 
-                                                    onClick={() => copyToClipboard(key.key)}
-                                                    aria-label={`Copy API key for ${key.name}`}
-                                                    color={copiedKey === key.key ? 'success' : 'default'}
-                                                >
-                                                    {copiedKey === key.key ? <DoneIcon /> : <ContentCopyIcon />}
-                                                </IconButton>
-                                            </Box>
-                                        </TableCell>
-                                        <TableCell>
-                                            {new Date(key.createdAt).toLocaleDateString()}
-                                        </TableCell>
-                                        <TableCell>
-                                            <IconButton
-                                                onClick={() => {
-                                                    setSelectedKeyToDelete(key._id);
-                                                    setDeleteKeyDialog(true);
-                                                }}
-                                                color="error"
-                                                aria-label={`Delete API key ${key.name}`}
-                                            >
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    )}
-                </Box>
-
-                {/* Delete Account Section */}
-                <Box mt="10px" mr="20px" p="20px">
-                    <Button
-                        onClick={handleClickDeleteAccount}
-                        disabled={isLoading}
-                        aria-label="Delete account"
+    
+                {/* Tabs */}
+                <Box ml="20px" mr="20px" mt="10px" borderBottom="1px solid #e0e0e0">
+                    <Tabs
+                        value={activeTab}
+                        onChange={(_, v) => setActiveTab(v)}
                         sx={{
-                            backgroundColor: 'red',
-                            color: 'white',
-                            '&:hover': { backgroundColor: 'darkred' }
+                            '& .Mui-selected': { color: '#F7941E' },
+                            '& .MuiTabs-indicator': { bgcolor: '#F7941E' },
                         }}
                     >
-                        {getMessage('label_delete_account')}
-                    </Button>
+                        <Tab label={getMessage('settings_tab_information')} sx={{ textTransform: 'none', fontWeight: 600 }} />
+                        <Tab label={getMessage('settings_tab_subscription')} sx={{ textTransform: 'none', fontWeight: 600 }} />
+                        <Tab label={getMessage('api_key')} sx={{ textTransform: 'none', fontWeight: 600 }} />
+                    </Tabs>
                 </Box>
-
-                {/* Create API Key Dialog */}
-                <Dialog 
-                    open={createKeyDialog} 
+    
+                {/* Tab 0 — User Info */}
+                {activeTab === 0 && (
+                    <>
+                        <Box mt="20px" ml="20px" mr="20px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
+                            <Typography variant="h6" fontWeight="bold" mb="10px">
+                                {getMessage('label_user_info')}
+                            </Typography>
+                            <Typography variant="body1">{`${currentUser.firstName} ${currentUser.lastName}`}</Typography>
+                            <Typography variant="body1">{currentUser.email}</Typography>
+                            <Typography variant="body1">{`${getMessage('label_status')}: ${currentUser.userStatus}`}</Typography>
+                            <Typography variant="body1">{`${getMessage('userId')}: ${currentUser._id}`}</Typography>
+                            <Typography variant="body1">{`${getMessage('codes_redeemed')}: ${currentUser.sharingCodeRedeemed}`}</Typography>
+                        </Box>
+    
+                        <Box mt="20px" ml="20px" mr="20px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
+                            <Typography variant="h6" fontWeight="bold" mb="10px">
+                                {getMessage('label_platform_info')}
+                            </Typography>
+                            <Typography variant="body1">
+                                {`${getMessage('label_name_platform')}: ${packageJson.name}`}
+                            </Typography>
+                            <Typography variant="body1">
+                                {`${getMessage('label_version_platform')}: ${packageJson.version}`}
+                            </Typography>
+                        </Box>
+    
+                        <Box mt="10px" mr="20px" p="20px">
+                            <Button
+                                onClick={handleClickDeleteAccount}
+                                disabled={isLoading}
+                                aria-label="Delete account"
+                                sx={{
+                                    backgroundColor: 'red',
+                                    color: 'white',
+                                    '&:hover': { backgroundColor: 'darkred' }
+                                }}
+                            >
+                                {getMessage('label_delete_account')}
+                            </Button>
+                        </Box>
+                    </>
+                )}
+    
+                {/* Tab 1 — Subscription */}
+                {activeTab === 1 && (
+                    <Box mt="20px" ml="20px" mr="20px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
+                        <Typography variant="h6" fontWeight="bold" mb="20px">
+                            {getMessage('settings_tab_subscription')}
+                        </Typography>
+                        <SubscriptionInfo />
+                    </Box>
+                )}
+    
+                {/* Tab 2 — API Keys */}
+                {activeTab === 2 && (
+                    <Box mt="20px" ml="20px" mr="20px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
+                        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                            <Typography variant="h6" fontWeight="bold">
+                                {`${getMessage('api_key')}`}
+                            </Typography>
+                            {apiKeys.length === 0 && (
+                                <Button
+                                    startIcon={<AddIcon />}
+                                    onClick={() => setCreateKeyDialog(true)}
+                                    disabled={isLoading}
+                                    aria-label={`${getMessage('no_api_key_created')}`}
+                                    sx={{
+                                        backgroundColor: '#F7941E',
+                                        color: 'white',
+                                        '&:hover': { backgroundColor: '#D17A1D' }
+                                    }}
+                                >
+                                    {`${getMessage('create_api_key')}`}
+                                </Button>
+                            )}
+                        </Box>
+    
+                        {isLoading ? (
+                            <Box display="flex" justifyContent="center" p={3}>
+                                <CircularProgress />
+                            </Box>
+                        ) : apiKeys.length === 0 ? (
+                            <Typography variant="body1" color="textSecondary" textAlign="center" py={3}>
+                                {`${getMessage('no_api_key_created')}`}
+                            </Typography>
+                        ) : (
+                            <Table aria-label="API Keys table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>{`${getMessage('key_name')}`}</TableCell>
+                                        <TableCell>{`${getMessage('key_api')}`}</TableCell>
+                                        <TableCell>{`${getMessage('created_key_api')}`}</TableCell>
+                                        <TableCell>{`${getMessage('actions_key_api')}`}</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {apiKeys.map((key) => (
+                                        <TableRow key={key._id}>
+                                            <TableCell>{key.name}</TableCell>
+                                            <TableCell>
+                                                <Box display="flex" alignItems="center" gap={1}>
+                                                    <Typography variant="body2" component="span" sx={{ fontFamily: 'monospace' }}>
+                                                        {`${key.key.substring(0, 8)}...${key.key.substring(key.key.length - 4)}`}
+                                                    </Typography>
+                                                    <IconButton
+                                                        size="small"
+                                                        onClick={() => copyToClipboard(key.key)}
+                                                        aria-label={`Copy API key for ${key.name}`}
+                                                        color={copiedKey === key.key ? 'success' : 'default'}
+                                                    >
+                                                        {copiedKey === key.key ? <DoneIcon /> : <ContentCopyIcon />}
+                                                    </IconButton>
+                                                </Box>
+                                            </TableCell>
+                                            <TableCell>
+                                                {new Date(key.createdAt).toLocaleDateString()}
+                                            </TableCell>
+                                            <TableCell>
+                                                <IconButton
+                                                    onClick={() => {
+                                                        setSelectedKeyToDelete(key._id);
+                                                        setDeleteKeyDialog(true);
+                                                    }}
+                                                    color="error"
+                                                    aria-label={`Delete API key ${key.name}`}
+                                                >
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        )}
+                    </Box>
+                )}
+    
+                {/* Dialogs — always mounted regardless of active tab */}
+                <Dialog
+                    open={createKeyDialog}
                     onClose={() => !isLoading && setCreateKeyDialog(false)}
                     aria-labelledby="create-key-dialog-title"
                 >
                     <DialogTitle id="create-key-dialog-title">
-                         {`${getMessage('create_new_api_key')}`}
+                        {`${getMessage('create_new_api_key')}`}
                     </DialogTitle>
                     <DialogContent>
                         <TextField
@@ -366,122 +400,80 @@ const Settings = () => {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button 
-                            onClick={() => setCreateKeyDialog(false)}
-                            disabled={isLoading}
-                            aria-label="Cancel creating API key"
-                        >
+                        <Button onClick={() => setCreateKeyDialog(false)} disabled={isLoading}>
                             {`${getMessage('cancel_key_create')}`}
                         </Button>
-                        <Button 
+                        <Button
                             onClick={handleCreateKey}
                             disabled={isLoading}
-                            aria-label="Create new API key"
-                            sx={{
-                                backgroundColor: '#F7941E',
-                                color: 'white',
-                                '&:hover': { backgroundColor: '#D17A1D' }
-                            }}
+                            sx={{ backgroundColor: '#F7941E', color: 'white', '&:hover': { backgroundColor: '#D17A1D' } }}
                         >
                             {isLoading ? <CircularProgress size={24} /> : `${getMessage('key_name_create')}`}
                         </Button>
                     </DialogActions>
                 </Dialog>
-
-                {/* Delete API Key Dialog */}
-                <Dialog 
-                    open={deleteKeyDialog} 
+    
+                <Dialog
+                    open={deleteKeyDialog}
                     onClose={() => !isLoading && setDeleteKeyDialog(false)}
                     aria-labelledby="delete-key-dialog-title"
-                    aria-describedby="delete-key-dialog-description"
                 >
                     <DialogTitle id="delete-key-dialog-title">
                         {`${getMessage('delete_key_api')}`}
                     </DialogTitle>
                     <DialogContent>
-                        <DialogContentText id="delete-key-dialog-description">
+                        <DialogContentText>
                             {`${getMessage('delete_key_api_message')}`}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button 
-                            onClick={() => setDeleteKeyDialog(false)}
-                            disabled={isLoading}
-                            aria-label="Cancel deleting API key"
-                        >
-                             {`${getMessage('cancel_key_create')}`}
+                        <Button onClick={() => setDeleteKeyDialog(false)} disabled={isLoading}>
+                            {`${getMessage('cancel_key_create')}`}
                         </Button>
-                        <Button 
+                        <Button
                             onClick={handleDeleteKey}
                             disabled={isLoading}
-                            aria-label="Confirm delete API key"
-                            sx={{
-                                backgroundColor: 'red',
-                                color: 'white',
-                                '&:hover': { backgroundColor: 'darkred' }
-                            }}
+                            sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
                         >
                             {isLoading ? <CircularProgress size={24} /> : `${getMessage('label_delete')}`}
                         </Button>
                     </DialogActions>
                 </Dialog>
-
-                {/* Delete Account Dialog */}
-                <Dialog 
-                    open={dialogConfirmDeleteOpen} 
+    
+                <Dialog
+                    open={dialogConfirmDeleteOpen}
                     onClose={() => !isLoading && handleCloseDeleteAccount()}
                     aria-labelledby="delete-account-dialog-title"
-                    aria-describedby="delete-account-dialog-description"
                 >
                     <DialogTitle id="delete-account-dialog-title">
                         {getMessage('label_delete_account_question')}
                     </DialogTitle>
                     <DialogContent>
-                        <DialogContentText id="delete-account-dialog-description">
+                        <DialogContentText>
                             {getMessage('label_delete_account_consequences')}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button 
-                            onClick={handleCloseDeleteAccount}
-                            disabled={isLoading}
-                            aria-label="Cancel account deletion"
-                            color="primary"
-                        >
+                        <Button onClick={handleCloseDeleteAccount} disabled={isLoading} color="primary">
                             {getMessage('label_cancel')}
                         </Button>
-                        <Button 
+                        <Button
                             onClick={handleConfirmDeleteAccount}
                             disabled={isLoading}
-                            aria-label="Confirm account deletion"
-                            sx={{
-                                backgroundColor: 'red',
-                                color: 'white',
-                                '&:hover': { backgroundColor: 'darkred' }
-                            }}
+                            sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
                         >
-                            {isLoading ? (
-                                <CircularProgress size={24} />
-                            ) : (
-                                getMessage('label_delete')
-                            )}
+                            {isLoading ? <CircularProgress size={24} /> : getMessage('label_delete')}
                         </Button>
                     </DialogActions>
                 </Dialog>
-
-                {/* Notifications */}
+    
                 <Snackbar
                     open={notification.open}
                     autoHideDuration={6000}
                     onClose={handleNotificationClose}
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 >
-                    <Alert
-                        onClose={handleNotificationClose}
-                        severity={notification.severity}
-                        variant="filled"
-                        sx={{ width: '100%' }}
-                    >
+                    <Alert onClose={handleNotificationClose} severity={notification.severity} variant="filled" sx={{ width: '100%' }}>
                         {notification.message}
                     </Alert>
                 </Snackbar>

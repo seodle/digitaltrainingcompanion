@@ -3499,5 +3499,707 @@
         "reference": "",
         "comment": "",
         "fuzzy": 0
+    },
+    {
+        "term": "pricing_section_title",
+        "definition": "Choose your plan",
+        "context": "Title of the pricing section on the home page",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_section_subtitle",
+        "definition": "Start free",
+        "context": " upgrade when you need.",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_on_quote",
+        "definition": "On request",
+        "context": "Displayed instead of a price when pricing is custom (research plan)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_per_month",
+        "definition": "\/ month",
+        "context": "Price suffix shown next to the monthly price",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_free_label",
+        "definition": "Free",
+        "context": "Label shown as the price for free plans",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_free",
+        "definition": "Get started for free",
+        "context": "CTA button on free plans",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_pro",
+        "definition": "Choose Pro",
+        "context": "CTA button on Pro Trainer and Pro Teacher plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_pro_plus",
+        "definition": "Choose Pro+",
+        "context": "CTA button on Pro+ Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_ultra",
+        "definition": "Choose Ultra",
+        "context": "CTA button on Ultra Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_contact",
+        "definition": "Contact us",
+        "context": "CTA button on Institution and Research plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_badge_popular",
+        "definition": "Popular",
+        "context": "Badge shown on highlighted\/recommended plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_trainer_label",
+        "definition": "You are a trainer",
+        "context": "Tab label for the trainer audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_trainer_desc",
+        "definition": "Create and share monitorings and access AI features.",
+        "context": "Description shown under the trainer tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_teacher_label",
+        "definition": "You are a teacher",
+        "context": "Tab label for the teacher audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_teacher_desc",
+        "definition": "Use Digital Training Companion in your classroom.",
+        "context": "Description shown under the teacher tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_institution_label",
+        "definition": "You are an institution",
+        "context": "Tab label for the institution audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_institution_desc",
+        "definition": "Provide Digital Training Companion to your staff. Unlimited users.",
+        "context": "Description shown under the institution tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_research_label",
+        "definition": "You are a research institution",
+        "context": "Tab label for the research audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_research_desc",
+        "definition": "Use Digital Training Companion in a research project with the Center LEARN of EPFL. Custom conditions.",
+        "context": "Description shown under the research tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f1",
+        "definition": "Create monitorings and assessments",
+        "context": "Feature listed on the Free Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f2",
+        "definition": "Collect responses",
+        "context": "Feature listed on the Free Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f3",
+        "definition": "Visualize results",
+        "context": "Feature listed on the Free Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f4",
+        "definition": "No AI features",
+        "context": "Feature listed on the Free Trainer plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f5",
+        "definition": "No monitoring sharing",
+        "context": "Feature listed on the Free Trainer plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f6",
+        "definition": "No raw data export",
+        "context": "Feature listed on the Free Trainer plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f1",
+        "definition": "1500 AI calls included",
+        "context": "Feature listed on the Pro Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f2",
+        "definition": "Full AI features",
+        "context": "Feature listed on Pro and above trainer plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f3",
+        "definition": "Share and import monitorings",
+        "context": "Feature listed on Pro and above trainer plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f4",
+        "definition": "Raw data export",
+        "context": "Feature listed on Pro and above trainer plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_plus_trainer_f1",
+        "definition": "5000 AI calls included",
+        "context": "Feature listed on the Pro+ Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_ultra_trainer_f1",
+        "definition": "30000 AI calls included",
+        "context": "Feature listed on the Ultra Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_teacher_f1",
+        "definition": "Access to shared assessments",
+        "context": "Feature listed on the Free Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_teacher_f2",
+        "definition": "AI available if included in a Pro+ trainer monitoring",
+        "context": "Feature listed on the Free Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_teacher_f3",
+        "definition": "No raw data export",
+        "context": "Feature listed on the Free Teacher plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_teacher_f1",
+        "definition": "750 AI calls included",
+        "context": "Feature listed on the Pro Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_teacher_f2",
+        "definition": "Full AI features",
+        "context": "Feature listed on the Pro Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_teacher_f3",
+        "definition": "Raw data export",
+        "context": "Feature listed on the Pro Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f1_xs",
+        "definition": "30000 AI calls per month",
+        "context": "Feature listed on the Institution XS plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f1_s",
+        "definition": "80000 AI calls  per month",
+        "context": "Feature listed on the Institution S plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f1_m",
+        "definition": "200000 AI calls  per month",
+        "context": "Feature listed on the Institution M plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f2",
+        "definition": "Unlimited users",
+        "context": "Feature listed on all Institution plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f3",
+        "definition": "Admin dashboard",
+        "context": "Feature listed on all Institution plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f4",
+        "definition": "Real-time quota visibility",
+        "context": "Feature listed on all Institution plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f1",
+        "definition": "Custom call pool",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f2",
+        "definition": "Unlimited users",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f3",
+        "definition": "Full AI features",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f4",
+        "definition": "Raw data export",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f5",
+        "definition": "Custom contract",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_005_max3",
+        "definition": "+0.005 CHF\/call above",
+        "context": "Overage pricing shown below the price on Pro Trainer card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_005_max10",
+        "definition": "+0.005 CHF\/call above",
+        "context": "Overage pricing shown below the price on Pro+ Trainer card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_005_max60",
+        "definition": "+0.005 CHF\/call above",
+        "context": "Overage pricing shown below the price on Ultra Trainer card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_005_max150",
+        "definition": "+0.005 CHF\/call above",
+        "context": "Overage pricing shown below the price on Pro Teacher card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_004_max60",
+        "definition": "+0.004 CHF\/call above",
+        "context": "Overage pricing shown below the price on Institution XS card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_004_max160",
+        "definition": "+0.004 CHF\/call above",
+        "context": "Overage pricing shown below the price on Institution S card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_overage_0035_max400",
+        "definition": "+0.0035 CHF\/call above",
+        "context": "Overage pricing shown below the price on Institution M card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_nav_button",
+        "definition": "Pricing",
+        "context": "Navigation button in the top bar that scrolls to the pricing section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_tab_information",
+        "definition": "Information",
+        "context": "Tab label for the user and platform info tab in settings",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_tab_subscription",
+        "definition": "Subscription",
+        "context": "Tab label for the subscription tab in settings",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_free_trainer",
+        "definition": "Free Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_pro_trainer",
+        "definition": "Pro Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_pro_plus_trainer",
+        "definition": "Pro+ Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_ultra_trainer",
+        "definition": "Ultra Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_free_teacher",
+        "definition": "Free Teacher",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_pro_teacher",
+        "definition": "Pro Teacher",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_institution_xs",
+        "definition": "Institution XS",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_institution_s",
+        "definition": "Institution S",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_institution_m",
+        "definition": "Institution M",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_research",
+        "definition": "Research",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_trial_active",
+        "definition": "Trial period:",
+        "context": "Label shown before the number of days remaining in the trial",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_trial_days_remaining",
+        "definition": "day(s) remaining",
+        "context": "Suffix shown after the number of days remaining in the trial",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_trial_expired",
+        "definition": "Trial period ended",
+        "context": "Shown when the trial period has expired",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_calls_this_month",
+        "definition": "AI calls this month",
+        "context": "Label for the AI call usage progress bar in settings",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_calls_remaining",
+        "definition": "call(s) remaining",
+        "context": "Suffix shown after the number of remaining AI calls",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_not_included",
+        "definition": "AI features are not included in your free plan.",
+        "context": "Alert shown for free plan users with no AI access",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_no_calls",
+        "definition": "No AI calls made this month.",
+        "context": "Alert shown when a paid user has made zero calls",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_see_plans",
+        "definition": "See available plans",
+        "context": "CTA button that navigates to the pricing section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_usage_fetch_error",
+        "definition": "Error fetching usage",
+        "context": "Error message when the AI usage API call fails",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_manage_plan",
+        "definition": "Manage my plan",
+        "context": "CTA button shown to paid plan users to upgrade or downgrade their plan",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
     }
 ]

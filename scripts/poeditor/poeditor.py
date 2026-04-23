@@ -54,9 +54,6 @@ if "OPENAI_API_KEY" not in ENV:
     print("The API key is available in your OpenAI account")
     sys.exit(1)
 
-# Set OpenAI API key
-openai.api_key = ENV['OPENAI_API_KEY']
-
 def check_parameter(name, value):
     """Checks that the given parameter was given."""
     if not value or value.isspace():
@@ -177,22 +174,29 @@ def add_term(key, english, context):
 
     add_context_to_term(key, context)
 
+LANG_NAMES = {
+  'fr': 'French',
+   'de': 'German',
+   'es': 'Spanish',
+   'it': 'Italian',
+}
+
 def translate(english, target_lang):
     """Translates the given english text into the target language using OpenAI."""
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+        client = openai.OpenAI(api_key=ENV['OPENAI_API_KEY'])
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": f"You are a translator. Translate the following English text to {target_lang}. The translations are needed for an app that helps to monitor training. Provide only the translation, no explanations."},
-                {"role": "user", "content": english}
+            {"role": "system", "content": f"You are a professional translator. Translate the following English text to {LANG_NAMES.get(target_lang, target_lang)}. The context is a web app that helps trainers and teachers monitor training sessions. Provide ONLY the translation, no explanations, no alternatives."},                {"role": "user", "content": english}
             ],
             temperature=0,
             max_tokens=150
         )
-        return response.choices[0].message['content'].strip()
+        return response.choices[0].message.content.strip()
     except Exception as e:
         print(f"Error in translation: {str(e)}")
-        return english  # Return original text if translation fails
+        return english
 
 def export_all():
     """Export all the locales."""
