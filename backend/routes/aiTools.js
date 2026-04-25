@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const { trackAiCall } = require('../middleware/trackAiCall');
+const { checkAiQuota } = require('../middleware/checkAiQuota');
 
 // Get Infomaniak AI endpoint ID from environment variable
 const INFOMANIAK_AI_ENDPOINT_ID = process.env.INFOMANIAK_AI_ENDPOINT_ID;
@@ -9,6 +10,7 @@ if (!INFOMANIAK_AI_ENDPOINT_ID) {
     console.error('Error: INFOMANIAK_AI_ENDPOINT_ID environment variable is not set');
 }
 
+router.use(checkAiQuota);
 router.use(trackAiCall);
 
 router.post('/infomaniak/chat', async (req, res) => {
