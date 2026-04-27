@@ -208,6 +208,11 @@ async function processMessageToAPI(message, type) {
 
     return response.data.choices[0].message.content;
   } catch (error) {
+    if (error?.response?.status === 402) {
+      window.dispatchEvent(new CustomEvent('ai-quota-exceeded', {
+        detail: { errorType: error.response.data?.error }
+      }));
+    }
     console.error('Full error details:', {
       message: error.message,
       response: error.response?.data,
@@ -215,7 +220,7 @@ async function processMessageToAPI(message, type) {
     });
     throw error;
   }
-}
+}                  
 
 /**
  * Generates a validation schema for adding questions based on provided parameters.
@@ -747,8 +752,13 @@ export const fetchSuggestedOptions = async (questionTitle, numberOfOptions, exis
       return suggestion;
     });
   } catch (error) {
+    if (error?.response?.status === 402) {
+      window.dispatchEvent(new CustomEvent('ai-quota-exceeded', {
+        detail: { errorType: error.response.data?.error }
+      }));
+      return existingOptions.length > 0 ? existingOptions : Array(numberOfOptions).fill('');
+    }
     console.error('Error fetching LLM suggestions:', error);
-    // Return existing options or empty array on error
     return existingOptions.length > 0 ? existingOptions : Array(numberOfOptions).fill('');
   }
 };

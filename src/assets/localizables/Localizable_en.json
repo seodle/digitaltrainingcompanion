@@ -4201,5 +4201,59 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_trial_title",
+        "definition": "Your trial has ended",
+        "context": "Title of the dialog shown when the 14-day trial expires",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_trial_body",
+        "definition": "Upgrade to a paid plan to keep using AI features.",
+        "context": "Body text of the trial expired dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_quota_title",
+        "definition": "Monthly AI limit reached",
+        "context": "Title of the dialog shown when the quota is exceeded",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_quota_body",
+        "definition": "You've used all your AI calls for this month. Upgrade or wait until next month.",
+        "context": "Body text of the quota exceeded dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_dismiss",
+        "definition": "Not now",
+        "context": "Dismiss button in the AI quota dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_upgrade",
+        "definition": "See plans",
+        "context": "Upgrade CTA button in the AI quota dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
     }
 ]

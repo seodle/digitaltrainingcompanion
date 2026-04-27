@@ -4201,5 +4201,59 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_trial_title",
+        "definition": "Ihre Testversion ist abgelaufen.",
+        "context": "Title of the dialog shown when the 14-day trial expires",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_trial_body",
+        "definition": "Upgrade auf einen kostenpflichtigen Plan, um die KI-Funktionen weiterhin nutzen zu k\u00f6nnen.",
+        "context": "Body text of the trial expired dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_quota_title",
+        "definition": "Monatliches KI-Limit erreicht",
+        "context": "Title of the dialog shown when the quota is exceeded",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_quota_body",
+        "definition": "Sie haben alle Ihre KI-Anfragen f\u00fcr diesen Monat genutzt. Upgrade oder warten Sie bis n\u00e4chsten Monat.",
+        "context": "Body text of the quota exceeded dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_dismiss",
+        "definition": "Nicht jetzt",
+        "context": "Dismiss button in the AI quota dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_upgrade",
+        "definition": "Pl\u00e4ne ansehen",
+        "context": "Upgrade CTA button in the AI quota dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
     }
 ]

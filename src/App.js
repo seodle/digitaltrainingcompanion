@@ -24,6 +24,8 @@ import EndSurvey from "./scenes/endSurvey";
 import Embedder from "./scenes/embedder";
 import PrivateRoute from "./components/PrivateRoute";
 import QuestionWidget from "./components/QuestionWidget";
+import AiQuotaDialog from './components/AiQuotaDialog';
+
 // Compute admin emails locally from environment (build-time)
 const ADMIN_EMAILS = (process.env.REACT_APP_ADMIN_EMAILS || '')
   .split(',')
@@ -184,6 +186,7 @@ function App() {
             }
           />
         </Routes>
+        <AiQuotaDialog />
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

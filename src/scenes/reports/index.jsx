@@ -949,11 +949,15 @@ const Reports = () => {
             
             return summary;
         } catch (error) {
+            if (error?.response?.status === 402) {
+              window.dispatchEvent(new CustomEvent('ai-quota-exceeded', {
+                detail: { errorType: error.response.data?.error }
+              }));
+            }
             console.error('Error generating AI summary:', error);
-            // En cas d'erreur, arrêter le loading
             setLoadingSummaries(prev => ({ ...prev, [questionKey]: false }));
             return null;
-        }
+          }
     };
 
     /**

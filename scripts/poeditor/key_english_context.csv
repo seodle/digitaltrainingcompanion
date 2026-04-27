@@ -1,23 +1,7 @@
 key,english,context
-settings_tab_information,Information,Tab label for the user and platform info tab in settings
-settings_tab_subscription,Subscription,Tab label for the subscription tab in settings
-plan_free_trainer,Free Trainer,Plan name displayed in the subscription badge
-plan_pro_trainer,Pro Trainer,Plan name displayed in the subscription badge
-plan_pro_plus_trainer,Pro+ Trainer,Plan name displayed in the subscription badge
-plan_ultra_trainer,Ultra Trainer,Plan name displayed in the subscription badge
-plan_free_teacher,Free Teacher,Plan name displayed in the subscription badge
-plan_pro_teacher,Pro Teacher,Plan name displayed in the subscription badge
-plan_institution_xs,Institution XS,Plan name displayed in the subscription badge
-plan_institution_s,Institution S,Plan name displayed in the subscription badge
-plan_institution_m,Institution M,Plan name displayed in the subscription badge
-plan_research,Research,Plan name displayed in the subscription badge
-settings_trial_active,Trial period:,Label shown before the number of days remaining in the trial
-settings_trial_days_remaining,day(s) remaining,Suffix shown after the number of days remaining in the trial
-settings_trial_expired,Trial period ended,Shown when the trial period has expired
-settings_ai_calls_this_month,AI calls this month,Label for the AI call usage progress bar in settings
-settings_ai_calls_remaining,call(s) remaining,Suffix shown after the number of remaining AI calls
-settings_ai_not_included,AI features are not included in your free plan.,Alert shown for free plan users with no AI access
-settings_ai_no_calls,No AI calls made this month.,Alert shown when a paid user has made zero calls
-settings_see_plans,See available plans,CTA button that navigates to the pricing section
-settings_usage_fetch_error,Error fetching usage,Error message when the AI usage API call fails
-settings_manage_plan,Manage my plan,CTA button shown to paid plan users to upgrade or downgrade their plan
+quota_dialog_trial_title,Your trial has ended,Title of the dialog shown when the 14-day trial expires
+quota_dialog_trial_body,Upgrade to a paid plan to keep using AI features.,Body text of the trial expired dialog
+quota_dialog_quota_title,Monthly AI limit reached,Title of the dialog shown when the quota is exceeded
+quota_dialog_quota_body,You've used all your AI calls for this month. Upgrade or wait until next month.,Body text of the quota exceeded dialog
+quota_dialog_dismiss,Not now,Dismiss button in the AI quota dialog
+quota_dialog_upgrade,See plans,Upgrade CTA button in the AI quota dialog

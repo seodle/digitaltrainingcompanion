@@ -4201,5 +4201,59 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_trial_title",
+        "definition": "La tua prova \u00e8 terminata.",
+        "context": "Title of the dialog shown when the 14-day trial expires",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_trial_body",
+        "definition": "Passa a un piano a pagamento per continuare a utilizzare le funzionalit\u00e0 AI.",
+        "context": "Body text of the trial expired dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_quota_title",
+        "definition": "Limite mensile di AI raggiunto",
+        "context": "Title of the dialog shown when the quota is exceeded",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_quota_body",
+        "definition": "Hai utilizzato tutte le tue chiamate AI per questo mese. Aggiorna o aspetta fino al mese prossimo.",
+        "context": "Body text of the quota exceeded dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_dismiss",
+        "definition": "Non adesso",
+        "context": "Dismiss button in the AI quota dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_upgrade",
+        "definition": "Vedi piani",
+        "context": "Upgrade CTA button in the AI quota dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
     }
 ]
