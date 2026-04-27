@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const Institution = require('../models/institutionModel');
 const { requireMonitoringOwnerOrRedeemer } = require('../middleware/authorization');
 
 const {
@@ -94,12 +95,36 @@ router.get("/currentUser/ai-usage", async (req, res) => {
     const quota = plan.monthlyCallQuota;
     const remaining = Math.max(0, quota - used);
 
+    // Institution admin check
+    const institutionId = user.institutionId || null;
+    let isInstitutionAdmin = false;
+    let institutionPool = null;
+
+    if (institutionId) {
+      const institution = await Institution.findById(institutionId)
+        .select('adminUserId aiCallsUsedThisMonth plan name')
+        .lean();
+      if (institution) {
+        isInstitutionAdmin = String(institution.adminUserId) === String(userId);
+        const instPlan = getPlan(institution.plan);
+        institutionPool = {
+          used: institution.aiCallsUsedThisMonth,
+          quota: instPlan.monthlyCallQuota,
+          remaining: Math.max(0, instPlan.monthlyCallQuota - institution.aiCallsUsedThisMonth),
+          name: institution.name,
+        };
+      }
+    }
+
     return res.json({
       plan: plan.id,
       used,
       quota,
       remaining,
       trialActive: user.trialActive ?? false,
+      institutionId: institutionId ? String(institutionId) : null,
+      isInstitutionAdmin,
+      institutionPool,
     });
   } catch (error) {
     return res.status(500).json({ error: error.message });

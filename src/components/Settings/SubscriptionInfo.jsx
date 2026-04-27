@@ -7,8 +7,16 @@ import {
     CircularProgress,
     Button,
     Alert,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    IconButton,
+    Tooltip,
 } from '@mui/material';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { useAuthUser } from '../../contexts/AuthUserContext';
 import { useMessageService } from '../../services/MessageService';
 import { useNavigate } from 'react-router-dom';
@@ -38,6 +46,8 @@ const SubscriptionInfo = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const pricingTab = currentUser?.userStatus === 'Teacher' ? 1 : 0;
+    const [members, setMembers] = useState([]);
+    const [loadingMembers, setLoadingMembers] = useState(false);
 
 
     useEffect(() => {
@@ -56,6 +66,39 @@ const SubscriptionInfo = () => {
         };
         fetchUsage();
     }, []);
+
+    useEffect(() => {
+        if (!usage?.isInstitutionAdmin || !usage?.institutionId) return;
+        const fetchMembers = async () => {
+            setLoadingMembers(true);
+            try {
+                const token = localStorage.getItem('token');
+                const res = await axios.get(
+                    `${BACKEND_URL}/institutions/${usage.institutionId}/members`,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+                setMembers(res.data.members || []);
+            } catch (err) {
+                console.error('Error fetching members:', err);
+            } finally {
+                setLoadingMembers(false);
+            }
+        };
+        fetchMembers();
+    }, [usage]);
+
+    const handleRemoveMember = async (userId) => {
+        try {
+            const token = localStorage.getItem('token');
+            await axios.delete(
+                `${BACKEND_URL}/institutions/${usage.institutionId}/members/${userId}`,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            setMembers(prev => prev.filter(m => String(m._id) !== String(userId)));
+        } catch (err) {
+            console.error('Error removing member:', err);
+        }
+    };
 
     if (!currentUser) return null;
 
@@ -166,6 +209,58 @@ const SubscriptionInfo = () => {
             >
                 {isFree ? getMessage('settings_see_plans') : getMessage('settings_manage_plan')}
             </Button>
+            {/* Institution admin dashboard */}
+            {usage?.isInstitutionAdmin && usage?.institutionPool && (
+                <Box mt={4}>
+                    <Typography variant="subtitle1" fontWeight={700} mb={1}>
+                        {getMessage('institution_pool_usage')}
+                    </Typography>
+                    <Box display="flex" justifyContent="space-between" mb={0.5}>
+                        <Typography variant="body2">{usage.institutionPool.name}</Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            {usage.institutionPool.used} / {usage.institutionPool.quota}
+                        </Typography>
+                    </Box>
+                    <LinearProgress
+                        variant="determinate"
+                        value={usage.institutionPool.quota > 0
+                            ? Math.min(100, Math.round((usage.institutionPool.used / usage.institutionPool.quota) * 100))
+                            : 0}
+                        sx={{ height: 8, borderRadius: 4, mb: 3 }}
+                    />
+                    <Typography variant="subtitle1" fontWeight={700} mb={1}>
+                        {getMessage('institution_members_title')}
+                    </Typography>
+                    {loadingMembers ? <CircularProgress size={24} /> : (
+                        <Table size="small">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>{getMessage('institution_member_name')}</TableCell>
+                                    <TableCell>{getMessage('institution_member_email')}</TableCell>
+                                    <TableCell align="right">{getMessage('institution_member_calls')}</TableCell>
+                                    <TableCell />
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {members.map(m => (
+                                    <TableRow key={m._id}>
+                                        <TableCell>{m.firstName} {m.lastName}</TableCell>
+                                        <TableCell>{m.email}</TableCell>
+                                        <TableCell align="right">{m.aiCallsUsedThisMonth ?? 0}</TableCell>
+                                        <TableCell align="right">
+                                            <Tooltip title={getMessage('institution_member_remove')}>
+                                                <IconButton size="small" onClick={() => handleRemoveMember(m._id)}>
+                                                    <PersonRemoveIcon fontSize="small" />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    )}
+                </Box>
+            )}
         </Box>
     );
 };

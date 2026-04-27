@@ -1,7 +1,7 @@
 key,english,context
-quota_dialog_trial_title,Your trial has ended,Title of the dialog shown when the 14-day trial expires
-quota_dialog_trial_body,Upgrade to a paid plan to keep using AI features.,Body text of the trial expired dialog
-quota_dialog_quota_title,Monthly AI limit reached,Title of the dialog shown when the quota is exceeded
-quota_dialog_quota_body,You've used all your AI calls for this month. Upgrade or wait until next month.,Body text of the quota exceeded dialog
-quota_dialog_dismiss,Not now,Dismiss button in the AI quota dialog
-quota_dialog_upgrade,See plans,Upgrade CTA button in the AI quota dialog
+institution_members_title,Institution Members,Title of the member list table in Settings for institution admins
+institution_member_name,Name,Column header for member name in the institution dashboard
+institution_member_email,Email,Column header for member email in the institution dashboard
+institution_member_calls,Calls this month,Column header for AI calls used in the institution dashboard
+institution_member_remove,Remove member,Tooltip for remove button in the institution member table
+institution_pool_usage,Institution AI pool usage,Label for the shared AI call pool gauge

@@ -4255,5 +4255,59 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
+    },
+    {
+        "term": "institution_members_title",
+        "definition": "Membres de l'institution",
+        "context": "Title of the member list table in Settings for institution admins",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_name",
+        "definition": "Nom",
+        "context": "Column header for member name in the institution dashboard",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_email",
+        "definition": "E-mail",
+        "context": "Column header for member email in the institution dashboard",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_calls",
+        "definition": "Appels ce mois-ci",
+        "context": "Column header for AI calls used in the institution dashboard",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_remove",
+        "definition": "Retirer membre",
+        "context": "Tooltip for remove button in the institution member table",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_pool_usage",
+        "definition": "Utilisation de la piscine AI de l'institution",
+        "context": "Label for the shared AI call pool gauge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
     }
 ]

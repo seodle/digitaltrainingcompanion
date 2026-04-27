@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
 const User = require("../models/userModel");
+const Institution = require("../models/institutionModel");
 const { validateUserCredentialsRegister } = require('../utils/passwordValidationUtils.js');
 require('dotenv').config();
 
@@ -81,6 +82,18 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
             isVerified: false,
         });
         await newUser.save();
+
+        // Auto-link to institution if email domain matches
+        const domain = userData.email.split('@')[1]?.toLowerCase();
+        if (domain) {
+            const institution = await Institution.findOne({ authorizedEmailDomains: domain });
+            if (institution) {
+                newUser.institutionId = institution._id;
+                newUser.subscriptionPlan = institution.plan;
+                newUser.trialActive = false;
+                await newUser.save();
+            }
+        }
 
         if (sendEmailForVerification) {
             // send an email to verify the account

@@ -25,6 +25,7 @@ const apiKeysRoutes = require("./routes/apiKeys");
 const aiToolsRoutes = require("./routes/aiTools");
 const questionWidgetRoutes = require('./routes/questionWidget');
 const adminRoutes = require('./routes/admin');
+const institutionRoutes = require('./routes/institution');
 
 const app = express();
 
@@ -108,6 +109,7 @@ app.use("/export", getUser, exportsRoutes);
 app.use("/api-keys", getUser, apiKeysRoutes);
 app.use("/ai-tools", getUser, aiToolsRoutes);
 app.use("/semantic", getUser, semanticSimiliaritySearch);
+app.use('/institutions', getUser, institutionRoutes);
 
 // ADMIN-ONLY ROUTES (JWT + ADMIN RIGHTS REQUIRED)
 app.use("/document", getUser, requireAdmin, documentEmbedding);

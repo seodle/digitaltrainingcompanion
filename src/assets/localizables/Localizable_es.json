@@ -4255,5 +4255,59 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
+    },
+    {
+        "term": "institution_members_title",
+        "definition": "Miembros de la Instituci\u00f3n",
+        "context": "Title of the member list table in Settings for institution admins",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_name",
+        "definition": "Nombre",
+        "context": "Column header for member name in the institution dashboard",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_email",
+        "definition": "Correo electr\u00f3nico",
+        "context": "Column header for member email in the institution dashboard",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_calls",
+        "definition": "Llamadas de este mes",
+        "context": "Column header for AI calls used in the institution dashboard",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_remove",
+        "definition": "Eliminar miembro",
+        "context": "Tooltip for remove button in the institution member table",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_pool_usage",
+        "definition": "Uso de la piscina de IA de la instituci\u00f3n",
+        "context": "Label for the shared AI call pool gauge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
     }
 ]
