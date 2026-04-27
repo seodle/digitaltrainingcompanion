@@ -17,7 +17,7 @@ router.post('/infomaniak/chat', async (req, res) => {
         }
         // Combine the incoming request with our configuration
         const requestBody = {
-            model: 'llama3',
+            model: 'qwen3',
             messages: req.body.messages,
             temperature: 0.1
         };
@@ -85,7 +85,7 @@ router.post('/suggest-options', async (req, res) => {
 
         // Prepare the request to the LLM API
         const requestBody = {
-            model: 'llama3',
+            model: 'qwen3',
             messages: [
                 {
                     role: 'system',
@@ -207,7 +207,7 @@ router.post('/generate-text-summary', async (req, res) => {
 
         // Call Infomaniak API with the exact same prompt as PDF/DOCX exports
         const requestBody = {
-            model: 'llama3',
+            model: 'qwen3',
             messages: [{
                 role: "user",
                 content: `
