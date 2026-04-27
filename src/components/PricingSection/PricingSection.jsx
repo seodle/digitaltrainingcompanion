@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
   Box,
   Button,
@@ -17,6 +18,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import { useMessageService } from '../../services/MessageService';
+import { BACKEND_URL } from '../../config';
+import { useAuthUser } from '../../contexts/AuthUserContext';
 
 // Palette matches Home page
 const palette = {
@@ -227,7 +230,7 @@ const AUDIENCES = [
   },
 ];
 
-const PlanCard = ({ plan, getMessage }) => {
+const PlanCard = ({ plan, getMessage, onCheckout }) => {
   const navigate = useNavigate();
 
   const priceDisplay = plan.price === null
@@ -323,7 +326,7 @@ const PlanCard = ({ plan, getMessage }) => {
         <Button
           fullWidth
           variant={plan.ctaVariant}
-          onClick={() => navigate('/signup')}
+          onClick={() => plan.price === 0 ? navigate('/signup') : onCheckout(plan.id)}
           sx={{
             borderRadius: 2,
             fontWeight: 700,
@@ -353,6 +356,26 @@ const PricingSection = () => {
       const tab = parseInt(searchParams.get('pricingTab'), 10);
       return isNaN(tab) ? 0 : Math.min(tab, AUDIENCES.length - 1);
   });
+  const { currentUser } = useAuthUser();
+  const navigate = useNavigate();
+
+  const handleCheckout = async (planId) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/signin');
+      return;
+    }
+    try {
+      const res = await axios.post(
+        `${BACKEND_URL}/subscription/checkout`,
+        { planId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      window.location.href = res.data.url;
+    } catch (err) {
+      console.error('Checkout error:', err);
+    }
+  };
 
   const audience = AUDIENCES[activeTab];
 
@@ -419,7 +442,7 @@ const PricingSection = () => {
               sm={6}
               md={audience.plans.length <= 2 ? 4 : 3}
             >
-              <PlanCard plan={plan} getMessage={getMessage} />
+              <PlanCard plan={plan} getMessage={getMessage} onCheckout={handleCheckout} />
             </Grid>
           ))}
         </Grid>

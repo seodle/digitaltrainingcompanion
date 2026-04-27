@@ -26,6 +26,8 @@ const aiToolsRoutes = require("./routes/aiTools");
 const questionWidgetRoutes = require('./routes/questionWidget');
 const adminRoutes = require('./routes/admin');
 const institutionRoutes = require('./routes/institution');
+const subscriptionRoutes = require('./routes/subscription');
+const stripeWebhookRoute = require('./routes/stripeWebhook');
 
 const app = express();
 
@@ -77,6 +79,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
+// Stripe webhook MUST be before bodyParser.json (needs raw body for signature verification)
+app.use('/stripe/webhook', stripeWebhookRoute);
+
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
 
@@ -110,6 +115,7 @@ app.use("/api-keys", getUser, apiKeysRoutes);
 app.use("/ai-tools", getUser, aiToolsRoutes);
 app.use("/semantic", getUser, semanticSimiliaritySearch);
 app.use('/institutions', getUser, institutionRoutes);
+app.use('/subscription', getUser, subscriptionRoutes);
 
 // ADMIN-ONLY ROUTES (JWT + ADMIN RIGHTS REQUIRED)
 app.use("/document", getUser, requireAdmin, documentEmbedding);
