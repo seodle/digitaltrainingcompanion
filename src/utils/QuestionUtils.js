@@ -172,10 +172,11 @@ const getAssessmentContent = (type) => {
  *
  * @param {string} message - The message content to send to the assistant.
  * @param {string} type - The type of assessment content to generate.
+ * @param {string} monitoringId - The ID of the monitoring.
  * @returns {Promise<string>} - The assistant's response content.
  * @throws Will throw an error if the API call fails or if the API key is not defined.
  */
-async function processMessageToAPI(message, type) {
+async function processMessageToAPI(message, type, monitoringId) {
   const systemPrompt = getAssessmentContent(type);
 
   try {
@@ -191,7 +192,8 @@ async function processMessageToAPI(message, type) {
             role: 'user',
             content: message,
           },
-        ]
+        ],
+        ...(monitoringId ? { monitoringId } : {})
       },
       {
         headers: {
@@ -212,6 +214,7 @@ async function processMessageToAPI(message, type) {
       window.dispatchEvent(new CustomEvent('ai-quota-exceeded', {
         detail: { errorType: error.response.data?.error }
       }));
+      throw error;
     }
     console.error('Full error details:', {
       message: error.message,
@@ -496,7 +499,9 @@ const handleSubmit = async (values, { resetForm }, context) => {
         setIsLoading(false);
       }
     } catch (error) {
-      console.error('Error:', error);
+      if (error?.response?.status !== 402) {
+        console.error('Error:', error);
+      }
       if (setIsLoading) {
         setIsLoading(false);
       }
@@ -680,7 +685,7 @@ export const handleAutoSuggestionsChange = (event, setAutoSuggestions) => {
  * @param {string} customInstructions - Custom instructions for the AI to follow
  * @returns {Promise<Array<string>>} Array of suggested options
  */
-export const fetchSuggestedOptions = async (questionTitle, numberOfOptions, existingOptions = [], currentUser = null, questionType = null, customInstructions = null) => {
+export const fetchSuggestedOptions = async (questionTitle, numberOfOptions, existingOptions = [], currentUser = null, questionType = null, customInstructions = null, monitoringId = null) => {
   try {
 
     console.log('questionType', questionType);
@@ -724,7 +729,8 @@ export const fetchSuggestedOptions = async (questionTitle, numberOfOptions, exis
         questionTitle,
         numberOfOptions,
         instructions: typeInstructions,
-        questionType: questionType
+        questionType: questionType,
+        ...(monitoringId ? { monitoringId } : {})
       },
       {
         headers: {
@@ -770,7 +776,7 @@ export const fetchSuggestedOptions = async (questionTitle, numberOfOptions, exis
  * @param {boolean} props.autoSuggestionsEnabled - Whether auto-suggestions are enabled
  * @returns {React.ReactElement} Component
  */
-export const QuestionOptionGenerator = ({ autoSuggestionsEnabled, questionText }) => {
+export const QuestionOptionGenerator = ({ autoSuggestionsEnabled, questionText, monitoringId }) => {
   const [loading, setLoading] = useState(false);
   const { values, setFieldValue } = useFormikContext();
   const { getMessage } = useMessageService();
@@ -786,7 +792,7 @@ export const QuestionOptionGenerator = ({ autoSuggestionsEnabled, questionText }
       questionText.trim() === '' ||
       values.questionType === QuestionType.TEXT ||
       values.questionType === QuestionType.SINGLE_TEXT ||
-      currentUser?.sandbox) {
+      ['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan)) {
       return;
     }
 
@@ -833,7 +839,9 @@ export const QuestionOptionGenerator = ({ autoSuggestionsEnabled, questionText }
         optionsToGenerate,
         optionsForGeneration,
         currentUser,
-        values.questionType
+        values.questionType,
+        null,
+        monitoringId
       );
 
       // Update options with suggestions

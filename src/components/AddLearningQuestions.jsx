@@ -26,7 +26,7 @@ import ChooseNumberQuestions from './ChooseNumberQuestions';
 import AdoptionTypeSelector from './AdoptionTypeSelector';
 import ChooseOptions from './ChooseOptions';
 
-const AddLearningQuestions = ({ setQuestions, questions, assessmentType, workshops, splitWorkshops }) => {
+const AddLearningQuestions = ({ setQuestions, questions, assessmentType, workshops, splitWorkshops, monitoringId }) => {
 
   const { currentUser } = useAuthUser();
   const [response, setResponse] = useState("");
@@ -41,6 +41,8 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
   const { languageCode } = useLanguage();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const { getMessage } = useMessageService();
+
+  const isFree = ['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan);
 
   const FormResetWatcher = ({ splitWorkshops, initialQuestionValues }) => {
     const { values, setFieldValue } = useFormikContext();
@@ -68,13 +70,19 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
     setError(null);
 
     try {
-      const response = await processMessageToAPI(message, type);
+      const response = await processMessageToAPI(message, type, monitoringId);
       console.log("response: ", response);
       setResponse(response);
       return response;
     } catch (error) {
-      console.error('Error:', error);
-      setError(error.message || "An unexpected error occurred");
+      if (error?.response?.status !== 402) {
+        console.error('Error:', error);
+      }
+      if (error?.response?.status === 402) {
+        setError(null);
+      } else {
+        setError(error.message || 'An unexpected error occurred');
+      }
       setIsLoading(false);
       throw error;
     }
@@ -90,7 +98,7 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
 
   // Function to handle option generation directly
   const handleGenerateOptions = async (values, setFieldValue) => {
-    if (!values.question || values.question.trim() === '' || currentUser?.sandbox) {
+    if (!values.question || values.question.trim() === '' || isFree) {
       return;
     }
 
@@ -250,7 +258,7 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
               <Switch
                 checked={localAutoSuggestionsEnabled}
                 onChange={handleAutoSuggestionsToggle}
-                disabled={!values.question || generatingOptions || currentUser?.sandbox || generationInProgress.current}
+                disabled={!values.question || generatingOptions || isFree || generationInProgress.current}
               />
             }
             label={
@@ -259,9 +267,9 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
               </Box>
             }
           />
-          {currentUser?.sandbox && (
+          {isFree && (
             <Alert severity="info" sx={{ mt: 1 }}>
-              {getMessage("sandbox_user_ai_restriction")}
+              {getMessage("free_user_ai_restriction")}
             </Alert>
           )}
         </Box>
@@ -298,10 +306,12 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
             editorState,
             setIsLoading,
         });
-    } catch (error) {
-        console.error('Error in onSubmit:', error);
+      } catch (error) {
+        if (error?.response?.status !== 402) {
+          console.error('Error in onSubmit:', error);
+        }
         setIsLoading(false);
-    }
+      }
   };
 
   return (
@@ -309,7 +319,7 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
     <Box flexDirection="column" display="flex" sx={{backgroundColor: "#fff", marginBottom: "20px", paddingLeft: "20px",}} >
       <Box display="flex" alignItems="center">
         <FormControlLabel
-          control={<Switch checked={helpWithAI} onChange={handleHelpWithAIChange} disabled={currentUser?.sandbox} />}
+          control={<Switch checked={helpWithAI} onChange={handleHelpWithAIChange} disabled={isFree} />}
           label={
             <Box display="flex" alignItems="center">
               {getMessage("label_create_questions_with_ai")}
@@ -326,9 +336,9 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
           }
         />
       </Box>
-      {currentUser?.sandbox && (
+      {isFree && (
         <Alert severity="info" sx={{ mt: 1, mr:3 }}>
-          {getMessage("sandbox_user_ai_restriction")}
+          {getMessage("free_user_ai_restriction")}
         </Alert>
       )}
     </Box>

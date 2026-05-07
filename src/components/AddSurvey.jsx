@@ -24,7 +24,7 @@ const learningTypes = [
     AssessmentType.STUDENT_LEARNING_OUTCOMES,
 ];
 
-const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
+const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds, monitoringId }) => {
     
     const location = useLocation();
     const navigate = useNavigate();
@@ -314,6 +314,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                                 assessmentType={assessmentType}
                                 splitWorkshops={splitWorkshops}
                                 workshops={workshops}
+                                monitoringId={monitoringId}
                             />
                          ) : (
                             <AddQuestion
@@ -322,6 +323,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                                 assessmentType={assessmentType}
                                 splitWorkshops={splitWorkshops}
                                 workshops={workshops}
+                                monitoringId={monitoringId}
                             />
                         )}
 

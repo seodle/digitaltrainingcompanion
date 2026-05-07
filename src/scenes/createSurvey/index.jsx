@@ -25,8 +25,8 @@ const assessmentEntries = Object.entries(AssessmentType);
 const CreateSurvey = () => {
 
     const location = useLocation();
-    const { assessmentType, assessmentName, assessmentId } = location.state || {};
-
+    const { assessmentType, assessmentName, assessmentId, monitoringId } = location.state || {};
+    console.log("monitoringId", monitoringId)
     console.log("assessmentType", assessmentType)
     console.log("assessmentName", assessmentName)
     console.log("assessmentId", assessmentId)
@@ -41,15 +41,15 @@ const CreateSurvey = () => {
                 </Box>
 
 
-                {assessmentType === AssessmentType.TRAINEE_CHARACTERISTICS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.TRAINEE_CHARACTERISTICS]} />}  
-                {assessmentType === AssessmentType.TRAINING_CHARACTERISTICS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.TRAINING_CHARACTERISTICS]} />}  
-                {assessmentType === AssessmentType.IMMEDIATE_REACTIONS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.IMMEDIATE_REACTIONS]} />}
-                {assessmentType === AssessmentType.SUSTAINABILITY_CONDITIONS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.SUSTAINABILITY_CONDITIONS]} />}
-                {assessmentType === AssessmentType.STUDENT_CHARACTERISTICS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.STUDENT_CHARACTERISTICS]} />}
-                {assessmentType === AssessmentType.ORGANIZATIONAL_CONDITIONS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.ORGANIZATIONAL_CONDITIONS]} />}
-                {assessmentType === AssessmentType.LEARNING && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.LEARNING]} />}
-                {assessmentType === AssessmentType.BEHAVIORAL_CHANGES && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.BEHAVIORAL_CHANGES]} />} 
-                {assessmentType === AssessmentType.STUDENT_LEARNING_OUTCOMES && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.STUDENT_LEARNING_OUTCOMES]} />}
+                {assessmentType === AssessmentType.TRAINEE_CHARACTERISTICS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.TRAINEE_CHARACTERISTICS]} monitoringId={monitoringId} />}  
+                {assessmentType === AssessmentType.TRAINING_CHARACTERISTICS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.TRAINING_CHARACTERISTICS]} monitoringId={monitoringId} />}  
+                {assessmentType === AssessmentType.IMMEDIATE_REACTIONS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.IMMEDIATE_REACTIONS]} monitoringId={monitoringId} />}
+                {assessmentType === AssessmentType.SUSTAINABILITY_CONDITIONS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.SUSTAINABILITY_CONDITIONS]} monitoringId={monitoringId} />}
+                {assessmentType === AssessmentType.STUDENT_CHARACTERISTICS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.STUDENT_CHARACTERISTICS]} monitoringId={monitoringId} />}
+                {assessmentType === AssessmentType.ORGANIZATIONAL_CONDITIONS && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.ORGANIZATIONAL_CONDITIONS]} monitoringId={monitoringId} />}
+                {assessmentType === AssessmentType.LEARNING && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.LEARNING]} monitoringId={monitoringId} />}
+                {assessmentType === AssessmentType.BEHAVIORAL_CHANGES && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.BEHAVIORAL_CHANGES]} monitoringId={monitoringId} />} 
+                {assessmentType === AssessmentType.STUDENT_LEARNING_OUTCOMES && <AddSurvey currentAssessmentServerId={assessmentId} predifinedQuestionIds={questionIdMap[AssessmentType.STUDENT_LEARNING_OUTCOMES]} monitoringId={monitoringId} />}
                  
             </Box>
         </Box>

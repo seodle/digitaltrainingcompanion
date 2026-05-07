@@ -17,7 +17,7 @@ import QuestionTypeSelector from './QuestionTypeSelector';
 import { handleAutoSuggestionsChange, QuestionOptionGenerator } from '../utils/QuestionUtils';
 import { useAuthUser } from '../contexts/AuthUserContext';
 
-const AddQuestion = ({ setQuestions, questions, assessmentType, workshops, splitWorkshops }) => {
+const AddQuestion = ({ setQuestions, questions, assessmentType, workshops, splitWorkshops, monitoringId }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [isUploading, setIsUploading ] = useState(false);
   const [uploadError, setUploadError] = useState(null);
@@ -26,6 +26,8 @@ const AddQuestion = ({ setQuestions, questions, assessmentType, workshops, split
   const [autoSuggestionsEnabled, setAutoSuggestionsEnabled] = useState(false);
   const { currentUser } = useAuthUser();
   const { getMessage } = useMessageService();
+
+  const isFree = ['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan);
 
   const getAddQuestionSchema = (splitWorkshops, questionType) => {
     let schema = {};
@@ -450,6 +452,7 @@ const AddQuestion = ({ setQuestions, questions, assessmentType, workshops, split
                   questionText={regroupAsMatrix && isMatrixRegroupableType(values.questionType) && values.questions && values.questions[0] 
                     ? values.questions[0].question 
                     : values.question}
+                  monitoringId={monitoringId}
                 />
 
                 <FormControlLabel
@@ -459,15 +462,15 @@ const AddQuestion = ({ setQuestions, questions, assessmentType, workshops, split
                       onChange={(e) => handleAutoSuggestionsChange(e, setAutoSuggestionsEnabled)}
                       name="autoSuggestions"
                       color="primary"
-                      disabled={currentUser?.sandbox}
+                      disabled={isFree}
                     />
                   }
                   label={getMessage("label_auto_suggestions")}
                   sx={{ mt: 5 }}
                 />
-                {currentUser?.sandbox && (
+                {isFree && (
                   <Alert severity="info" sx={{ mt: 1 }}>
-                    {getMessage("sandbox_user_ai_restriction")}
+                    {getMessage("free_user_ai_restriction")}
                   </Alert>
                 )}
 
