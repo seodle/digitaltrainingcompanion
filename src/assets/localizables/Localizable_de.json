@@ -2916,17 +2916,17 @@
         "fuzzy": 0
     },
     {
-        "term": "sandbox_user_ai_restriction",
-        "definition": "Nicht verf\u00fcgbar f\u00fcr Sandbox-Nutzer. Kontaktieren Sie uns, um ein Upgrade durchzuf\u00fchren: contact@digitaltrainingcompanion.ch",
-        "context": "sandbox user ai restriction",
+        "term": "free_user_ai_restriction",
+        "definition": "Nicht verfügbar im kostenlosen Plan. Upgraden Sie für KI-Funktionen.",
+        "context": "free user ai restriction",
         "term_plural": "",
         "reference": "",
         "comment": "",
         "fuzzy": 0
     },
     {
-        "term": "sandbox_user_monitoring_limit",
-        "definition": "Sandbox-Benutzer k\u00f6nnen nur ein Monitoring verwenden",
+        "term": "free_user_monitoring_limit",
+        "definition": "Kostenlose Nutzer können nur ein Monitoring erstellen",
         "context": "Monitoring restrictions",
         "term_plural": "",
         "reference": "",
@@ -2934,8 +2934,8 @@
         "fuzzy": 1
     },
     {
-        "term": "sandbox_user_assessment_type_limit",
-        "definition": "Sandbox-Benutzer k\u00f6nnen nur eine Bewertung jedes Typs erstellen",
+        "term": "free_user_assessment_type_limit",
+        "definition": "Kostenlose Nutzer können nur eine Bewertung pro Typ erstellen",
         "context": " Assessment restrictions",
         "term_plural": "",
         "reference": "",
@@ -2943,18 +2943,18 @@
         "fuzzy": 1
     },
     {
-        "term": "sandbox_user_cannot_import",
-        "definition": "Der Import von Monitorings ist f\u00fcr Sandbox-Benutzer nicht verf\u00fcgbar",
-        "context": "sandbox_user_cannot_import",
+        "term": "free_user_cannot_import",
+        "definition": "Monitoring-Import ist im kostenlosen Plan nicht verfügbar",
+        "context": "free_user_cannot_import",
         "term_plural": "",
         "reference": "",
         "comment": "",
         "fuzzy": 0
     },
     {
-        "term": "sandbox_user_cannot_copy",
-        "definition": "Kopieren ist f\u00fcr Sandbox-Benutzer nicht verf\u00fcgbar",
-        "context": "sandbox_user_cannot_copy",
+        "term": "free_user_cannot_copy",
+        "definition": "Kopieren ist im kostenlosen Plan nicht verfügbar",
+        "context": "free_user_cannot_copy",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -3933,69 +3933,6 @@
         "fuzzy": 1
     },
     {
-        "term": "pricing_overage_005_max3",
-        "definition": "+0,005 CHF\/call dar\u00fcber",
-        "context": "Overage pricing shown below the price on Pro Trainer card",
-        "term_plural": "",
-        "reference": "",
-        "comment": "",
-        "fuzzy": 1
-    },
-    {
-        "term": "pricing_overage_005_max10",
-        "definition": "+0,005 CHF\/call dar\u00fcber",
-        "context": "Overage pricing shown below the price on Pro+ Trainer card",
-        "term_plural": "",
-        "reference": "",
-        "comment": "",
-        "fuzzy": 1
-    },
-    {
-        "term": "pricing_overage_005_max60",
-        "definition": "+0,005 CHF\/call dar\u00fcber",
-        "context": "Overage pricing shown below the price on Ultra Trainer card",
-        "term_plural": "",
-        "reference": "",
-        "comment": "",
-        "fuzzy": 1
-    },
-    {
-        "term": "pricing_overage_005_max150",
-        "definition": "+0,005 CHF\/call dar\u00fcber",
-        "context": "Overage pricing shown below the price on Pro Teacher card",
-        "term_plural": "",
-        "reference": "",
-        "comment": "",
-        "fuzzy": 1
-    },
-    {
-        "term": "pricing_overage_004_max60",
-        "definition": "+0,004 CHF\/call dar\u00fcber",
-        "context": "Overage pricing shown below the price on Institution XS card",
-        "term_plural": "",
-        "reference": "",
-        "comment": "",
-        "fuzzy": 1
-    },
-    {
-        "term": "pricing_overage_004_max160",
-        "definition": "+0,004 CHF\/call dar\u00fcber",
-        "context": "Overage pricing shown below the price on Institution S card",
-        "term_plural": "",
-        "reference": "",
-        "comment": "",
-        "fuzzy": 1
-    },
-    {
-        "term": "pricing_overage_0035_max400",
-        "definition": "+0,0035 CHF\/call dar\u00fcber",
-        "context": "Overage pricing shown below the price on Institution M card",
-        "term_plural": "",
-        "reference": "",
-        "comment": "",
-        "fuzzy": 1
-    },
-    {
         "term": "pricing_nav_button",
         "definition": "Preise",
         "context": "Navigation button in the top bar that scrolls to the pricing section",
@@ -4159,7 +4096,7 @@
     },
     {
         "term": "settings_ai_not_included",
-        "definition": "KI-Funktionen sind in Ihrem kostenlosen Plan nicht enthalten.",
+        "definition": "KI-Funktionen sind in deinem kostenlosen Plan nicht enthalten, es sei denn, du importierst ein Monitoring von einem Trainer mit einem kostenpflichtigen Plan.",
         "context": "Alert shown for free plan users with no AI access",
         "term_plural": "",
         "reference": "",
@@ -4309,5 +4246,662 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_current_plan",
+        "definition": "Aktueller Plan",
+        "context": "Pricing card button when this plan matches the logged-in user's subscriptionPlan",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_ai_calls_included_per_month",
+        "definition": "AI-Calls pro Monat enthalten",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_cta_choose_institution_xs",
+        "definition": "W\u00e4hlen Sie XS",
+        "context": "Pricing card CTA for Institution XS (Stripe checkout)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_institution_s",
+        "definition": "W\u00e4hlen Sie S",
+        "context": "Pricing card CTA for Institution S (Stripe checkout)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_institution_m",
+        "definition": "W\u00e4hlen Sie M",
+        "context": "Pricing card CTA for Institution M (Stripe checkout)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_subscription_canceled_intro",
+        "definition": "Sie haben Ihr Abonnement gek\u00fcndigt. Ihre Vorteile des kostenpflichtigen Plans enden am",
+        "context": "Settings subscription tab: first part of warning before localized end date (date appended in UI)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_billing_trial_intro",
+        "definition": "Ihre Abonnementabrechnung beginnt nach dem Ende Ihrer Testphase am",
+        "context": "Settings \u2192 Subscription tab: info alert for paid users in Stripe billing trial (trialing). First part of the sentence; localized trial-end date and a period are appended in the UI.",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_cancel_plan",
+        "definition": "Stornieren Sie meinen Plan.",
+        "context": "Settings \u2192 Subscription tab: red outlined button next to Manage plan; opens same Stripe billing portal where user can cancel.",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_firstname_required",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "signup_create_account",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "signup_success",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_first_name",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_last_name",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_email",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_signup",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_signin",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_password",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_2",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_3",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_4",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_5",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_6",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_7",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_8",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_9",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_10",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_11",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_try_platform",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_contact_us_at",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_already_have_account",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_survey_description",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_survey_participate",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_survey_time",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_survey_view_results",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_table_assessment",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_monitoring_title",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_qr_code_section",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_reset",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_validate",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_cancel",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_add_option",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_option",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_short_name",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_question_title",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_edit_question",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_correct_answer",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_explanation",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_automatically_recode_competencies",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_add_competencies_manually",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_competency_area",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_competency",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_activity",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_learning_type",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_knowledge",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_skill",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_duplicate_question",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_edit_question",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_remove_question",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_move_question_up",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_move_question_down",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_make_question_optional",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_make_question_mandatory",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_evaluate",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_create_sections",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_add_worshop",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_create_new_question",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_workshop",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_logout",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_resources",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_home",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_design",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_results",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
     }
 ]

@@ -54,6 +54,11 @@ router.get("/currentUser", async (req, res) => {
       return res.status(401).json({ error: 'Authentication required' });
     }
     const user = await getUserWithId(userId);
+    res.set({
+      'Cache-Control': 'private, no-store, no-cache, must-revalidate',
+      Pragma: 'no-cache',
+      Expires: '0',
+    });
     return res.json(user);
   } catch (error) {
     return res.status(500).json({ error: error.message });

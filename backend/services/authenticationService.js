@@ -83,6 +83,11 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
         });
         await newUser.save();
 
+        if (newUser.userStatus === 'Teacher') {
+            newUser.subscriptionPlan = 'FREE_TEACHER';
+            await newUser.save();
+        }
+
         // Auto-link to institution if email domain matches
         const domain = userData.email.split('@')[1]?.toLowerCase();
         if (domain) {

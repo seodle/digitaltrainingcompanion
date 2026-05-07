@@ -11,24 +11,22 @@ const Institution = require('../models/institutionModel');
  */
 const trackAiCall = (req, res, next) => {
     res.on('finish', async () => {
-        // Only count successful responses
         if (res.statusCode < 200 || res.statusCode >= 300) return;
 
-        // req.user comes from JWT — may be missing on unauthenticated routes
-        const userId = req.user?._id;
+        const userId = req.billingUserId || req.user?._id;
         if (!userId) return;
 
         try {
             const user = await User.findById(userId).select(
-                'aiCallsUsedThisMonth aiCallsResetDate institutionId'
+                'aiCallsUsedThisMonth aiCallsResetDate institutionId subscriptionPlan'
             );
             if (!user) return;
 
             const now = new Date();
             const needsReset = user.aiCallsResetDate && now >= user.aiCallsResetDate;
+            const newUserCount = needsReset ? 1 : user.aiCallsUsedThisMonth + 1;
 
             if (needsReset) {
-                // Reset counter for the new month
                 const nextReset = new Date(now);
                 nextReset.setMonth(nextReset.getMonth() + 1, 1);
                 nextReset.setHours(0, 0, 0, 0);
@@ -45,15 +43,19 @@ const trackAiCall = (req, res, next) => {
                 });
             }
 
-            // If user belongs to an institution, increment the shared pool too
+            const isMonitoringOwnerBill = !!req.billingUserId;
+
             if (user.institutionId) {
                 const institution = await Institution.findById(user.institutionId).select(
-                    'aiCallsUsedThisMonth aiCallsResetDate'
+                    'plan aiCallsUsedThisMonth aiCallsResetDate'
                 );
                 if (!institution) return;
 
                 const institutionNeedsReset =
                     institution.aiCallsResetDate && now >= institution.aiCallsResetDate;
+                const newInstCount = institutionNeedsReset
+                    ? 1
+                    : institution.aiCallsUsedThisMonth + 1;
 
                 if (institutionNeedsReset) {
                     const nextReset = new Date(now);
@@ -73,7 +75,6 @@ const trackAiCall = (req, res, next) => {
                 }
             }
         } catch (err) {
-            // Never crash the app over a tracking failure — just log it
             console.error('[trackAiCall] Failed to record AI call:', err.message);
         }
     });

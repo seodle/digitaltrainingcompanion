@@ -1,7 +1,6 @@
 key,english,context
-institution_members_title,Institution Members,Title of the member list table in Settings for institution admins
-institution_member_name,Name,Column header for member name in the institution dashboard
-institution_member_email,Email,Column header for member email in the institution dashboard
-institution_member_calls,Calls this month,Column header for AI calls used in the institution dashboard
-institution_member_remove,Remove member,Tooltip for remove button in the institution member table
-institution_pool_usage,Institution AI pool usage,Label for the shared AI call pool gauge
+free_user_ai_restriction,Not available on the free plan. Upgrade to access AI features.,free user ai restriction
+free_user_monitoring_limit,Free plan users can only create one monitoring,Monitoring restrictions
+free_user_assessment_type_limit,Free plan users can only create one assessment of each type,Assessment restrictions
+free_user_cannot_import,Monitoring import is not available on the free plan,free_user_cannot_import
+free_user_cannot_copy,Copy is not available on the free plan,free_user_cannot_copy

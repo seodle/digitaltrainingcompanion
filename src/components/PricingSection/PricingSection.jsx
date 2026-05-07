@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   Box,
@@ -20,6 +20,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useMessageService } from '../../services/MessageService';
 import { BACKEND_URL } from '../../config';
 import { useAuthUser } from '../../contexts/AuthUserContext';
+import { UserType } from '../../utils/enums';
 
 // Palette matches Home page
 const palette = {
@@ -61,7 +62,6 @@ const AUDIENCES = [
         price: 9.90,
         color: palette.teal,
         callQuota: 1500,
-        overageKey: 'pricing_overage_005_max3',
         featureKeys: [
           'pricing_pro_trainer_f1',
           'pricing_pro_trainer_f2',
@@ -70,7 +70,7 @@ const AUDIENCES = [
         ],
         ctaKey: 'pricing_cta_choose_pro',
         ctaVariant: 'contained',
-        highlighted: false,
+        highlighted: true,
       },
       {
         id: 'PRO_PLUS_TRAINER',
@@ -78,7 +78,6 @@ const AUDIENCES = [
         price: 17.90,
         color: palette.purple,
         callQuota: 5000,
-        overageKey: 'pricing_overage_005_max10',
         featureKeys: [
           'pricing_pro_plus_trainer_f1',
           'pricing_pro_trainer_f2',
@@ -87,7 +86,7 @@ const AUDIENCES = [
         ],
         ctaKey: 'pricing_cta_choose_pro_plus',
         ctaVariant: 'contained',
-        highlighted: true,
+        highlighted: false,
       },
       {
         id: 'ULTRA_TRAINER',
@@ -95,7 +94,6 @@ const AUDIENCES = [
         price: 79.90,
         color: palette.dark,
         callQuota: 30000,
-        overageKey: 'pricing_overage_005_max60',
         featureKeys: [
           'pricing_ultra_trainer_f1',
           'pricing_pro_trainer_f2',
@@ -134,7 +132,6 @@ const AUDIENCES = [
         price: 4.90,
         color: palette.teal,
         callQuota: 750,
-        overageKey: 'pricing_overage_005_max150',
         featureKeys: [
           'pricing_pro_teacher_f1',
           'pricing_pro_teacher_f2',
@@ -157,14 +154,13 @@ const AUDIENCES = [
         price: 249,
         color: palette.teal,
         callQuota: 30000,
-        overageKey: 'pricing_overage_004_max60',
         featureKeys: [
           'pricing_institution_f1_xs',
           'pricing_institution_f2',
           'pricing_institution_f3',
           'pricing_institution_f4',
         ],
-        ctaKey: 'pricing_cta_contact',
+        ctaKey: 'pricing_cta_choose_institution_xs',
         ctaVariant: 'outlined',
         highlighted: false,
       },
@@ -174,14 +170,13 @@ const AUDIENCES = [
         price: 490,
         color: palette.orange,
         callQuota: 80000,
-        overageKey: 'pricing_overage_004_max160',
         featureKeys: [
           'pricing_institution_f1_s',
           'pricing_institution_f2',
           'pricing_institution_f3',
           'pricing_institution_f4',
         ],
-        ctaKey: 'pricing_cta_contact',
+        ctaKey: 'pricing_cta_choose_institution_s',
         ctaVariant: 'contained',
         highlighted: true,
       },
@@ -191,14 +186,13 @@ const AUDIENCES = [
         price: 990,
         color: palette.dark,
         callQuota: 200000,
-        overageKey: 'pricing_overage_0035_max400',
         featureKeys: [
           'pricing_institution_f1_m',
           'pricing_institution_f2',
           'pricing_institution_f3',
           'pricing_institution_f4',
         ],
-        ctaKey: 'pricing_cta_contact',
+        ctaKey: 'pricing_cta_choose_institution_m',
         ctaVariant: 'contained',
         highlighted: false,
       },
@@ -230,8 +224,39 @@ const AUDIENCES = [
   },
 ];
 
-const PlanCard = ({ plan, getMessage, onCheckout }) => {
-  const navigate = useNavigate();
+const FREE_PLAN_IDS = ['FREE_TRAINER', 'FREE_TEACHER'];
+
+const isPaidSubscriptionPlan = (planId) =>
+  Boolean(planId && !FREE_PLAN_IDS.includes(planId)); 
+
+  const TRAINER_PLAN_IDS = new Set([
+    'FREE_TRAINER',
+    'PRO_TRAINER',
+    'PRO_PLUS_TRAINER',
+    'ULTRA_TRAINER',
+  ]);
+  const TEACHER_PLAN_IDS = new Set(['FREE_TEACHER', 'PRO_TEACHER']);
+
+  /** Logged-in user cannot subscribe to the other role’s plans; use a new account. */
+  function planRequiresSeparateAccount(userStatus, planId) {
+    if (!userStatus) return false;
+    if (TRAINER_PLAN_IDS.has(planId)) return userStatus === UserType.TEACHER;
+    if (TEACHER_PLAN_IDS.has(planId)) return userStatus === UserType.TEACHER_TRAINER;
+    return false;
+  }
+
+  const PlanCard = ({
+    plan,
+    getMessage,
+    onCheckout,
+    currentPlanId,
+    onDowngradeToFree,
+    isPaidUser,
+    onSwitchPaidPlan,
+    hasStripeCustomer,
+    userStatus,
+  }) => {  const navigate = useNavigate();
+  const isCurrentPlan = Boolean(currentPlanId && plan.id === currentPlanId);
 
   const priceDisplay = plan.price === null
     ? getMessage('pricing_on_quote')
@@ -294,10 +319,10 @@ const PlanCard = ({ plan, getMessage, onCheckout }) => {
           )}
         </Box>
 
-        {/* Overage info */}
-        {plan.overageKey && (
+        {/* Included AI calls (monthly quota) */}
+        {plan.callQuota != null && plan.callQuota > 0 && (
           <Typography variant="caption" sx={{ color: '#999', display: 'block', mb: 2 }}>
-            {getMessage(plan.overageKey)}
+            {`${plan.callQuota.toLocaleString()} ${getMessage('pricing_ai_calls_included_per_month')}`}
           </Typography>
         )}
 
@@ -321,26 +346,60 @@ const PlanCard = ({ plan, getMessage, onCheckout }) => {
         </Box>
       </CardContent>
 
-      {/* CTA */}
-      <Box sx={{ px: 3, pb: 3, pt: 1 }}>
+            {/* CTA */}
+            <Box sx={{ px: 3, pb: 3, pt: 1 }}>
         <Button
           fullWidth
-          variant={plan.ctaVariant}
-          onClick={() => plan.price === 0 ? navigate('/signup') : onCheckout(plan.id)}
+          variant={isCurrentPlan ? 'outlined' : plan.ctaVariant}
+          disabled={isCurrentPlan}
+          onClick={() => {
+            if (isCurrentPlan) return;
+            if (plan.id === 'RESEARCH') {
+              window.location.href =
+                'mailto:contact@digitaltrainingcompanion.ch?subject=Research%20plan%20inquiry';
+              return;
+            }
+            if (
+              typeof localStorage !== 'undefined' &&
+              localStorage.getItem('token') &&
+              planRequiresSeparateAccount(userStatus, plan.id)
+            ) {
+              navigate('/signup');
+              return;
+            }
+            if (plan.price === 0) {
+              const token = typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null;
+              if (!token) {
+                navigate('/signup');
+                return;
+              }
+              if ((isPaidUser || hasStripeCustomer) && FREE_PLAN_IDS.includes(plan.id)) {
+                onDowngradeToFree();
+                return;
+              }
+              navigate('/signup');
+              return;
+            }
+            if (isPaidUser && !isCurrentPlan && hasStripeCustomer) {
+              onSwitchPaidPlan();
+              return;
+            }
+            onCheckout(plan.id);
+          }}
           sx={{
             borderRadius: 2,
             fontWeight: 700,
             textTransform: 'none',
-            borderColor: plan.ctaVariant === 'outlined' ? plan.color : undefined,
-            color: plan.ctaVariant === 'outlined' ? plan.color : '#fff',
-            bgcolor: plan.ctaVariant === 'contained' ? plan.color : undefined,
+            borderColor: plan.ctaVariant === 'outlined' || isCurrentPlan ? plan.color : undefined,
+            color: isCurrentPlan ? plan.color : plan.ctaVariant === 'outlined' ? plan.color : '#fff',
+            bgcolor: !isCurrentPlan && plan.ctaVariant === 'contained' ? plan.color : undefined,
             '&:hover': {
-              bgcolor: plan.ctaVariant === 'contained' ? plan.color : undefined,
-              opacity: 0.88,
+              bgcolor: !isCurrentPlan && plan.ctaVariant === 'contained' ? plan.color : undefined,
+              opacity: isCurrentPlan ? 1 : 0.88,
             },
           }}
         >
-          {getMessage(plan.ctaKey)}
+          {getMessage(isCurrentPlan ? 'pricing_cta_current_plan' : plan.ctaKey)}
         </Button>
       </Box>
     </Card>
@@ -359,10 +418,33 @@ const PricingSection = () => {
   const { currentUser } = useAuthUser();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const param = searchParams.get('pricingTab');
+    if (param == null || param === '') return;
+
+    const tab = parseInt(param, 10);
+    if (!Number.isNaN(tab)) {
+      setActiveTab(Math.min(Math.max(0, tab), AUDIENCES.length - 1));
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      document.getElementById('pricing-section')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchParams]);
+
   const handleCheckout = async (planId) => {
     const token = localStorage.getItem('token');
     if (!token) {
       navigate('/signin');
+      return;
+    }
+    if (currentUser?.subscriptionPlan === planId) {
+      navigate('/settings?tab=1');
       return;
     }
     try {
@@ -374,6 +456,29 @@ const PricingSection = () => {
       window.location.href = res.data.url;
     } catch (err) {
       console.error('Checkout error:', err);
+      const code = err.response?.data?.error;
+      if (err.response?.status === 409 && code === 'active_subscription_exists') {
+        void handleBillingPortal();
+        return;
+      }
+    }
+  };
+
+  const handleBillingPortal = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/signin');
+      return;
+    }
+    try {
+      const res = await axios.post(
+        `${BACKEND_URL}/subscription/billing-portal`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      window.location.href = res.data.url;
+    } catch (err) {
+      console.error('Billing portal error:', err);
     }
   };
 
@@ -442,7 +547,17 @@ const PricingSection = () => {
               sm={6}
               md={audience.plans.length <= 2 ? 4 : 3}
             >
-              <PlanCard plan={plan} getMessage={getMessage} onCheckout={handleCheckout} />
+            <PlanCard
+              plan={plan}
+              getMessage={getMessage}
+              onCheckout={handleCheckout}
+              currentPlanId={currentUser?.subscriptionPlan || null}
+              onDowngradeToFree={handleBillingPortal}
+              isPaidUser={isPaidSubscriptionPlan(currentUser?.subscriptionPlan)}
+              onSwitchPaidPlan={handleBillingPortal}
+              hasStripeCustomer={Boolean(currentUser?.stripeCustomerId)}
+              userStatus={currentUser?.userStatus}
+            />
             </Grid>
           ))}
         </Grid>

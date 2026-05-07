@@ -160,8 +160,7 @@ router.post('/suggest-options', async (req, res) => {
  * @body {responses} - Array of response strings
  * @body {questionText} - The question text
  * @body {language} - Language code (en, fr, de, it, es)
- * @body {sandbox} - Boolean indicating if user is sandbox (optional, for backward compatibility)
- * @returns {summary} - AI generated summary or null for sandbox users
+ * @returns {summary} - AI generated summary or null for free users
  */
 router.post('/generate-text-summary', async (req, res) => {
     try {
@@ -170,7 +169,7 @@ router.post('/generate-text-summary', async (req, res) => {
                 error: 'Server configuration error: INFOMANIAK_AI_ENDPOINT_ID is not set'
             });
         }
-        const { responses, questionText, language, sandbox } = req.body;
+        const { responses, questionText, language } = req.body;
 
         // Validation
         if (!responses || !Array.isArray(responses)) {
@@ -183,14 +182,6 @@ router.post('/generate-text-summary', async (req, res) => {
 
         if (!language) {
             return res.status(400).json({ error: 'Language is required' });
-        }
-
-        // Check if user is sandbox - return early if true
-        if (sandbox === true) {
-            return res.json({
-                summary: null,
-                message: 'Summary generation not available for sandbox users'
-            });
         }
 
         // Filter out null/empty responses

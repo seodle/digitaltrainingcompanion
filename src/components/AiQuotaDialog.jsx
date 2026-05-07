@@ -6,7 +6,7 @@ import { useAuthUser } from '../contexts/AuthUserContext';
 
 const AiQuotaDialog = () => {
   const [open, setOpen] = useState(false);
-  const [errorType, setErrorType] = useState(null); // 'trial_expired' | 'quota_exceeded'
+  const [errorType, setErrorType] = useState(null);
   const navigate = useNavigate();
   const { getMessage } = useMessageService();
   const { currentUser } = useAuthUser();
@@ -20,18 +20,28 @@ const AiQuotaDialog = () => {
     return () => window.removeEventListener('ai-quota-exceeded', handler);
   }, []);
 
-  const handleUpgrade = () => {
+  const handlePrimary = () => {
     setOpen(false);
-    // Derive the right tab from plan, same logic as SubscriptionInfo
     const plan = currentUser?.subscriptionPlan || '';
-    const tab = plan.includes('TEACHER') ? 'teacher'
-               : plan.includes('INSTITUTION') || plan.includes('RESEARCH') ? 'institution'
-               : 'trainer';
-    navigate(`/?pricingTab=${tab}`);
+    if (plan.includes('INSTITUTION')) {
+      navigate('/settings?tab=1');
+      return;
+    }
+    // Numeric tabs match PricingSection (AUDIENCES order: trainer, teacher, institution, research)
+    const pricingTab = plan.includes('RESEARCH')
+      ? 3
+      : plan.includes('TEACHER')
+        ? 1
+        : 0;
+    navigate(`/?pricingTab=${pricingTab}`);
   };
 
-  const titleKey = errorType === 'trial_expired' ? 'quota_dialog_trial_title' : 'quota_dialog_quota_title';
-  const bodyKey  = errorType === 'trial_expired' ? 'quota_dialog_trial_body'  : 'quota_dialog_quota_body';
+  const titleKey = errorType === 'trial_expired'
+    ? 'quota_dialog_trial_title'
+    : 'quota_dialog_quota_title';
+  const bodyKey = errorType === 'trial_expired'
+    ? 'quota_dialog_trial_body'
+    : 'quota_dialog_quota_body';
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
@@ -41,7 +51,7 @@ const AiQuotaDialog = () => {
       </DialogContent>
       <DialogActions>
         <Button onClick={() => setOpen(false)}>{getMessage('quota_dialog_dismiss')}</Button>
-        <Button onClick={handleUpgrade} variant="contained">{getMessage('quota_dialog_upgrade')}</Button>
+        <Button onClick={handlePrimary} variant="contained">{getMessage('quota_dialog_upgrade')}</Button>
       </DialogActions>
     </Dialog>
   );

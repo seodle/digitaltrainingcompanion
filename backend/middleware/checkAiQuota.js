@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
+const Monitoring = require('../models/monitoringModel');
 const Institution = require('../models/institutionModel');
-const { getPlan, TRIAL_DURATION_DAYS } = require('../constants/subscriptionPlans');
-
+const { getPlan, TRIAL_DURATION_DAYS, canMakeAiCall } = require('../constants/subscriptionPlans');
 const TRIAL_MS = TRIAL_DURATION_DAYS * 24 * 60 * 60 * 1000;
 
 const checkAiQuota = async (req, res, next) => {
@@ -9,13 +9,46 @@ const checkAiQuota = async (req, res, next) => {
     if (!userId) return res.status(401).json({ error: 'unauthenticated' });
 
     const user = await User.findById(userId)
-        .select('subscriptionPlan trialActive trialStartDate aiCallsUsedThisMonth institutionId')
+        .select('subscriptionPlan trialActive trialStartDate aiCallsUsedThisMonth institutionId sharingCodeRedeemed')
         .lean();
     if (!user) return res.status(401).json({ error: 'user_not_found' });
 
-    // --- Trial expiry check ---
-    if (user.trialActive && Date.now() > new Date(user.trialStartDate).getTime() + TRIAL_MS) {
-        return res.status(402).json({ error: 'trial_expired' });
+    // --- Trial expiry check (manual / granted free-AI only; requires trialStartDate) ---
+    if (user.trialActive && user.trialStartDate) {
+        const trialStart = new Date(user.trialStartDate).getTime();
+        if (Number.isFinite(trialStart) && Date.now() > trialStart + TRIAL_MS) {
+            return res.status(402).json({ error: 'trial_expired' });
+        }
+    }
+
+    // --- Monitoring pool check (shared monitoring — charge to owner) ---
+    const monitoringId = req.body?.monitoringId;
+    if (monitoringId) {
+        const monitoring = await Monitoring.findById(monitoringId).select('userId sharingCode').lean();
+        if (!monitoring) {
+            return res.status(400).json({ error: 'monitoring_not_found' });
+        }
+        if (String(monitoring.userId) !== String(userId)) {
+            const shareCode = monitoring.sharingCode;
+            const redeemed = user.sharingCodeRedeemed || [];
+            if (!shareCode || !redeemed.includes(shareCode)) {
+                return res.status(403).json({ error: 'not_monitoring_redeemer' });
+            }
+            const owner = await User.findById(monitoring.userId)
+                .select('subscriptionPlan aiCallsUsedThisMonth trialActive institutionId')
+                .lean();
+            if (owner) {
+                const ownerPlan = getPlan(owner.subscriptionPlan);
+                if (!ownerPlan.features?.sharingEnabled) {
+                    return res.status(402).json({ error: 'sharing_not_enabled' });
+                }
+                if (!canMakeAiCall(ownerPlan, owner.aiCallsUsedThisMonth)) {
+                    return res.status(402).json({ error: 'quota_exceeded' });
+                }
+                req.billingUserId = String(monitoring.userId);
+                return next();
+            }
+        }
     }
 
     // --- Institution pool check ---
@@ -24,18 +57,22 @@ const checkAiQuota = async (req, res, next) => {
             .select('plan aiCallsUsedThisMonth')
             .lean();
         if (institution) {
-            const plan = getPlan(institution.plan);
-            if (plan.monthlyCallQuota > 0 && institution.aiCallsUsedThisMonth >= plan.monthlyCallQuota) {
-                return res.status(402).json({ error: 'quota_exceeded' });
+            const instPlan = getPlan(institution.plan);
+            if (instPlan.monthlyCallQuota > 0) {
+                if (!canMakeAiCall(instPlan, institution.aiCallsUsedThisMonth)) {
+                    return res.status(402).json({ error: 'quota_exceeded' });
+                }
             }
-            return next(); // institution user within quota — allow
+            return next();
         }
     }
-
+    
     // --- Individual quota check ---
     const plan = getPlan(user.subscriptionPlan);
-    if (plan.monthlyCallQuota > 0 && user.aiCallsUsedThisMonth >= plan.monthlyCallQuota) {
-        return res.status(402).json({ error: 'quota_exceeded' });
+    if (plan.monthlyCallQuota > 0) {
+        if (!canMakeAiCall(plan, user.aiCallsUsedThisMonth)) {
+            return res.status(402).json({ error: 'quota_exceeded' });
+        }
     }
 
     // FREE plans (quota === 0) also mean AI is disabled

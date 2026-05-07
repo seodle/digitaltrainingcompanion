@@ -130,8 +130,10 @@ const FrameworkSelector = ({ label, getMessage, competenceAreas, sx = {}, ...pro
               }}
             />
           )}
-          renderOption={(props, option) => (
-            <Box component="li" {...props}>
+          renderOption={(props, option) => {
+            const { key, ...optionProps } = props;
+            return (
+              <Box component="li" key={key} {...optionProps}>
               <Box display="flex" alignItems="flex-start" gap={1} width="100%">
                 <span style={{ fontSize: '1.2em', marginTop: '2px' }}>{option.flag}</span>
                 <Box flex={1}>
@@ -192,8 +194,9 @@ const FrameworkSelector = ({ label, getMessage, competenceAreas, sx = {}, ...pro
                   </Box>
                 </Box>
               </Box>
-            </Box>
-          )}
+              </Box>
+            );
+          }}
           isOptionEqualToValue={(option, value) => option.value === value.value}
           noOptionsText="No frameworks found matching your search"
           loading={false}

@@ -5,8 +5,6 @@ const PLANS = {
       audience: 'trainer',
       priceChf: 0,
       monthlyCallQuota: 0,       // no AI calls
-      overagePricePerCall: 0,
-      maxOverageChf: 0,
       features: {
         aiEnabled: false,
         sharingEnabled: false,
@@ -21,8 +19,6 @@ const PLANS = {
       audience: 'trainer',
       priceChf: 9.90,
       monthlyCallQuota: 1500,
-      overagePricePerCall: 0.005,
-      maxOverageChf: 3,
       features: {
         aiEnabled: true,
         sharingEnabled: true,
@@ -37,8 +33,6 @@ const PLANS = {
       audience: 'trainer',
       priceChf: 17.90,
       monthlyCallQuota: 5000,
-      overagePricePerCall: 0.005,
-      maxOverageChf: 10,
       features: {
         aiEnabled: true,
         sharingEnabled: true,
@@ -53,8 +47,6 @@ const PLANS = {
       audience: 'trainer',
       priceChf: 79.90,
       monthlyCallQuota: 30000,
-      overagePricePerCall: 0.005,
-      maxOverageChf: 60,
       features: {
         aiEnabled: true,
         sharingEnabled: true,
@@ -69,8 +61,6 @@ const PLANS = {
       audience: 'teacher',
       priceChf: 0,
       monthlyCallQuota: 0,       // AI only if inside a Pro+ trainer's shared monitoring
-      overagePricePerCall: 0,
-      maxOverageChf: 0,
       features: {
         aiEnabled: false,         // enabled contextually via shared monitoring
         sharingEnabled: false,
@@ -85,8 +75,6 @@ const PLANS = {
       audience: 'teacher',
       priceChf: 4.90,
       monthlyCallQuota: 750,
-      overagePricePerCall: 0.005,
-      maxOverageChf: 1.50,
       features: {
         aiEnabled: true,
         sharingEnabled: false,
@@ -101,8 +89,6 @@ const PLANS = {
       audience: 'institution',
       priceChf: 249,
       monthlyCallQuota: 30000,
-      overagePricePerCall: 0.004,
-      maxOverageChf: 60,
       features: {
         aiEnabled: true,
         sharingEnabled: true,
@@ -117,8 +103,6 @@ const PLANS = {
       audience: 'institution',
       priceChf: 490,
       monthlyCallQuota: 80000,
-      overagePricePerCall: 0.004,
-      maxOverageChf: 160,
       features: {
         aiEnabled: true,
         sharingEnabled: true,
@@ -133,8 +117,6 @@ const PLANS = {
       audience: 'institution',
       priceChf: 990,
       monthlyCallQuota: 200000,
-      overagePricePerCall: 0.0035,
-      maxOverageChf: 400,
       features: {
         aiEnabled: true,
         sharingEnabled: true,
@@ -149,8 +131,6 @@ const PLANS = {
       audience: 'research',
       priceChf: 0,               // custom contract — set per agreement
       monthlyCallQuota: 0,       // set at institution level
-      overagePricePerCall: 0,
-      maxOverageChf: 0,
       features: {
         aiEnabled: true,
         sharingEnabled: true,
@@ -170,4 +150,11 @@ const PLANS = {
   
   const TRIAL_DURATION_DAYS = 14;
   
-  module.exports = { PLANS, getPlan, TRIAL_DURATION_DAYS };
+    /** Returns true if one more AI call is allowed within the monthly included quota. */
+    function canMakeAiCall(plan, usedThisMonth) {
+      const quota = plan.monthlyCallQuota;
+      if (quota <= 0) return false;
+      return usedThisMonth < quota;
+    }
+  
+    module.exports = { PLANS, getPlan, TRIAL_DURATION_DAYS, canMakeAiCall };

@@ -19,8 +19,10 @@ const userSchema = new mongoose.Schema({
 
     // Subscription
     subscriptionPlan: { type: String, default: 'FREE_TRAINER' },
-    trialStartDate: { type: Date, default: Date.now },
-    trialActive: { type: Boolean, default: true },
+    trialStartDate: { type: Date, default: null },
+    trialActive: { type: Boolean, default: false },
+    stripeSubscriptionStatus: { type: String, default: null },
+    stripeTrialEnd: { type: Date, default: null },
 
     // AI call tracking
     aiCallsUsedThisMonth: { type: Number, default: 0 },
@@ -41,6 +43,8 @@ const userSchema = new mongoose.Schema({
     // Stripe
     stripeCustomerId: { type: String, default: null },
     stripeSubscriptionId: { type: String, default: null },
+    subscriptionCancelAtPeriodEnd: { type: Boolean, default: false },
+    subscriptionCurrentPeriodEnd: { type: Date, default: null },
 });
 
 // methods

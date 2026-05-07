@@ -31,13 +31,13 @@ import { useAuthUser } from '../../contexts/AuthUserContext';
 import axios from "axios";
 import packageJson from '../../../package.json';
 import { veryLightGray } from '../../components/styledComponents';
-import { useNavigate } from "react-router-dom";
 import { Tab, Tabs } from '@mui/material';
 import SubscriptionInfo from '../../components/Settings/SubscriptionInfo';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Settings = () => {
     const { getMessage } = useMessageService();
-    const { currentUser } = useAuthUser();
+    const { currentUser, fetchUserDetails } = useAuthUser();
     const navigate = useNavigate();
 
     // States
@@ -55,11 +55,86 @@ const Settings = () => {
     });
     const [copiedKey, setCopiedKey] = useState(null);
     const [activeTab, setActiveTab] = useState(0);
-    
+    const [searchParams, setSearchParams] = useSearchParams();
+    const tabFromUrl = searchParams.get('tab');
+    const checkoutFlag = searchParams.get('checkout');
+    const sessionIdFromUrl = searchParams.get('session_id');
+    const billingSyncFlag = searchParams.get('billing_sync');
+
+    useEffect(() => {
+        if (tabFromUrl === null || tabFromUrl === '') return;
+        const tab = parseInt(tabFromUrl, 10);
+        if (!Number.isNaN(tab) && tab >= 0 && tab <= 2) {
+            setActiveTab(tab);
+        }
+    }, [tabFromUrl]);
+
+    useEffect(() => {
+        if (checkoutFlag !== 'success' || !sessionIdFromUrl) return;
+
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        let cancelled = false;
+
+        const run = async () => {
+            try {
+                await axios.post(
+                    `${BACKEND_URL}/subscription/sync-checkout`,
+                    { sessionId: sessionIdFromUrl },
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+            } catch (e) {
+                console.error('[sync-checkout]', e.response?.data || e.message);
+            } finally {
+                if (!cancelled) {
+                    await fetchUserDetails(token);
+                    setSearchParams({ tab: '1' }, { replace: true });
+                }
+            }
+        };
+
+        run();
+        return () => {
+            cancelled = true;
+        };
+    }, [checkoutFlag, sessionIdFromUrl, fetchUserDetails, setSearchParams]);
+
+    useEffect(() => {
+        if (billingSyncFlag !== '1') return;
+
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        let cancelled = false;
+
+        const run = async () => {
+            try {
+                await axios.post(
+                    `${BACKEND_URL}/subscription/sync-subscription-from-stripe`,
+                    {},
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+            } catch (e) {
+                console.error('[sync-subscription-from-stripe]', e.response?.data || e.message);
+            } finally {
+                if (!cancelled) {
+                    await fetchUserDetails(token);
+                    setSearchParams({ tab: '1' }, { replace: true });
+                }
+            }
+        };
+
+        run();
+        return () => {
+            cancelled = true;
+        };
+    }, [billingSyncFlag, fetchUserDetails, setSearchParams]);
 
     // Fetch API keys when component mounts
     useEffect(() => {
         fetchApiKeys();
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only
     }, []);
 
     // Reset copied key indicator after 2 seconds

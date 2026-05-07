@@ -34,6 +34,7 @@ import csv
 from dotenv import dotenv_values
 import settings
 import openai
+import json  
 
 # the script directory
 DIR_SCRIPT = os.path.dirname(os.path.abspath(__file__))
@@ -234,6 +235,52 @@ def export(code):
     os.makedirs(os.path.dirname(to_path), exist_ok=True)
     shutil.copy(from_path, to_path)
 
+def upload(code):
+    """Upload local .json translations to POEditor for the given locale."""
+    locale = settings.LOCALES[code]
+    src_path = f"{DIR_SCRIPT}/../../src/assets/localizables/Localizable_{locale['code']}.json"
+
+    print(f"Uploading {src_path} → POEditor ({code})")
+
+    # Read the local file (array of {term, definition} objects)
+    with open(src_path, 'r', encoding='utf-8') as f:
+        terms = json.load(f)
+
+    # Convert to simple key→value dict that POEditor expects
+    kv = {entry["term"]: entry.get("definition", "") for entry in terms}
+
+    tmp_path = f"/tmp/poeditor_upload_{code}.json"
+    with open(tmp_path, 'w', encoding='utf-8') as f:
+        json.dump(kv, f, ensure_ascii=False, indent=2)
+
+    api_url = 'https://api.poeditor.com/v2/projects/upload'
+    api_params = {
+        'api_token': ENV['POEDITOR_API_KEY'],
+        'id': settings.POEDITOR_PROJECT_ID,
+        'updating': 'terms_translations',
+        'language': code,
+        'overwrite': '1',
+    }
+
+    with open(tmp_path, 'rb') as f:
+        api_response = requests.post(
+            api_url,
+            data=api_params,
+            files={'file': (f'Localizable_{code}.json', f, 'application/json')}
+        ).json()
+
+    if api_response["response"]["code"] != "200":
+        sys.exit(f"Error uploading {code}: {api_response}")
+
+    result = api_response.get("result", {})
+    print(f"  ✓ {code}: {result}")
+
+
+def upload_all():
+    """Upload all locales to POEditor."""
+    for locale in settings.LOCALES.values():
+        upload(locale["code"])
+
 def read_csv(file_path):
     """Reads the CSV file and returns a list of dictionaries."""
     terms = []
@@ -264,6 +311,13 @@ def main():
     if args.action == "export":
         print("Exporting .json files")
         export_all()
+    elif args.action == "upload":
+        print("Uploading .json files")
+        if args.file:
+            # upload a single locale e.g. -file en
+            upload(args.file)
+        else:
+            upload_all()
     elif args.action == "add_terms":
         if not args.file:
             sys.exit("Error: -file argument is required for 'add_terms' action")

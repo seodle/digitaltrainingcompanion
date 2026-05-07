@@ -52,21 +52,26 @@ const SubscriptionInfo = () => {
 
     useEffect(() => {
         const fetchUsage = async () => {
+            setLoadingUsage(true);
             try {
                 const token = localStorage.getItem('token');
                 const res = await axios.get(`${BACKEND_URL}/users/currentUser/ai-usage`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setUsage(res.data);
+                setError(null);
             } catch (err) {
                 setError(getMessage('settings_usage_fetch_error'));
             } finally {
                 setLoadingUsage(false);
             }
         };
-        fetchUsage();
-    }, []);
+        if (currentUser) fetchUsage();
+        // Omit getMessage: useMessageService returns a new function each render; including it causes infinite refetch.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentUser?.subscriptionPlan]);
 
+    
     useEffect(() => {
         if (!usage?.isInstitutionAdmin || !usage?.institutionId) return;
         const fetchMembers = async () => {
@@ -97,6 +102,21 @@ const SubscriptionInfo = () => {
             setMembers(prev => prev.filter(m => String(m._id) !== String(userId)));
         } catch (err) {
             console.error('Error removing member:', err);
+        }
+    };
+
+    const openBillingPortal = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+        try {
+            const res = await axios.post(
+                `${BACKEND_URL}/subscription/billing-portal`,
+                {},
+                { headers: { Authorization: `Bearer ${token}` } },
+            );
+            if (res.data?.url) window.location.href = res.data.url;
+        } catch (err) {
+            console.error('[billing-portal]', err.response?.data || err.message);
         }
     };
 
@@ -151,6 +171,27 @@ const SubscriptionInfo = () => {
                         ? `${getMessage('settings_trial_active')} ${trialDaysRemaining} ${getMessage('settings_trial_days_remaining')}`
                         : getMessage('settings_trial_expired')}
                 </Alert>
+            
+            )}
+
+            {/* Stripe billing trial (paid plan, first charge after trial_end) */}
+            {!isFree &&
+                currentUser.stripeSubscriptionStatus === 'trialing' &&
+                currentUser.stripeTrialEnd && (
+                <Alert severity="info" sx={{ mb: 3 }}>
+                    {`${getMessage('settings_billing_trial_intro')} ${new Date(
+                        currentUser.stripeTrialEnd,
+                    ).toLocaleDateString()}.`}
+                </Alert>
+            )}
+
+            {currentUser?.subscriptionCancelAtPeriodEnd &&
+                currentUser.subscriptionCurrentPeriodEnd && (
+                <Alert severity="warning" sx={{ mb: 3 }}>
+                    {`${getMessage('settings_subscription_canceled_intro')} ${new Date(
+                        currentUser.subscriptionCurrentPeriodEnd
+                    ).toLocaleDateString()}.`}
+                </Alert>
             )}
 
             {/* AI call usage */}
@@ -188,27 +229,56 @@ const SubscriptionInfo = () => {
                 </Box>
             )}
 
-            {/* Plan CTA — always visible */}
-            <Button
-                variant={isFree ? 'contained' : 'outlined'}
-                onClick={() => {
-                    navigate(`/?pricingTab=${pricingTab}`);
-                    setTimeout(() => {
-                        document.getElementById('pricing-section')?.scrollIntoView({ behavior: 'smooth' });
-                    }, 150);
-                }}
-                sx={{
-                    bgcolor: isFree ? meta.color : undefined,
-                    color: isFree ? '#fff' : meta.color,
-                    borderColor: meta.color,
-                    fontWeight: 700,
-                    textTransform: 'none',
-                    borderRadius: 2,
-                    '&:hover': { opacity: 0.88, bgcolor: isFree ? meta.color : undefined },
-                }}
-            >
-                {isFree ? getMessage('settings_see_plans') : getMessage('settings_manage_plan')}
-            </Button>
+            {/* Plan CTAs */}
+            <Box display="flex" flexWrap="wrap" gap={1.5}>
+                {isFree ? (
+                    <Button
+                        variant="contained"
+                        onClick={() => { navigate(`/?pricingTab=${pricingTab}`); }}
+                        sx={{
+                            bgcolor: meta.color,
+                            color: '#fff',
+                            fontWeight: 700,
+                            textTransform: 'none',
+                            borderRadius: 2,
+                            '&:hover': { opacity: 0.88, bgcolor: meta.color },
+                        }}
+                    >
+                        {getMessage('settings_see_plans')}
+                    </Button>
+                ) : (
+                    <>
+                        <Button
+                            variant="outlined"
+                            onClick={openBillingPortal}
+                            disabled={!currentUser?.stripeCustomerId}
+                            sx={{
+                                color: meta.color,
+                                borderColor: meta.color,
+                                fontWeight: 700,
+                                textTransform: 'none',
+                                borderRadius: 2,
+                                '&:hover': { opacity: 0.88, borderColor: meta.color },
+                            }}
+                        >
+                            {getMessage('settings_manage_plan')}
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            color="error"
+                            onClick={openBillingPortal}
+                            disabled={!currentUser?.stripeCustomerId}
+                            sx={{
+                                fontWeight: 700,
+                                textTransform: 'none',
+                                borderRadius: 2,
+                            }}
+                        >
+                            {getMessage('settings_cancel_plan')}
+                        </Button>
+                    </>
+                )}
+            </Box>
             {/* Institution admin dashboard */}
             {usage?.isInstitutionAdmin && usage?.institutionPool && (
                 <Box mt={4}>
