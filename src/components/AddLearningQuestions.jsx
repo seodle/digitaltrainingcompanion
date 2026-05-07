@@ -2,15 +2,18 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Formik, Form, useFormikContext } from "formik";
 import React, { useState, useEffect } from "react";
 import * as Yup from "yup";
-import { Box, Button, Select, MenuItem, InputLabel, Typography, FormControl, FormControlLabel, Switch, Tooltip, IconButton, Alert, CircularProgress } from "@mui/material";
+import { Box, Button, Select, MenuItem, InputLabel, Typography, FormControl, FormControlLabel, Switch, Tooltip, IconButton, Alert, CircularProgress, TableContainer, Paper, Table, TableBody, TableRow, TableCell, Checkbox } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
+import { Globe2 } from 'lucide-react';
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from 'draft-js';
+import axios from 'axios';
 
 import { useLanguage } from '../contexts/LanguageContext';
 import { useMessageService } from '../services/MessageService';
 import { buttonStyle, toolbarConfig } from '../components/styledComponents'
 import { QuestionType, AssessmentType, LearningType } from '../utils/enums';
+import { BACKEND_URL } from '../config';
 import { processMessageToAPI, addQuestionsSchema, handleAutomaticEncodingChange, handleSubmit, 
          initialQuestionValues, getCompetencies, getActivities, updateCompetenciesForQuestion,
          fetchSuggestedOptions } from '../utils/QuestionUtils';
@@ -26,7 +29,16 @@ import ChooseNumberQuestions from './ChooseNumberQuestions';
 import AdoptionTypeSelector from './AdoptionTypeSelector';
 import ChooseOptions from './ChooseOptions';
 
-const AddLearningQuestions = ({ setQuestions, questions, assessmentType, workshops, splitWorkshops }) => {
+const AddLearningQuestions = ({
+  setQuestions,
+  questions,
+  assessmentType,
+  workshops,
+  splitWorkshops,
+  aiBeaconEligible = false,
+  courseAiBeaconId = null,
+  currentAssessmentServerId = null,
+}) => {
 
   const { currentUser } = useAuthUser();
   const [response, setResponse] = useState("");
@@ -34,6 +46,14 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false); 
   const [helpWithAI, setHelpWithAI] = useState(false);
+  const [helpWithAiBeacon, setHelpWithAiBeacon] = useState(false);
+  const [moodleCourseContents, setMoodleCourseContents] = useState([]);
+  const [isLoadingMoodleCourseContents, setIsLoadingMoodleCourseContents] = useState(false);
+  const [moodleCourseContentsError, setMoodleCourseContentsError] = useState('');
+  const [selectedMoodleContentIds, setSelectedMoodleContentIds] = useState([]);
+  const [aiBeaconOutputLanguage, setAiBeaconOutputLanguage] = useState('auto');
+  const [aiBeaconLanguageError, setAiBeaconLanguageError] = useState('');
+  const [aiBeaconLanguageSaving, setAiBeaconLanguageSaving] = useState(false);
   const [automaticEncoding, setAutomaticEncoding] = useState(false);
   const [selectedCompetencies, setSelectedCompetencies] = useState([]);
   const [hasError, setHasError] = useState(false);
@@ -60,6 +80,101 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
     setAutomaticEncoding(event.target.checked);
     setSelectedCompetencies([]);
   };
+
+  const handleHelpWithAiBeaconChange = (event) => {
+    const checked = event.target.checked;
+    setHelpWithAiBeacon(checked);
+    if (!checked) {
+      setSelectedMoodleContentIds([]);
+      setAiBeaconOutputLanguage('auto');
+      setAiBeaconLanguageError('');
+    }
+  };
+
+  const handleAiBeaconOutputLanguageChange = async (event) => {
+    const language = event.target.value;
+    const previous = aiBeaconOutputLanguage;
+    if (!courseAiBeaconId || aiBeaconLanguageSaving) return;
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setAiBeaconLanguageError('Could not save language.');
+      return;
+    }
+
+    setAiBeaconOutputLanguage(language);
+    setAiBeaconLanguageError('');
+    setAiBeaconLanguageSaving(true);
+    try {
+      await axios.put(
+        `${BACKEND_URL}/aiBeacon/courses/${encodeURIComponent(courseAiBeaconId)}`,
+        { language },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    } catch (e) {
+      setAiBeaconOutputLanguage(previous);
+      const msg = e?.response?.data?.error || e?.response?.data?.message;
+      setAiBeaconLanguageError(typeof msg === 'string' ? msg : 'Could not save language.');
+    } finally {
+      setAiBeaconLanguageSaving(false);
+    }
+  };
+
+  const toggleMoodleContentSelected = (contentId) => {
+    if (contentId == null) return;
+    setSelectedMoodleContentIds((prev) =>
+      prev.includes(contentId)
+        ? prev.filter((id) => id !== contentId)
+        : [...prev, contentId]
+    );
+  };
+
+  useEffect(() => {
+    if (!aiBeaconEligible || !helpWithAiBeacon || !courseAiBeaconId) {
+      setMoodleCourseContents([]);
+      setMoodleCourseContentsError('');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setMoodleCourseContents([]);
+      setMoodleCourseContentsError('No authentication token available.');
+      return;
+    }
+
+    let cancelled = false;
+    const loadCourseContents = async () => {
+      setIsLoadingMoodleCourseContents(true);
+      setMoodleCourseContentsError('');
+      try {
+        const response = await axios.get(
+          `${BACKEND_URL}/aiBeacon/courses/${encodeURIComponent(courseAiBeaconId)}/contents`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const contents = Array.isArray(response?.data?.contents)
+          ? response.data.contents
+          : [];
+        if (!cancelled) {
+          setMoodleCourseContents(contents);
+        }
+      } catch (e) {
+        if (!cancelled) {
+          setMoodleCourseContents([]);
+          setMoodleCourseContentsError('Failed to load Moodle course contents.');
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoadingMoodleCourseContents(false);
+        }
+      }
+    };
+
+    loadCourseContents();
+    return () => {
+      cancelled = true;
+    };
+  }, [aiBeaconEligible, helpWithAiBeacon, courseAiBeaconId]);
  
   const handleSend = async (message, type) => {
     setResponse("");
@@ -283,6 +398,66 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
 
   // Define the onSubmit function
   const onSubmit = async (values, formikBag) => {
+    if (helpWithAiBeacon) {
+      setError(null);
+      if (selectedMoodleContentIds.length === 0) {
+        setError(getMessage('label_select_your_content'));
+        return;
+      }
+
+      setIsLoading(true);
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(
+          `${BACKEND_URL}/aiBeacon/assessments/${encodeURIComponent(currentAssessmentServerId)}/generate-questions`,
+          {
+            courseId: courseAiBeaconId,
+            content_ids: selectedMoodleContentIds,
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const mappedQuestions = Array.isArray(response?.data?.questions)
+          ? response.data.questions
+          : [];
+        if (mappedQuestions.length === 0) {
+          setError('No questions were generated.');
+          return;
+        }
+
+        const startQuestionId =
+          questions.reduce(
+            (maxId, question) => Math.max(maxId, parseInt(question.questionId, 10)),
+            0
+          ) + 1;
+
+        const frontendQuestions = mappedQuestions.map((question, index) => ({
+          ...question,
+          questionId: String(startQuestionId + index),
+          workshopId: values.workshopId || '',
+          options: (question.choices || []).map((choice) => ({
+            label: choice,
+            value: choice,
+          })),
+          correctAnswer: Array.isArray(question.correctAnswer)
+            ? question.correctAnswer
+            : question.correctAnswer
+              ? [question.correctAnswer]
+              : [],
+        }));
+
+        setQuestions((prevQuestions) => [...prevQuestions, ...frontendQuestions]);
+      } catch (submitError) {
+        const msg =
+          submitError?.response?.data?.error ||
+          submitError?.message ||
+          'Failed to generate questions.';
+        setError(typeof msg === 'string' ? msg : 'Failed to generate questions.');
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
+
     try {
         await handleSubmit(values, formikBag, {
             handleSend,
@@ -308,23 +483,36 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
     <>
     <Box flexDirection="column" display="flex" sx={{backgroundColor: "#fff", marginBottom: "20px", paddingLeft: "20px",}} >
       <Box display="flex" alignItems="center">
-        <FormControlLabel
-          control={<Switch checked={helpWithAI} onChange={handleHelpWithAIChange} disabled={currentUser?.sandbox} />}
-          label={
-            <Box display="flex" alignItems="center">
-              {getMessage("label_create_questions_with_ai")}
-              <Tooltip title={
-                  <Typography sx={{ fontSize: '0.9rem' }}>
-                    {getMessage("info_create_questions_with_ai")}
-                  </Typography>
-                }>
-                <IconButton size="small" sx={{ ml: 0.5, color: 'info.main' }}>
-                  <InfoIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            </Box>
-          }
-        />
+        {aiBeaconEligible ? (
+          <FormControlLabel
+            control={
+              <Switch
+                checked={helpWithAiBeacon}
+                onChange={handleHelpWithAiBeaconChange}
+                disabled={currentUser?.sandbox}
+              />
+            }
+            label={getMessage("label_create_questions_with_ai")}
+          />
+        ) : (
+          <FormControlLabel
+            control={<Switch checked={helpWithAI} onChange={handleHelpWithAIChange} disabled={currentUser?.sandbox} />}
+            label={
+              <Box display="flex" alignItems="center">
+                {getMessage("label_create_questions_with_ai")}
+                <Tooltip title={
+                    <Typography sx={{ fontSize: '0.9rem' }}>
+                      {getMessage("info_create_questions_with_ai")}
+                    </Typography>
+                  }>
+                  <IconButton size="small" sx={{ ml: 0.5, color: 'info.main' }}>
+                    <InfoIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            }
+          />
+        )}
       </Box>
       {currentUser?.sandbox && (
         <Alert severity="info" sx={{ mt: 1, mr:3 }}>
@@ -371,7 +559,159 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
               </FormControl>
             )}
 
-            {!helpWithAI ? (
+            {helpWithAiBeacon ? (
+              <Box sx={{ mt: '15px' }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: 2,
+                    flexWrap: 'wrap',
+                    mb: 2,
+                  }}
+                >
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ whiteSpace: 'nowrap' }}
+                  >
+                    {getMessage('label_language')}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-end',
+                      gap: 0.5,
+                      minWidth: 120,
+                    }}
+                  >
+                    <Select
+                      size="small"
+                      value={aiBeaconOutputLanguage}
+                      onChange={handleAiBeaconOutputLanguageChange}
+                      disabled={!courseAiBeaconId || aiBeaconLanguageSaving || isLoading}
+                      inputProps={{
+                        'aria-label': getMessage('label_language'),
+                      }}
+                      sx={{
+                        minWidth: 148,
+                        boxShadow: 'none',
+                        '.MuiOutlinedInput-notchedOutline': { borderColor: 'divider' },
+                      }}
+                      renderValue={(value) => {
+                        if (value === 'auto') {
+                          return (
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+                              <Globe2 size={18} aria-hidden />
+                              {getMessage('label_ai_beacon_auto_detect')}
+                            </Box>
+                          );
+                        }
+                        const flagClass =
+                          value === 'en'
+                            ? 'fi fi-gb'
+                            : value === 'de'
+                              ? 'fi fi-de'
+                              : value === 'fr'
+                                ? 'fi fi-fr'
+                                : 'fi fi-it';
+                        const native =
+                          value === 'en'
+                            ? 'English'
+                            : value === 'fr'
+                              ? 'Français'
+                              : value === 'de'
+                                ? 'Deutsch'
+                                : 'Italiano';
+                        return (
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <span className={flagClass} aria-hidden />
+                            {native}
+                          </Box>
+                        );
+                      }}
+                    >
+                      <MenuItem value="auto">
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <Globe2 size={18} aria-hidden />
+                          {getMessage('label_ai_beacon_auto_detect')}
+                        </Box>
+                      </MenuItem>
+                      <MenuItem value="en">
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <span className="fi fi-gb" aria-hidden />
+                          English
+                        </Box>
+                      </MenuItem>
+                      <MenuItem value="fr">
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <span className="fi fi-fr" aria-hidden />
+                          Français
+                        </Box>
+                      </MenuItem>
+                      <MenuItem value="de">
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <span className="fi fi-de" aria-hidden />
+                          Deutsch
+                        </Box>
+                      </MenuItem>
+                      <MenuItem value="it">
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <span className="fi fi-it" aria-hidden />
+                          Italiano
+                        </Box>
+                      </MenuItem>
+                    </Select>
+                    {aiBeaconLanguageError ? (
+                      <Typography variant="caption" color="error" sx={{ textAlign: 'right' }}>
+                        {aiBeaconLanguageError}
+                      </Typography>
+                    ) : null}
+                  </Box>
+                </Box>
+                <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                  {getMessage('label_select_your_content')}
+                </Typography>
+                {isLoadingMoodleCourseContents ? (
+                  <Box display="flex" justifyContent="center" py={2}>
+                    <CircularProgress size={22} />
+                  </Box>
+                ) : moodleCourseContentsError ? (
+                  <Alert severity="error">{moodleCourseContentsError}</Alert>
+                ) : moodleCourseContents.length === 0 ? (
+                  <Typography color="text.secondary">No course contents found.</Typography>
+                ) : (
+                  <TableContainer component={Paper} variant="outlined" sx={{ mt: 1, maxHeight: 220 }}>
+                    <Table size="small" stickyHeader>
+                      <TableBody>
+                        {moodleCourseContents.map((content, index) => {
+                          const contentId =
+                            content.id != null && content.id !== ''
+                              ? Number(content.id)
+                              : null;
+                          return (
+                            <TableRow key={String(contentId ?? index)}>
+                              <TableCell padding="checkbox" sx={{ width: 48 }}>
+                                <Checkbox
+                                  size="small"
+                                  checked={contentId != null && selectedMoodleContentIds.includes(contentId)}
+                                  disabled={!contentId || isLoading}
+                                  onChange={() => toggleMoodleContentSelected(contentId)}
+                                />
+                              </TableCell>
+                              <TableCell>{content.name || '-'}</TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+              </Box>
+            ) : !helpWithAI ? (
             <>
               {/* choose the question type */}
               <QuestionTypeSelector
@@ -564,13 +904,19 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
           </>
         ))}
 
+        {error && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {error}
+          </Alert>
+        )}
+
         {/* Button to submit the form */}
         <Box sx={{mt:"30px"}}>
           <Button
             type="submit"
             variant="contained"
             sx={ buttonStyle }
-            disabled={isLoading || hasError} // Disable the button when loading or has error
+            disabled={isLoading || hasError}
           >
             {isLoading ? <CircularProgress size={24} /> : <Typography variant="h5">{getMessage("label_add")}</Typography>}
 

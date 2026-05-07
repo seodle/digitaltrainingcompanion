@@ -1,7 +1,7 @@
 import { Box, Typography, FormControlLabel, Switch } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Formik, Form } from 'formik';
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { AssessmentType, QuestionType } from '../utils/enums';
 import AddLearningQuestions from "./AddLearningQuestions";
@@ -14,6 +14,7 @@ import { saveSurveyToAssessment, fetchExistingSurvey, groupQuestionsByWorkshop a
 import { localizeAssessmentType } from '../utils/ObjectsUtils';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getCompetencies, getActivities, findCompetencies } from '../utils/QuestionUtils';
+import { useAuthUser } from '../contexts/AuthUserContext';
 
 // for i18n
 import { useMessageService } from '../services/MessageService';
@@ -43,12 +44,25 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
     const [selectedCompetency, setSelectedCompetency] = useState('');
     const [activity, setActivity] = useState(''); 
 
+    const { getMessage } = useMessageService();
+    const { languageCode } = useLanguage();
+    const { currentUser } = useAuthUser();
+
+    const [aiBeaconEligible, setAiBeaconEligible] = useState(false);
+    const [courseAiBeaconId, setCourseAiBeaconId] = useState(null);
+
     const prevQuestionsLengthRef = useRef(questions.length);
     const formActionsRef = useRef(null);
 
-    // for the translations
-    const { getMessage } = useMessageService();
-    const { languageCode } = useLanguage();
+    const applyAiBeaconContext = ({ courseAiBeaconId: apiCourseAiBeaconId, courseSyncedAt }) => {
+        const eligible =
+            assessmentType === AssessmentType.LEARNING &&
+            !!currentUser?.aiBeaconApiKeyCreatedAt &&
+            !!apiCourseAiBeaconId &&
+            !!courseSyncedAt;
+        setAiBeaconEligible(eligible);
+        setCourseAiBeaconId(eligible ? apiCourseAiBeaconId : null);
+    };
 
     // Add useEffect to watch for questions changes
     useEffect(() => {
@@ -64,10 +78,18 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
 
         console.log("-----", assessmentType, predifinedQuestionIds);
 
-        fetchExistingSurvey(setQuestions, setSplitWorkshops, setWorkshops, setInitialQuestions, 
-                            currentAssessmentServerId, predifinedQuestionIds, languageCode);
+        fetchExistingSurvey(
+            setQuestions,
+            setSplitWorkshops,
+            setWorkshops,
+            setInitialQuestions,
+            currentAssessmentServerId,
+            predifinedQuestionIds,
+            languageCode,
+            { onAiBeaconContext: applyAiBeaconContext }
+        );
 
-    }, [currentAssessmentServerId, predifinedQuestionIds, assessmentType, languageCode]);
+    }, [currentAssessmentServerId, predifinedQuestionIds, assessmentType, languageCode, currentUser]);
 
     /**
      * Handles changes to competency-related selections and updates the corresponding state.
@@ -314,6 +336,9 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                                 assessmentType={assessmentType}
                                 splitWorkshops={splitWorkshops}
                                 workshops={workshops}
+                                aiBeaconEligible={aiBeaconEligible}
+                                courseAiBeaconId={courseAiBeaconId}
+                                currentAssessmentServerId={currentAssessmentServerId}
                             />
                          ) : (
                             <AddQuestion

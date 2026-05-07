@@ -140,10 +140,13 @@ function mapAiBeaconAssessmentAnalysisToQuestions(rawAnalysis) {
   const shortAnswerQuestions = Array.isArray(normalizedSource?.short_answer)
     ? normalizedSource.short_answer
     : [];
-  const essayPrompt =
-    normalizedSource?.essay && typeof normalizedSource.essay === "object"
-      ? String(normalizedSource.essay?.question || "").trim()
-      : String(normalizedSource?.essay || "").trim();
+  const essayQuestions = Array.isArray(normalizedSource?.essay)
+    ? normalizedSource.essay
+    : normalizedSource?.essay && typeof normalizedSource.essay === "object"
+      ? [normalizedSource.essay]
+      : String(normalizedSource?.essay || "").trim()
+        ? [{ question: String(normalizedSource.essay) }]
+        : [];
 
   const mappedQuestions = [];
   let nextQuestionId = 1;
@@ -158,50 +161,62 @@ function mapAiBeaconAssessmentAnalysisToQuestions(rawAnalysis) {
           .map((option) => String(option || "").trim())
           .filter((option) => option.length > 0)
       : rawOptions && typeof rawOptions === "object"
-        ? Object.values(rawOptions)
-            .map((option) => String(option || "").trim())
-            .filter((option) => option.length > 0)
+        ? Object.entries(rawOptions)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([, label]) => String(label || "").trim())
+            .filter((label) => label.length > 0)
         : [];
+
+    const answerKey = String(entry?.correct_answer ?? "").trim();
+    let correctAnswer = [];
+    if (answerKey && rawOptions && typeof rawOptions === "object" && !Array.isArray(rawOptions)) {
+      const matchedLabel = rawOptions[answerKey];
+      if (matchedLabel) {
+        correctAnswer = [String(matchedLabel).trim()];
+      }
+    } else if (answerKey && options.includes(answerKey)) {
+      correctAnswer = [answerKey];
+    }
+
+    const questionName = String(entry?.question_name || "").trim();
 
     mappedQuestions.push({
       questionId: String(nextQuestionId),
-      shortName: `Question ${nextQuestionId}`,
+      shortName: questionName || `Question ${nextQuestionId}`,
       question: questionText,
       questionType: MULTIPLE_CHOICES_QUESTION_TYPE,
       choices: options,
+      correctAnswer,
+      explanation: String(entry?.explanation || "").trim(),
       isMandatory: false,
       workshopId: null,
     });
     nextQuestionId += 1;
   });
 
-  shortAnswerQuestions.forEach((entry) => {
+  const mapOpenEndedEntry = (entry) => {
     const questionText = String(entry?.question || "").trim();
     if (!questionText) return;
 
+    const questionName = String(entry?.question_name || "").trim();
+    const answer = String(entry?.correct_answer ?? "").trim();
+
     mappedQuestions.push({
       questionId: String(nextQuestionId),
-      shortName: `Question ${nextQuestionId}`,
+      shortName: questionName || `Question ${nextQuestionId}`,
       question: questionText,
       questionType: OPEN_ENDED_QUESTION_TYPE,
       choices: [],
+      correctAnswer: answer ? [answer] : [],
+      explanation: String(entry?.explanation || "").trim(),
       isMandatory: false,
       workshopId: null,
     });
     nextQuestionId += 1;
-  });
+  };
 
-  if (essayPrompt) {
-    mappedQuestions.push({
-      questionId: String(nextQuestionId),
-      shortName: `Question ${nextQuestionId}`,
-      question: essayPrompt,
-      questionType: OPEN_ENDED_QUESTION_TYPE,
-      choices: [],
-      isMandatory: false,
-      workshopId: null,
-    });
-  }
+  shortAnswerQuestions.forEach(mapOpenEndedEntry);
+  essayQuestions.forEach(mapOpenEndedEntry);
 
   return mappedQuestions;
 }
@@ -258,6 +273,7 @@ async function generateAssessmentAnalyses({
     if (normalizedContentIds !== undefined) {
       analyzePayload.content_ids = normalizedContentIds;
     }
+
     const analyzeResponse = await client.post(
       `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/analyze`,
       analyzePayload
@@ -294,6 +310,7 @@ async function generateAssessmentAnalyses({
             result?.analysis_id !== null &&
             String(result.analysis_id).trim() !== ""
         );
+
         if (firstResultWithAnalysisId) {
           analysisIdToFetch = String(firstResultWithAnalysisId.analysis_id);
         }
@@ -310,6 +327,21 @@ async function generateAssessmentAnalyses({
   return { duplicates, analysis: analysisResponse };
 }
 
+async function generateQuestionsFromAiBeacon({
+  userId,
+  courseId,
+  contentIds,
+}) {
+  const { analysis } = await generateAssessmentAnalyses({
+    userId,
+    courseId,
+    analysisTypes: ["assessment_generation"],
+    contentIds,
+  });
+
+  return mapAiBeaconAssessmentAnalysisToQuestions(analysis);
+}
+
 module.exports = {
   extractAvailableCourses,
   extractSyncedCourses,
@@ -319,4 +351,5 @@ module.exports = {
   isCourseProcessingDone,
   generateAssessmentAnalyses,
   mapAiBeaconAssessmentAnalysisToQuestions,
+  generateQuestionsFromAiBeacon,
 };

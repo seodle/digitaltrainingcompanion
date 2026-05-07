@@ -251,9 +251,9 @@ const requireApiKeyOwner = (paramName = 'apiKeyId') => {
     };
 };
 
-// Ensure authenticated user has both aiBeacon + Moodle API keys configured.
-// We use the *CreatedAt timestamps since the encrypted keys fields are usually `select: false`.
-const requireAiBeaconAndMoodleApiKeys = () => {
+// Ensure authenticated user has aiBeacon API key configured.
+// We use the createdAt timestamp since the encrypted key field is usually `select: false`.
+const requireAiBeaconApiKey = () => {
     return async (req, res, next) => {
         try {
             const requesterId = req.user && req.user._id;
@@ -263,7 +263,7 @@ const requireAiBeaconAndMoodleApiKeys = () => {
 
             // The actual key fields are `select: false`, so explicitly include them.
             const user = await User.findById(requesterId).select(
-                '+aiBeaconApiKey +moodleApiKey aiBeaconApiKeyCreatedAt moodleApiKeyCreatedAt'
+                '+aiBeaconApiKey aiBeaconApiKeyCreatedAt'
             );
             if (!user) {
                 return res.status(404).json({ error: 'User not found' });
@@ -272,22 +272,17 @@ const requireAiBeaconAndMoodleApiKeys = () => {
             const aiBeaconKey = typeof user.getAiBeaconApiKey === 'function'
                 ? String(user.getAiBeaconApiKey() || '').trim()
                 : String(user.aiBeaconApiKey || '').trim();
-            const moodleKey = typeof user.getMoodleApiKey === 'function'
-                ? String(user.getMoodleApiKey() || '').trim()
-                : String(user.moodleApiKey || '').trim();
-
-            // Prefer checking real keys; fall back to timestamps if needed.
+            // Prefer checking real key; fall back to timestamp if needed.
             const hasAiBeacon = !!aiBeaconKey || !!user.aiBeaconApiKeyCreatedAt;
-            const hasMoodle = !!moodleKey || !!user.moodleApiKeyCreatedAt;
-            if (!hasAiBeacon || !hasMoodle) {
+            if (!hasAiBeacon) {
                 return res.status(403).json({
-                    error: 'Missing AI Beacon API key and/or Moodle API key',
+                    error: 'Missing AI Beacon API key',
                 });
             }
 
             return next();
         } catch (err) {
-            console.error('AI Beacon + Moodle keys check failed:', err);
+            console.error('AI Beacon key check failed:', err);
             return res.status(500).json({ error: 'Server error' });
         }
     };
@@ -302,7 +297,7 @@ module.exports = {
     requireAssessmentOwner,
     requireLogOwner,
     requireApiKeyOwner,
-    requireAiBeaconAndMoodleApiKeys
+    requireAiBeaconApiKey
 };
 
 
