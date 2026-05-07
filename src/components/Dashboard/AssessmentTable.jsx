@@ -87,6 +87,8 @@ const AssessmentTable = ({
   const [newAssessmentType, setNewAssessmentType] = useState('');
   const [error, setError] = useState(null);
 
+  const isFree = ['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan);
+
   // Normalize assessment user id whether populated (object) or not (string)
   const getAssessmentUserId = (a) => {
     if (!a || !a.userId) return undefined;
@@ -548,13 +550,14 @@ const handleEditAssessment = (assessment) => {
 
   
   
-  navigate('/createSurvey', {
-       state: {
-           assessmentType: assessment.type,
-           assessmentName: assessment.name,
-           assessmentId: assessment._id
-       },
-   });
+navigate('/createSurvey', {
+      state: {
+          assessmentType: assessment.type,
+          assessmentName: assessment.name,
+          assessmentId: assessment._id,
+          monitoringId: assessment.monitoringId,
+      },
+  });
 };
 
 /**
@@ -659,8 +662,8 @@ const handleAssessmentPreview = (assessment) => {
      * @returns {Promise<void>} A promise that resolves once the assessment is copied and saved to the server.
     */
     const handleCopyAssessment = async (assessmentId) => {
-      if (currentUser?.sandbox) {
-        setError(getMessage("sandbox_user_cannot_copy"));
+      if (isFree) {
+        setError(getMessage("free_user_cannot_copy"));
         return;
       }
 
@@ -1307,7 +1310,7 @@ const handleAssessmentPreview = (assessment) => {
         open={Boolean(menuAnchorEl)}
         onClose={handleMenuClose}>
        <Tooltip 
-          title={currentUser?.sandbox ? <Typography sx={{ fontSize: '0.9rem' }}>{getMessage("sandbox_user_cannot_copy")}</Typography> : ""}
+          title={isFree ? <Typography sx={{ fontSize: '0.9rem' }}>{getMessage("free_user_cannot_copy")}</Typography> : ""}
           placement="left"
         >
           <div> {/* Wrap MenuItem in a div for tooltip to work when disabled */}
@@ -1316,7 +1319,7 @@ const handleAssessmentPreview = (assessment) => {
                 handleCopyAssessment(activeAssessment);
                 handleMenuClose();
               }}
-              disabled={currentUser?.sandbox}
+              disabled={isFree}
             >
               <Copy size={16} style={{ marginRight: 8 }} />
               {getMessage('label_copy')}

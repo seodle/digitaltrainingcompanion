@@ -9,6 +9,8 @@ const DisplayTextQuestion = ({ title, content, displayName, comment = false, aiS
     const { currentUser } = useAuthUser();
     const { getMessage } = useMessageService();
 
+    const isFree = ['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan);
+
     return (
         <Box bgcolor="background.paper" m={2} p={2}>
             <Box display="flex" justifyContent="space-between">
@@ -42,9 +44,9 @@ const DisplayTextQuestion = ({ title, content, displayName, comment = false, aiS
                         {getMessage('label_ai_summary') || 'AI Summary'}
                     </Typography>
                     
-                    {currentUser?.sandbox ? (
+                    {isFree ? (
                         <Alert severity="info">
-                            {getMessage("sandbox_user_ai_restriction")}
+                            {getMessage("free_user_ai_restriction")}
                         </Alert>
                     ) : loadingSummary ? (
                         <Box display="flex" alignItems="center" gap={1}>

@@ -88,6 +88,8 @@ const Dashboard = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
+  const isFree = ['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan);
+
   // Function to check if the token is expired
   const isTokenExpired = (token) => {
     if (!token) {
@@ -309,15 +311,15 @@ const Dashboard = () => {
     let errorMessage = '';
     setError(null);
 
-    // Check for sandbox user restrictions
-    if (currentUser?.sandbox) {
+    // Check for free plan restrictions
+    if (isFree) {
       const existingAssessmentsOfType = assessments.filter(
         assessment => assessment.monitoringId === currentMonitoringId && 
                      assessment.type === newAssessmentType
       );
       
       if (existingAssessmentsOfType.length >= 1) {
-        setError(getMessage('sandbox_user_assessment_type_limit'));
+        setError(getMessage('free_user_assessment_type_limit'));
         return;
       }
     }
@@ -558,7 +560,7 @@ const Dashboard = () => {
               sx={buttonStyle}
               onClick={() => {
                 setOpenMonitoringDialog(true);
-                if (currentUser?.sandbox && monitorings.length >= 1) {
+                if (isFree && monitorings.length >= 1) {
                   setShowSandboxLimitAlert(true);
                 }
               }}
@@ -580,9 +582,9 @@ const Dashboard = () => {
               {getMessage("new_monitoring_create_new_monitoring")}
             </DialogTitle>
             <DialogContent>
-              {showSandboxLimitAlert && currentUser?.sandbox && monitorings.length >= 1 && (
+            {showSandboxLimitAlert && isFree && monitorings.length >= 1 && (
                 <Alert severity="info" sx={{ mb: 2 }}>
-                  {getMessage("sandbox_user_monitoring_limit")}
+                  {getMessage("free_user_monitoring_limit")}
                 </Alert>
               )}
               <TextField
@@ -605,9 +607,9 @@ const Dashboard = () => {
                 fullWidth
                 value={newMonitoringDescription}
                 onChange={e => setNewMonitoringDescription(e.target.value)}
-                disabled={currentUser?.sandbox && monitorings.length >= 1}
+                disabled={isFree && monitorings.length >= 1}
               />
-              {error && error !== getMessage("sandbox_user_monitoring_limit") && (
+              {error && error !== getMessage("free_user_monitoring_limit") && (
                 <Box mt="15px">
                   <Alert severity="error">
                     {error}
@@ -635,11 +637,6 @@ const Dashboard = () => {
           <Dialog open={openLoadCodeDialog} onClose={handleCloseLoadCodeDialog}>
             <DialogTitle>{getMessage("load_code_dialog_title")}</DialogTitle>
             <DialogContent>
-              {currentUser?.sandbox && (
-                <Alert severity="info" sx={{ mb: 2 }}>
-                  {getMessage("sandbox_user_cannot_import")}
-                </Alert>
-              )}
               <TextField
                 autoFocus
                 margin="dense"
@@ -651,7 +648,6 @@ const Dashboard = () => {
                 onChange={e => setLoadCode(e.target.value)}
                 error={!!loadCodeError}
                 helperText={loadCodeError}
-                disabled={currentUser?.sandbox} 
               />
             </DialogContent>
             <DialogActions>
@@ -663,7 +659,6 @@ const Dashboard = () => {
                 variant="contained"
                 color="primary"
                 sx={buttonStyle}
-                disabled={currentUser?.sandbox} 
               >
                 {getMessage("label_import")}
               </Button>
@@ -826,8 +821,8 @@ const Dashboard = () => {
               {error && (
                 <Box mt="15px">
                   <Alert severity={
-                    error === getMessage("sandbox_user_monitoring_limit") || 
-                    error === getMessage("sandbox_user_assessment_type_limit") 
+                    error === getMessage("free_user_monitoring_limit") || 
+                    error === getMessage("free_user_assessment_type_limit") 
                       ? "info" 
                       : "error"
                   }>

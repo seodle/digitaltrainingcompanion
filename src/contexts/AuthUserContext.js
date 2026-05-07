@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from "../config"; 
 
@@ -11,6 +11,23 @@ export const AuthUserProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
 
+    const fetchUserDetails = useCallback(async (token) => {
+        try {
+            const response = await axios.get(`${BACKEND_URL}/users/currentUser`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                params: { _: Date.now() },
+            });
+            setCurrentUser(response.data);
+        } catch (error) {
+            console.error('Failed to fetch user details:', error);
+            setIsAuthenticated(false);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -21,26 +38,11 @@ export const AuthUserProvider = ({ children }) => {
             setCurrentUser(null);
             setLoading(false);
         }
-    }, []);
-
-    const fetchUserDetails = async (token) => {
-        try {
-            const response = await axios.get(`${BACKEND_URL}/users/currentUser`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setCurrentUser(response.data); // Sets the current user on successful fetch
-        } catch (error) {
-            console.error('Failed to fetch user details:', error);
-            setIsAuthenticated(false); // Updates authentication status on error
-        } finally {
-            setLoading(false); // Ensures loading is set to false in both success and error cases
-        }
-    };
+    }, [fetchUserDetails]);
 
     if (loading) {
-        return <div>Loading...</div>; // or other loading indicators
+        return <div>Loading...</div>;
     }
-
 
     return (
         <AuthUserContext.Provider value={{ currentUser, isAuthenticated, setCurrentUser, setIsAuthenticated, fetchUserDetails }}>

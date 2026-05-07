@@ -928,7 +928,7 @@ const Reports = () => {
                     responses: validResponses,
                     questionText: questionText,
                     language: languageCode,
-                    sandbox: currentUser?.sandbox || false
+                    monitoringId: selectedMonitoring?._id || null
                 },
                 {
                     headers: {

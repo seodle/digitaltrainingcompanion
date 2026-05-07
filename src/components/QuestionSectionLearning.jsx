@@ -51,6 +51,8 @@ const EditQuestionView = ({
     const [localActivity, setLocalActivity] = useState(question.activity || '');
     const [isAutoEncodingActive, setIsAutoEncodingActive] = useState(false);
 
+    const isFree = ['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan);
+
     useEffect(() => {
         setLocalSelectedArea(question.area || '');
         setLocalSelectedCompetency(question.competency || '');
@@ -151,7 +153,7 @@ const EditQuestionView = ({
         addOption(setQuestions, questionId);
         
         // If auto-suggestions enabled, generate new options
-        if (autoSuggestionsEnabled && !currentUser?.sandbox) {
+        if (autoSuggestionsEnabled && !isFree) {
             setTimeout(async () => {
                 const currentQuestion = questions.find(q => q.questionId === questionId);
                 if (currentQuestion && currentQuestion.question) {
@@ -220,7 +222,7 @@ const EditQuestionView = ({
         removeOption(setQuestions, questionId, index);
         
         // If auto-suggestions enabled and we'll have options left, generate new options
-        if (autoSuggestionsEnabled && !currentUser?.sandbox && targetOptionCount > 0) {
+        if (autoSuggestionsEnabled && !isFree && targetOptionCount > 0) {
             setTimeout(async () => {
                 const currentQuestion = questions.find(q => q.questionId === questionId);
                 // Only proceed if the question exists and has a title
@@ -411,7 +413,7 @@ const EditQuestionView = ({
                                             <Switch
                                                 checked={autoSuggestionsEnabled}
                                                 onChange={handleAutoSuggestToggle}
-                                                disabled={!question.question || generatingOptions || currentUser?.sandbox}
+                                                disabled={!question.question || generatingOptions || isFree}
                                             />
                                         }
                                         label={getMessage("label_auto_suggestions")}
@@ -422,9 +424,9 @@ const EditQuestionView = ({
                                             <Typography variant="body2">{getMessage("label_generating_options")}</Typography>
                                         </Box>
                                     )}
-                                    {currentUser?.sandbox && (
+                                    {isFree && (
                                         <Alert severity="info" sx={{ mt: 1, mb: 1 }}>
-                                            {getMessage("sandbox_user_ai_restriction")}
+                                            {getMessage("free_user_ai_restriction")}
                                         </Alert>
                                     )}
                                 </Box>
@@ -517,14 +519,14 @@ const EditQuestionView = ({
                                     control={<Switch 
                                         checked={isAutoEncodingActive} 
                                         onChange={handleLocalAutomaticEncodingChange} 
-                                        disabled={currentUser?.sandbox || !question.framework || !question.question}
+                                        disabled={isFree || !question.framework || !question.question}
                                     />}
                                     label={getMessage("label_automatically_recode_competencies")}
                                 />
                             </Box>
-                            {currentUser?.sandbox && (
+                            {isFree && (
                                 <Alert severity="info" sx={{ mt: 1, mb: 1, mr:1 }}>
-                                    {getMessage("sandbox_user_ai_restriction")}
+                                    {getMessage("free_user_ai_restriction")}
                                 </Alert>
                             )}
                              {!question.question && isAutoEncodingActive && (

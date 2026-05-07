@@ -76,6 +76,8 @@ const MonitoringCard = ({
   const isExpanded = expandedMonitoring === monitoring._id;
   const isOwner = currentUser._id === monitoring.userId;
 
+  const isFree = ['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan);
+
 useEffect(() => {
   const fetchUsersWhoRedeemed = async () => {
     if (monitoring.sharingCode) {
@@ -219,8 +221,8 @@ const generateTooltipContent = () => {
  * @throws Will throw an error if the copying process fails.
  */
   const handleCopyMonitoring = async (monitoringId) => {
-    if (currentUser?.sandbox) {
-    setError(getMessage("sandbox_user_cannot_copy"));
+    if (isFree) {
+      setError(getMessage("free_user_cannot_copy"));
     return;
   }
     try {
@@ -762,7 +764,7 @@ const WarningDialog = () => (
             }}
             >
             <Tooltip 
-              title={currentUser?.sandbox ? <Typography sx={{ fontSize: '0.9rem' }}>{getMessage("sandbox_user_cannot_copy")}</Typography> : ""}
+              title={isFree ? <Typography sx={{ fontSize: '0.9rem' }}>{getMessage("free_user_cannot_copy")}</Typography> : ""}
               placement="left"
             >
               <div>
@@ -771,7 +773,7 @@ const WarningDialog = () => (
                     handleCopyMonitoring(monitoring._id);
                     handleMenuClose(e);
                   }}
-                  disabled={currentUser?.sandbox}
+                  disabled={isFree}
                 >
                   <ContentCopyIcon sx={{ mr: 1.5, fontSize: 18 }} />
                   <Typography variant="body2">

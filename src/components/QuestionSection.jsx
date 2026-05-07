@@ -87,9 +87,9 @@ const AutoSuggestionsSwitch = ({
           <Typography variant="body2">{getMessage("label_generating_options")}</Typography>
         </Box>
       )}
-      {currentUser?.sandbox && (
+      {['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan) && (
         <Alert severity="info" sx={{ mt: 1, mb: 1 }}>
-          {getMessage("sandbox_user_ai_restriction")}
+          {getMessage("free_user_ai_restriction")}
         </Alert>
       )}
     </Box>
@@ -107,6 +107,8 @@ const EditQuestionView = ({ question, matrixQuestions, setQuestions, setEditingQ
     const [autoSuggestionsEnabled, setAutoSuggestionsEnabled] = useState(false);
     const [generatingOptions, setGeneratingOptions] = useState(false);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+    const isFree = ['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan);
 
     const createEditorStateFromHtml = (html = "") => {
         const rawHtml = (html || "").trim();
@@ -257,7 +259,7 @@ const EditQuestionView = ({ question, matrixQuestions, setQuestions, setEditingQ
     const enhancedAddOption = () => {
         const originalOptionCount = question.options?.length || 0;
         addOption(setQuestions, question.questionId);
-        if (autoSuggestionsEnabled && question.question && !currentUser?.sandbox) {
+        if (autoSuggestionsEnabled && question.question && !isFree) {
             setTimeout(async () => {
                 // The 'question' prop might be stale here due to closure.
                 // We calculate the target count based on the length *before* addOption was called.
@@ -307,7 +309,7 @@ const EditQuestionView = ({ question, matrixQuestions, setQuestions, setEditingQ
     const enhancedRemoveOption = (optionIndex) => {
         const originalOptionCount = question.options?.length || 0;
         removeOption(setQuestions, question.questionId, optionIndex);
-        if (autoSuggestionsEnabled && question.question && !currentUser?.sandbox) {
+        if (autoSuggestionsEnabled && question.question && !isFree) {
             setTimeout(async () => {
                 // The 'question' prop might be stale.
                 // Calculate target count based on length *before* removeOption.
@@ -431,7 +433,7 @@ const EditQuestionView = ({ question, matrixQuestions, setQuestions, setEditingQ
                         autoSuggestionsEnabled={autoSuggestionsEnabled}
                         onToggle={handleAutoSuggestToggle}
                         generatingOptions={generatingOptions}
-                        disabled={!question.question || generatingOptions || currentUser?.sandbox}
+                        disabled={!question.question || generatingOptions || isFree}
                         getMessage={getMessage}
                         currentUser={currentUser}
                     />
@@ -529,7 +531,7 @@ const EditQuestionView = ({ question, matrixQuestions, setQuestions, setEditingQ
                                 autoSuggestionsEnabled={autoSuggestionsEnabled}
                                 onToggle={handleAutoSuggestToggle}
                                 generatingOptions={generatingOptions}
-                                disabled={!question.question || generatingOptions || currentUser?.sandbox}
+                                disabled={!question.question || generatingOptions || isFree}
                                 getMessage={getMessage}
                                 currentUser={currentUser}
                             />

@@ -34,6 +34,8 @@ const CompetenciesSelector = ({
   const { values, touched, errors, handleChange, handleBlur } = useFormikContext();
   const { currentUser } = useAuthUser();
 
+  const isFree = ['FREE_TRAINER', 'FREE_TEACHER'].includes(currentUser?.subscriptionPlan);
+
   return (
     <>
       {/* Automatic Encoding Switch */}
@@ -52,15 +54,15 @@ const CompetenciesSelector = ({
                 updateCompetenciesForQuestion
               )
             }
-            disabled={helpWithAI || currentUser?.sandbox || !framework}
+            disabled={helpWithAI || isFree || !framework}
           />
         }
         label={getMessage('label_automatic_encoding_competencies')}
       />
 
-      {currentUser?.sandbox && (
+    {isFree && (
         <Alert severity="info" sx={{ mb: 2 }}>
-          {getMessage("sandbox_user_ai_restriction")}
+          {getMessage("free_user_ai_restriction")}
         </Alert>
       )}
 
