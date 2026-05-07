@@ -451,7 +451,7 @@ function fetchPredifinedQuestions(predifinedQuestionIds, languageCode) {
 
     return predifinedQuestionIds.map(id => ({
         ...questionBank[languageCode][id],
-        workshopId: "",
+        workshopId: null,
         questionId: id,
         options: questionBank[languageCode][id].options.map(option => ({
             value: option,
