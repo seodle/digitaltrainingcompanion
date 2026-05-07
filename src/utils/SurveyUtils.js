@@ -391,7 +391,16 @@ export const saveSurveyToAssessment = async (assessmentId, suveyData) => {
  * @param {string} currentAssessmentServerId - The current assessment server ID used to fetch the survey.
  * @param {Array} predifinedQuestionIds - List of predinied questions.
  */
-export const fetchExistingSurvey = async (setQuestions, setSplitWorkshops, setWorkshops, setInitialQuestions, currentAssessmentServerId, predifinedQuestionIds, languageCode) => {
+export const fetchExistingSurvey = async (
+    setQuestions,
+    setSplitWorkshops,
+    setWorkshops,
+    setInitialQuestions,
+    currentAssessmentServerId,
+    predifinedQuestionIds,
+    languageCode,
+    { onAiBeaconContext } = {}
+) => {
 
     try {
         const token = localStorage.getItem("token");
@@ -405,6 +414,14 @@ export const fetchExistingSurvey = async (setQuestions, setSplitWorkshops, setWo
                 sandbox: sandbox
             }
         });
+
+        if (onAiBeaconContext && response.data) {
+            onAiBeaconContext({
+                monitoringId: response.data.monitoringId,
+                courseAiBeaconId: response.data.courseAiBeaconId,
+                courseSyncedAt: response.data.courseSyncedAt,
+            });
+        }
 
         // Always set initialQuestions with predefined questions for new workshops
         let predifinedQuestion = fetchPredifinedQuestions(predifinedQuestionIds, languageCode);

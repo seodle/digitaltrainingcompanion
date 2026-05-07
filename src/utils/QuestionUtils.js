@@ -912,5 +912,5 @@ export const QuestionOptionGenerator = ({ autoSuggestionsEnabled, questionText }
 
 export {
   processMessageToAPI, addQuestionsSchema, handleAutomaticEncodingChange, updateCompetenciesForQuestion,
-  handleSubmit, initialQuestionValues, getCompetencies, getActivities, findCompetencies
+  handleSubmit, initialQuestionValues, getCompetencies, getActivities, findCompetencies,
 };

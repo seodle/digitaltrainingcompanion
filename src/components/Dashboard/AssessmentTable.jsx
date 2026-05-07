@@ -554,13 +554,11 @@ const handleEditAssessment = (assessment) => {
   // Change status to 'Draft' when editing
   handleAssessmentStatusChange(assessment._id, 'Draft');
 
-  
-  
   navigate('/createSurvey', {
        state: {
            assessmentType: assessment.type,
            assessmentName: assessment.name,
-           assessmentId: assessment._id
+           assessmentId: assessment._id,
        },
    });
 };

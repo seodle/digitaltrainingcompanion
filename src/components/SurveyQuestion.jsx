@@ -1,5 +1,5 @@
 import React, {useState, useCallback} from 'react';
-import { Box, Button, Radio, Checkbox, FormControl, FormLabel, FormControlLabel, RadioGroup, Typography, TextField, Slider } from '@mui/material';
+import { Box, Button, Radio, Checkbox, FormControl, FormLabel, FormControlLabel, RadioGroup, Typography, TextField, Slider, Chip } from '@mui/material';
 import { Field } from 'formik';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import draftToHtml from 'draftjs-to-html';
@@ -31,6 +31,7 @@ const SurveyQuestion = ({
   matrixPosition,
   matrixTitle,
   viewType = 'default',
+  questionCategoryBadge = null,
 }) => {
 
   const { getMessage } = useMessageService();
@@ -132,6 +133,21 @@ const SurveyQuestion = ({
             </>
           )}
         </FormLabel>
+        {questionCategoryBadge?.label && !matrixId && (
+          <Box sx={{ mb: 1.5 }}>
+            <Chip
+              size="small"
+              label={questionCategoryBadge.label}
+              sx={{
+                fontWeight: 600,
+                color: questionCategoryBadge.color || "#1f2937",
+                backgroundColor: questionCategoryBadge.backgroundColor || "#eef2ff",
+                border: "1px solid",
+                borderColor: questionCategoryBadge.borderColor || "transparent",
+              }}
+            />
+          </Box>
+        )}
 
         {type === "single-text" ? (
           <Box sx={{ fontSize: optionFontSize, mt: 2, width: '100%' }} dangerouslySetInnerHTML={{ __html: htmlContent }} />

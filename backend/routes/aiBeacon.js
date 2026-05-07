@@ -9,27 +9,73 @@ const {
   extractCourseContents,
   resolveLmsConnectionId,
   waitForCourseProcessingCompletion,
+  generateQuestionsFromAiBeacon,
 } = require("../services/aiBeacon.service");
-const { createAssessment } = require("../services/assessmentService");
 const { AiBeaconApiError } = require("../clients/aiBeacon.client");
+const { requireAssessmentOwner } = require("../middleware/authorization");
 
 const AI_BEACON_OUTPUT_LANGUAGES = new Set(["de", "fr", "it", "en", "auto"]);
+const AI_BEACON_QUESTION_CATEGORY_BY_LEARNING_TYPE = {
+  knowledge: "knowledge",
+  skill: "skill",
+  attitude: "attitude",
+};
 
-router.post("/assessments", async (req, res) => {
-  const assessmentData = req.body;
-  const requesterId = req.user && req.user._id;
+router.post(
+  "/assessments/:assessmentId/generate-questions",
+  requireAssessmentOwner("assessmentId"),
+  async (req, res) => {
+    const requesterId = req.user && req.user._id;
+    const courseId = String(req.body?.courseId || "").trim();
+    const contentIds = Array.isArray(req.body?.content_ids)
+      ? req.body.content_ids
+      : [];
+    const numberOfQuestions = Number(req.body?.numberOfQuestions);
+    const requestedQuestionCategory = String(req.body?.questionCategory || "")
+      .trim()
+      .toLowerCase();
+    const questionCategory =
+      AI_BEACON_QUESTION_CATEGORY_BY_LEARNING_TYPE[requestedQuestionCategory];
 
-  try {
-    const result = await createAssessment(assessmentData, {
-      requesterId,
-      enableAiBeaconEnrichment: true,
-    });
-    return res.json(result);
-  } catch (error) {
-    const statusCode = error.message === "Assessment not found" ? 404 : 500;
-    return res.status(statusCode).json({ error: error.message });
+    if (!courseId) {
+      return res.status(400).json({ error: "courseId is required" });
+    }
+    if (contentIds.length === 0) {
+      return res.status(400).json({ error: "content_ids must be a non-empty array" });
+    }
+    if (!Number.isInteger(numberOfQuestions) || numberOfQuestions < 1) {
+      return res.status(400).json({ error: "numberOfQuestions must be a positive integer" });
+    }
+    if (!questionCategory) {
+      return res.status(400).json({
+        error: "questionCategory must be one of: knowledge, skill, attitude",
+      });
+    }
+
+    try {
+      const questions = await generateQuestionsFromAiBeacon({
+        userId: requesterId,
+        courseId,
+        contentIds,
+        numberOfQuestions,
+        questionCategory,
+      });
+      return res.json({ questions });
+    } catch (error) {
+      if (error instanceof AiBeaconApiError) {
+        return res.status(
+          error.status >= 400 && error.status < 600 ? error.status : 500
+        ).json({
+          error: error.message || "AI Beacon request failed",
+          details: error.responseBody,
+        });
+      }
+      return res.status(500).json({
+        error: error.message || "Failed to generate questions",
+      });
+    }
   }
-});
+);
 
 router.get("/courses", async (req, res) => {
   try {

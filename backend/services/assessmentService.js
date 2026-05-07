@@ -1,31 +1,23 @@
 const Assessment = require('../models/assessmentModel');
+const Monitoring = require('../models/monitoringModel');
 const mongoose = require('mongoose');
-const {
-    generateAssessmentAnalyses,
-    mapAiBeaconAssessmentAnalysisToQuestions,
-} = require('./aiBeacon.service');
 
 /**
  * Create an assessement and add it to the db
- * @param {string} monitoringId - The unique identifier of the monitoring document-
- * @param {Object} newAssessment - The assessment object to be created.
+ * @param {Object} assessmentData - The assessment object to be created.
+ * @param {Object} options
+ * @param {string} [options.requesterId] - Authenticated user id; used as assessment owner when provided.
  * @return {Promise<Object>} A promise that resolves to an object containing the ID of the newly created assessment.
  * @throws {Error} Throws an error if the monitoring document is not found or if there is an error saving the updates to the database.
  */
-const createAssessment = async (
-    assessmentData,
-    { requesterId, enableAiBeaconEnrichment = false } = {}
-) => {
+const createAssessment = async (assessmentData, { requesterId } = {}) => {
 
     try {
-        const contentIds = assessmentData.content_ids;
-
         // Compute next position on the server to avoid relying on client-side counts
         const nextPosition = (await Assessment.countDocuments({ monitoringId: assessmentData.monitoringId })) + 1;
 
-        // create new Monitoring
         let newAssessment = new Assessment({
-            userId: assessmentData.userId,
+            userId: requesterId || assessmentData.userId,
             monitoringId: assessmentData.monitoringId,
             position: nextPosition,
             name: assessmentData.name,
@@ -40,35 +32,7 @@ const createAssessment = async (
         const createdAssessement = await newAssessment.save();
         console.log("New Assessement created successfully");
 
-        // Step 1: assessment is created first (empty survey).
-        // Step 2: if Moodle contents are selected, trigger AI Beacon enrichment flow.
-        // Mapping of AI response into questions is intentionally deferred.
-        if (
-            enableAiBeaconEnrichment &&
-            Array.isArray(contentIds) &&
-            contentIds.length > 0
-        ) {
-            try {
-                const { analysis } = await generateAssessmentAnalyses({
-                    userId: requesterId || assessmentData.userId,
-                    courseId: assessmentData.courseId,
-                    analysisTypes: ['assessment_generation'],
-                    contentIds,
-                });
-
-                const mappedQuestions = mapAiBeaconAssessmentAnalysisToQuestions(analysis);
-                
-                if (mappedQuestions.length > 0) {
-                    createdAssessement.questions = mappedQuestions;
-                    createdAssessement.lastModificationDate = new Date();
-                    const savedAssessment = await createdAssessement.save();
-                }
-            } catch (analysisError) {
-                console.error("AI Beacon enrichment failed:", analysisError);
-            }
-        }
-
-        return createdAssessement; // Return the created assessement document
+        return createdAssessement;
 
     } catch (error) {
         console.error(error);
@@ -393,6 +357,18 @@ const fetchSurveyData = async (currentAssessmentServerId, sandbox) => {
             return { status: 'error', message: 'No assessment found with the provided ID' };
         }
 
+        let courseAiBeaconId = null;
+        let courseSyncedAt = null;
+        if (assessment.monitoringId) {
+            const monitoring = await Monitoring.findById(assessment.monitoringId)
+                .select('courseAiBeaconId courseSyncedAt')
+                .lean();
+            if (monitoring) {
+                courseAiBeaconId = monitoring.courseAiBeaconId ?? null;
+                courseSyncedAt = monitoring.courseSyncedAt ?? null;
+            }
+        }
+
         // If assessment is found, return the survey and additional details
         return {
             status: 'success',
@@ -401,7 +377,10 @@ const fetchSurveyData = async (currentAssessmentServerId, sandbox) => {
                 type: assessment.type,
                 name: assessment.name,
                 status: assessment.status,
-                workshops: assessment.workshops
+                workshops: assessment.workshops,
+                monitoringId: assessment.monitoringId,
+                courseAiBeaconId,
+                courseSyncedAt,
             }
         };
     } catch (error) {

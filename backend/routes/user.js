@@ -67,10 +67,9 @@ router.put("/externalPlatformKeys", async (req, res) => {
     }
 
     // Whitelist: only allow updating fields we explicitly support.
-    const allowedFields = ["aiBeaconApiKey", "moodleApiKey"];
+    const allowedFields = ["aiBeaconApiKey"];
     const createdAtFieldForKeyField = {
-      aiBeaconApiKey: "aiBeaconApiKeyCreatedAt",
-      moodleApiKey: "moodleApiKeyCreatedAt"
+      aiBeaconApiKey: "aiBeaconApiKeyCreatedAt"
     };
     const incoming = req.body || {};
     const update = {};
@@ -88,12 +87,9 @@ router.put("/externalPlatformKeys", async (req, res) => {
       }
     }
 
-    // LMS connection is user-scoped and tied to external platform credentials.
-    // Reset cached value whenever either key is rotated/changed.
-    if (
-      Object.prototype.hasOwnProperty.call(incoming, "aiBeaconApiKey") ||
-      Object.prototype.hasOwnProperty.call(incoming, "moodleApiKey")
-    ) {
+    // LMS connection is user-scoped and tied to the aiBeacon credentials.
+    // Reset cached value whenever the key is rotated/changed.
+    if (Object.prototype.hasOwnProperty.call(incoming, "aiBeaconApiKey")) {
       update.lmsConnectionId = null;
     }
 

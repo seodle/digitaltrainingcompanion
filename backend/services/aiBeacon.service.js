@@ -140,10 +140,13 @@ function mapAiBeaconAssessmentAnalysisToQuestions(rawAnalysis) {
   const shortAnswerQuestions = Array.isArray(normalizedSource?.short_answer)
     ? normalizedSource.short_answer
     : [];
-  const essayPrompt =
-    normalizedSource?.essay && typeof normalizedSource.essay === "object"
-      ? String(normalizedSource.essay?.question || "").trim()
-      : String(normalizedSource?.essay || "").trim();
+  const essayQuestions = Array.isArray(normalizedSource?.essay)
+    ? normalizedSource.essay
+    : normalizedSource?.essay && typeof normalizedSource.essay === "object"
+      ? [normalizedSource.essay]
+      : String(normalizedSource?.essay || "").trim()
+        ? [{ question: String(normalizedSource.essay) }]
+        : [];
 
   const mappedQuestions = [];
   let nextQuestionId = 1;
@@ -158,50 +161,62 @@ function mapAiBeaconAssessmentAnalysisToQuestions(rawAnalysis) {
           .map((option) => String(option || "").trim())
           .filter((option) => option.length > 0)
       : rawOptions && typeof rawOptions === "object"
-        ? Object.values(rawOptions)
-            .map((option) => String(option || "").trim())
-            .filter((option) => option.length > 0)
+        ? Object.entries(rawOptions)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([, label]) => String(label || "").trim())
+            .filter((label) => label.length > 0)
         : [];
+
+    const answerKey = String(entry?.correct_answer ?? "").trim();
+    let correctAnswer = [];
+    if (answerKey && rawOptions && typeof rawOptions === "object" && !Array.isArray(rawOptions)) {
+      const matchedLabel = rawOptions[answerKey];
+      if (matchedLabel) {
+        correctAnswer = [String(matchedLabel).trim()];
+      }
+    } else if (answerKey && options.includes(answerKey)) {
+      correctAnswer = [answerKey];
+    }
+
+    const questionName = String(entry?.question_name || "").trim();
 
     mappedQuestions.push({
       questionId: String(nextQuestionId),
-      shortName: `Question ${nextQuestionId}`,
+      shortName: questionName || `Question ${nextQuestionId}`,
       question: questionText,
       questionType: MULTIPLE_CHOICES_QUESTION_TYPE,
       choices: options,
+      correctAnswer,
+      explanation: String(entry?.explanation || "").trim(),
       isMandatory: false,
       workshopId: null,
     });
     nextQuestionId += 1;
   });
 
-  shortAnswerQuestions.forEach((entry) => {
+  const mapOpenEndedEntry = (entry) => {
     const questionText = String(entry?.question || "").trim();
     if (!questionText) return;
 
+    const questionName = String(entry?.question_name || "").trim();
+    const answer = String(entry?.correct_answer ?? "").trim();
+
     mappedQuestions.push({
       questionId: String(nextQuestionId),
-      shortName: `Question ${nextQuestionId}`,
+      shortName: questionName || `Question ${nextQuestionId}`,
       question: questionText,
       questionType: OPEN_ENDED_QUESTION_TYPE,
       choices: [],
+      correctAnswer: answer ? [answer] : [],
+      explanation: String(entry?.explanation || "").trim(),
       isMandatory: false,
       workshopId: null,
     });
     nextQuestionId += 1;
-  });
+  };
 
-  if (essayPrompt) {
-    mappedQuestions.push({
-      questionId: String(nextQuestionId),
-      shortName: `Question ${nextQuestionId}`,
-      question: essayPrompt,
-      questionType: OPEN_ENDED_QUESTION_TYPE,
-      choices: [],
-      isMandatory: false,
-      workshopId: null,
-    });
-  }
+  shortAnswerQuestions.forEach(mapOpenEndedEntry);
+  essayQuestions.forEach(mapOpenEndedEntry);
 
   return mappedQuestions;
 }
@@ -211,6 +226,8 @@ async function generateAssessmentAnalyses({
   courseId,
   analysisTypes,
   contentIds,
+  numberOfQuestions,
+  questionCategory,
 }) {
   const normalizedCourseId = String(courseId || "").trim();
   if (!normalizedCourseId) {
@@ -222,6 +239,10 @@ async function generateAssessmentAnalyses({
         .map((id) => Number(id))
         .filter((id) => Number.isFinite(id))
     : undefined;
+  const normalizedNumberOfQuestions = Number(numberOfQuestions);
+  const normalizedQuestionCategory = String(questionCategory || "")
+    .trim()
+    .toLowerCase();
 
   const payload = { analysis_types: analysisTypes };
   if (normalizedContentIds !== undefined) {
@@ -229,74 +250,66 @@ async function generateAssessmentAnalyses({
   }
 
   const client = await createAiBeaconApiClientForUser(userId);
-  const raw = await client.post(
-    `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/check-duplicates`,
-    payload
-  );
-
-  const duplicates = Array.isArray(raw?.duplicates) ? raw.duplicates : [];
-  const reusableDuplicate = duplicates.find(
-    (duplicate) =>
-      duplicate?.existing_analysis?.id !== undefined &&
-      duplicate?.existing_analysis?.id !== null
-  );
-  const hasReusableDuplicate = Boolean(reusableDuplicate);
-  const shouldRunAnalysis =
-    duplicates.length === 0 ||
-    duplicates.some((duplicate) => duplicate?.is_stale === true) ||
-    !hasReusableDuplicate;
-  let analysisIdToFetch = reusableDuplicate
-    ? String(reusableDuplicate.existing_analysis.id)
-    : null;
+  const duplicates = [];
+  let analysisIdToFetch = null;
   let analysisResponse = null;
 
-  if (shouldRunAnalysis) {
-    const analysisType = Array.isArray(analysisTypes)
-      ? analysisTypes[0]
-      : analysisTypes;
-    const analyzePayload = { analysis_type: analysisType };
-    if (normalizedContentIds !== undefined) {
-      analyzePayload.content_ids = normalizedContentIds;
-    }
-    const analyzeResponse = await client.post(
-      `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/analyze`,
-      analyzePayload
-    );
+  const analysisType = Array.isArray(analysisTypes)
+    ? analysisTypes[0]
+    : analysisTypes;
+  const analyzePayload = { analysis_type: analysisType };
+  if (normalizedContentIds !== undefined) {
+    analyzePayload.content_ids = normalizedContentIds;
+  }
+  if (
+    normalizedQuestionCategory &&
+    Number.isInteger(normalizedNumberOfQuestions) &&
+    normalizedNumberOfQuestions > 0
+  ) {
+    analyzePayload.question_categories = {
+      [normalizedQuestionCategory]: normalizedNumberOfQuestions,
+    };
+  }
 
-    const jobId = analyzeResponse?.job_id;
-    if (jobId !== undefined && jobId !== null && String(jobId).trim() !== "") {
-      let jobResponse = null;
-      let pollAttempt = 0;
-      do {
-        jobResponse = await client.get(
-          `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/jobs/${encodeURIComponent(String(jobId))}`
-        );
+  const analyzeResponse = await client.post(
+    `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/analyze`,
+    analyzePayload
+  );
 
-        const status = String(jobResponse?.status || "").toLowerCase();
-        if (status === "completed" || status === "failed") {
-          break;
-        }
+  const jobId = analyzeResponse?.job_id;
+  if (jobId !== undefined && jobId !== null && String(jobId).trim() !== "") {
+    let jobResponse = null;
+    let pollAttempt = 0;
+    do {
+      jobResponse = await client.get(
+        `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/jobs/${encodeURIComponent(String(jobId))}`
+      );
 
-        pollAttempt += 1;
-        if (pollAttempt < ANALYSIS_JOB_POLL_MAX_ATTEMPTS) {
-          await sleep(ANALYSIS_JOB_POLL_INTERVAL_MS);
-        }
-      } while (pollAttempt < ANALYSIS_JOB_POLL_MAX_ATTEMPTS);
+      const status = String(jobResponse?.status || "").toLowerCase();
+      if (status === "completed" || status === "failed") {
+        break;
+      }
 
-      const finalStatus = String(jobResponse?.status || "").toLowerCase();
-      if (finalStatus === "completed") {
-        const results = Array.isArray(jobResponse?.results)
-          ? jobResponse.results
-          : [];
-        const firstResultWithAnalysisId = results.find(
-          (result) =>
-            result?.analysis_id !== undefined &&
-            result?.analysis_id !== null &&
-            String(result.analysis_id).trim() !== ""
-        );
-        if (firstResultWithAnalysisId) {
-          analysisIdToFetch = String(firstResultWithAnalysisId.analysis_id);
-        }
+      pollAttempt += 1;
+      if (pollAttempt < ANALYSIS_JOB_POLL_MAX_ATTEMPTS) {
+        await sleep(ANALYSIS_JOB_POLL_INTERVAL_MS);
+      }
+    } while (pollAttempt < ANALYSIS_JOB_POLL_MAX_ATTEMPTS);
+
+    const finalStatus = String(jobResponse?.status || "").toLowerCase();
+    if (finalStatus === "completed") {
+      const results = Array.isArray(jobResponse?.results)
+        ? jobResponse.results
+        : [];
+      const firstResultWithAnalysisId = results.find(
+        (result) =>
+          result?.analysis_id !== undefined &&
+          result?.analysis_id !== null &&
+          String(result.analysis_id).trim() !== ""
+      );
+
+      if (firstResultWithAnalysisId) {
+        analysisIdToFetch = String(firstResultWithAnalysisId.analysis_id);
       }
     }
   }
@@ -310,6 +323,25 @@ async function generateAssessmentAnalyses({
   return { duplicates, analysis: analysisResponse };
 }
 
+async function generateQuestionsFromAiBeacon({
+  userId,
+  courseId,
+  contentIds,
+  numberOfQuestions,
+  questionCategory,
+}) {
+  const { analysis } = await generateAssessmentAnalyses({
+    userId,
+    courseId,
+    analysisTypes: ["assessment_generation"],
+    contentIds,
+    numberOfQuestions,
+    questionCategory,
+  });
+
+  return mapAiBeaconAssessmentAnalysisToQuestions(analysis);
+}
+
 module.exports = {
   extractAvailableCourses,
   extractSyncedCourses,
@@ -319,4 +351,5 @@ module.exports = {
   isCourseProcessingDone,
   generateAssessmentAnalyses,
   mapAiBeaconAssessmentAnalysisToQuestions,
+  generateQuestionsFromAiBeacon,
 };

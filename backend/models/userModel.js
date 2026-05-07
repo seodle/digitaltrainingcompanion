@@ -48,9 +48,7 @@ const userSchema = new mongoose.Schema({
     passwordResetToken: { type: String, default: null, select: false },
     passwordResetExpires: { type: Date, default: null, select: false },
     aiBeaconApiKey: { type: String, default: null, select: false },
-    moodleApiKey: { type: String, default: null, select: false },
     aiBeaconApiKeyCreatedAt: { type: Date, default: null },
-    moodleApiKeyCreatedAt: { type: Date, default: null },
     lmsConnectionId: { type: String, default: null },
     sharingCodeRedeemed: { type: [String], default: [] },
     termsAccepted: { type: Boolean, required: true, default: false }
@@ -59,9 +57,6 @@ const userSchema = new mongoose.Schema({
 userSchema.pre("save", function (next) {
     if (this.isModified("aiBeaconApiKey")) {
         this.aiBeaconApiKey = encrypt(this.aiBeaconApiKey);
-    }
-    if (this.isModified("moodleApiKey")) {
-        this.moodleApiKey = encrypt(this.moodleApiKey);
     }
     next();
 });
@@ -73,9 +68,6 @@ userSchema.pre(["findOneAndUpdate", "updateOne"], function (next) {
     if (Object.prototype.hasOwnProperty.call(set, "aiBeaconApiKey")) {
         set.aiBeaconApiKey = encrypt(set.aiBeaconApiKey);
     }
-    if (Object.prototype.hasOwnProperty.call(set, "moodleApiKey")) {
-        set.moodleApiKey = encrypt(set.moodleApiKey);
-    }
 
     if (update.$set) update.$set = set;
     this.setUpdate(update);
@@ -84,10 +76,6 @@ userSchema.pre(["findOneAndUpdate", "updateOne"], function (next) {
 
 userSchema.methods.getAiBeaconApiKey = function () {
     return decrypt(this.aiBeaconApiKey);
-};
-
-userSchema.methods.getMoodleApiKey = function () {
-    return decrypt(this.moodleApiKey);
 };
 
 // methods

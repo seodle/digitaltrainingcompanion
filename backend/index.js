@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const cors = require('cors');
 
 // Middleware
-const { getUser, requireAdmin, requireAiBeaconAndMoodleApiKeys } = require('./middleware/authorization.js');
+const { getUser, requireAdmin, requireAiBeaconApiKey } = require('./middleware/authorization.js');
 
 // Routes
 const registerRoutes = require("./routes/register");
@@ -108,7 +108,7 @@ app.use("/logs", getUser, logRoutes);
 app.use("/export", getUser, exportsRoutes);
 app.use("/api-keys", getUser, apiKeysRoutes);
 app.use("/ai-tools", getUser, aiToolsRoutes);
-app.use("/aiBeacon", getUser, requireAiBeaconAndMoodleApiKeys(), aiBeaconRoutes);
+app.use("/aiBeacon", getUser, requireAiBeaconApiKey(), aiBeaconRoutes);
 app.use("/semantic", getUser, semanticSimiliaritySearch);
 
 // ADMIN-ONLY ROUTES (JWT + ADMIN RIGHTS REQUIRED)

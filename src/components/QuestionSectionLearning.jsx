@@ -711,6 +711,35 @@ const QuestionsListSectionLearning = ({
     const [editableWorkshopName, setEditableWorkshopName] = useState(workshop?.label || "");
     const { getMessage } = useMessageService();
 
+    const getLearningTypeBadge = (learningType) => {
+        const normalizedType = String(learningType || "").trim().toLowerCase();
+        if (normalizedType === "knowledge") {
+            return {
+                label: getMessage("label_knowledge"),
+                color: "#1d4ed8",
+                backgroundColor: "#dbeafe",
+                borderColor: "#93c5fd",
+            };
+        }
+        if (normalizedType === "skill") {
+            return {
+                label: getMessage("label_skill"),
+                color: "#7c3aed",
+                backgroundColor: "#ede9fe",
+                borderColor: "#c4b5fd",
+            };
+        }
+        if (normalizedType === "attitude") {
+            return {
+                label: getMessage("label_attitude"),
+                color: "#047857",
+                backgroundColor: "#d1fae5",
+                borderColor: "#6ee7b7",
+            };
+        }
+        return null;
+    };
+
     useEffect(() => {
         if (!isEditingWorkshopName) {
             setEditableWorkshopName(workshop?.label || "");
@@ -849,6 +878,7 @@ const QuestionsListSectionLearning = ({
                                 matrixId={question.matrixId}
                                 matrixPosition={question.matrixPosition}
                                 matrixQuestions={matrixQuestions}
+                                questionCategoryBadge={getLearningTypeBadge(question.learningType)}
                             />
                         )}
                     </Box>
