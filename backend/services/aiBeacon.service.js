@@ -2,6 +2,7 @@ const Users = require("../models/userModel");
 const sleep = require("../utils/sleep");
 const {
   createAiBeaconApiClientForUser,
+  createAiBeaconReadOnlyApiClientForUser,
 } = require("../clients/aiBeacon.client");
 
 const PROCESSING_POLL_INTERVAL_MS = 2000;
@@ -10,6 +11,44 @@ const ANALYSIS_JOB_POLL_INTERVAL_MS = 2000;
 const ANALYSIS_JOB_POLL_MAX_ATTEMPTS = 60;
 const OPEN_ENDED_QUESTION_TYPE = "text";
 const MULTIPLE_CHOICES_QUESTION_TYPE = "checkbox";
+
+function parseCoachFeedbackResponseField(responseField) {
+  if (!responseField) return null;
+  if (typeof responseField === "object") {
+    return responseField;
+  }
+  if (typeof responseField !== "string") {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(responseField);
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function extractImprovedDraftFromCoachFeedbackAnalysis(analysis) {
+  if (!analysis || typeof analysis !== "object") {
+    return "";
+  }
+
+  const structuredDraft = String(
+    analysis?.structured_output?.improved_draft ?? ""
+  ).trim();
+  if (structuredDraft) {
+    return structuredDraft;
+  }
+
+  const parsedResponse = parseCoachFeedbackResponseField(analysis.response);
+  const responseDraft = String(parsedResponse?.improved_draft ?? "").trim();
+  if (responseDraft) {
+    return responseDraft;
+  }
+
+  return String(analysis?.improved_draft ?? "").trim();
+}
 
 function extractAvailableCourses(rawAvailable) {
   if (!Array.isArray(rawAvailable)) return [];
@@ -127,6 +166,15 @@ function extractCourseContents(rawContents) {
   }));
 }
 
+function extractCourseContentIds(rawContents) {
+  return extractCourseContents(rawContents)
+    .map((item) => {
+      const id = Number(item.id);
+      return Number.isFinite(id) ? id : null;
+    })
+    .filter((id) => id !== null);
+}
+
 function mapAiBeaconAssessmentAnalysisToQuestions(rawAnalysis) {
   const normalizedSource =
     rawAnalysis?.structured_output &&
@@ -221,6 +269,92 @@ function mapAiBeaconAssessmentAnalysisToQuestions(rawAnalysis) {
   return mappedQuestions;
 }
 
+async function pollAnalysisJobForAnalysisId({ client, courseId, jobId }) {
+  const normalizedCourseId = String(courseId || "").trim();
+  const normalizedJobId = String(jobId || "").trim();
+  if (!normalizedCourseId || !normalizedJobId) {
+    return null;
+  }
+
+  let jobResponse = null;
+  let pollAttempt = 0;
+  do {
+    jobResponse = await client.get(
+      `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/jobs/${encodeURIComponent(normalizedJobId)}`
+    );
+
+    const status = String(jobResponse?.status || "").toLowerCase();
+    if (status === "completed" || status === "failed") {
+      break;
+    }
+
+    pollAttempt += 1;
+    if (pollAttempt < ANALYSIS_JOB_POLL_MAX_ATTEMPTS) {
+      await sleep(ANALYSIS_JOB_POLL_INTERVAL_MS);
+    }
+  } while (pollAttempt < ANALYSIS_JOB_POLL_MAX_ATTEMPTS);
+
+  const finalStatus = String(jobResponse?.status || "").toLowerCase();
+  if (finalStatus !== "completed") {
+    return null;
+  }
+
+  const results = Array.isArray(jobResponse?.results) ? jobResponse.results : [];
+  const firstResultWithAnalysisId = results.find(
+    (result) =>
+      result?.analysis_id !== undefined &&
+      result?.analysis_id !== null &&
+      String(result.analysis_id).trim() !== ""
+  );
+
+  if (!firstResultWithAnalysisId) {
+    return null;
+  }
+
+  return String(firstResultWithAnalysisId.analysis_id);
+}
+
+async function fetchCourseAnalysisById({ client, courseId, analysisId }) {
+  const normalizedCourseId = String(courseId || "").trim();
+  const normalizedAnalysisId = String(analysisId || "").trim();
+  if (!normalizedCourseId || !normalizedAnalysisId) {
+    return null;
+  }
+
+  return client.get(
+    `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/${encodeURIComponent(normalizedAnalysisId)}`
+  );
+}
+
+async function runCourseAnalysisJob({ client, courseId, startPath, startPayload }) {
+  const normalizedCourseId = String(courseId || "").trim();
+  if (!normalizedCourseId) {
+    throw new Error("courseId is required");
+  }
+
+  const startResponse = await client.post(startPath, startPayload);
+
+  const jobId = startResponse?.job_id;
+  if (jobId === undefined || jobId === null || String(jobId).trim() === "") {
+    return null;
+  }
+
+  const analysisId = await pollAnalysisJobForAnalysisId({
+    client,
+    courseId: normalizedCourseId,
+    jobId,
+  });
+  if (!analysisId) {
+    return null;
+  }
+
+  return fetchCourseAnalysisById({
+    client,
+    courseId: normalizedCourseId,
+    analysisId,
+  });
+}
+
 async function generateAssessmentAnalyses({
   userId,
   courseId,
@@ -244,16 +378,6 @@ async function generateAssessmentAnalyses({
     .trim()
     .toLowerCase();
 
-  const payload = { analysis_types: analysisTypes };
-  if (normalizedContentIds !== undefined) {
-    payload.content_ids = normalizedContentIds;
-  }
-
-  const client = await createAiBeaconApiClientForUser(userId);
-  const duplicates = [];
-  let analysisIdToFetch = null;
-  let analysisResponse = null;
-
   const analysisType = Array.isArray(analysisTypes)
     ? analysisTypes[0]
     : analysisTypes;
@@ -271,56 +395,15 @@ async function generateAssessmentAnalyses({
     };
   }
 
-  const analyzeResponse = await client.post(
-    `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/analyze`,
-    analyzePayload
-  );
+  const client = await createAiBeaconApiClientForUser(userId);
+  const analysisResponse = await runCourseAnalysisJob({
+    client,
+    courseId: normalizedCourseId,
+    startPath: `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/analyze`,
+    startPayload: analyzePayload,
+  });
 
-  const jobId = analyzeResponse?.job_id;
-  if (jobId !== undefined && jobId !== null && String(jobId).trim() !== "") {
-    let jobResponse = null;
-    let pollAttempt = 0;
-    do {
-      jobResponse = await client.get(
-        `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/jobs/${encodeURIComponent(String(jobId))}`
-      );
-
-      const status = String(jobResponse?.status || "").toLowerCase();
-      if (status === "completed" || status === "failed") {
-        break;
-      }
-
-      pollAttempt += 1;
-      if (pollAttempt < ANALYSIS_JOB_POLL_MAX_ATTEMPTS) {
-        await sleep(ANALYSIS_JOB_POLL_INTERVAL_MS);
-      }
-    } while (pollAttempt < ANALYSIS_JOB_POLL_MAX_ATTEMPTS);
-
-    const finalStatus = String(jobResponse?.status || "").toLowerCase();
-    if (finalStatus === "completed") {
-      const results = Array.isArray(jobResponse?.results)
-        ? jobResponse.results
-        : [];
-      const firstResultWithAnalysisId = results.find(
-        (result) =>
-          result?.analysis_id !== undefined &&
-          result?.analysis_id !== null &&
-          String(result.analysis_id).trim() !== ""
-      );
-
-      if (firstResultWithAnalysisId) {
-        analysisIdToFetch = String(firstResultWithAnalysisId.analysis_id);
-      }
-    }
-  }
-
-  if (analysisIdToFetch) {
-    analysisResponse = await client.get(
-      `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/${encodeURIComponent(analysisIdToFetch)}`
-    );
-  }
-
-  return { duplicates, analysis: analysisResponse };
+  return { duplicates: [], analysis: analysisResponse };
 }
 
 async function generateQuestionsFromAiBeacon({
@@ -342,14 +425,74 @@ async function generateQuestionsFromAiBeacon({
   return mapAiBeaconAssessmentAnalysisToQuestions(analysis);
 }
 
+async function enrichCoachFeedbackFromAiBeacon({
+  userId,
+  courseId,
+  feedbackText,
+  contentIds,
+}) {
+  const normalizedCourseId = String(courseId || "").trim();
+  if (!normalizedCourseId) {
+    throw new Error("courseId is required");
+  }
+
+  const feedback_text = String(feedbackText || "").trim();
+  if (!feedback_text) {
+    throw new Error("feedback_text is required");
+  }
+
+  const content_ids = Array.isArray(contentIds)
+    ? contentIds.map((id) => Number(id)).filter((id) => Number.isFinite(id))
+    : [];
+  if (content_ids.length === 0) {
+    throw new Error("content_ids must be a non-empty array");
+  }
+
+  const client = await createAiBeaconReadOnlyApiClientForUser(userId);
+  const analysis = await runCourseAnalysisJob({
+    client,
+    courseId: normalizedCourseId,
+    startPath: `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/coach-feedback`,
+    startPayload: { feedback_text, content_ids },
+  });
+
+  const improvedDraft = extractImprovedDraftFromCoachFeedbackAnalysis(analysis);
+  if (!improvedDraft) {
+    throw new Error("AI Beacon did not return an improved draft");
+  }
+
+  return { improvedDraft };
+}
+
+async function createReadOnlyApiKeyForUser(userId) {
+  const client = await createAiBeaconApiClientForUser(userId);
+  const response = await client.post("/api/users/me/api-keys", {
+    name: "read-only",
+    "expires_in_days": 365,
+    scopes: ["analysis:read"],
+  });
+
+  const readOnlyKey = String(
+    response?.key ?? response?.api_key ?? response?.token ?? ""
+  ).trim();
+  if (!readOnlyKey) {
+    throw new Error("AI Beacon did not return a read-only API key");
+  }
+
+  return readOnlyKey;
+}
+
 module.exports = {
   extractAvailableCourses,
   extractSyncedCourses,
   extractCourseContents,
+  extractCourseContentIds,
   resolveLmsConnectionId,
   waitForCourseProcessingCompletion,
   isCourseProcessingDone,
   generateAssessmentAnalyses,
   mapAiBeaconAssessmentAnalysisToQuestions,
   generateQuestionsFromAiBeacon,
+  enrichCoachFeedbackFromAiBeacon,
+  createReadOnlyApiKeyForUser,
 };

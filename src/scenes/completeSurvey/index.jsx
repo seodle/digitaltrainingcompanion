@@ -14,6 +14,19 @@ import { useAuthUser } from '../../contexts/AuthUserContext';
 import { getMatrixQuestions } from '../../utils/matrixUtils';
 import { groupQuestionsByWorkshop } from '../../utils/SurveyUtils';
 
+const appendFeedbackHistoryEntry = (history, { text, source }) => {
+    const entries = Array.isArray(history) ? history : [];
+    return [
+        ...entries,
+        {
+            text,
+            source,
+            order: entries.length + 1,
+            createdAt: new Date().toISOString(),
+        },
+    ];
+};
+
 const MemoizedSurveyQuestion = React.memo(SurveyQuestion);
 
 const useLanguageFromUrl = () => {
@@ -54,6 +67,12 @@ const CompleteSurvey = () => {
 
     // State to track which questions have been validated
     const [validatedQuestions, setValidatedQuestions] = useState(new Set());
+    const [coachFeedbackEnabled, setCoachFeedbackEnabled] = useState(false);
+    const [enrichedQuestions, setEnrichedQuestions] = useState(new Set());
+    const [enrichingQuestions, setEnrichingQuestions] = useState(new Set());
+    const [enrichFeedbackErrors, setEnrichFeedbackErrors] = useState({});
+    const [feedbackHistoryByField, setFeedbackHistoryByField] = useState({});
+    const [pendingEnrichedFeedbackByField, setPendingEnrichedFeedbackByField] = useState({});
 
 
     const navigate = useNavigate();
@@ -82,12 +101,13 @@ const CompleteSurvey = () => {
                 },
             });
     
-            const { survey, type, name, status, workshops } = response.data;
+            const { survey, type, name, status, workshops, coachFeedbackEnabled: coachEnabled } = response.data;
             setSurveyData(survey.map(question => ({
                 ...question,
                 choices: question.choices.map(choice => ({ value: choice, label: choice })),
             })));
             setAssessmentWorkshops(Array.isArray(workshops) ? workshops : []);
+            setCoachFeedbackEnabled(Boolean(coachEnabled));
     
             setAssessmentType(type); 
             setAssessmentName(name); 
@@ -100,7 +120,12 @@ const CompleteSurvey = () => {
             }, {});
     
             setInitialValues(initialValues);
-            setValidatedQuestions(new Set()); // Reset validation state when survey data changes
+            setValidatedQuestions(new Set());
+            setEnrichedQuestions(new Set());
+            setEnrichingQuestions(new Set());
+            setEnrichFeedbackErrors({});
+            setFeedbackHistoryByField({});
+            setPendingEnrichedFeedbackByField({});
         } catch (error) {
             console.error('Error fetching survey data:', error);
         }
@@ -232,6 +257,11 @@ const CompleteSurvey = () => {
                 choices: question.choices.map(choice => choice.value),
                 competencies: question.competencies,
                 response: responseValue,
+                ...(coachFeedbackEnabled && question.questionType === 'text' && !question.matrixId
+                    ? {
+                        feedbackHistory: feedbackHistoryByField[`q${question.questionId}`] || [],
+                    }
+                    : {}),
                 matrixId: question.matrixId,
                 matrixPosition: question.matrixPosition,
                 matrixTitle: question.matrixTitle,
@@ -256,7 +286,12 @@ const CompleteSurvey = () => {
             if (currentAssessmentIndex < assessmentIds.length - 1) {
                 setCurrentAssessmentIndex(prevIndex => prevIndex + 1);
                 setInitialValues({});
-                setValidatedQuestions(new Set()); // Reset validation state for next assessment
+                setValidatedQuestions(new Set());
+                setEnrichedQuestions(new Set());
+                setEnrichingQuestions(new Set());
+                setEnrichFeedbackErrors({});
+                setFeedbackHistoryByField({});
+                setPendingEnrichedFeedbackByField({});
                 
                 window.scrollTo({
                     top: 0,
@@ -272,7 +307,187 @@ const CompleteSurvey = () => {
 
         setSubmitting(false);
         setIsSubmitting(false);
-    }, [surveyData, assessmentIds, currentAssessmentIndex, languageCode, navigate, fetchSurveyData]);
+    }, [surveyData, assessmentIds, currentAssessmentIndex, languageCode, navigate, userId, monitoring, assessmentType, linkingCode, displayName, email, sandbox, coachFeedbackEnabled, feedbackHistoryByField]);
+
+    const coachFeedbackTextQuestions = useMemo(() => {
+        if (!coachFeedbackEnabled) return [];
+        return surveyData.filter(
+            question => question.questionType === 'text' && !question.matrixId
+        );
+    }, [coachFeedbackEnabled, surveyData]);
+
+    const getCoachFeedbackQuestionsNeedingEnrichment = useCallback((values) => {
+        return coachFeedbackTextQuestions.filter(
+            question =>
+                question.isMandatory &&
+                String(values[`q${question.questionId}`] || '').trim().length > 0
+        );
+    }, [coachFeedbackTextQuestions]);
+
+    const canSubmit = useMemo(() => {
+        if (assessmentType !== "Learning") return true;
+
+        const learningQuestionsWithExplanations = surveyData.filter(
+            question => question.explanation && question.explanation.trim() !== ""
+        );
+
+        if (learningQuestionsWithExplanations.length === 0) return true;
+
+        return learningQuestionsWithExplanations.every(
+            question => validatedQuestions.has(`q${question.questionId}`)
+        );
+    }, [assessmentType, surveyData, validatedQuestions]);
+
+    const hasPendingCoachFeedback = useCallback(() => {
+        return coachFeedbackTextQuestions
+            .filter(question => question.isMandatory)
+            .some(question => {
+                const fieldName = `q${question.questionId}`;
+                return String(pendingEnrichedFeedbackByField[fieldName] || '').trim().length > 0;
+            });
+    }, [coachFeedbackTextQuestions, pendingEnrichedFeedbackByField]);
+
+    const canSubmitCoachFeedback = useCallback((values) => {
+        if (hasPendingCoachFeedback()) return false;
+
+        const questionsNeedingEnrichment = getCoachFeedbackQuestionsNeedingEnrichment(values);
+        if (questionsNeedingEnrichment.length === 0) return true;
+
+        return questionsNeedingEnrichment.every(
+            question => enrichedQuestions.has(`q${question.questionId}`)
+        );
+    }, [getCoachFeedbackQuestionsNeedingEnrichment, enrichedQuestions, hasPendingCoachFeedback]);
+
+    const getSubmitDisabledTooltip = useCallback((values) => {
+        if (!canSubmit && assessmentType === "Learning") {
+            return getMessage('tooltip_validate_before_submit');
+        }
+        if (hasPendingCoachFeedback()) {
+            return getMessage('tooltip_resolve_enriched_feedback_before_submit');
+        }
+        if (!canSubmitCoachFeedback(values)) {
+            return getMessage('tooltip_enrich_feedback_before_submit');
+        }
+        return '';
+    }, [canSubmit, assessmentType, canSubmitCoachFeedback, getMessage, hasPendingCoachFeedback]);
+
+    const handleFeedbackTextChange = useCallback((fieldName) => {
+        setEnrichedQuestions(prev => {
+            if (!prev.has(fieldName)) return prev;
+            const next = new Set(prev);
+            next.delete(fieldName);
+            return next;
+        });
+        setEnrichFeedbackErrors(prev => {
+            if (!prev[fieldName]) return prev;
+            const next = { ...prev };
+            delete next[fieldName];
+            return next;
+        });
+    }, []);
+
+    const handleEnrichFeedback = useCallback(async (fieldName, feedbackText) => {
+        const trimmedFeedback = String(feedbackText || '').trim();
+        if (!trimmedFeedback || !userId || !monitoring) return;
+
+        const currentAssessmentId = assessmentIds[currentAssessmentIndex];
+        setEnrichingQuestions(prev => new Set(prev).add(fieldName));
+        setEnrichFeedbackErrors(prev => ({ ...prev, [fieldName]: '' }));
+        setFeedbackHistoryByField(prev => ({
+            ...prev,
+            [fieldName]: appendFeedbackHistoryEntry(prev[fieldName], {
+                text: trimmedFeedback,
+                source: 'student',
+            }),
+        }));
+
+        try {
+            const response = await axios.post(
+                `${BACKEND_URL}/aiBeacon/public/assessments/${encodeURIComponent(currentAssessmentId)}/coach-feedback`,
+                {
+                    userId,
+                    monitoringId: monitoring,
+                    feedback_text: trimmedFeedback,
+                }
+            );
+
+            const improvedDraft = String(response.data?.improvedDraft || '').trim();
+            if (!improvedDraft) {
+                throw new Error('No enriched feedback returned');
+            }
+
+            setPendingEnrichedFeedbackByField(prev => ({
+                ...prev,
+                [fieldName]: improvedDraft,
+            }));
+            setFeedbackHistoryByField(prev => ({
+                ...prev,
+                [fieldName]: appendFeedbackHistoryEntry(prev[fieldName], {
+                    text: improvedDraft,
+                    source: 'aiBeacon',
+                }),
+            }));
+        } catch (error) {
+            const message = error.response?.data?.error || error.message || 'Failed to enrich feedback';
+            setEnrichFeedbackErrors(prev => ({ ...prev, [fieldName]: message }));
+            setFeedbackHistoryByField(prev => {
+                const entries = prev[fieldName];
+                if (!Array.isArray(entries) || entries.length === 0) return prev;
+                const lastEntry = entries[entries.length - 1];
+                if (lastEntry?.source !== 'student') return prev;
+                return {
+                    ...prev,
+                    [fieldName]: entries.slice(0, -1),
+                };
+            });
+        } finally {
+            setEnrichingQuestions(prev => {
+                if (!prev.has(fieldName)) return prev;
+                const next = new Set(prev);
+                next.delete(fieldName);
+                return next;
+            });
+        }
+    }, [assessmentIds, currentAssessmentIndex, monitoring, userId]);
+
+    const handleAcceptOrEditFeedback = useCallback((fieldName, setFieldValue) => {
+        const pendingText = String(pendingEnrichedFeedbackByField[fieldName] || '').trim();
+        if (!pendingText) return;
+
+        setFieldValue(fieldName, pendingText);
+        setPendingEnrichedFeedbackByField(prev => {
+            const next = { ...prev };
+            delete next[fieldName];
+            return next;
+        });
+        setEnrichedQuestions(prev => new Set(prev).add(fieldName));
+        setEnrichFeedbackErrors(prev => {
+            if (!prev[fieldName]) return prev;
+            const next = { ...prev };
+            delete next[fieldName];
+            return next;
+        });
+    }, [pendingEnrichedFeedbackByField]);
+
+    const handleDeclineFeedback = useCallback((fieldName) => {
+        setPendingEnrichedFeedbackByField(prev => {
+            const next = { ...prev };
+            delete next[fieldName];
+            return next;
+        });
+        setEnrichedQuestions(prev => {
+            if (!prev.has(fieldName)) return prev;
+            const next = new Set(prev);
+            next.delete(fieldName);
+            return next;
+        });
+        setEnrichFeedbackErrors(prev => {
+            if (!prev[fieldName]) return prev;
+            const next = { ...prev };
+            delete next[fieldName];
+            return next;
+        });
+    }, []);
 
     const workshopObjects = useMemo(() => {
         return groupQuestionsByWorkshop(assessmentWorkshops, surveyData);
@@ -320,21 +535,6 @@ const CompleteSurvey = () => {
             return newSet;
         });
     }, []);
-
-    // Check if all Learning type questions with explanations have been validated
-    const canSubmit = useMemo(() => {
-        if (assessmentType !== "Learning") return true;
-        
-        const learningQuestionsWithExplanations = surveyData.filter(
-            question => question.explanation && question.explanation.trim() !== ""
-        );
-        
-        if (learningQuestionsWithExplanations.length === 0) return true;
-        
-        return learningQuestionsWithExplanations.every(
-            question => validatedQuestions.has(`q${question.questionId}`)
-        );
-    }, [assessmentType, surveyData, validatedQuestions]);
 
   const preventEnterKey = (event) => {
     if (event.key === 'Enter') {
@@ -471,7 +671,7 @@ const CompleteSurvey = () => {
                 <Box display="flex" alignItems="center" justifyContent="center">
                     <Box sx={{ boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', borderRadius: '15px', padding: '20px', backgroundColor: '#fff', width: { xs: '90vw', md: '50vw' }, }}>
                         <Formik key={currentAssessmentIndex} initialValues={initialValues} onSubmit={handleSubmit}>
-                            {({ setFieldValue }) => (
+                            {({ setFieldValue, values }) => (
                                 <Form style={{ width: '100%' }}>
                                     {workshopObjects.map((workshop) => (
                                         <div key={workshop.workshopId} style={{ width: '100%' }}>
@@ -506,6 +706,29 @@ const CompleteSurvey = () => {
                                                         matrixQuestions={question.matrixId ? getMatrixQuestionsForSurvey(question.matrixId) : []}
                                                         viewType="completeSurvey"
                                                         onQuestionValidated={handleQuestionValidated}
+                                                        showEnrichFeedbackButton={
+                                                            coachFeedbackEnabled && question.questionType === 'text' && !question.matrixId
+                                                        }
+                                                        enrichFeedbackLoading={enrichingQuestions.has(`q${question.questionId}`)}
+                                                        enrichFeedbackDisabled={
+                                                            !String(values[`q${question.questionId}`] || '').trim()
+                                                        }
+                                                        enrichFeedbackError={enrichFeedbackErrors[`q${question.questionId}`] || ''}
+                                                        pendingEnrichedFeedback={
+                                                            pendingEnrichedFeedbackByField[`q${question.questionId}`] || ''
+                                                        }
+                                                        onEnrichFeedback={() => handleEnrichFeedback(
+                                                            `q${question.questionId}`,
+                                                            values[`q${question.questionId}`]
+                                                        )}
+                                                        onAcceptOrEditFeedback={() => handleAcceptOrEditFeedback(
+                                                            `q${question.questionId}`,
+                                                            setFieldValue
+                                                        )}
+                                                        onDeclineFeedback={() => handleDeclineFeedback(
+                                                            `q${question.questionId}`
+                                                        )}
+                                                        onFeedbackTextChange={handleFeedbackTextChange}
                                                     />
                                                 )
                                             ))}
@@ -533,10 +756,20 @@ const CompleteSurvey = () => {
                                         </Box>
                                     )}
                                     
+                                    {coachFeedbackEnabled && getCoachFeedbackQuestionsNeedingEnrichment(values).length > 0 && (
+                                        <Box mt={2} display="flex" justifyContent="center">
+                                            <Typography variant="body2" color="textSecondary">
+                                                {`${getCoachFeedbackQuestionsNeedingEnrichment(values).filter(
+                                                    question => enrichedQuestions.has(`q${question.questionId}`)
+                                                ).length}/${getCoachFeedbackQuestionsNeedingEnrichment(values).length} ${getMessage('label_feedback_enriched')}`}
+                                            </Typography>
+                                        </Box>
+                                    )}
+
                                     <Box mt={2} display="flex" justifyContent="center">
                                         {surveyData.length > 0 && (
                                             <Tooltip 
-                                                title={!canSubmit && assessmentType === "Learning" ? getMessage('tooltip_validate_before_submit') : ""}
+                                                title={getSubmitDisabledTooltip(values)}
                                                 arrow
                                             >
                                                 <span>
@@ -545,7 +778,7 @@ const CompleteSurvey = () => {
                                                         variant="contained"
                                                         loading={isSubmitting}
                                                         sx={buttonStyle}
-                                                        disabled={!canSubmit}
+                                                        disabled={!canSubmit || !canSubmitCoachFeedback(values)}
                                                     >
                                                         <Typography variant="h5">
                                                             {currentAssessmentIndex < assessmentIds.length - 1 ? getMessage('label_next') : getMessage('label_submit')}

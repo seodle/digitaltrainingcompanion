@@ -118,6 +118,9 @@ const createMonitoring = async (monitoringData) => {
       courseMoodleId: monitoringData.courseMoodleId ?? null,
       courseName: monitoringData.courseName ?? null,
       courseSyncedAt: monitoringData.courseSyncedAt ?? null,
+      courseContentIds: Array.isArray(monitoringData.courseContentIds)
+        ? monitoringData.courseContentIds
+        : [],
       creationDate: monitoringData.creationDate,
       lastModification: monitoringData.lastModification,
       sharingCode: monitoringData.sharingCode,

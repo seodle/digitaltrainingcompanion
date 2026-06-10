@@ -3429,6 +3429,78 @@
         "fuzzy": 0
     },
     {
+        "term": "label_enrich_feedback",
+        "definition": "Arricchisci il feedback",
+        "context": "button to enrich open feedback with AI on complete survey",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_feedback_enriched_success",
+        "definition": "Feedback arricchito",
+        "context": "confirmation after coach feedback enrichment succeeded",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_enriched_feedback_suggestion",
+        "definition": "Suggerimento di feedback arricchito",
+        "context": "title shown above AI Beacon enriched feedback suggestion on complete survey",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_accept_or_edit_feedback",
+        "definition": "Accetta o modifica",
+        "context": "button to accept enriched feedback suggestion into the text field on complete survey",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_decline_feedback",
+        "definition": "Rifiuta",
+        "context": "button to decline enriched feedback suggestion on complete survey",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "tooltip_resolve_enriched_feedback_before_submit",
+        "definition": "Accetta o rifiuta tutti i suggerimenti di feedback arricchito prima di inviare",
+        "context": "tooltip shown when submit button is disabled due to pending enriched feedback suggestions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "tooltip_enrich_feedback_before_submit",
+        "definition": "Si prega di arricchire tutte le risposte aperte prima di inviare",
+        "context": "tooltip shown when submit button is disabled due to missing feedback enrichment",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_feedback_enriched",
+        "definition": "risposte di feedback arricchite",
+        "context": "progress indicator showing how many open feedback answers have been enriched",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "label_questions_validated",
         "definition": "domande convalidate",
         "context": "progress indicator showing how many questions have been validated",

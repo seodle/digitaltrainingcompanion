@@ -288,6 +288,100 @@ const requireAiBeaconApiKey = () => {
     };
 };
 
+// Validate public survey context for coach-feedback enrichment (no JWT).
+const requirePublicCoachFeedbackContext = async (req, res, next) => {
+    try {
+        const assessmentId = String(req.params?.assessmentId || '').trim();
+        if (!assessmentId) {
+            return res.status(400).json({ error: 'Missing assessmentId' });
+        }
+
+        const userId = String(req.body?.userId || '').trim();
+        const monitoringId = String(req.body?.monitoringId || '').trim();
+        const feedbackText = String(
+            req.body?.feedback_text ?? req.body?.feedbackText ?? ''
+        ).trim();
+
+        if (!userId) {
+            return res.status(400).json({ error: 'userId is required' });
+        }
+        if (!monitoringId) {
+            return res.status(400).json({ error: 'monitoringId is required' });
+        }
+        if (!feedbackText) {
+            return res.status(400).json({ error: 'feedback_text is required' });
+        }
+
+        const assessment = await Assessment.findById(assessmentId).select(
+            'monitoringId type'
+        );
+        if (!assessment) {
+            return res.status(404).json({ error: 'Assessment not found' });
+        }
+        if (String(assessment.monitoringId || '') !== monitoringId) {
+            return res.status(403).json({ error: 'Forbidden' });
+        }
+        if (
+            assessment.type === 'Learning' ||
+            assessment.type === 'Student learning outcomes'
+        ) {
+            return res.status(403).json({
+                error: 'Coach feedback is not available for this assessment type',
+            });
+        }
+
+        const monitoring = await Monitoring.findById(monitoringId).select(
+            'userId courseAiBeaconId courseContentIds'
+        );
+        if (!monitoring) {
+            return res.status(404).json({ error: 'Monitoring not found' });
+        }
+        if (String(monitoring.userId) !== userId) {
+            return res.status(403).json({ error: 'Forbidden' });
+        }
+
+        const courseId = String(monitoring.courseAiBeaconId || '').trim();
+        const contentIds = Array.isArray(monitoring.courseContentIds)
+            ? monitoring.courseContentIds
+            : [];
+        if (!courseId || contentIds.length === 0) {
+            return res.status(403).json({
+                error: 'Monitoring is not linked to a synced course with content',
+            });
+        }
+
+        const owner = await User.findById(userId).select(
+            '+aiBeaconReadOnlyApiKey aiBeaconReadOnlyApiKeyCreatedAt'
+        );
+        if (!owner) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const readOnlyKey = typeof owner.getAiBeaconReadOnlyApiKey === 'function'
+            ? String(owner.getAiBeaconReadOnlyApiKey() || '').trim()
+            : '';
+        if (!readOnlyKey && !owner.aiBeaconReadOnlyApiKeyCreatedAt) {
+            return res.status(403).json({
+                error: 'Missing AI Beacon read-only API key',
+            });
+        }
+
+        req.coachFeedbackContext = {
+            userId,
+            monitoring,
+            assessment,
+            courseId,
+            contentIds,
+            feedbackText,
+        };
+
+        return next();
+    } catch (err) {
+        console.error('Public coach feedback context check failed:', err);
+        return res.status(500).json({ error: 'Server error' });
+    }
+};
+
 module.exports = {
     getUser,
     requireAdmin,
@@ -297,7 +391,8 @@ module.exports = {
     requireAssessmentOwner,
     requireLogOwner,
     requireApiKeyOwner,
-    requireAiBeaconApiKey
+    requireAiBeaconApiKey,
+    requirePublicCoachFeedbackContext,
 };
 
 

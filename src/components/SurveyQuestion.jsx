@@ -1,5 +1,6 @@
 import React, {useState, useCallback} from 'react';
 import { Box, Button, Radio, Checkbox, FormControl, FormLabel, FormControlLabel, RadioGroup, Typography, TextField, Slider, Chip } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { Field } from 'formik';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import draftToHtml from 'draftjs-to-html';
@@ -32,6 +33,15 @@ const SurveyQuestion = ({
   matrixTitle,
   viewType = 'default',
   questionCategoryBadge = null,
+  showEnrichFeedbackButton = false,
+  enrichFeedbackLoading = false,
+  enrichFeedbackDisabled = false,
+  enrichFeedbackError = '',
+  pendingEnrichedFeedback = '',
+  onEnrichFeedback,
+  onAcceptOrEditFeedback,
+  onDeclineFeedback,
+  onFeedbackTextChange,
 }) => {
 
   const { getMessage } = useMessageService();
@@ -268,15 +278,91 @@ const SurveyQuestion = ({
         )}
 
         {type === "text" && (
-          <Field
-            multiline
-            as={TextField}
-            name={fieldName}
-            sx={{ m: "0px 20px 0px 0px", width: '100%' }}
-            disabled={isOptionDisabled()}
-            value={disabled ? "" : undefined}
-            rows={4}
-          />
+          <Field name={fieldName}>
+            {({ field }) => (
+              <TextField
+                {...field}
+                multiline
+                rows={4}
+                sx={{ m: "0px 20px 0px 0px", width: '100%' }}
+                disabled={isOptionDisabled() || Boolean(pendingEnrichedFeedback)}
+                value={disabled ? "" : field.value}
+                onChange={(event) => {
+                  field.onChange(event);
+                  if (onFeedbackTextChange) {
+                    onFeedbackTextChange(fieldName);
+                  }
+                }}
+              />
+            )}
+          </Field>
+        )}
+
+        {showEnrichFeedbackButton && type === "text" && !pendingEnrichedFeedback && (
+          <Box display="flex" flexDirection="column" gap="8px" marginTop="20px" alignItems="flex-start">
+            <LoadingButton
+              variant="contained"
+              size="small"
+              loading={enrichFeedbackLoading}
+              onClick={onEnrichFeedback}
+              disabled={enrichFeedbackLoading || isOptionDisabled() || enrichFeedbackDisabled}
+              sx={{
+                ...buttonStyle,
+                width: 'fit-content',
+                minWidth: 'unset',
+                mr: 0,
+              }}
+            >
+              {getMessage('label_enrich_feedback')}
+            </LoadingButton>
+            {enrichFeedbackError && (
+              <Typography variant="body2" color="error">
+                {enrichFeedbackError}
+              </Typography>
+            )}
+          </Box>
+        )}
+
+        {showEnrichFeedbackButton && type === "text" && pendingEnrichedFeedback && (
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap="8px"
+            marginTop="20px"
+            sx={{
+              p: 2,
+              borderRadius: '8px',
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #e0e0e0',
+            }}
+          >
+            <Typography variant="subtitle2" fontWeight="bold">
+              {getMessage('label_enriched_feedback_suggestion')}
+            </Typography>
+            <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
+              {pendingEnrichedFeedback}
+            </Typography>
+            <Box display="flex" flexWrap="wrap" gap="10px" marginTop="8px">
+              <Button
+                variant="contained"
+                size="small"
+                onClick={onAcceptOrEditFeedback}
+                disabled={isOptionDisabled()}
+                sx={buttonStyle}
+              >
+                {getMessage('label_accept_or_edit_feedback')}
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={onDeclineFeedback}
+                disabled={isOptionDisabled()}
+                sx={buttonStyle}
+              >
+                {getMessage('label_decline_feedback')}
+              </Button>
+            </Box>
+          </Box>
         )}
 
         {/* Display validate button for Learning type assessments */}

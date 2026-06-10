@@ -24,6 +24,7 @@ const exportsRoutes = require("./routes/exports");
 const apiKeysRoutes = require("./routes/apiKeys");
 const aiToolsRoutes = require("./routes/aiTools");
 const aiBeaconRoutes = require("./routes/aiBeacon");
+const aiBeaconPublicRoutes = require("./routes/aiBeaconPublic");
 const questionWidgetRoutes = require('./routes/questionWidget');
 const adminRoutes = require('./routes/admin');
 
@@ -98,6 +99,7 @@ app.use("/", questionWidgetRoutes);
 app.use("/", registerRoutes);
 app.use("/", authRoutes);
 app.use("/", surveyRoutes);
+app.use("/aiBeacon/public", aiBeaconPublicRoutes);
 
 // AUTHENTICATED ROUTES (JWT REQUIRED)
 app.use("/users", getUser, userRoutes);

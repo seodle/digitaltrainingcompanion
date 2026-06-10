@@ -130,9 +130,24 @@ async function createAiBeaconApiClientForUser(userId, options = {}) {
   return createAiBeaconApiClient(apiKey, options);
 }
 
+async function createAiBeaconReadOnlyApiClientForUser(userId, options = {}) {
+  const user = await Users.findById(userId).select("+aiBeaconReadOnlyApiKey");
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const apiKey = user.getAiBeaconReadOnlyApiKey();
+  if (!apiKey) {
+    throw new Error("User does not have an AI Beacon read-only API key configured");
+  }
+
+  return createAiBeaconApiClient(apiKey, options);
+}
+
 module.exports = {
   DEFAULT_BASE_URL,
   AiBeaconApiError,
   createAiBeaconApiClient,
   createAiBeaconApiClientForUser,
+  createAiBeaconReadOnlyApiClientForUser,
 };

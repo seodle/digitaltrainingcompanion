@@ -49,6 +49,8 @@ const userSchema = new mongoose.Schema({
     passwordResetExpires: { type: Date, default: null, select: false },
     aiBeaconApiKey: { type: String, default: null, select: false },
     aiBeaconApiKeyCreatedAt: { type: Date, default: null },
+    aiBeaconReadOnlyApiKey: { type: String, default: null, select: false },
+    aiBeaconReadOnlyApiKeyCreatedAt: { type: Date, default: null },
     lmsConnectionId: { type: String, default: null },
     sharingCodeRedeemed: { type: [String], default: [] },
     termsAccepted: { type: Boolean, required: true, default: false }
@@ -56,9 +58,32 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", function (next) {
     if (this.isModified("aiBeaconApiKey")) {
+        this.$_aiBeaconApiKeyWasModified = true;
+        this.$_aiBeaconApiKeyWasCleared = !this.aiBeaconApiKey;
+        if (!this.aiBeaconApiKey) {
+            this.aiBeaconReadOnlyApiKey = null;
+            this.aiBeaconReadOnlyApiKeyCreatedAt = null;
+        }
         this.aiBeaconApiKey = encrypt(this.aiBeaconApiKey);
     }
+    if (this.isModified("aiBeaconReadOnlyApiKey")) {
+        this.aiBeaconReadOnlyApiKey = encrypt(this.aiBeaconReadOnlyApiKey);
+    }
     next();
+});
+
+userSchema.post("save", async function (doc) {
+    if (!doc.$_aiBeaconApiKeyWasModified || doc.$_aiBeaconApiKeyWasCleared) {
+        return;
+    }
+
+    const { createReadOnlyApiKeyForUser } = require("../services/aiBeacon.service");
+    const readOnlyKey = await createReadOnlyApiKeyForUser(doc._id);
+
+    doc.aiBeaconReadOnlyApiKey = readOnlyKey;
+    doc.aiBeaconReadOnlyApiKeyCreatedAt = new Date();
+    doc.$_aiBeaconApiKeyWasModified = false;
+    await doc.save();
 });
 
 userSchema.pre(["findOneAndUpdate", "updateOne"], function (next) {
@@ -67,6 +92,13 @@ userSchema.pre(["findOneAndUpdate", "updateOne"], function (next) {
 
     if (Object.prototype.hasOwnProperty.call(set, "aiBeaconApiKey")) {
         set.aiBeaconApiKey = encrypt(set.aiBeaconApiKey);
+        if (!set.aiBeaconApiKey) {
+            set.aiBeaconReadOnlyApiKey = null;
+            set.aiBeaconReadOnlyApiKeyCreatedAt = null;
+        }
+    }
+    if (Object.prototype.hasOwnProperty.call(set, "aiBeaconReadOnlyApiKey")) {
+        set.aiBeaconReadOnlyApiKey = encrypt(set.aiBeaconReadOnlyApiKey);
     }
 
     if (update.$set) update.$set = set;
@@ -76,6 +108,10 @@ userSchema.pre(["findOneAndUpdate", "updateOne"], function (next) {
 
 userSchema.methods.getAiBeaconApiKey = function () {
     return decrypt(this.aiBeaconApiKey);
+};
+
+userSchema.methods.getAiBeaconReadOnlyApiKey = function () {
+    return decrypt(this.aiBeaconReadOnlyApiKey);
 };
 
 // methods

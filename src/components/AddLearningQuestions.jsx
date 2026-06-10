@@ -398,121 +398,33 @@ const AddLearningQuestions = ({
     );
   };
 
-  // Define the onSubmit function
   const onSubmit = async (values, formikBag) => {
-    if (helpWithAiBeacon) {
-      setError(null);
-      if (selectedMoodleContentIds.length === 0) {
-        setError(getMessage('label_select_your_content'));
-        return;
-      }
-      if (!values.learningType) {
-        setError(getMessage("label_learning_type"));
-        return;
-      }
-      if (!values.framework) {
-        setError(getMessage("label_choose_framework"));
-        return;
-      }
-
-      const normalizedNumberOfQuestions = Number(values.numberOfQuestions);
-      if (!Number.isInteger(normalizedNumberOfQuestions) || normalizedNumberOfQuestions < 1) {
-        setError('Please select a valid number of questions.');
-        return;
-      }
-
-      setIsLoading(true);
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.post(
-          `${BACKEND_URL}/aiBeacon/assessments/${encodeURIComponent(currentAssessmentServerId)}/generate-questions`,
-          {
-            courseId: courseAiBeaconId,
-            content_ids: selectedMoodleContentIds,
-            numberOfQuestions: normalizedNumberOfQuestions,
-            questionCategory: values.learningType,
-          },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        const mappedQuestions = Array.isArray(response?.data?.questions)
-          ? response.data.questions
-          : [];
-        if (mappedQuestions.length === 0) {
-          setError('No questions were generated.');
-          return;
-        }
-
-        const startQuestionId =
-          questions.reduce(
-            (maxId, question) => Math.max(maxId, parseInt(question.questionId, 10)),
-            0
-          ) + 1;
-
-        const frontendQuestions = [];
-        for (let index = 0; index < mappedQuestions.length; index++) {
-          const question = mappedQuestions[index];
-          let competencies = [];
-          try {
-            competencies = await updateCompetenciesForQuestion(
-              setSelectedCompetencies,
-              question.question || '',
-              question.shortName || '',
-              values.framework
-            ) || [];
-          } catch (competencyError) {
-            console.error('Error fetching competencies for AI Beacon question:', competencyError);
-          }
-
-          frontendQuestions.push({
-            ...question,
-            questionId: String(startQuestionId + index),
-            learningType: values.learningType,
-            workshopId: values.workshopId || '',
-            framework: values.framework,
-            competencies,
-            options: (question.choices || []).map((choice) => ({
-              label: choice,
-              value: choice,
-            })),
-            correctAnswer: Array.isArray(question.correctAnswer)
-              ? question.correctAnswer
-              : question.correctAnswer
-                ? [question.correctAnswer]
-                : [],
-          });
-        }
-
-        setQuestions((prevQuestions) => [...prevQuestions, ...frontendQuestions]);
-      } catch (submitError) {
-        const msg =
-          submitError?.response?.data?.error ||
-          submitError?.message ||
-          'Failed to generate questions.';
-        setError(typeof msg === 'string' ? msg : 'Failed to generate questions.');
-      } finally {
-        setIsLoading(false);
-      }
-      return;
-    }
-
     try {
-        await handleSubmit(values, formikBag, {
-            handleSend,
-            languageCode,
-            numberOfQuestions: values.numberOfQuestions,
-            data: values.data,
-            helpWithAI,
-            questions,
-            setQuestions,
-            selectedCompetencies,
-            setSelectedCompetencies,
-            setAutomaticEncoding,
-            editorState,
-            setIsLoading,
-        });
+      await handleSubmit(values, formikBag, {
+        handleSend,
+        languageCode,
+        numberOfQuestions: values.numberOfQuestions,
+        data: values.data,
+        helpWithAI,
+        helpWithAiBeacon,
+        aiBeacon: helpWithAiBeacon ? {
+          courseAiBeaconId,
+          selectedMoodleContentIds,
+          currentAssessmentServerId,
+        } : null,
+        setError,
+        getMessage,
+        questions,
+        setQuestions,
+        selectedCompetencies,
+        setSelectedCompetencies,
+        setAutomaticEncoding,
+        editorState,
+        setIsLoading,
+      });
     } catch (error) {
-        console.error('Error in onSubmit:', error);
-        setIsLoading(false);
+      console.error('Error in onSubmit:', error);
+      setIsLoading(false);
     }
   };
 

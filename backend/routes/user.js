@@ -9,6 +9,7 @@ const {
   deleteUser
 } = require('../services/userService');
 const { deleteAnswersFromUserId } = require('../services/responseService');
+const { AiBeaconApiError } = require('../clients/aiBeacon.client');
 
 
 /**
@@ -72,17 +73,23 @@ router.put("/externalPlatformKeys", async (req, res) => {
       aiBeaconApiKey: "aiBeaconApiKeyCreatedAt"
     };
     const incoming = req.body || {};
-    const update = {};
+    let hasUpdates = false;
+
+    const user = await Users.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     for (const field of allowedFields) {
       if (Object.prototype.hasOwnProperty.call(incoming, field)) {
         const value = incoming[field];
-        update[field] = value;
+        user[field] = value ? String(value).trim() : null;
+        hasUpdates = true;
 
         // If the key is set/rotated, update the "createdAt" stamp.
         // If the key is removed (null/empty), clear the stamp too.
         if (Object.prototype.hasOwnProperty.call(createdAtFieldForKeyField, field)) {
-          update[createdAtFieldForKeyField[field]] = value ? new Date() : null;
+          user[createdAtFieldForKeyField[field]] = value ? new Date() : null;
         }
       }
     }
@@ -90,25 +97,26 @@ router.put("/externalPlatformKeys", async (req, res) => {
     // LMS connection is user-scoped and tied to the aiBeacon credentials.
     // Reset cached value whenever the key is rotated/changed.
     if (Object.prototype.hasOwnProperty.call(incoming, "aiBeaconApiKey")) {
-      update.lmsConnectionId = null;
+      user.lmsConnectionId = null;
+      hasUpdates = true;
     }
 
-    if (Object.keys(update).length === 0) {
+    if (!hasUpdates) {
       return res.status(400).json({ error: "No updatable fields provided" });
     }
 
-    const updatedUser = await Users.findByIdAndUpdate(
-      userId,
-      { $set: update },
-      { new: true, runValidators: true }
-    );
+    await user.save();
 
-    if (!updatedUser) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    return res.json(updatedUser);
+    return res.json(user);
   } catch (error) {
+    if (error instanceof AiBeaconApiError) {
+      return res.status(
+        error.status >= 400 && error.status < 600 ? error.status : 500
+      ).json({
+        error: error.message || "AI Beacon request failed",
+        details: error.responseBody,
+      });
+    }
     return res.status(500).json({ error: error.message });
   }
 });

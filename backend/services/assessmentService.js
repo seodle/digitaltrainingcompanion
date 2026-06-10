@@ -359,15 +359,25 @@ const fetchSurveyData = async (currentAssessmentServerId, sandbox) => {
 
         let courseAiBeaconId = null;
         let courseSyncedAt = null;
+        let courseContentIds = [];
         if (assessment.monitoringId) {
             const monitoring = await Monitoring.findById(assessment.monitoringId)
-                .select('courseAiBeaconId courseSyncedAt')
+                .select('courseAiBeaconId courseSyncedAt courseContentIds')
                 .lean();
             if (monitoring) {
                 courseAiBeaconId = monitoring.courseAiBeaconId ?? null;
                 courseSyncedAt = monitoring.courseSyncedAt ?? null;
+                courseContentIds = Array.isArray(monitoring.courseContentIds)
+                    ? monitoring.courseContentIds
+                    : [];
             }
         }
+
+        const coachFeedbackEnabled =
+            !!courseAiBeaconId &&
+            courseContentIds.length > 0 &&
+            assessment.type !== 'Learning' &&
+            assessment.type !== 'Student learning outcomes';
 
         // If assessment is found, return the survey and additional details
         return {
@@ -381,6 +391,8 @@ const fetchSurveyData = async (currentAssessmentServerId, sandbox) => {
                 monitoringId: assessment.monitoringId,
                 courseAiBeaconId,
                 courseSyncedAt,
+                courseContentIds,
+                coachFeedbackEnabled,
             }
         };
     } catch (error) {

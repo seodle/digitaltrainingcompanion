@@ -7,6 +7,7 @@ const {
   extractAvailableCourses,
   extractSyncedCourses,
   extractCourseContents,
+  extractCourseContentIds,
   resolveLmsConnectionId,
   waitForCourseProcessingCompletion,
   generateQuestionsFromAiBeacon,
@@ -222,6 +223,11 @@ router.post("/courses/:courseId/sync", async (req, res) => {
     );
     if (syncedCourse?.courseAiBeaconId) {
       setDoc.courseAiBeaconId = syncedCourse.courseAiBeaconId;
+
+      const rawContents = await client.get(
+        `/api/courses/${encodeURIComponent(syncedCourse.courseAiBeaconId)}/contents`
+      );
+      setDoc.courseContentIds = extractCourseContentIds(rawContents);
     }
     await Monitoring.updateMany(
       { userId, courseMoodleId: moodleCourseId },

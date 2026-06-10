@@ -409,6 +409,80 @@ const updateCompetenciesForQuestion = async (
 // Function to adjust image alignment
 const convertImages = (htmlText) => htmlText.replace(/<div style="text-align:none;"><img/g, '<div style="text-align:center;"><img');
 
+async function fetchAiBeaconQuestions({
+  assessmentServerId,
+  courseAiBeaconId,
+  contentIds,
+  numberOfQuestions,
+  questionCategory,
+}) {
+  const token = localStorage.getItem('token');
+  const response = await axios.post(
+    `${BACKEND_URL}/aiBeacon/assessments/${encodeURIComponent(assessmentServerId)}/generate-questions`,
+    {
+      courseId: courseAiBeaconId,
+      content_ids: contentIds,
+      numberOfQuestions,
+      questionCategory,
+    },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return Array.isArray(response?.data?.questions) ? response.data.questions : [];
+}
+
+async function mapAiBeaconQuestions(mappedQuestions, values, startingQuestionId, setSelectedCompetencies) {
+  const frontendQuestions = [];
+  for (let index = 0; index < mappedQuestions.length; index++) {
+    const question = mappedQuestions[index];
+    let competencies = [];
+    try {
+      competencies = await updateCompetenciesForQuestion(
+        setSelectedCompetencies,
+        question.question || '',
+        question.shortName || '',
+        values.framework
+      ) || [];
+    } catch (competencyError) {
+      console.error('Error fetching competencies for AI Beacon question:', competencyError);
+    }
+
+    frontendQuestions.push({
+      ...question,
+      questionId: String(startingQuestionId + index),
+      learningType: values.learningType,
+      workshopId: values.workshopId || '',
+      framework: values.framework,
+      competencies,
+      options: (question.choices || []).map((choice) => ({
+        label: choice,
+        value: choice,
+      })),
+      correctAnswer: Array.isArray(question.correctAnswer)
+        ? question.correctAnswer
+        : question.correctAnswer
+          ? [question.correctAnswer]
+          : [],
+    });
+  }
+  return frontendQuestions;
+}
+
+function validateAiBeaconSubmission(values, aiBeacon, getMessage) {
+  if (aiBeacon.selectedMoodleContentIds.length === 0) {
+    return getMessage('label_select_your_content');
+  }
+  if (!values.learningType) {
+    return getMessage('label_learning_type');
+  }
+  if (!values.framework) {
+    return getMessage('label_choose_framework');
+  }
+  const normalizedNumberOfQuestions = Number(values.numberOfQuestions);
+  if (!Number.isInteger(normalizedNumberOfQuestions) || normalizedNumberOfQuestions < 1) {
+    return 'Please select a valid number of questions.';
+  }
+  return null;
+}
 
 /**
  * Handles the submission of the form, either by generating questions with AI assistance or manually.
@@ -421,6 +495,10 @@ const convertImages = (htmlText) => htmlText.replace(/<div style="text-align:non
  * @param {String} context.languageCode - The current language code.
  * @param {Number} context.numberOfQuestions - The number of questions to generate.
  * @param {Boolean} context.helpWithAI - Whether to use AI assistance.
+ * @param {Boolean} context.helpWithAiBeacon - Whether to use AI Beacon for question generation.
+ * @param {Object} context.aiBeacon - AI Beacon context (course, content ids, assessment id).
+ * @param {Function} context.setError - Function to set error messages.
+ * @param {Function} context.getMessage - Function to get localized messages.
  * @param {Array} context.questions - The existing list of questions.
  * @param {Function} context.setQuestions - Function to update the questions state.
  * @param {Array} context.selectedCompetencies - The selected competencies.
@@ -437,6 +515,10 @@ const handleSubmit = async (values, { resetForm }, context) => {
     numberOfQuestions,
     data,
     helpWithAI,
+    helpWithAiBeacon,
+    aiBeacon,
+    setError,
+    getMessage,
     questions,
     setQuestions,
     selectedCompetencies,
@@ -462,7 +544,53 @@ const handleSubmit = async (values, { resetForm }, context) => {
   let newQuestionId =
     questions.reduce((maxId, question) => Math.max(maxId, parseInt(question.questionId, 10)), 0) + 1;
 
-  if (helpWithAI) {
+  if (helpWithAiBeacon) {
+    const validationError = validateAiBeaconSubmission(values, aiBeacon, getMessage);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setError(null);
+    if (setIsLoading) {
+      setIsLoading(true);
+    }
+
+    try {
+      const normalizedNumberOfQuestions = Number(values.numberOfQuestions);
+      const rawQuestions = await fetchAiBeaconQuestions({
+        assessmentServerId: aiBeacon.currentAssessmentServerId,
+        courseAiBeaconId: aiBeacon.courseAiBeaconId,
+        contentIds: aiBeacon.selectedMoodleContentIds,
+        numberOfQuestions: normalizedNumberOfQuestions,
+        questionCategory: values.learningType,
+      });
+
+      if (rawQuestions.length === 0) {
+        setError('No questions were generated.');
+        return;
+      }
+
+      const frontendQuestions = await mapAiBeaconQuestions(
+        rawQuestions,
+        values,
+        newQuestionId,
+        setSelectedCompetencies
+      );
+      setQuestions((prevQuestions) => [...prevQuestions, ...frontendQuestions]);
+    } catch (submitError) {
+      const msg =
+        submitError?.response?.data?.error ||
+        submitError?.message ||
+        'Failed to generate questions.';
+      setError(typeof msg === 'string' ? msg : 'Failed to generate questions.');
+      return;
+    } finally {
+      if (setIsLoading) {
+        setIsLoading(false);
+      }
+    }
+  } else if (helpWithAI) {
     try {
       // Prepare the content to send to the AI service
       let content = `Make sure that the questions are aligned with the following information.\n

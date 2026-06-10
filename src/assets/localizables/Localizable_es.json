@@ -3429,6 +3429,78 @@
         "fuzzy": 0
     },
     {
+        "term": "label_enrich_feedback",
+        "definition": "Enriquecer comentarios",
+        "context": "button to enrich open feedback with AI on complete survey",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_feedback_enriched_success",
+        "definition": "Comentarios enriquecidos",
+        "context": "confirmation after coach feedback enrichment succeeded",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_enriched_feedback_suggestion",
+        "definition": "Sugerencia de comentario enriquecido",
+        "context": "title shown above AI Beacon enriched feedback suggestion on complete survey",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_accept_or_edit_feedback",
+        "definition": "Aceptar o editar",
+        "context": "button to accept enriched feedback suggestion into the text field on complete survey",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_decline_feedback",
+        "definition": "Rechazar",
+        "context": "button to decline enriched feedback suggestion on complete survey",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "tooltip_resolve_enriched_feedback_before_submit",
+        "definition": "Acepte o rechace todas las sugerencias de comentarios enriquecidos antes de enviar",
+        "context": "tooltip shown when submit button is disabled due to pending enriched feedback suggestions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "tooltip_enrich_feedback_before_submit",
+        "definition": "Por favor enriquezca todas las respuestas abiertas antes de enviar",
+        "context": "tooltip shown when submit button is disabled due to missing feedback enrichment",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_feedback_enriched",
+        "definition": "respuestas de comentarios enriquecidas",
+        "context": "progress indicator showing how many open feedback answers have been enriched",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "label_questions_validated",
         "definition": "preguntas validadas",
         "context": "progress indicator showing how many questions have been validated",

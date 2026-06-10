@@ -1,6 +1,13 @@
 const mongoose = require("mongoose");
 const workshopSchema = require("./workshopSchema");
 
+const feedbackHistoryEntrySchema = new mongoose.Schema({
+    text: { type: String, required: true },
+    source: { type: String, enum: ["student", "aiBeacon"], required: true },
+    order: { type: Number, required: true },
+    createdAt: { type: Date, default: Date.now },
+}, { _id: false });
+
 // Survey schema
 const questionSchema = new mongoose.Schema({
     questionId: { type: String, required: true },
@@ -20,6 +27,7 @@ const questionSchema = new mongoose.Schema({
     framework: { type: String },
     competencies: [String],
     response: [String],
+    feedbackHistory: [feedbackHistoryEntrySchema],
     matrixId: { type: String }, // Matrix unique identifier
     matrixPosition: { type: Number }, // Position of the question within the matrix
     matrixTitle: { type: String } // Title of the matrix group
