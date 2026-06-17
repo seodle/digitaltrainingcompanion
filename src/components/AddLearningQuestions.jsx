@@ -13,7 +13,7 @@ import { buttonStyle, toolbarConfig } from '../components/styledComponents'
 import { QuestionType, AssessmentType, LearningType } from '../utils/enums';
 import { processMessageToAPI, addQuestionsSchema, handleAutomaticEncodingChange, handleSubmit, 
          initialQuestionValues, getCompetencies, getActivities, updateCompetenciesForQuestion,
-         fetchSuggestedOptions } from '../utils/QuestionUtils';
+         fetchSuggestedOptions, LEARNING_OPTION_SUGGESTION_INSTRUCTION } from '../utils/QuestionUtils';
 import { traineeCompetenceAreas, studentCompetenceAreas } from "../assets/frameworksData";
 import { useAuthUser } from '../contexts/AuthUserContext';
 
@@ -112,7 +112,7 @@ const AddLearningQuestions = ({ setQuestions, questions, assessmentType, worksho
         [],
         currentUser,
         questionType,
-        null // custom instructions
+        LEARNING_OPTION_SUGGESTION_INSTRUCTION
       );
 
       // Update form values with suggested options
