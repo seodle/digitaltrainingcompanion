@@ -3499,5 +3499,1409 @@
         "reference": "",
         "comment": "",
         "fuzzy": 0
+    },
+    {
+        "term": "pricing_section_title",
+        "definition": "Choisissez votre plan",
+        "context": "Title of the pricing section on the home page",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_section_subtitle",
+        "definition": "Commencer gratuitement",
+        "context": " upgrade when you need.",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_on_quote",
+        "definition": "Sur demande",
+        "context": "Displayed instead of a price when pricing is custom (research plan)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_per_month",
+        "definition": "\/ mois",
+        "context": "Price suffix shown next to the monthly price",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_free_label",
+        "definition": "Gratuit",
+        "context": "Label shown as the price for free plans",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_free",
+        "definition": "Commencez gratuitement",
+        "context": "CTA button on free plans",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_pro",
+        "definition": "Choisissez Pro",
+        "context": "CTA button on Pro Trainer and Pro Teacher plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_pro_plus",
+        "definition": "Choisissez Pro+",
+        "context": "CTA button on Pro+ Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_ultra",
+        "definition": "Choisissez Ultra",
+        "context": "CTA button on Ultra Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_contact",
+        "definition": "Contactez-nous",
+        "context": "CTA button on Institution and Research plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_badge_popular",
+        "definition": "Populaire",
+        "context": "Badge shown on highlighted\/recommended plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_trainer_label",
+        "definition": "Vous \u00eates un formateur",
+        "context": "Tab label for the trainer audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_trainer_desc",
+        "definition": "Cr\u00e9ez et partagez des suivis et acc\u00e9dez aux fonctionnalit\u00e9s d'IA.",
+        "context": "Description shown under the trainer tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_teacher_label",
+        "definition": "Vous \u00eates un enseignant",
+        "context": "Tab label for the teacher audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_teacher_desc",
+        "definition": "Utilisez Digital Training Companion dans votre classe.",
+        "context": "Description shown under the teacher tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_institution_label",
+        "definition": "Vous \u00eates une institution",
+        "context": "Tab label for the institution audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_institution_desc",
+        "definition": "Fournissez Digital Training Companion \u00e0 votre personnel. Utilisateurs illimit\u00e9s.",
+        "context": "Description shown under the institution tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_research_label",
+        "definition": "Vous \u00eates une institution de recherche",
+        "context": "Tab label for the research audience section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_audience_research_desc",
+        "definition": "Utilisation du Digital Training Companion dans un projet de recherche avec le Center LEARN de l\u2019EPFL. Conditions personnalis\u00e9es.",
+        "context": "Description shown under the research tab",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f1",
+        "definition": "Cr\u00e9er des suivis et des \u00e9valuations",
+        "context": "Feature listed on the Free Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f2",
+        "definition": "Collecter des r\u00e9ponses",
+        "context": "Feature listed on the Free Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f3",
+        "definition": "Visualiser les r\u00e9sultats",
+        "context": "Feature listed on the Free Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f4",
+        "definition": "Pas de fonctionnalit\u00e9s d'IA",
+        "context": "Feature listed on the Free Trainer plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f5",
+        "definition": "Aucun partage de monitorage",
+        "context": "Feature listed on the Free Trainer plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_trainer_f6",
+        "definition": "Pas d'exportation de donn\u00e9es brutes",
+        "context": "Feature listed on the Free Trainer plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f1",
+        "definition": "1500 calls IA inclus",
+        "context": "Feature listed on the Pro Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f2",
+        "definition": "Fonctionnalit\u00e9s compl\u00e8tes d'IA",
+        "context": "Feature listed on Pro and above trainer plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f3",
+        "definition": "Partager et importer des monitorage",
+        "context": "Feature listed on Pro and above trainer plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_trainer_f4",
+        "definition": "Exportation de donn\u00e9es brutes",
+        "context": "Feature listed on Pro and above trainer plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_plus_trainer_f1",
+        "definition": "5000 calls IA inclus",
+        "context": "Feature listed on the Pro+ Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_ultra_trainer_f1",
+        "definition": "30000 calls IA inclus",
+        "context": "Feature listed on the Ultra Trainer plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_teacher_f1",
+        "definition": "Acc\u00e8s aux \u00e9valuations partag\u00e9es",
+        "context": "Feature listed on the Free Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_teacher_f2",
+        "definition": "IA disponible si incluse dans un suivi de formateur Pro+",
+        "context": "Feature listed on the Free Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_free_teacher_f3",
+        "definition": "Pas d'exportation de donn\u00e9es brutes",
+        "context": "Feature listed on the Free Teacher plan card (limitation)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_teacher_f1",
+        "definition": "750 calls IA inclus",
+        "context": "Feature listed on the Pro Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_teacher_f2",
+        "definition": "Fonctionnalit\u00e9s compl\u00e8tes d'IA",
+        "context": "Feature listed on the Pro Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_pro_teacher_f3",
+        "definition": "Exportation de donn\u00e9es brutes",
+        "context": "Feature listed on the Pro Teacher plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f1_xs",
+        "definition": "30000 calls IA par mois",
+        "context": "Feature listed on the Institution XS plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f1_s",
+        "definition": "80000 calls IA par mois",
+        "context": "Feature listed on the Institution S plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f1_m",
+        "definition": "200 000 calls IA par mois",
+        "context": "Feature listed on the Institution M plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f2",
+        "definition": "Utilisateurs illimit\u00e9s",
+        "context": "Feature listed on all Institution plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f3",
+        "definition": "Tableau de bord administrateur",
+        "context": "Feature listed on all Institution plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_institution_f4",
+        "definition": "Visibilit\u00e9 des quotas en temps r\u00e9el",
+        "context": "Feature listed on all Institution plan cards",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f1",
+        "definition": "Pool de calls IA personnalis\u00e9",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f2",
+        "definition": "Utilisateurs illimit\u00e9s",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f3",
+        "definition": "Fonctionnalit\u00e9s compl\u00e8tes d'IA",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f4",
+        "definition": "Exportation de donn\u00e9es brutes",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_research_f5",
+        "definition": "Contrat personnalis\u00e9",
+        "context": "Feature listed on the Research plan card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_nav_button",
+        "definition": "Tarification",
+        "context": "Navigation button in the top bar that scrolls to the pricing section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_tab_information",
+        "definition": "Informations",
+        "context": "Tab label for the user and platform info tab in settings",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_tab_subscription",
+        "definition": "Abonnement",
+        "context": "Tab label for the subscription tab in settings",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_free_trainer",
+        "definition": "Formateur Gratuit",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_pro_trainer",
+        "definition": "Pro Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_pro_plus_trainer",
+        "definition": "Pro+ Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_ultra_trainer",
+        "definition": "Ultra Trainer",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_free_teacher",
+        "definition": "Enseignant Gratuit",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_pro_teacher",
+        "definition": "Pro Enseignant",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_institution_xs",
+        "definition": "Institution XS",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_institution_s",
+        "definition": "Institution S",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_institution_m",
+        "definition": "Institution M",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "plan_research",
+        "definition": "Recherche",
+        "context": "Plan name displayed in the subscription badge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_trial_active",
+        "definition": "P\u00e9riode d'essai :",
+        "context": "Label shown before the number of days remaining in the trial",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_trial_days_remaining",
+        "definition": "jour(s) restant(s)",
+        "context": "Suffix shown after the number of days remaining in the trial",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_trial_expired",
+        "definition": "P\u00e9riode d'essai termin\u00e9e",
+        "context": "Shown when the trial period has expired",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_calls_this_month",
+        "definition": "Calls IA ce mois-ci",
+        "context": "Label for the AI call usage progress bar in settings",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_calls_remaining",
+        "definition": "call(s) restant(s)",
+        "context": "Suffix shown after the number of remaining AI calls",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_not_included",
+        "definition": "Les fonctionnalit\u00e9s d\u2019IA ne sont pas incluses dans votre offre gratuite, sauf si vous importez un suivi provenant d\u2019un entra\u00eeneur disposant d\u2019un abonnement payant.",
+        "context": "Alert shown for free plan users with no AI access",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_ai_no_calls",
+        "definition": "Aucun call d'IA effectu\u00e9 ce mois-ci.",
+        "context": "Alert shown when a paid user has made zero calls",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_see_plans",
+        "definition": "Voir les plans disponibles",
+        "context": "CTA button that navigates to the pricing section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_usage_fetch_error",
+        "definition": "Erreur de r\u00e9cup\u00e9ration de l'utilisation",
+        "context": "Error message when the AI usage API call fails",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_manage_plan",
+        "definition": "G\u00e9rer mon plan",
+        "context": "CTA button shown to paid plan users to upgrade or downgrade their plan",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_trial_title",
+        "definition": "Votre essai est termin\u00e9.",
+        "context": "Title of the dialog shown when the 14-day trial expires",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_trial_body",
+        "definition": "Passez \u00e0 un plan payant pour continuer \u00e0 utiliser les fonctionnalit\u00e9s d'IA.",
+        "context": "Body text of the trial expired dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_quota_title",
+        "definition": "Limite mensuelle d'IA atteinte",
+        "context": "Title of the dialog shown when the quota is exceeded",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_quota_body",
+        "definition": "Vous avez utilis\u00e9 tous vos appels d'IA pour ce mois-ci. Mettez \u00e0 niveau ou attendez le mois prochain.",
+        "context": "Body text of the quota exceeded dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_dismiss",
+        "definition": "Pas maintenant",
+        "context": "Dismiss button in the AI quota dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "quota_dialog_upgrade",
+        "definition": "Voir les plans",
+        "context": "Upgrade CTA button in the AI quota dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_members_title",
+        "definition": "Membres de l'institution",
+        "context": "Title of the member list table in Settings for institution admins",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_name",
+        "definition": "Nom",
+        "context": "Column header for member name in the institution dashboard",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_email",
+        "definition": "E-mail",
+        "context": "Column header for member email in the institution dashboard",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_calls",
+        "definition": "Appels ce mois-ci",
+        "context": "Column header for AI calls used in the institution dashboard",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_member_remove",
+        "definition": "Retirer membre",
+        "context": "Tooltip for remove button in the institution member table",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "institution_pool_usage",
+        "definition": "Utilisation de la piscine AI de l'institution",
+        "context": "Label for the shared AI call pool gauge",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_current_plan",
+        "definition": "Plan actuel",
+        "context": "Pricing card button when this plan matches the logged-in user's subscriptionPlan",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_ai_calls_included_per_month",
+        "definition": "Calls IA inclus par mois",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_cta_choose_institution_xs",
+        "definition": "Choisissez XS",
+        "context": "Pricing card CTA for Institution XS (Stripe checkout)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_institution_s",
+        "definition": "Choisissez S",
+        "context": "Pricing card CTA for Institution S (Stripe checkout)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pricing_cta_choose_institution_m",
+        "definition": "Choisissez M",
+        "context": "Pricing card CTA for Institution M (Stripe checkout)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_subscription_canceled_intro",
+        "definition": "Vous avez annul\u00e9 votre abonnement. Les avantages de votre plan payant se terminent le",
+        "context": "Settings subscription tab: first part of warning before localized end date (date appended in UI)",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_billing_trial_intro",
+        "definition": "La facturation de votre abonnement commence apr\u00e8s la fin de votre essai le",
+        "context": "Settings \u2192 Subscription tab: info alert for paid users in Stripe billing trial (trialing). First part of the sentence; localized trial-end date and a period are appended in the UI.",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "settings_cancel_plan",
+        "definition": "Annuler mon plan",
+        "context": "Settings \u2192 Subscription tab: red outlined button next to Manage plan; opens same Stripe billing portal where user can cancel.",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "signup_firstname_required",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "signup_create_account",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "signup_success",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_first_name",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_last_name",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_email",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_signup",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_signin",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_password",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_2",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_3",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_4",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_5",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_6",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_7",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_8",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_9",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_10",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "dtc_description_11",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_try_platform",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_contact_us_at",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_already_have_account",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_survey_description",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_survey_participate",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_survey_time",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_survey_view_results",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_table_assessment",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_monitoring_title",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_qr_code_section",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_reset",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_validate",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_cancel",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_add_option",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_option",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_short_name",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_question_title",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_edit_question",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_correct_answer",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_explanation",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_automatically_recode_competencies",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_add_competencies_manually",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_competency_area",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_competency",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_activity",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_learning_type",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_knowledge",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_skill",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_duplicate_question",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_edit_question",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_remove_question",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_move_question_up",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_move_question_down",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_make_question_optional",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_tooltip_make_question_mandatory",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_evaluate",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_create_sections",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_add_worshop",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_create_new_question",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_workshop",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_logout",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_resources",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_home",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_design",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_results",
+        "definition": "",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
     }
 ]
