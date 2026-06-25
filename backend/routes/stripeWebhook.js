@@ -35,6 +35,7 @@ router.post('/', express.raw({ type: 'application/json' }), async (req, res) => 
                     stripeCustomerId: session.customer,
                     stripeSubscriptionId: session.subscription,
                     trialActive: false,
+                    trialExpiresAt: null,
                     subscriptionCancelAtPeriodEnd: false,
                     subscriptionCurrentPeriodEnd: null,
                 };

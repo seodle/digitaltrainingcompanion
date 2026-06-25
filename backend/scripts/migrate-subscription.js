@@ -47,6 +47,18 @@ async function migrate() {
     );
     console.log(`Migrated ${trainers.modifiedCount} Trainer(s)/other → FREE_TRAINER`);
 
+    // Existing non-sandbox users → grant trial until Aug 31 2026
+    const trialed = await User.updateMany(
+        { sandbox: false },
+        {
+            $set: {
+                trialActive: true,
+                trialExpiresAt: new Date('2026-08-31T23:59:59Z'),
+            }
+        }
+    );
+    console.log(`Granted trial until 2026-08-31 to ${trialed.modifiedCount} non-sandbox user(s)`);
+
     // Verify
     const remaining = await User.countDocuments({ subscriptionPlan: { $exists: false } });
     if (remaining > 0) {

@@ -168,6 +168,7 @@ router.post('/sync-checkout', async (req, res) => {
             stripeCustomerId: session.customer || undefined,
             stripeSubscriptionId: session.subscription || undefined,
             trialActive: false,
+            trialExpiresAt: null,
             subscriptionCancelAtPeriodEnd: false,
             subscriptionCurrentPeriodEnd: null,
         };

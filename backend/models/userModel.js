@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
     // Subscription
     subscriptionPlan: { type: String, default: 'FREE_TRAINER' },
     trialStartDate: { type: Date, default: null },
+    trialExpiresAt: { type: Date, default: null },
     trialActive: { type: Boolean, default: false },
     stripeSubscriptionStatus: { type: String, default: null },
     stripeTrialEnd: { type: Date, default: null },
@@ -59,7 +60,8 @@ userSchema.methods.generateAuthToken = function () {
             sandbox: this.sandbox, // deprecated, kept for URL compat
             userStatus: this.userStatus,
             subscriptionPlan: this.subscriptionPlan,
-            trialActive: this.trialActive
+            trialActive: this.trialActive,
+            trialExpiresAt: this.trialExpiresAt
         },
 
         process.env.JWTPRIVATEKEY,

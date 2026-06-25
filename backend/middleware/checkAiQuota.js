@@ -14,9 +14,13 @@ const checkAiQuota = async (req, res, next) => {
     if (!user) return res.status(401).json({ error: 'user_not_found' });
 
     // --- Trial expiry check (manual / granted free-AI only; requires trialStartDate) ---
-    if (user.trialActive && user.trialStartDate) {
-        const trialStart = new Date(user.trialStartDate).getTime();
-        if (Number.isFinite(trialStart) && Date.now() > trialStart + TRIAL_MS) {
+    if (user.trialActive) {
+        const expiresAt = user.trialExpiresAt
+            ? new Date(user.trialExpiresAt).getTime()
+            : user.trialStartDate
+                ? new Date(user.trialStartDate).getTime() + TRIAL_MS
+                : null;
+        if (expiresAt && Date.now() > expiresAt) {
             return res.status(402).json({ error: 'trial_expired' });
         }
     }
