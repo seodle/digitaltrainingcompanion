@@ -93,7 +93,15 @@ const Home = () => {
       </Box>
 
       {/* Right side */}
-      <Box display="flex" alignItems="center" gap={2} sx={{ marginRight: 4 }}>
+      <Box
+        display="flex"
+        alignItems="center"
+        gap={{ xs: 1, sm: 1.5, md: 2 }}
+        sx={{
+          mr: { xs: 0, md: 4 },
+          pr: { xs: 1, md: 0 }, // optional tiny inner breathing room on mobile
+        }}
+      >
         <IconButton
           component="a"
           href="https://www.linkedin.com/company/the-digital-training-companion/posts/?feedView=all"

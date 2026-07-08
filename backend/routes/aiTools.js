@@ -59,7 +59,7 @@ router.post('/suggest-options', async (req, res) => {
             return res.status(400).json({ error: 'Question title is required' });
         }
 
-        const count = numberOfOptions || 2; // Default to 2 options if not specified
+        const count = numberOfOptions || 4; // Default to 4 options if not specified
         const isOrderedScale = questionType === 'radio-ordered';
 
         // Create the system prompt based on question type

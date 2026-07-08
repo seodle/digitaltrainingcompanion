@@ -145,9 +145,8 @@ const CompleteSurvey = () => {
     };
 
 
-    const handleSubmit = useCallback(async (values, { setSubmitting }) => {
-
-        const isAnyMandatoryUnanswered = surveyData.some(question => {
+    const hasUnansweredMandatoryQuestions = useCallback((values) => {
+        return surveyData.some(question => {
             if (question.isMandatory) {
                 if (question.matrixId) {
                     // For matrix questions, only check the first question in the matrix (matrixPosition === 0)
@@ -192,8 +191,10 @@ const CompleteSurvey = () => {
             }
             return false;
         });
+    }, [surveyData]);
 
-        if (isAnyMandatoryUnanswered) {
+    const handleSubmit = useCallback(async (values, { setSubmitting }) => {
+        if (hasUnansweredMandatoryQuestions(values)) {
             setShowGlobalError(true);
             setSubmitting(false); // should be set to false to allow re-submit
             setIsSubmitting(false);
@@ -307,7 +308,7 @@ const CompleteSurvey = () => {
 
         setSubmitting(false);
         setIsSubmitting(false);
-    }, [surveyData, assessmentIds, currentAssessmentIndex, languageCode, navigate, userId, monitoring, assessmentType, linkingCode, displayName, email, sandbox, coachFeedbackEnabled, feedbackHistoryByField]);
+    }, [surveyData, assessmentIds, currentAssessmentIndex, languageCode, navigate, userId, monitoring, assessmentType, linkingCode, displayName, email, sandbox, coachFeedbackEnabled, feedbackHistoryByField, hasUnansweredMandatoryQuestions]);
 
     const coachFeedbackTextQuestions = useMemo(() => {
         if (!coachFeedbackEnabled) return [];
@@ -325,17 +326,19 @@ const CompleteSurvey = () => {
     }, [coachFeedbackTextQuestions]);
 
     const canSubmit = useMemo(() => {
-        if (assessmentType !== "Learning") return true;
+        if (assessmentType !== "Learning" && assessmentType !== "Student learning outcomes") {
+            return true;
+        }
 
-        const learningQuestionsWithExplanations = surveyData.filter(
-            question => question.explanation && question.explanation.trim() !== ""
-        );
+        const fieldNamesToValidate = surveyData
+            .filter((q) =>
+                !q.matrixId &&
+                q.questionType !== "text" &&
+                q.questionType !== "single-text"
+            )
+            .map((q) => `q${q.questionId}`);
 
-        if (learningQuestionsWithExplanations.length === 0) return true;
-
-        return learningQuestionsWithExplanations.every(
-            question => validatedQuestions.has(`q${question.questionId}`)
-        );
+        return fieldNamesToValidate.every((fieldName) => validatedQuestions.has(fieldName));
     }, [assessmentType, surveyData, validatedQuestions]);
 
     const hasPendingCoachFeedback = useCallback(() => {
@@ -358,18 +361,34 @@ const CompleteSurvey = () => {
         );
     }, [getCoachFeedbackQuestionsNeedingEnrichment, enrichedQuestions, hasPendingCoachFeedback]);
 
+    const isSubmitDisabled = useCallback((values) => {
+        if (!canSubmit) return true;
+        if (!canSubmitCoachFeedback(values)) return true;
+        // Grey out early for AI-beacon surveys when mandatory answers are still missing
+        if (coachFeedbackEnabled && hasUnansweredMandatoryQuestions(values)) return true;
+        return false;
+    }, [canSubmit, canSubmitCoachFeedback, coachFeedbackEnabled, hasUnansweredMandatoryQuestions]);
+
     const getSubmitDisabledTooltip = useCallback((values) => {
-        if (!canSubmit && assessmentType === "Learning") {
+        if (!canSubmit && (assessmentType === "Learning" || assessmentType === "Student learning outcomes")) {
             return getMessage('tooltip_validate_before_submit');
         }
         if (hasPendingCoachFeedback()) {
             return getMessage('tooltip_resolve_enriched_feedback_before_submit');
         }
-        if (!canSubmitCoachFeedback(values)) {
+
+        const needsRequiredAnswers = coachFeedbackEnabled && hasUnansweredMandatoryQuestions(values);
+        const needsEnrichment = !canSubmitCoachFeedback(values);
+
+        if (needsRequiredAnswers) {
+            // AI beacon surveys: tell the user about both remaining requirements
+            return `${getMessage('label_questions_required_in_survey')}. ${getMessage('tooltip_enrich_feedback_before_submit')}`;
+        }
+        if (needsEnrichment) {
             return getMessage('tooltip_enrich_feedback_before_submit');
         }
         return '';
-    }, [canSubmit, assessmentType, canSubmitCoachFeedback, getMessage, hasPendingCoachFeedback]);
+    }, [canSubmit, assessmentType, canSubmitCoachFeedback, coachFeedbackEnabled, getMessage, hasPendingCoachFeedback, hasUnansweredMandatoryQuestions]);
 
     const handleFeedbackTextChange = useCallback((fieldName) => {
         setEnrichedQuestions(prev => {
@@ -740,13 +759,23 @@ const CompleteSurvey = () => {
                                         </Box>
                                     )}
                                     
-                                    {/* Show validation progress for Learning type assessments */}
-                                    {assessmentType === "Learning" && (
+                                    {/* Show validation progress for Learning and Student learning outcomes type assessments */}
+                                    {(assessmentType === "Learning" || assessmentType === "Student learning outcomes") && (
                                         <Box mt={2} display="flex" justifyContent="center">
                                             <Typography variant="body2" color="textSecondary">
-                                                {(() => {
-                                                    const totalQuestions = surveyData.filter(q => q.explanation && q.explanation.trim() !== "").length;
-                                                    const validatedCount = validatedQuestions.size;
+                                            {(() => {
+                                                    // Only validateable questions with an explanation have a Validate button
+                                                    const fieldNamesToValidate = surveyData
+                                                        .filter((q) =>
+                                                            !q.matrixId &&
+                                                            q.questionType !== "text" &&
+                                                            q.questionType !== "single-text"
+                                                        )
+                                                        .map((q) => `q${q.questionId}`);
+                                                    const totalQuestions = fieldNamesToValidate.length;
+                                                    const validatedCount = fieldNamesToValidate.filter((name) =>
+                                                        validatedQuestions.has(name)
+                                                    ).length;
                                                     if (totalQuestions > 0) {
                                                         return `${validatedCount}/${totalQuestions} ${getMessage('label_questions_validated')}`;
                                                     }
@@ -778,7 +807,7 @@ const CompleteSurvey = () => {
                                                         variant="contained"
                                                         loading={isSubmitting}
                                                         sx={buttonStyle}
-                                                        disabled={!canSubmit || !canSubmitCoachFeedback(values)}
+                                                        disabled={isSubmitDisabled(values)}
                                                     >
                                                         <Typography variant="h5">
                                                             {currentAssessmentIndex < assessmentIds.length - 1 ? getMessage('label_next') : getMessage('label_submit')}

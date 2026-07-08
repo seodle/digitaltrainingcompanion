@@ -124,41 +124,46 @@ function getActivities(values) {
  * @param {string} type - The type of learning objective (e.g., LearningType.KNOWLEDGE, LearningType.SKILL, LearningType.ATTITUDE).
  * @returns {string} - The system prompt content to be sent to the LLM assistant.
  */
+const CORRECT_ANSWER_COUNT_RULE = `Each question must have exactly one correct answer by default. Use two correct answers only when the question genuinely requires multiple valid responses. Never use more than two correct answers.`;
+
+export const LEARNING_OPTION_SUGGESTION_INSTRUCTION =
+  "Generate one correct answer and the rest should be plausible but incorrect alternatives. Make all options believable but ensure only one is truly correct.";
+
 const getAssessmentContent = (type) => {
   switch (type) {
     case LearningType.KNOWLEDGE:
-      return `Utilize the training material provided to formulate complex questions aimed at evaluating knowledge acquisition. The questions must follow a specific multiple-choice format with one or more correct answers, the question shortname and an explanation of the right answers. Follow this example strictly: \n
+      return `Utilize the training material provided to formulate complex questions aimed at evaluating knowledge acquisition. The questions must follow a specific multiple-choice format with exactly one correct answer in most cases, the question shortname and an explanation of the right answers. ${CORRECT_ANSWER_COUNT_RULE} Follow this example strictly: \n
       1. [Insert Question Here]
       A) [Option A]
       B) [Option B]
       C) [Option C]
       D) [Option D]
 
-      Correct Answers: [A, B] [List the letters of all correct options]
+      Correct Answers: [B] [List the letter(s) of correct option(s), one or two max]
       ShortName: [Insert Question Shortname of Max 30 Characters Here With Spaces Between Words]
       Explanation: [Full explanation about why each option is correct or incorrect]`;
 
     case LearningType.SKILL:
-      return `Utilize the training material provided to formulate complex questions aimed at evaluating practical skills and application. Each question should present a realistic scenario where the learner must demonstrate their ability to apply multiple concepts with one or more correct answers. Questions must follow this specific format: \n       
+      return `Utilize the training material provided to formulate complex questions aimed at evaluating practical skills and application. Each question should present a realistic scenario where the learner must demonstrate their ability to apply the material. Prefer a single best answer; use two only when multiple actions are equally valid. ${CORRECT_ANSWER_COUNT_RULE} Questions must follow this specific format: \n       
       1. [Present a real situation where the student needs to USE the material]
       A) [Action/solution option A]
       B) [Action/solution option B]
       C) [Action/solution option C]
       D) [Action/solution option D]
 
-      Correct Answers: [List letters of all correct options, e.g. A, C]
+      Correct Answers: [B] [List the letter(s) of correct option(s), one or two max]
       ShortName: [Insert Question Shortname of Max 30 Characters Here With Spaces Between Words]
       Explanation: [Full explanation about why each option is correct or incorrect]`;
 
     case LearningType.ATTITUDE:
-      return `Utilize the training material to formulate complex questions that evaluate the learner's ethical approach, personal responsibility, and critical mindset towards the material learned. Each question should present a realistic scenario that tests attitudes and values with one or more correct answers. Follow this format strictly: \n  
+      return `Utilize the training material to formulate complex questions that evaluate the learner's ethical approach, personal responsibility, and critical mindset towards the material learned. Each question should present a realistic scenario that tests attitudes and values. Prefer a single best answer; use two only when multiple approaches are equally valid. ${CORRECT_ANSWER_COUNT_RULE} Follow this format strictly: \n  
       1. [Present an ethical dilemma or situation requiring value judgment about network usage]
       A) [Option A]
       B) [Option B]
       C) [Option C]
       D) [Option D]
 
-      Correct Answers: [List letters of all valid approaches, e.g. B, D]
+      Correct Answers: [B] [List the letter(s) of correct option(s), one or two max]
       ShortName: [Insert Question Shortname of Max 30 Characters Here With Spaces Between Words]
       Explanation: [Full explanation about why each option is correct or incorrect]`;
 
@@ -597,7 +602,8 @@ const handleSubmit = async (values, { resetForm }, context) => {
           Number of questions: ${numberOfQuestions}.\n
           Description of the activity: ${data}.\n
           Output language: ${languageMapping[languageCode]}
-          Keywords should always be in the following language: en`;
+          Keywords should always be in the following language: en
+          Prefer exactly one correct answer per question. At most two correct answers when genuinely required. Never more than two.`;
 
       // Send the content to the AI service and get the response
       const response = await handleSend(content, values.learningType);
@@ -684,7 +690,6 @@ const handleSubmit = async (values, { resetForm }, context) => {
  * @returns {Array} - An array of parsed question objects.
  */
 const parseAIResponse = async (response, startingQuestionId, values, updateCompetenciesForQuestion, setSelectedCompetencies) => {
-  // Regular expression to match individual questions
   const questionsRegex = /(\d+\..+?)(?=\n\d+\.|$)/gs;
   const matches = [...response.matchAll(questionsRegex)];
 
@@ -693,39 +698,27 @@ const parseAIResponse = async (response, startingQuestionId, values, updateCompe
 
   for (const match of matches) {
     const questionBlock = match[0].trim();
-
-    // Split the question block into lines
     const lines = questionBlock.split('\n');
-
-    // Extract the question text
     const questionText = lines[0].replace(/^\d+\.\s*/, '');
 
-    // Extract the options
     const options = lines
       .filter((line) => /^\s*[A-Z]\)/.test(line))
-      .map((line) => {
-        const optionText = line.replace(/^\s*[A-Z]\)\s*/, '').trim();
-        return optionText;
-      });
+      .map((line) => line.replace(/^\s*[A-Z]\)\s*/, '').trim());
 
-    // Extract the correct answers (multiple)
-    const correctAnswersMatch = questionBlock.match(/Correct Answers:\s*([A-D,\s]+)/i);
-    console.log('Raw correct answers match:', correctAnswersMatch);
+    const bracketMatch = questionBlock.match(/Correct Answers:\s*\[([^\]]+)\]/i);
+    const unbracketedMatch = questionBlock.match(/Correct Answers:\s*([A-D]+(?:\s*,\s*[A-D]+)*)/i);
+    const correctAnswersRaw = bracketMatch?.[1] ?? unbracketedMatch?.[1];
 
-    // Extract and clean letters
     let correctLetters = [];
-    if (correctAnswersMatch && correctAnswersMatch[1]) {
-      correctLetters = correctAnswersMatch[1]
-        .replace(/[\[\]]/g, '') // Remove any brackets if present
+    if (correctAnswersRaw) {
+      correctLetters = correctAnswersRaw
         .split(',')
-        .map(letter => letter.trim().toUpperCase()) // Ensure uppercase
-        .filter(letter => /^[A-D]$/.test(letter)); // Validate A-D
+        .map(letter => letter.trim().toUpperCase())
+        .filter(letter => /^[A-D]$/.test(letter));
     }
 
-    // Validate that correctLetters only contains valid option letters
     const validOptionLetters = options.map((_, index) => String.fromCharCode(65 + index));
     correctLetters = correctLetters.filter(letter => validOptionLetters.includes(letter));
-    console.log('Validated correct letters:', correctLetters);
 
     // Extract the short name
     const shortNameMatch = questionBlock.match(/ShortName:\s*(.+)/);
@@ -756,7 +749,7 @@ const parseAIResponse = async (response, startingQuestionId, values, updateCompe
         const foundOption = optionsWithValues.find(opt => opt.value === letter);
         return foundOption ? foundOption.label : null;
       })
-      .filter(text => text !== null); // Remove any invalid entries
+      .filter(text => text !== null);
 
     // Construct the question object
     const question = {
