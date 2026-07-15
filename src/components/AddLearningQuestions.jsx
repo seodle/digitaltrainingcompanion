@@ -2,9 +2,9 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Formik, Form, useFormikContext } from "formik";
 import React, { useState, useEffect } from "react";
 import * as Yup from "yup";
-import { Box, Button, Select, MenuItem, InputLabel, Typography, FormControl, FormControlLabel, Switch, Tooltip, IconButton, Alert, CircularProgress, TableContainer, Paper, Table, TableBody, TableRow, TableCell, Checkbox } from "@mui/material";
+import { Box, Button, Select, MenuItem, InputLabel, Typography, FormControl, FormControlLabel, Switch, Tooltip, IconButton, Alert, CircularProgress, TableContainer, Paper, Table, TableBody, TableRow, TableCell, Checkbox, TextField } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
-import { Globe2 } from 'lucide-react';
+import { Globe2, Search } from 'lucide-react';
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from 'draft-js';
 import axios from 'axios';
@@ -51,6 +51,7 @@ const AddLearningQuestions = ({
   const [isLoadingMoodleCourseContents, setIsLoadingMoodleCourseContents] = useState(false);
   const [moodleCourseContentsError, setMoodleCourseContentsError] = useState('');
   const [selectedMoodleContentIds, setSelectedMoodleContentIds] = useState([]);
+  const [contentSearchQuery, setContentSearchQuery] = useState('');
   const [aiBeaconOutputLanguage, setAiBeaconOutputLanguage] = useState('auto');
   const [aiBeaconLanguageError, setAiBeaconLanguageError] = useState('');
   const [aiBeaconLanguageSaving, setAiBeaconLanguageSaving] = useState(false);
@@ -87,6 +88,7 @@ const AddLearningQuestions = ({
     setAutomaticEncoding(checked);
     if (!checked) {
       setSelectedMoodleContentIds([]);
+      setContentSearchQuery('');
       setAiBeaconOutputLanguage('auto');
       setAiBeaconLanguageError('');
       setSelectedCompetencies([]);
@@ -121,6 +123,18 @@ const AddLearningQuestions = ({
       setAiBeaconLanguageSaving(false);
     }
   };
+
+  const normalizedContentSearchQuery = contentSearchQuery.trim().toLowerCase();
+  const filteredMoodleCourseContents = normalizedContentSearchQuery
+    ? moodleCourseContents.filter((content) => {
+        const name = String(content.name || '').toLowerCase();
+        const id = String(content.id ?? '').toLowerCase();
+        return (
+          name.includes(normalizedContentSearchQuery) ||
+          id.includes(normalizedContentSearchQuery)
+        );
+      })
+    : moodleCourseContents;
 
   const toggleMoodleContentSelected = (contentId) => {
     if (contentId == null) return;
@@ -672,6 +686,23 @@ const AddLearningQuestions = ({
                 <Typography variant="subtitle2" sx={{ mb: 1 }}>
                   {getMessage('label_select_your_content')}
                 </Typography>
+                {!isLoadingMoodleCourseContents && moodleCourseContents.length > 0 ? (
+                  <TextField
+                    fullWidth
+                    size="small"
+                    placeholder={getMessage('label_search_content')}
+                    value={contentSearchQuery}
+                    onChange={(e) => setContentSearchQuery(e.target.value)}
+                    disabled={isLoading}
+                    inputProps={{
+                      'aria-label': getMessage('label_search_content'),
+                    }}
+                    InputProps={{
+                      endAdornment: <Search size={18} aria-hidden />,
+                    }}
+                    sx={{ mb: 1 }}
+                  />
+                ) : null}
                 {isLoadingMoodleCourseContents ? (
                   <Box display="flex" justifyContent="center" py={2}>
                     <CircularProgress size={22} />
@@ -680,11 +711,13 @@ const AddLearningQuestions = ({
                   <Alert severity="error">{moodleCourseContentsError}</Alert>
                 ) : moodleCourseContents.length === 0 ? (
                   <Typography color="text.secondary">No course contents found.</Typography>
+                ) : filteredMoodleCourseContents.length === 0 ? (
+                  <Typography color="text.secondary">{getMessage('label_no_content_matches_search')}</Typography>
                 ) : (
                   <TableContainer component={Paper} variant="outlined" sx={{ mt: 1, maxHeight: 220 }}>
                     <Table size="small" stickyHeader>
                       <TableBody>
-                        {moodleCourseContents.map((content, index) => {
+                        {filteredMoodleCourseContents.map((content, index) => {
                           const contentId =
                             content.id != null && content.id !== ''
                               ? Number(content.id)

@@ -39,8 +39,6 @@ const SurveyQuestion = ({
   enrichFeedbackError = '',
   pendingEnrichedFeedback = '',
   onEnrichFeedback,
-  onAcceptOrEditFeedback,
-  onDeclineFeedback,
   onFeedbackTextChange,
 }) => {
 
@@ -303,7 +301,7 @@ const SurveyQuestion = ({
                 multiline
                 rows={4}
                 sx={{ m: "0px 20px 0px 0px", width: '100%' }}
-                disabled={isOptionDisabled() || Boolean(pendingEnrichedFeedback)}
+                disabled={isOptionDisabled()}
                 value={disabled ? "" : field.value}
                 onChange={(event) => {
                   field.onChange(event);
@@ -360,26 +358,6 @@ const SurveyQuestion = ({
             <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
               {pendingEnrichedFeedback}
             </Typography>
-            <Box display="flex" flexWrap="wrap" gap="10px" marginTop="8px">
-              <Button
-                variant="contained"
-                size="small"
-                onClick={onAcceptOrEditFeedback}
-                disabled={isOptionDisabled()}
-                sx={buttonStyle}
-              >
-                {getMessage('label_accept_or_edit_feedback')}
-              </Button>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={onDeclineFeedback}
-                disabled={isOptionDisabled()}
-                sx={buttonStyle}
-              >
-                {getMessage('label_decline_feedback')}
-              </Button>
-            </Box>
           </Box>
         )}
 

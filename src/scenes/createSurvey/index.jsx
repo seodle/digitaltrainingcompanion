@@ -9,7 +9,7 @@ import { AssessmentType } from "../../utils/enums";
 const questionIdMap = {
     [AssessmentType.TRAINEE_CHARACTERISTICS]: ["0", "1", "2", "3", "4"],
     [AssessmentType.TRAINING_CHARACTERISTICS]: ["5", "6", "7", "8", "9", "10"],
-    [AssessmentType.IMMEDIATE_REACTIONS]: ["11", "12", "13","14","15"],
+    [AssessmentType.IMMEDIATE_REACTIONS]: ["11", "12", "13", "14", "15", "49", "50"],
     [AssessmentType.ORGANIZATIONAL_CONDITIONS]: ["16", "17", "18", "19", "20", "21"],
     [AssessmentType.SUSTAINABILITY_CONDITIONS]: ["22", "23", "24", "25", "26", "27"],
     [AssessmentType.STUDENT_CHARACTERISTICS]: ["28", "29", "30", "31"],

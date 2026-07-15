@@ -479,9 +479,6 @@ function validateAiBeaconSubmission(values, aiBeacon, getMessage) {
   if (!values.learningType) {
     return getMessage('label_learning_type');
   }
-  if (!values.framework) {
-    return getMessage('label_choose_framework');
-  }
   const normalizedNumberOfQuestions = Number(values.numberOfQuestions);
   if (!Number.isInteger(normalizedNumberOfQuestions) || normalizedNumberOfQuestions < 1) {
     return 'Please select a valid number of questions.';

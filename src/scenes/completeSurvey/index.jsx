@@ -341,25 +341,14 @@ const CompleteSurvey = () => {
         return fieldNamesToValidate.every((fieldName) => validatedQuestions.has(fieldName));
     }, [assessmentType, surveyData, validatedQuestions]);
 
-    const hasPendingCoachFeedback = useCallback(() => {
-        return coachFeedbackTextQuestions
-            .filter(question => question.isMandatory)
-            .some(question => {
-                const fieldName = `q${question.questionId}`;
-                return String(pendingEnrichedFeedbackByField[fieldName] || '').trim().length > 0;
-            });
-    }, [coachFeedbackTextQuestions, pendingEnrichedFeedbackByField]);
-
     const canSubmitCoachFeedback = useCallback((values) => {
-        if (hasPendingCoachFeedback()) return false;
-
         const questionsNeedingEnrichment = getCoachFeedbackQuestionsNeedingEnrichment(values);
         if (questionsNeedingEnrichment.length === 0) return true;
 
         return questionsNeedingEnrichment.every(
             question => enrichedQuestions.has(`q${question.questionId}`)
         );
-    }, [getCoachFeedbackQuestionsNeedingEnrichment, enrichedQuestions, hasPendingCoachFeedback]);
+    }, [getCoachFeedbackQuestionsNeedingEnrichment, enrichedQuestions]);
 
     const isSubmitDisabled = useCallback((values) => {
         if (!canSubmit) return true;
@@ -373,9 +362,6 @@ const CompleteSurvey = () => {
         if (!canSubmit && (assessmentType === "Learning" || assessmentType === "Student learning outcomes")) {
             return getMessage('tooltip_validate_before_submit');
         }
-        if (hasPendingCoachFeedback()) {
-            return getMessage('tooltip_resolve_enriched_feedback_before_submit');
-        }
 
         const needsRequiredAnswers = coachFeedbackEnabled && hasUnansweredMandatoryQuestions(values);
         const needsEnrichment = !canSubmitCoachFeedback(values);
@@ -388,13 +374,19 @@ const CompleteSurvey = () => {
             return getMessage('tooltip_enrich_feedback_before_submit');
         }
         return '';
-    }, [canSubmit, assessmentType, canSubmitCoachFeedback, coachFeedbackEnabled, getMessage, hasPendingCoachFeedback, hasUnansweredMandatoryQuestions]);
+    }, [canSubmit, assessmentType, canSubmitCoachFeedback, coachFeedbackEnabled, getMessage, hasUnansweredMandatoryQuestions]);
 
     const handleFeedbackTextChange = useCallback((fieldName) => {
         setEnrichedQuestions(prev => {
             if (!prev.has(fieldName)) return prev;
             const next = new Set(prev);
             next.delete(fieldName);
+            return next;
+        });
+        setPendingEnrichedFeedbackByField(prev => {
+            if (!prev[fieldName]) return prev;
+            const next = { ...prev };
+            delete next[fieldName];
             return next;
         });
         setEnrichFeedbackErrors(prev => {
@@ -439,6 +431,7 @@ const CompleteSurvey = () => {
                 ...prev,
                 [fieldName]: improvedDraft,
             }));
+            setEnrichedQuestions(prev => new Set(prev).add(fieldName));
             setFeedbackHistoryByField(prev => ({
                 ...prev,
                 [fieldName]: appendFeedbackHistoryEntry(prev[fieldName], {
@@ -468,45 +461,6 @@ const CompleteSurvey = () => {
             });
         }
     }, [assessmentIds, currentAssessmentIndex, monitoring, userId]);
-
-    const handleAcceptOrEditFeedback = useCallback((fieldName, setFieldValue) => {
-        const pendingText = String(pendingEnrichedFeedbackByField[fieldName] || '').trim();
-        if (!pendingText) return;
-
-        setFieldValue(fieldName, pendingText);
-        setPendingEnrichedFeedbackByField(prev => {
-            const next = { ...prev };
-            delete next[fieldName];
-            return next;
-        });
-        setEnrichedQuestions(prev => new Set(prev).add(fieldName));
-        setEnrichFeedbackErrors(prev => {
-            if (!prev[fieldName]) return prev;
-            const next = { ...prev };
-            delete next[fieldName];
-            return next;
-        });
-    }, [pendingEnrichedFeedbackByField]);
-
-    const handleDeclineFeedback = useCallback((fieldName) => {
-        setPendingEnrichedFeedbackByField(prev => {
-            const next = { ...prev };
-            delete next[fieldName];
-            return next;
-        });
-        setEnrichedQuestions(prev => {
-            if (!prev.has(fieldName)) return prev;
-            const next = new Set(prev);
-            next.delete(fieldName);
-            return next;
-        });
-        setEnrichFeedbackErrors(prev => {
-            if (!prev[fieldName]) return prev;
-            const next = { ...prev };
-            delete next[fieldName];
-            return next;
-        });
-    }, []);
 
     const workshopObjects = useMemo(() => {
         return groupQuestionsByWorkshop(assessmentWorkshops, surveyData);
@@ -739,13 +693,6 @@ const CompleteSurvey = () => {
                                                         onEnrichFeedback={() => handleEnrichFeedback(
                                                             `q${question.questionId}`,
                                                             values[`q${question.questionId}`]
-                                                        )}
-                                                        onAcceptOrEditFeedback={() => handleAcceptOrEditFeedback(
-                                                            `q${question.questionId}`,
-                                                            setFieldValue
-                                                        )}
-                                                        onDeclineFeedback={() => handleDeclineFeedback(
-                                                            `q${question.questionId}`
                                                         )}
                                                         onFeedbackTextChange={handleFeedbackTextChange}
                                                     />

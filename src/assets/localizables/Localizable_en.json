@@ -1332,6 +1332,24 @@
         "fuzzy": 1
     },
     {
+        "term": "label_search_content",
+        "definition": "Search content",
+        "context": "placeholder for search box when selecting Moodle course contents for AI Beacon question generation",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_no_content_matches_search",
+        "definition": "No content matches your search.",
+        "context": "message shown when Moodle course content search returns no results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
         "term": "label_ai_beacon_auto_detect",
         "definition": "Auto-detect",
         "context": "AI Beacon course output language option",

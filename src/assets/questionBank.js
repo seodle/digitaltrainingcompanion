@@ -335,6 +335,18 @@ const questionBank = {
       shortName: "Commentaires Additionnels",
       questionType: "text",
       options: []
+    },
+    '49': {
+      question: "Quels aspects du cours étaient bons ? Quels aspects pourraient être améliorés ? Quelles sont vos suggestions d'amélioration ?",
+      shortName: "Points forts et axes d'amélioration",
+      questionType: "text",
+      options: []
+    },
+    '50': {
+      question: "Dans l'ensemble, dans quelle mesure avez-vous été satisfait(e) du cours ? Qu'aimeriez-vous ajouter ?",
+      shortName: "Satisfaction globale",
+      questionType: "text",
+      options: []
     }
   },
 
@@ -679,6 +691,18 @@ const questionBank = {
       shortName: "Additional Comments",
       questionType: "text",
       options: []
+    },
+    '49': {
+      question: "Which aspects of the course were good? Which aspects could be improved? What are your suggestions for improvement?",
+      shortName: "Strengths & potential for improvement",
+      questionType: "text",
+      options: []
+    },
+    '50': {
+      question: "How satisfied were you with the course overall? What else would you like to say?",
+      shortName: "Overall satisfaction",
+      questionType: "text",
+      options: []
     }
   },
   de: {
@@ -1015,6 +1039,18 @@ const questionBank = {
     '48': {
       question: "Gibt es noch etwas, das Sie über Ihre Erfahrungen bei der Umsetzung der Fortbildung mitteilen möchten?",
       shortName: "Zusätzliche Kommentare",
+      questionType: "text",
+      options: []
+    },
+    '49': {
+      question: "Welche Aspekte des Kurses waren gut? Welche Aspekte könnten verbessert werden? Was sind Ihre Verbesserungsvorschläge?",
+      shortName: "Stärken & Verbesserungspotenzial",
+      questionType: "text",
+      options: []
+    },
+    '50': {
+      question: "Wie zufrieden waren Sie insgesamt mit dem Kurs? Was möchten Sie noch mitteilen?",
+      shortName: "Gesamtzufriedenheit",
       questionType: "text",
       options: []
     }
@@ -1358,6 +1394,18 @@ const questionBank = {
       shortName: "Comentarios Adicionales",
       questionType: "text",
       options: []
+    },
+    '49': {
+      question: "¿Qué aspectos del curso fueron buenos? ¿Qué aspectos podrían mejorarse? ¿Cuáles son sus sugerencias de mejora?",
+      shortName: "Fortalezas y margen de mejora",
+      questionType: "text",
+      options: []
+    },
+    '50': {
+      question: "¿En general, qué tan satisfecho/a quedó con el curso? ¿Qué más le gustaría decir?",
+      shortName: "Satisfacción general",
+      questionType: "text",
+      options: []
     }
   },
   it: {
@@ -1694,6 +1742,18 @@ const questionBank = {
     '48': {
       question: "C'è altro che vorresti condividere sulla tua esperienza nell'implementazione della formazione?",
       shortName: "Commenti Aggiuntivi",
+      questionType: "text",
+      options: []
+    },
+    '49': {
+      question: "Quali aspetti del corso sono stati positivi? Quali aspetti potrebbero essere migliorati? Quali sono i vostri suggerimenti per migliorare?",
+      shortName: "Punti di forza e margini di miglioramento",
+      questionType: "text",
+      options: []
+    },
+    '50': {
+      question: "Nel complesso, quanto è rimasto/a soddisfatto/a del corso? Cosa vorrebbe aggiungere?",
+      shortName: "Soddisfazione complessiva",
       questionType: "text",
       options: []
     }
