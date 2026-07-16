@@ -43,6 +43,7 @@ const responseSchema = new mongoose.Schema({
     completionDate: { type: Date, default: Date.now },
     survey: [questionSchema],
     displayName: String,
+    recordId: String,
 });
 
 const model = mongoose.model("Response", responseSchema, "response");

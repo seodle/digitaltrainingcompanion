@@ -23,7 +23,7 @@ router.get("/survey", async (req, res) => {
 // submit a new response
 router.post("/response", async (req, res) => {
   // Get the response data from the request body
-  const { userId, email, monitoringId, assessmentId, assessmentType, survey, sandbox, displayName } = req.body;
+  const { userId, email, monitoringId, assessmentId, assessmentType, survey, sandbox, displayName, recordId } = req.body;
 
   // Create a new response using the chosen model
   const response = new Response({
@@ -34,6 +34,7 @@ router.post("/response", async (req, res) => {
     assessmentType,
     survey,
     displayName,
+    recordId,
   });
 
   try {

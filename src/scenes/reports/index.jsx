@@ -462,7 +462,7 @@ const Reports = () => {
         }
 
         const headers = [
-            "Assessment Name", "Assessment Type", "Linking ID", 
+            "Assessment Name", "Assessment Type", "Linking ID", "Record ID",
             "Display Name", "Completion Date", "Question Short Name", "Section", 
             "Question Type", "Question Item", "Matrix ID", "Matrix Title", "Proposed Choices", "Response", "Correct Answer"
         ];
@@ -601,6 +601,7 @@ const Reports = () => {
                         assessmentName: assessment.name || '',
                         assessmentType: assessment.type || '',
                         linkingId: surveyItem.linkingId || '',
+                        recordId: response.recordId || '',
                         displayName: response.displayName || '',
                         completionDate: response.completionDate ? new Date(response.completionDate).toISOString().split('T')[0] : '',
                         questionShortName: surveyItem.shortName || '',

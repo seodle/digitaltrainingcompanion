@@ -53,6 +53,7 @@ const CompleteSurvey = () => {
     const link = params.get('link') === 'true';
     const userId = params.get('userId');
     const email = params.get('email');
+    const recordId = params.get('record_id');
     const { languageCode } = useLanguageFromUrl();
 
     // states for the displayName
@@ -278,6 +279,7 @@ const CompleteSurvey = () => {
             survey: responses,
             sandbox: sandbox,
             displayName: displayName,
+            recordId: recordId,
         };
 
         try {
@@ -308,7 +310,7 @@ const CompleteSurvey = () => {
 
         setSubmitting(false);
         setIsSubmitting(false);
-    }, [surveyData, assessmentIds, currentAssessmentIndex, languageCode, navigate, userId, monitoring, assessmentType, linkingCode, displayName, email, sandbox, coachFeedbackEnabled, feedbackHistoryByField, hasUnansweredMandatoryQuestions]);
+    }, [surveyData, assessmentIds, currentAssessmentIndex, languageCode, navigate, userId, monitoring, assessmentType, linkingCode, displayName, email, recordId, sandbox, coachFeedbackEnabled, feedbackHistoryByField, hasUnansweredMandatoryQuestions]);
 
     const coachFeedbackTextQuestions = useMemo(() => {
         if (!coachFeedbackEnabled) return [];
