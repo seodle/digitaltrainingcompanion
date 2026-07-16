@@ -288,6 +288,42 @@
         "fuzzy": 1
     },
     {
+        "term": "label_save",
+        "definition": "Enregistrer",
+        "context": "button to save a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "message_unsaved_survey_warning",
+        "definition": "Vous avez des modifications non enregistrées. Si vous quittez cette page, votre travail sera perdu.",
+        "context": "warning when leaving create survey with unsaved changes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_stay",
+        "definition": "Rester",
+        "context": "button to stay on the page when warned about unsaved changes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_leave",
+        "definition": "Quitter",
+        "context": "button to leave the page despite unsaved changes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "label_cancel",
         "definition": "Annuler",
         "context": "button to cancel an action",

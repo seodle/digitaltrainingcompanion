@@ -59,6 +59,16 @@ export const buttonStyle = {
     },
 };
 
+export const saveButtonStyle = {
+    mr: 2,
+    backgroundColor: '#4CAF50',
+    borderRadius: '50px',
+    color: 'white',
+    '&:hover': {
+        backgroundColor: '#43A047',
+    },
+};
+
 // Authentification form Style
 export const authentificationFormStyle = {
     boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",

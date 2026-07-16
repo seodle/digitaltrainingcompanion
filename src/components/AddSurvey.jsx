@@ -1,5 +1,5 @@
-import { Box, Typography, FormControlLabel, Switch } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Box, Typography, FormControlLabel, Switch, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@mui/material";
+import { useLocation, useNavigate, useBlocker } from "react-router-dom";
 import { Formik, Form } from 'formik';
 import React, { useState, useEffect, useRef } from "react";
 
@@ -53,6 +53,11 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
 
     const prevQuestionsLengthRef = useRef(questions.length);
     const formActionsRef = useRef(null);
+    const lastSyncedLoadGenerationRef = useRef(0);
+    const bypassBlockerRef = useRef(false);
+
+    const [loadGeneration, setLoadGeneration] = useState(0);
+    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
     const applyAiBeaconContext = ({ courseAiBeaconId: apiCourseAiBeaconId, courseSyncedAt }) => {
         const eligible =
@@ -63,6 +68,25 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
         setAiBeaconEligible(eligible);
         setCourseAiBeaconId(eligible ? apiCourseAiBeaconId : null);
     };
+
+    // Warn on refresh / tab close when there are unsaved changes (browser native dialog)
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            if (!hasUnsavedChanges) return;
+            event.preventDefault();
+            event.returnValue = '';
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [hasUnsavedChanges]);
+
+    // Block in-app navigation (sidebar, back, URL change) when there are unsaved changes
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) =>
+            !bypassBlockerRef.current &&
+            hasUnsavedChanges &&
+            currentLocation.pathname !== nextLocation.pathname
+    );
 
     // Add useEffect to watch for questions changes
     useEffect(() => {
@@ -75,21 +99,42 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
     }, [questions]);
 
     useEffect(() => {
-
         console.log("-----", assessmentType, predifinedQuestionIds);
 
-        fetchExistingSurvey(
-            setQuestions,
-            setSplitWorkshops,
-            setWorkshops,
-            setInitialQuestions,
-            currentAssessmentServerId,
-            predifinedQuestionIds,
-            languageCode,
-            { onAiBeaconContext: applyAiBeaconContext }
-        );
+        let cancelled = false;
+        (async () => {
+            await fetchExistingSurvey(
+                setQuestions,
+                setSplitWorkshops,
+                setWorkshops,
+                setInitialQuestions,
+                currentAssessmentServerId,
+                predifinedQuestionIds,
+                languageCode,
+                { onAiBeaconContext: applyAiBeaconContext }
+            );
+            if (!cancelled) {
+                setLoadGeneration((generation) => generation + 1);
+            }
+        })();
 
+        return () => {
+            cancelled = true;
+        };
     }, [currentAssessmentServerId, predifinedQuestionIds, assessmentType, languageCode, currentUser]);
+
+    // Track unsaved changes after the initial survey load finishes
+    useEffect(() => {
+        if (loadGeneration === 0) return;
+
+        if (lastSyncedLoadGenerationRef.current !== loadGeneration) {
+            lastSyncedLoadGenerationRef.current = loadGeneration;
+            setHasUnsavedChanges(false);
+            return;
+        }
+
+        setHasUnsavedChanges(true);
+    }, [questions, workshops, splitWorkshops, loadGeneration]);
 
     /**
      * Handles changes to competency-related selections and updates the corresponding state.
@@ -290,7 +335,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
     
  
    return (
-            
+    <>
         <Box display="flex" flexDirection="column" alignItems="center" minHeight="100vh" ml="10px" backgroundColor="white">  
                 <Box display="flex" flexDirection="column" justifyContent="space-between" minHeight="5vh" sx={{backgroundColor: "#fff", width: {xs: "90vw", md: "75vw",}, }}>
                     <Box display="flex" flexDirection="row" alignItems="baseline" ml="10px" mb="20px">
@@ -361,6 +406,8 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                             try {
                                 const surveyData = prepareSurveyData(questions);
                                 await saveSurveyToAssessment(currentAssessmentServerId, surveyData);
+                                bypassBlockerRef.current = true;
+                                setHasUnsavedChanges(false);
                                 navigate('/dashboard');
                             } catch (error) {
                                 console.error('Failed to submit the survey:', error);
@@ -380,20 +427,51 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                                     editingQuestionId,
                                     setFieldValue,
                                 })}
-                                <div ref={formActionsRef}>
+                                <Box
+                                    ref={formActionsRef}
+                                    sx={{
+                                        position: 'sticky',
+                                        bottom: 0,
+                                        zIndex: 10,
+                                        bgcolor: '#fff',
+                                        borderTop: '1px solid #eee',
+                                    }}
+                                >
                                     <FormActions 
                                         handleReset={handleReset} 
                                         handleSubmit={handleSubmit} 
                                         questionsExist={questions.length > 0} 
                                     />
-                                </div>
+                                </Box>
                             </Form>
                         )}
                     </Formik>
                 </Box>
             </Box>
         </Box>
-    </Box>);
+    </Box>
+    
+    <Dialog
+        open={blocker.state === 'blocked'}
+        onClose={() => blocker.reset?.()}
+    >
+        <DialogTitle variant="h3">{getMessage("label_confirmation")}</DialogTitle>
+        <DialogContent>
+            <DialogContentText>
+                {getMessage("message_unsaved_survey_warning")}
+            </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={() => blocker.reset?.()} color="primary">
+                {getMessage("label_stay")}
+            </Button>
+            <Button onClick={() => blocker.proceed?.()} color="primary" autoFocus>
+                {getMessage("label_leave")}
+            </Button>
+        </DialogActions>
+    </Dialog>
+    </>
+    );
 };
 
 export default AddSurvey;

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { useMessageService } from '../services/MessageService';
-import { buttonStyle } from './styledComponents';
+import { buttonStyle, saveButtonStyle } from './styledComponents';
 
 const FormActions = ({ handleReset, handleSubmit, questionsExist }) => {
 
@@ -38,9 +39,10 @@ const FormActions = ({ handleReset, handleSubmit, questionsExist }) => {
                         type="submit"
                         variant="contained"
                         onClick={handleSubmit}
-                        sx={buttonStyle}
+                        sx={saveButtonStyle}
+                        startIcon={<WarningAmberIcon />}
                     >
-                        <Typography variant="h5">{getMessage('label_validate')}</Typography>
+                        <Typography variant="h5">{getMessage('label_save')}</Typography>
                     </Button>
                 )}
             </Box>

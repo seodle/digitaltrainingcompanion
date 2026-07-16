@@ -288,6 +288,42 @@
         "fuzzy": 0
     },
     {
+        "term": "label_save",
+        "definition": "Guardar",
+        "context": "button to save a form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "message_unsaved_survey_warning",
+        "definition": "Tiene cambios sin guardar. Si abandona esta página, se perderá su trabajo.",
+        "context": "warning when leaving create survey with unsaved changes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_stay",
+        "definition": "Quedarse",
+        "context": "button to stay on the page when warned about unsaved changes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_leave",
+        "definition": "Salir",
+        "context": "button to leave the page despite unsaved changes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "label_cancel",
         "definition": "Cancelar",
         "context": "button to cancel an action",
