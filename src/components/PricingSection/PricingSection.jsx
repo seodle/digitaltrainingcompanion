@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -10,6 +11,7 @@ import {
   Grid,
   Tab,
   Tabs,
+  TextField,
   Typography,
   useMediaQuery,
   useTheme,
@@ -245,6 +247,14 @@ const isPaidSubscriptionPlan = (planId) =>
     return false;
   }
 
+  const PROMO_ERROR_KEYS = {
+    invalid_promotion_code: 'pricing_promo_code_error_invalid',
+    promotion_code_not_applicable: 'pricing_promo_code_error_not_applicable',
+    promotion_code_exhausted: 'pricing_promo_code_error_exhausted',
+    promotion_code_not_configured: 'pricing_promo_code_error_not_configured',
+    promotion_code_required: 'pricing_promo_code_error_invalid',
+  };
+
   const PlanCard = ({
     plan,
     getMessage,
@@ -255,8 +265,12 @@ const isPaidSubscriptionPlan = (planId) =>
     onSwitchPaidPlan,
     hasStripeCustomer,
     userStatus,
-  }) => {  const navigate = useNavigate();
+    checkoutLoading,
+  }) => {
+  const navigate = useNavigate();
+  const [promotionCode, setPromotionCode] = useState('');
   const isCurrentPlan = Boolean(currentPlanId && plan.id === currentPlanId);
+  const showPromoField = plan.price != null && plan.price > 0;
 
   const priceDisplay = plan.price === null
     ? getMessage('pricing_on_quote')
@@ -348,10 +362,26 @@ const isPaidSubscriptionPlan = (planId) =>
 
             {/* CTA */}
             <Box sx={{ px: 3, pb: 3, pt: 1 }}>
+        {showPromoField && (
+          <Box sx={{ mb: 2 }}>
+            <TextField
+              fullWidth
+              size="small"
+              label={getMessage('pricing_promo_code_label')}
+              placeholder={getMessage('pricing_promo_code_placeholder')}
+              value={promotionCode}
+              onChange={(e) => setPromotionCode(e.target.value)}
+              disabled={isCurrentPlan || checkoutLoading}
+              inputProps={{ autoComplete: 'off' }}
+            />
+            <Typography variant="caption" sx={{ color: '#888', display: 'block', mt: 0.75 }}>
+              {getMessage('pricing_promo_code_help')}
+            </Typography>
+          </Box>
+        )}
         <Button
           fullWidth
           variant={isCurrentPlan ? 'outlined' : plan.ctaVariant}
-          disabled={isCurrentPlan}
           onClick={() => {
             if (isCurrentPlan) return;
             if (plan.id === 'RESEARCH') {
@@ -384,8 +414,9 @@ const isPaidSubscriptionPlan = (planId) =>
               onSwitchPaidPlan();
               return;
             }
-            onCheckout(plan.id);
+            onCheckout(plan.id, promotionCode.trim() || undefined);
           }}
+          disabled={isCurrentPlan || checkoutLoading}
           sx={{
             borderRadius: 2,
             fontWeight: 700,
@@ -417,6 +448,8 @@ const PricingSection = () => {
   });
   const { currentUser } = useAuthUser();
   const navigate = useNavigate();
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState(null);
 
   useEffect(() => {
     const param = searchParams.get('pricingTab');
@@ -437,7 +470,7 @@ const PricingSection = () => {
     return () => clearTimeout(timeoutId);
   }, [searchParams]);
 
-  const handleCheckout = async (planId) => {
+  const handleCheckout = async (planId, promotionCode) => {
     const token = localStorage.getItem('token');
     if (!token) {
       navigate('/signin');
@@ -447,10 +480,16 @@ const PricingSection = () => {
       navigate('/settings?tab=1');
       return;
     }
+    setCheckoutError(null);
+    setCheckoutLoading(true);
     try {
+      const body = { planId };
+      if (promotionCode) {
+        body.promotionCode = promotionCode;
+      }
       const res = await axios.post(
         `${BACKEND_URL}/subscription/checkout`,
-        { planId },
+        body,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       window.location.href = res.data.url;
@@ -461,6 +500,14 @@ const PricingSection = () => {
         void handleBillingPortal();
         return;
       }
+      const messageKey = PROMO_ERROR_KEYS[code];
+      if (messageKey) {
+        setCheckoutError(getMessage(messageKey));
+      } else {
+        setCheckoutError(getMessage('pricing_checkout_error_generic'));
+      }
+    } finally {
+      setCheckoutLoading(false);
     }
   };
 
@@ -537,6 +584,12 @@ const PricingSection = () => {
           {getMessage(audience.descKey)}
         </Typography>
 
+        {checkoutError && (
+          <Alert severity="error" sx={{ mb: 3, maxWidth: 700, mx: 'auto' }} onClose={() => setCheckoutError(null)}>
+            {checkoutError}
+          </Alert>
+        )}
+
         {/* Plan cards */}
         <Grid container spacing={3} justifyContent="center">
           {audience.plans.map((plan) => (
@@ -557,6 +610,7 @@ const PricingSection = () => {
               onSwitchPaidPlan={handleBillingPortal}
               hasStripeCustomer={Boolean(currentUser?.stripeCustomerId)}
               userStatus={currentUser?.userStatus}
+              checkoutLoading={checkoutLoading}
             />
             </Grid>
           ))}

@@ -5,6 +5,7 @@ const User = require('../models/userModel');
 const Institution = require('../models/institutionModel');
 const { stripePriceIdFromSubscriptionItem } = require('../utils/stripePriceId');
 const { subscriptionScheduleFromStripeSub } = require('../utils/stripeSubscriptionSchedule');
+const { deactivateAssociationPromoCode, applyAssociationPromoCancelAt } = require('../utils/stripePromotionCode');
 
 const FREE_PLAN_FOR = (planId) =>
     planId?.includes('TEACHER') ? 'FREE_TEACHER' : 'FREE_TRAINER';
@@ -40,10 +41,21 @@ router.post('/', express.raw({ type: 'application/json' }), async (req, res) => 
                     subscriptionCurrentPeriodEnd: null,
                 };
                 if (session.subscription) {
-                    const sub = await stripe.subscriptions.retrieve(session.subscription);
+                    let sub = await stripe.subscriptions.retrieve(session.subscription);
+                    sub = await applyAssociationPromoCancelAt(stripe, session.subscription, session.metadata)
+                        || sub;
                     Object.assign(patch, stripeStatusPatchFromSub(sub));
+                    const schedule = subscriptionScheduleFromStripeSub(sub);
+                    patch.subscriptionCancelAtPeriodEnd = schedule.subscriptionCancelAtPeriodEnd;
+                    patch.subscriptionCurrentPeriodEnd = schedule.subscriptionCurrentPeriodEnd;
                 }
                 await User.findByIdAndUpdate(userId, patch);
+                if (session.metadata?.associationPromoCodeId) {
+                    await deactivateAssociationPromoCode(
+                        stripe,
+                        session.metadata.associationPromoCodeId,
+                    );
+                }
                 break;
             }
             case 'customer.subscription.updated': {

@@ -4903,5 +4903,86 @@
         "reference": "",
         "comment": "",
         "fuzzy": 0
+    },
+    {
+        "term": "pricing_promo_code_label",
+        "definition": "Association promo code",
+        "context": "Label for promo code field on Pro Trainer pricing card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_promo_code_placeholder",
+        "definition": "e.g. ASSOC-A1B2-C3D4",
+        "context": "Placeholder for association promo code field",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_promo_code_help",
+        "definition": "Enter the code from your association. Pro Trainer and Pro Teacher: 100% off for 12 months. Other paid plans: 100 CHF off per month for 12 months. After 12 months, register again with your association for a new code.",
+        "context": "Help text under association promo code field on Pro Trainer card",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_promo_code_error_invalid",
+        "definition": "This promotion code is invalid or expired.",
+        "context": "Checkout error when association promo code is not found",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_promo_code_error_not_applicable",
+        "definition": "This code cannot be used for this plan.",
+        "context": "Checkout error when promo code does not apply to Pro Trainer",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_promo_code_error_exhausted",
+        "definition": "This promotion code has already been used.",
+        "context": "Checkout error when single-use promo code was redeemed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_promo_code_error_pro_trainer_only",
+        "definition": "Promotion codes can only be used with the Pro Trainer plan.",
+        "context": "Checkout error when promo code sent for a non-Pro-Trainer plan",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_promo_code_error_not_configured",
+        "definition": "Association discounts are not fully configured. Please contact support.",
+        "context": "Checkout error when STRIPE_ASSOCIATION_COUPON_100CHF or full coupon env is missing",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "pricing_checkout_error_generic",
+        "definition": "Could not start checkout. Please try again.",
+        "context": "Generic checkout failure message on pricing section",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
     }
 ]

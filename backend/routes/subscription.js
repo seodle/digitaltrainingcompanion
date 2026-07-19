@@ -5,6 +5,11 @@ const User = require('../models/userModel');
 const { PLANS } = require('../constants/subscriptionPlans');
 const { stripePriceIdFromSubscriptionItem } = require('../utils/stripePriceId');
 const { subscriptionScheduleFromStripeSub } = require('../utils/stripeSubscriptionSchedule');
+const {
+    validateAssociationPromotionCode,
+    deactivateAssociationPromoCode,
+    applyAssociationPromoCancelAt,
+} = require('../utils/stripePromotionCode');
 
 const PLAN_PRICE_IDS = {
     PRO_TRAINER:      process.env.STRIPE_PRICE_PRO_TRAINER,
@@ -41,9 +46,11 @@ async function customerHasBlockingSubscription(customerId) {
 
 router.post('/checkout', async (req, res) => {
     try {
-        const { planId } = req.body;
+        const { planId, promotionCode } = req.body;
         const priceId = PLAN_PRICE_IDS[planId];
         if (!priceId) return res.status(400).json({ error: 'invalid_plan' });
+
+        const trimmedPromo = typeof promotionCode === 'string' ? promotionCode.trim() : '';
 
         const userId = req.user._id;
         const user = await User.findById(userId)
@@ -82,18 +89,55 @@ router.post('/checkout', async (req, res) => {
 
         const line_items = [{ price: priceId, quantity: 1 }];
 
-        const session = await stripe.checkout.sessions.create({
+        let validatedPromo = null;
+        let discountCouponId = null;
+        if (trimmedPromo) {
+            const promoResult = await validateAssociationPromotionCode(
+                stripe,
+                trimmedPromo,
+                planId,
+                priceId,
+            );
+            if (promoResult.error) {
+                return res.status(400).json({ error: promoResult.error });
+            }
+            validatedPromo = promoResult.promo;
+            discountCouponId = promoResult.discountCouponId;
+        }
+
+        const sessionMetadata = {
+            userId: String(userId),
+            planId,
+            ...(validatedPromo ? {
+                associationPromo: 'true',
+                associationPromoCodeId: validatedPromo.id,
+                associationPromoCode: trimmedPromo,
+            } : {}),
+        };
+
+        const subscriptionData = {
+            metadata: { planId, ...(validatedPromo ? { associationPromo: 'true' } : {}) },
+        };
+
+        if (!validatedPromo) {
+            subscriptionData.trial_period_days = 14;
+        }
+
+        const sessionParams = {
             customer: customerId,
             mode: 'subscription',
             line_items: line_items,
             success_url: `${FRONTEND_URL}/settings?tab=1&checkout=success&session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${FRONTEND_URL}/?pricingTab=0`,
-            metadata: { userId: String(userId), planId },
-            subscription_data: {
-                trial_period_days: 14,
-                metadata: { planId },
-            },
-        });
+            metadata: sessionMetadata,
+            subscription_data: subscriptionData,
+        };
+
+        if (validatedPromo) {
+            sessionParams.discounts = [{ coupon: discountCouponId }];
+        }
+
+        const session = await stripe.checkout.sessions.create(sessionParams);
 
         res.json({ url: session.url });
     } catch (err) {
@@ -174,13 +218,25 @@ router.post('/sync-checkout', async (req, res) => {
         };
 
         if (session.subscription) {
-            const sub = await stripe.subscriptions.retrieve(session.subscription);
+            let sub = await stripe.subscriptions.retrieve(session.subscription);
+            sub = await applyAssociationPromoCancelAt(stripe, session.subscription, session.metadata)
+                || sub;
             userPatch.stripeSubscriptionStatus = sub.status;
             userPatch.stripeTrialEnd =
                 sub.trial_end != null ? new Date(sub.trial_end * 1000) : null;
+            const schedule = subscriptionScheduleFromStripeSub(sub);
+            userPatch.subscriptionCancelAtPeriodEnd = schedule.subscriptionCancelAtPeriodEnd;
+            userPatch.subscriptionCurrentPeriodEnd = schedule.subscriptionCurrentPeriodEnd;
         }
 
         await User.findByIdAndUpdate(metaUserId, userPatch);
+
+        if (session.metadata?.associationPromoCodeId) {
+            await deactivateAssociationPromoCode(
+                stripe,
+                session.metadata.associationPromoCodeId,
+            );
+        }
 
         res.json({ ok: true, planId });
     } catch (err) {
