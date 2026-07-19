@@ -4924,7 +4924,7 @@
     },
     {
         "term": "pricing_promo_code_help",
-        "definition": "Enter the code from your association. Pro Trainer and Pro Teacher: 100% off for 12 months. Other paid plans: 100 CHF off per month for 12 months. After 12 months, register again with your association for a new code.",
+        "definition": "Enter the code from your association. Pro Trainer and Pro Teacher: 100% off for 12 months. Other paid plans: 8.33 CHF off per month for 12 months. After 12 months, register again with your association for a new code.",
         "context": "Help text under association promo code field on Pro Trainer card",
         "term_plural": "",
         "reference": "",
@@ -4970,7 +4970,7 @@
     {
         "term": "pricing_promo_code_error_not_configured",
         "definition": "Association discounts are not fully configured. Please contact support.",
-        "context": "Checkout error when STRIPE_ASSOCIATION_COUPON_100CHF or full coupon env is missing",
+        "context": "Checkout error when STRIPE_ASSOCIATION_COUPON_8CHF or 100% coupon env is missing",
         "term_plural": "",
         "reference": "",
         "comment": "",

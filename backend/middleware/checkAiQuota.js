@@ -9,11 +9,11 @@ const checkAiQuota = async (req, res, next) => {
     if (!userId) return res.status(401).json({ error: 'unauthenticated' });
 
     const user = await User.findById(userId)
-        .select('subscriptionPlan trialActive trialStartDate aiCallsUsedThisMonth institutionId sharingCodeRedeemed')
+        .select('subscriptionPlan trialActive trialStartDate trialExpiresAt aiCallsUsedThisMonth institutionId sharingCodeRedeemed')
         .lean();
     if (!user) return res.status(401).json({ error: 'user_not_found' });
 
-    // --- Trial expiry check (manual / granted free-AI only; requires trialStartDate) ---
+    // --- Trial expiry check (manual / granted free-AI; trialExpiresAt or trialStartDate) ---
     if (user.trialActive) {
         const expiresAt = user.trialExpiresAt
             ? new Date(user.trialExpiresAt).getTime()

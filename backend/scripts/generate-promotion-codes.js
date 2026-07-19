@@ -3,9 +3,9 @@
  *
  * Prerequisites (backend/.env):
  *   STRIPE_SECRET_KEY
- *   STRIPE_ASSOCIATION_COUPON_FULL  — 100% / 12 mo (Pro Trainer + Pro Teacher); also used for code pool
- *   STRIPE_ASSOCIATION_COUPON_ID    — legacy alias for COUPON_FULL
- *   STRIPE_ASSOCIATION_COUPON_100CHF — 100 CHF / 12 mo (Pro+, Ultra, Institution)
+ *   STRIPE_ASSOCIATION_COUPON_100PCT — 100% / 12 mo (Pro Trainer + Pro Teacher); also used for code pool
+ *   STRIPE_ASSOCIATION_COUPON_8CHF   — 8.33 CHF/mo × 12 (Pro+, Ultra, Institution)
+ *   STRIPE_ASSOCIATION_COUPON_100CHF — legacy alias for COUPON_8CHF
  *
  * Usage:
  *   cd backend
@@ -46,10 +46,9 @@ function buildCode(prefix) {
 }
 
 async function main() {
-    const couponId = process.env.STRIPE_ASSOCIATION_COUPON_FULL
-        || process.env.STRIPE_ASSOCIATION_COUPON_ID;
+    const couponId = process.env.STRIPE_ASSOCIATION_COUPON_100PCT;
     if (!couponId) {
-        console.error('Error: STRIPE_ASSOCIATION_COUPON_FULL (or STRIPE_ASSOCIATION_COUPON_ID) must be set in backend/.env');
+        console.error('Error: STRIPE_ASSOCIATION_COUPON_100PCT (100% coupon) must be set in backend/.env');
         process.exit(1);
     }
     if (!process.env.STRIPE_SECRET_KEY) {

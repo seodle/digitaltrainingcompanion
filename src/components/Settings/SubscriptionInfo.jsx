@@ -126,13 +126,21 @@ const SubscriptionInfo = () => {
     const meta = PLAN_META[plan] || PLAN_META.FREE_TRAINER;
     const isFree = plan === 'FREE_TRAINER' || plan === 'FREE_TEACHER';
 
-    // Trial countdown
+    // Trial countdown (trialExpiresAt from migration, or trialStartDate + 14 days)
     const trialActive = currentUser.trialActive;
     let trialDaysRemaining = 0;
-    if (trialActive && currentUser.trialStartDate) {
-        const start = new Date(currentUser.trialStartDate);
-        const elapsed = Math.floor((Date.now() - start.getTime()) / (1000 * 60 * 60 * 24));
-        trialDaysRemaining = Math.max(0, TRIAL_DURATION_DAYS - elapsed);
+    if (trialActive) {
+        if (currentUser.trialExpiresAt) {
+            const expires = new Date(currentUser.trialExpiresAt);
+            trialDaysRemaining = Math.max(
+                0,
+                Math.ceil((expires.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+            );
+        } else if (currentUser.trialStartDate) {
+            const start = new Date(currentUser.trialStartDate);
+            const elapsed = Math.floor((Date.now() - start.getTime()) / (1000 * 60 * 60 * 24));
+            trialDaysRemaining = Math.max(0, TRIAL_DURATION_DAYS - elapsed);
+        }
     }
 
     // Progress bar percentage

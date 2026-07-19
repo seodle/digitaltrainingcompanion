@@ -21,23 +21,28 @@ function resolvePromotionCouponRef(promo) {
 }
 
 function getAssociationPoolCouponId() {
-    return process.env.STRIPE_ASSOCIATION_COUPON_FULL
-        || process.env.STRIPE_ASSOCIATION_COUPON_ID
+    return process.env.STRIPE_ASSOCIATION_COUPON_100PCT || null;
+}
+
+/** Stripe coupon for partial discount on Pro+, Ultra, Institution (8.33 CHF/mo × 12). */
+function getPartialDiscountCouponId() {
+    return process.env.STRIPE_ASSOCIATION_COUPON_8CHF
+        || process.env.STRIPE_ASSOCIATION_COUPON_100CHF
         || null;
 }
 
-/** Stripe coupon for the plan discount (100% Pro Trainer/Teacher, 100 CHF others). */
+/** Stripe coupon for the plan discount (100% Pro Trainer/Teacher, 8.33 CHF/mo others). */
 function getAssociationDiscountCouponId(planId) {
     if (FULL_DISCOUNT_PLANS.has(planId)) {
         const id = getAssociationPoolCouponId();
         if (!id) {
-            throw new Error('STRIPE_ASSOCIATION_COUPON_FULL (or STRIPE_ASSOCIATION_COUPON_ID) is not set');
+            throw new Error('STRIPE_ASSOCIATION_COUPON_100PCT (100% coupon) is not set');
         }
         return id;
     }
-    const id = process.env.STRIPE_ASSOCIATION_COUPON_100CHF;
+    const id = getPartialDiscountCouponId();
     if (!id) {
-        throw new Error('STRIPE_ASSOCIATION_COUPON_100CHF is not set');
+        throw new Error('STRIPE_ASSOCIATION_COUPON_8CHF (or STRIPE_ASSOCIATION_COUPON_100CHF) is not set');
     }
     return id;
 }
