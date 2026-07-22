@@ -314,7 +314,7 @@ const SurveyQuestion = ({
           </Field>
         )}
 
-        {showEnrichFeedbackButton && type === "text" && !pendingEnrichedFeedback && (
+        {showEnrichFeedbackButton && type === "text" && (
           <Box display="flex" flexDirection="column" gap="8px" marginTop="20px" alignItems="flex-start">
             <LoadingButton
               variant="contained"
@@ -336,28 +336,27 @@ const SurveyQuestion = ({
                 {enrichFeedbackError}
               </Typography>
             )}
-          </Box>
-        )}
-
-        {showEnrichFeedbackButton && type === "text" && pendingEnrichedFeedback && (
-          <Box
-            display="flex"
-            flexDirection="column"
-            gap="8px"
-            marginTop="20px"
-            sx={{
-              p: 2,
-              borderRadius: '8px',
-              backgroundColor: '#f8f9fa',
-              border: '1px solid #e0e0e0',
-            }}
-          >
-            <Typography variant="subtitle2" fontWeight="bold">
-              {getMessage('label_enriched_feedback_suggestion')}
-            </Typography>
-            <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
-              {pendingEnrichedFeedback}
-            </Typography>
+            {pendingEnrichedFeedback && (
+              <Box
+                display="flex"
+                flexDirection="column"
+                gap="8px"
+                sx={{
+                  width: '100%',
+                  p: 2,
+                  borderRadius: '8px',
+                  backgroundColor: '#f8f9fa',
+                  border: '1px solid #e0e0e0',
+                }}
+              >
+                <Typography variant="subtitle2" fontWeight="bold">
+                  {getMessage('label_enriched_feedback_suggestion')}
+                </Typography>
+                <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
+                  {pendingEnrichedFeedback}
+                </Typography>
+              </Box>
+            )}
           </Box>
         )}
 

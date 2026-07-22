@@ -29,25 +29,25 @@ function parseCoachFeedbackResponseField(responseField) {
   }
 }
 
-function extractImprovedDraftFromCoachFeedbackAnalysis(analysis) {
+function extractSummaryFromCoachFeedbackAnalysis(analysis) {
   if (!analysis || typeof analysis !== "object") {
     return "";
   }
 
-  const structuredDraft = String(
-    analysis?.structured_output?.improved_draft ?? ""
+  const structuredSummary = String(
+    analysis?.structured_output?.summary ?? ""
   ).trim();
-  if (structuredDraft) {
-    return structuredDraft;
+  if (structuredSummary) {
+    return structuredSummary;
   }
 
   const parsedResponse = parseCoachFeedbackResponseField(analysis.response);
-  const responseDraft = String(parsedResponse?.improved_draft ?? "").trim();
-  if (responseDraft) {
-    return responseDraft;
+  const responseSummary = String(parsedResponse?.summary ?? "").trim();
+  if (responseSummary) {
+    return responseSummary;
   }
 
-  return String(analysis?.improved_draft ?? "").trim();
+  return String(analysis?.summary ?? "").trim();
 }
 
 function extractAvailableCourses(rawAvailable) {
@@ -429,7 +429,7 @@ async function enrichCoachFeedbackFromAiBeacon({
   userId,
   courseId,
   feedbackText,
-  contentIds,
+  question,
 }) {
   const normalizedCourseId = String(courseId || "").trim();
   if (!normalizedCourseId) {
@@ -441,11 +441,13 @@ async function enrichCoachFeedbackFromAiBeacon({
     throw new Error("feedback_text is required");
   }
 
-  const content_ids = Array.isArray(contentIds)
-    ? contentIds.map((id) => Number(id)).filter((id) => Number.isFinite(id))
-    : [];
-  if (content_ids.length === 0) {
-    throw new Error("content_ids must be a non-empty array");
+  const startPayload = {
+    feedback_text,
+    content_ids: [],
+  };
+  const normalizedQuestion = String(question || "").trim();
+  if (normalizedQuestion) {
+    startPayload.question = normalizedQuestion;
   }
 
   const client = await createAiBeaconReadOnlyApiClientForUser(userId);
@@ -453,15 +455,15 @@ async function enrichCoachFeedbackFromAiBeacon({
     client,
     courseId: normalizedCourseId,
     startPath: `/api/analysis/course/${encodeURIComponent(normalizedCourseId)}/coach-feedback`,
-    startPayload: { feedback_text, content_ids },
+    startPayload,
   });
 
-  const improvedDraft = extractImprovedDraftFromCoachFeedbackAnalysis(analysis);
-  if (!improvedDraft) {
-    throw new Error("AI Beacon did not return an improved draft");
+  const summary = extractSummaryFromCoachFeedbackAnalysis(analysis);
+  if (!summary) {
+    throw new Error("AI Beacon did not return a summary");
   }
 
-  return { improvedDraft };
+  return { summary };
 }
 
 async function createReadOnlyApiKeyForUser(userId) {

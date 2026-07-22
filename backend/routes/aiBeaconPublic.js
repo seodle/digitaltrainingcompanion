@@ -10,18 +10,18 @@ router.post(
     const {
       userId,
       courseId,
-      contentIds,
       feedbackText,
+      question,
     } = req.coachFeedbackContext;
 
     try {
-      const { improvedDraft } = await enrichCoachFeedbackFromAiBeacon({
+      const { summary } = await enrichCoachFeedbackFromAiBeacon({
         userId,
         courseId,
         feedbackText,
-        contentIds,
+        question,
       });
-      return res.json({ improvedDraft });
+      return res.json({ summary });
     } catch (error) {
       if (error instanceof AiBeaconApiError) {
         return res.status(

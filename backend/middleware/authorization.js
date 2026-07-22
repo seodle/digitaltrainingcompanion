@@ -301,6 +301,7 @@ const requirePublicCoachFeedbackContext = async (req, res, next) => {
         const feedbackText = String(
             req.body?.feedback_text ?? req.body?.feedbackText ?? ''
         ).trim();
+        const question = String(req.body?.question ?? '').trim();
 
         if (!userId) {
             return res.status(400).json({ error: 'userId is required' });
@@ -331,7 +332,7 @@ const requirePublicCoachFeedbackContext = async (req, res, next) => {
         }
 
         const monitoring = await Monitoring.findById(monitoringId).select(
-            'userId courseAiBeaconId courseContentIds'
+            'userId courseAiBeaconId'
         );
         if (!monitoring) {
             return res.status(404).json({ error: 'Monitoring not found' });
@@ -341,12 +342,9 @@ const requirePublicCoachFeedbackContext = async (req, res, next) => {
         }
 
         const courseId = String(monitoring.courseAiBeaconId || '').trim();
-        const contentIds = Array.isArray(monitoring.courseContentIds)
-            ? monitoring.courseContentIds
-            : [];
-        if (!courseId || contentIds.length === 0) {
+        if (!courseId) {
             return res.status(403).json({
-                error: 'Monitoring is not linked to a synced course with content',
+                error: 'Monitoring is not linked to a synced course',
             });
         }
 
@@ -371,8 +369,8 @@ const requirePublicCoachFeedbackContext = async (req, res, next) => {
             monitoring,
             assessment,
             courseId,
-            contentIds,
             feedbackText,
+            question,
         };
 
         return next();

@@ -12,7 +12,7 @@ const monitoringSchema = new mongoose.Schema({
     courseMoodleId: { type: String, default: null },
     courseName: { type: String, default: null },
     courseSyncedAt: { type: Date, default: null },
-    /** AI Beacon content ids (from course contents), used for coach-feedback enrichment. */
+    /** AI Beacon content ids (from course contents), used for assessment generation. */
     courseContentIds: { type: [Number], default: [] },
     creationDate: { type: Date, default: Date.now }, // should be createdAt
     lastModificationDate: { type: Date, default: Date.now }, // should be updatedAt

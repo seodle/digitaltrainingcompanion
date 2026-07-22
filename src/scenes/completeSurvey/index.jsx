@@ -378,19 +378,9 @@ const CompleteSurvey = () => {
         return '';
     }, [canSubmit, assessmentType, canSubmitCoachFeedback, coachFeedbackEnabled, getMessage, hasUnansweredMandatoryQuestions]);
 
+    // Editing after enrichment must not revoke the "enriched at least once" gate
+    // or hide the existing suggestion — only clear a prior enrich error.
     const handleFeedbackTextChange = useCallback((fieldName) => {
-        setEnrichedQuestions(prev => {
-            if (!prev.has(fieldName)) return prev;
-            const next = new Set(prev);
-            next.delete(fieldName);
-            return next;
-        });
-        setPendingEnrichedFeedbackByField(prev => {
-            if (!prev[fieldName]) return prev;
-            const next = { ...prev };
-            delete next[fieldName];
-            return next;
-        });
         setEnrichFeedbackErrors(prev => {
             if (!prev[fieldName]) return prev;
             const next = { ...prev };
@@ -399,11 +389,12 @@ const CompleteSurvey = () => {
         });
     }, []);
 
-    const handleEnrichFeedback = useCallback(async (fieldName, feedbackText) => {
+    const handleEnrichFeedback = useCallback(async (fieldName, feedbackText, questionText) => {
         const trimmedFeedback = String(feedbackText || '').trim();
         if (!trimmedFeedback || !userId || !monitoring) return;
 
         const currentAssessmentId = assessmentIds[currentAssessmentIndex];
+        const trimmedQuestion = String(questionText || '').trim();
         setEnrichingQuestions(prev => new Set(prev).add(fieldName));
         setEnrichFeedbackErrors(prev => ({ ...prev, [fieldName]: '' }));
         setFeedbackHistoryByField(prev => ({
@@ -421,23 +412,24 @@ const CompleteSurvey = () => {
                     userId,
                     monitoringId: monitoring,
                     feedback_text: trimmedFeedback,
+                    ...(trimmedQuestion ? { question: trimmedQuestion } : {}),
                 }
             );
 
-            const improvedDraft = String(response.data?.improvedDraft || '').trim();
-            if (!improvedDraft) {
+            const summary = String(response.data?.summary || '').trim();
+            if (!summary) {
                 throw new Error('No enriched feedback returned');
             }
 
             setPendingEnrichedFeedbackByField(prev => ({
                 ...prev,
-                [fieldName]: improvedDraft,
+                [fieldName]: summary,
             }));
             setEnrichedQuestions(prev => new Set(prev).add(fieldName));
             setFeedbackHistoryByField(prev => ({
                 ...prev,
                 [fieldName]: appendFeedbackHistoryEntry(prev[fieldName], {
-                    text: improvedDraft,
+                    text: summary,
                     source: 'aiBeacon',
                 }),
             }));
@@ -694,7 +686,8 @@ const CompleteSurvey = () => {
                                                         }
                                                         onEnrichFeedback={() => handleEnrichFeedback(
                                                             `q${question.questionId}`,
-                                                            values[`q${question.questionId}`]
+                                                            values[`q${question.questionId}`],
+                                                            question.question
                                                         )}
                                                         onFeedbackTextChange={handleFeedbackTextChange}
                                                     />
