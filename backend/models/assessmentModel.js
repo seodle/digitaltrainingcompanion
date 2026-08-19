@@ -21,7 +21,8 @@ const questionSchema = new mongoose.Schema({
     response: [String],
     matrixId: { type: String }, // Matrix unique identifier
     matrixPosition: { type: Number }, // Position of the question within the matrix
-    matrixTitle: { type: String }
+    matrixTitle: { type: String },
+    creationDate: { type: Date }
 });
 
 // Assessment Schema

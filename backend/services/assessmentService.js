@@ -134,13 +134,24 @@ const updateAssessmentSurvey = async (assessmentId, updatedQuestions, workshops)
             throw new Error('No assessment found with the given ID');
         }
 
+        // Build a lookup of existing creationDates by _id to preserve them
+        const existingCreationDates = new Map(
+            assessment.questions.map(q => [q._id.toString(), q.creationDate])
+        );
+
+        const getCreationDate = (q) => {
+            const id = q._id?.toString();
+            if (id && existingCreationDates.has(id)) return existingCreationDates.get(id);
+            return new Date();
+        };
+
         // Update assessment with workshops if provided
         if (workshops && Array.isArray(workshops)) {
             // If sections were explicitly disabled, clear workshops and all workshop links
             if (workshops.length === 0) {
                 assessment.workshops = [];
                 // Force-clear workshopId on all questions from payload (defensive copy)
-                assessment.questions = (updatedQuestions || []).map(q => q ? { ...q, workshopId: null } : q);
+                assessment.questions = (updatedQuestions || []).map(q => q ? { ...q, workshopId: null, creationDate: getCreationDate(q) } : q);
             } else {
                 // Build a map from temporary workshop _id (string) to normalized mongoose ObjectId
                 const idMap = new Map();
@@ -175,11 +186,11 @@ const updateAssessmentSurvey = async (assessmentId, updatedQuestions, workshops)
                     return q;
                 });
 
-                assessment.questions = updatedQuestionsWithRealIds;
+                assessment.questions = updatedQuestionsWithRealIds.map(q => q ? { ...q, creationDate: getCreationDate(q) } : q);
             }
         } else {
             // Update the questions of the assessment without workshop changes
-            assessment.questions = updatedQuestions;
+            assessment.questions = (updatedQuestions || []).map(q => q ? { ...q, creationDate: getCreationDate(q) } : q);
         }
 
         // Update the last modification date of the assessment
