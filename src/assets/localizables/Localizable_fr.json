@@ -2700,6 +2700,96 @@
         "fuzzy": 0
     },
     {
+        "term": "table_assessment_tooltip_status_draft_body",
+        "definition": "L'\u00e9valuation peut \u00eatre modifi\u00e9e.\nL'\u00e9valuation ne peut pas encore \u00eatre partag\u00e9e avec les participants.",
+        "context": "table assessment tooltip status draft body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_draft_action",
+        "definition": "Cliquez pour passer le statut \u00e0 \u00ab Ouvert \u00bb et partager votre \u00e9valuation avec les participants.",
+        "context": "table assessment tooltip status draft action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_open_body",
+        "definition": "L'\u00e9valuation ne peut plus \u00eatre modifi\u00e9e.*\nL'\u00e9valuation peut \u00eatre partag\u00e9e avec les participants.",
+        "context": "table assessment tooltip status open body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_open_action",
+        "definition": "Cliquez pour passer le statut \u00e0 \u00ab Ferm\u00e9 \u00bb si vous avez termin\u00e9 de partager votre \u00e9valuation avec les participants.",
+        "context": "table assessment tooltip status open action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_close_body",
+        "definition": "L'\u00e9valuation ne peut plus \u00eatre modifi\u00e9e.*\nL'\u00e9valuation ne peut plus \u00eatre partag\u00e9e avec les participants.",
+        "context": "table assessment tooltip status close body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_copy_footnote",
+        "definition": "* vous pouvez toujours copier votre \u00e9valuation si vous avez besoin d'une version modifiable.",
+        "context": "table assessment tooltip status copy footnote",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_open_title",
+        "definition": "Ouvrir l'\u00e9valuation ?",
+        "context": "warning status open title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_open_message",
+        "definition": "Si vous passez le statut \u00e0 \u00ab Ouvert \u00bb, vous ne pourrez plus modifier l'\u00e9valuation.",
+        "context": "warning status open message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_close_title",
+        "definition": "Fermer l'\u00e9valuation ?",
+        "context": "warning status close title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_close_message",
+        "definition": "Si vous passez le statut \u00e0 \u00ab Ferm\u00e9 \u00bb, vous ne pourrez plus partager vos \u00e9valuations avec les participants.",
+        "context": "warning status close message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "table_assessments_today",
         "definition": "Aujourd'hui",
         "context": "table assessments today",

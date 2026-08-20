@@ -88,7 +88,12 @@ const AssessmentTable = ({
         open: false, 
         assessment: null,
         type: null // 'delete' or 'deleteAnswers'
-    });  
+    });
+    const [statusWarningDialog, setStatusWarningDialog] = useState({
+        open: false,
+        assessment: null,
+        newStatus: null,
+    });
   const [editingCell, setEditingCell] = useState(null);
   const [editingCellValue, setEditingCellValue] = useState(null);
   const [newAssessmentName, setNewAssessmentName] = useState('');
@@ -141,8 +146,8 @@ const AssessmentTable = ({
 
   const statusToOptions = {
         Draft: [OptionTypes.EDIT, OptionTypes.PREVIEW, OptionTypes.OPEN, OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS],
-        Open: [OptionTypes.CLOSE, OptionTypes.EDIT, OptionTypes.PREVIEW, OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS],
-        Close: [OptionTypes.OPEN, OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS],
+        Open: [OptionTypes.CLOSE, OptionTypes.PREVIEW, OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS],
+        Close: [OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS],
       };
 
   const handleSort = (key) => {
@@ -181,7 +186,7 @@ const AssessmentTable = ({
 
   const renderNumberFieldCell = (params, field) => {
     // Only the owner can edit and it should not be open
-    const canEdit = isOwner(params.row) && params.row.status !== 'Open';  
+    const canEdit = isOwner(params.row) && params.row.status !== 'Open';
 
     return canEdit ? (
         <Tooltip title="Click to modify the session number" placement="top">
@@ -822,6 +827,60 @@ const handleAssessmentPreview = (assessment) => {
     }
   };
 
+  const getStatusTooltip = (assessment) => {
+    if (!isOwner(assessment)) {
+      return getMessage('table_assessment_tooltip_status2');
+    }
+
+    const footnote = getMessage('table_assessment_tooltip_status_copy_footnote');
+    const sx = { fontSize: '0.9rem', whiteSpace: 'pre-line', maxWidth: 320 };
+
+    switch (assessment.status) {
+      case 'Draft':
+        return (
+          <Box sx={sx}>
+            <Typography component="div" sx={{ fontSize: 'inherit', whiteSpace: 'pre-line' }}>
+              {getMessage('table_assessment_tooltip_status_draft_body')}
+            </Typography>
+            <Typography component="div" sx={{ fontSize: 'inherit', fontWeight: 700, mt: 1.5 }}>
+              {getMessage('table_assessment_tooltip_status_draft_action')}
+            </Typography>
+          </Box>
+        );
+      case 'Open':
+        return (
+          <Box sx={sx}>
+            <Typography component="div" sx={{ fontSize: 'inherit', whiteSpace: 'pre-line' }}>
+              {getMessage('table_assessment_tooltip_status_open_body')}
+            </Typography>
+            <Typography component="div" sx={{ fontSize: 'inherit', fontWeight: 700, mt: 1.5 }}>
+              {getMessage('table_assessment_tooltip_status_open_action')}
+            </Typography>
+            <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.4)', mt: 1.5, pt: 1 }}>
+              <Typography component="div" sx={{ fontSize: '0.75rem', opacity: 0.9 }}>
+                {footnote}
+              </Typography>
+            </Box>
+          </Box>
+        );
+      case 'Close':
+        return (
+          <Box sx={sx}>
+            <Typography component="div" sx={{ fontSize: 'inherit', whiteSpace: 'pre-line' }}>
+              {getMessage('table_assessment_tooltip_status_close_body')}
+            </Typography>
+            <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.4)', mt: 1.5, pt: 1 }}>
+              <Typography component="div" sx={{ fontSize: '0.75rem', opacity: 0.9 }}>
+                {footnote}
+              </Typography>
+            </Box>
+          </Box>
+        );
+      default:
+        return '';
+    }
+  };
+
   const handleStatusClick = (assessment) => {
   if (!isOwner(assessment)) {
     console.log("Status change rejected - not owner");
@@ -837,13 +896,17 @@ const handleAssessmentPreview = (assessment) => {
       newStatus = 'Close';
       break;
     case 'Close':
-      newStatus = 'Draft';
-      break;
+      // Terminal state: no reopen
+      return;
     default:
       return;
   }
 
-  handleAssessmentStatusChange(assessment._id, newStatus);
+  setStatusWarningDialog({
+    open: true,
+    assessment,
+    newStatus,
+  });
 };
 
   const filteredAssessments = assessments.filter(assessment => {
@@ -1200,11 +1263,17 @@ const handleAssessmentPreview = (assessment) => {
                               </Box>
                               </TableCell>
                             <TableCell>
-                              <Tooltip title={
-                                  isOwner(assessment)
-                                      ? getMessage('table_assessment_tooltip_status1') 
-                                      : getMessage('table_assessment_tooltip_status2') 
-                              }>
+                              <Tooltip
+                                title={getStatusTooltip(assessment)}
+                                componentsProps={{
+                                  tooltip: {
+                                    sx: {
+                                      maxWidth: 360,
+                                      p: 1.5,
+                                    },
+                                  },
+                                }}
+                              >
                                   <Box
                                   onClick={() => handleStatusClick(assessment)}
                                   sx={{
@@ -1214,7 +1283,7 @@ const handleAssessmentPreview = (assessment) => {
                                       padding: '6px 12px',
                                       borderRadius: '8px',
                                       border: '2px solid',
-                                      cursor: getAssessmentUserId(assessment) === currentUser._id ? 'pointer' : 'default',
+                                      cursor: getAssessmentUserId(assessment) === currentUser._id && assessment.status !== 'Close' ? 'pointer' : 'default',
                                       ...(() => {
                                       switch (assessment.status) {
                                           case 'Open':
@@ -1240,9 +1309,6 @@ const handleAssessmentPreview = (assessment) => {
                                               borderColor: '#F44336',
                                               backgroundColor: '#ffebee',
                                               color: '#d32f2f',
-                                              '&:hover': getAssessmentUserId(assessment) === currentUser._id ? {
-                                              backgroundColor: '#ffcdd2',
-                                              } : {}
                                           };
                                           default:
                                           return {};
@@ -1429,6 +1495,43 @@ const handleAssessmentPreview = (assessment) => {
     </Button>
   </DialogActions>
 </Dialog>
+        <Dialog
+          open={statusWarningDialog.open}
+          onClose={() => setStatusWarningDialog({ open: false, assessment: null, newStatus: null })}
+        >
+          <DialogTitle>
+            {statusWarningDialog.newStatus === 'Open'
+              ? getMessage('warning_status_open_title')
+              : getMessage('warning_status_close_title')}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText sx={{ whiteSpace: 'pre-line', fontSize: '1rem' }}>
+              {statusWarningDialog.newStatus === 'Open'
+                ? getMessage('warning_status_open_message')
+                : getMessage('warning_status_close_message')}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => setStatusWarningDialog({ open: false, assessment: null, newStatus: null })}
+            >
+              {getMessage('label_cancel')}
+            </Button>
+            <Button
+              onClick={() => {
+                handleAssessmentStatusChange(
+                  statusWarningDialog.assessment._id,
+                  statusWarningDialog.newStatus
+                );
+                setStatusWarningDialog({ open: false, assessment: null, newStatus: null });
+              }}
+              color="primary"
+              autoFocus
+            >
+              {getMessage('label_continue')}
+            </Button>
+          </DialogActions>
+        </Dialog>
     </Paper>
   );
 };

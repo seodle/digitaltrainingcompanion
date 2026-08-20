@@ -2700,6 +2700,96 @@
         "fuzzy": 0
     },
     {
+        "term": "table_assessment_tooltip_status_draft_body",
+        "definition": "La valutazione pu\u00f2 essere modificata.\nLa valutazione non pu\u00f2 ancora essere condivisa con i partecipanti.",
+        "context": "table assessment tooltip status draft body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_draft_action",
+        "definition": "Clicca per cambiare lo stato in \u00ab Apri \u00bb e condividere la valutazione con i partecipanti.",
+        "context": "table assessment tooltip status draft action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_open_body",
+        "definition": "La valutazione non pu\u00f2 pi\u00f9 essere modificata.*\nLa valutazione pu\u00f2 essere condivisa con i partecipanti.",
+        "context": "table assessment tooltip status open body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_open_action",
+        "definition": "Clicca per cambiare lo stato in \u00ab Chiudi \u00bb se hai finito di condividere la valutazione con i partecipanti.",
+        "context": "table assessment tooltip status open action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_close_body",
+        "definition": "La valutazione non pu\u00f2 pi\u00f9 essere modificata.*\nLa valutazione non pu\u00f2 pi\u00f9 essere condivisa con i partecipanti.",
+        "context": "table assessment tooltip status close body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_copy_footnote",
+        "definition": "* puoi comunque copiare la valutazione se ti serve una versione modificabile.",
+        "context": "table assessment tooltip status copy footnote",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_open_title",
+        "definition": "Aprire la valutazione?",
+        "context": "warning status open title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_open_message",
+        "definition": "Se cambi lo stato in \u00ab Apri \u00bb, non potrai pi\u00f9 modificare la valutazione.",
+        "context": "warning status open message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_close_title",
+        "definition": "Chiudere la valutazione?",
+        "context": "warning status close title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_close_message",
+        "definition": "Se cambi lo stato in \u00ab Chiudi \u00bb, non potrai pi\u00f9 condividere le valutazioni con i partecipanti.",
+        "context": "warning status close message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "table_assessments_today",
         "definition": "Oggi",
         "context": "table assessments today",

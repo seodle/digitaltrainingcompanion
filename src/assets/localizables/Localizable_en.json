@@ -2700,6 +2700,96 @@
         "fuzzy": 0
     },
     {
+        "term": "table_assessment_tooltip_status_draft_body",
+        "definition": "Assessment can be edited.\nAssessment can not be shared with participants yet.",
+        "context": "table assessment tooltip status draft body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_draft_action",
+        "definition": "Click to change status to \"Open\" to share your assessment with participants.",
+        "context": "table assessment tooltip status draft action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_open_body",
+        "definition": "Assessment can not be edited anymore.*\nAssessment can be shared with participants.",
+        "context": "table assessment tooltip status open body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_open_action",
+        "definition": "Click to change status to \"Close\" if you are done sharing your assessment with participants.",
+        "context": "table assessment tooltip status open action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_close_body",
+        "definition": "Assessment can not be edited anymore.*\nAssessment can not be shared with participants anymore.",
+        "context": "table assessment tooltip status close body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_copy_footnote",
+        "definition": "* you can still copy your assessment if you need an editable version.",
+        "context": "table assessment tooltip status copy footnote",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_open_title",
+        "definition": "Open assessment?",
+        "context": "warning status open title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_open_message",
+        "definition": "If you change the status to \"Open\", you will not be able to edit the assessment anymore.",
+        "context": "warning status open message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_close_title",
+        "definition": "Close assessment?",
+        "context": "warning status close title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_close_message",
+        "definition": "If you change the status to \"Close\", you will not be able to share your assessments to participants anymore.",
+        "context": "warning status close message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "table_assessments_today",
         "definition": "Today",
         "context": "table assessments today",

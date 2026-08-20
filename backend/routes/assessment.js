@@ -93,16 +93,16 @@ router.put('/:assessmentId', requireAssessmentOwner('assessmentId'), async (req,
   const updatedAssessment = req.body;
 
   try {
-    const { status, data } = await updateAssessment(assessmentId, updatedAssessment);
-
-    if (status === 'error') {
-      return res.status(404).json({ error: data.message });
-    }
-
+    const data = await updateAssessment(assessmentId, updatedAssessment);
     res.json(data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "An error occurred while updating the assessment" });
+    const statusCode = error.statusCode || 500;
+    res.status(statusCode).json({
+      error: statusCode === 500
+        ? "An error occurred while updating the assessment"
+        : error.message,
+    });
   }
 });
 
@@ -147,7 +147,8 @@ router.put("/:assessmentId/survey", requireAssessmentOwner('assessmentId'), asyn
     res.json(updatedSurvey);
   } catch (error) {
     console.error('Route error:', error.message);
-    res.status(500).json({
+    const statusCode = error.statusCode || 500;
+    res.status(statusCode).json({
       error: error.message,
     });
   }

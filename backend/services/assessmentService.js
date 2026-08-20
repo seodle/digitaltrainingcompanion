@@ -2,6 +2,13 @@ const Assessment = require('../models/assessmentModel');
 const Monitoring = require('../models/monitoringModel');
 const mongoose = require('mongoose');
 
+/** Allowed one-way status transitions: Draft → Open → Close */
+const ALLOWED_STATUS_TRANSITIONS = {
+    Draft: ['Open'],
+    Open: ['Close'],
+    Close: [],
+};
+
 /**
  * Create an assessement and add it to the db
  * @param {Object} assessmentData - The assessment object to be created.
@@ -132,6 +139,12 @@ const updateAssessmentSurvey = async (assessmentId, updatedQuestions, workshops)
         const assessment = await Assessment.findById(assessmentId);
         if (!assessment) {
             throw new Error('No assessment found with the given ID');
+        }
+
+        if (assessment.status !== 'Draft') {
+            const error = new Error('Questions can only be edited when the assessment is in Draft status');
+            error.statusCode = 403;
+            throw error;
         }
 
         // Build a lookup of existing creationDates by _id to preserve them
@@ -283,6 +296,24 @@ const updateAssessment = async (assessmentId, updatedAssessmentData) => {
     try {
         // Remove the non-ObjectId id from updatedAssessmentData if it exists
         delete updatedAssessmentData.id;
+
+        const existingAssessment = await Assessment.findById(assessmentId);
+        if (!existingAssessment) {
+            throw new Error('No assessment found with the given ID');
+        }
+
+        // Enforce one-way status transitions: Draft → Open → Close
+        if (updatedAssessmentData.status !== undefined
+            && updatedAssessmentData.status !== existingAssessment.status) {
+            const allowedNext = ALLOWED_STATUS_TRANSITIONS[existingAssessment.status] || [];
+            if (!allowedNext.includes(updatedAssessmentData.status)) {
+                const error = new Error(
+                    `Invalid status transition from ${existingAssessment.status} to ${updatedAssessmentData.status}`
+                );
+                error.statusCode = 400;
+                throw error;
+            }
+        }
 
         // Finds an assessment document by its ID and updates it with the provided data
         const updatedAssessment = await Assessment.findByIdAndUpdate(

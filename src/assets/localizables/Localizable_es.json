@@ -2700,6 +2700,96 @@
         "fuzzy": 0
     },
     {
+        "term": "table_assessment_tooltip_status_draft_body",
+        "definition": "La evaluaci\u00f3n se puede editar.\nLa evaluaci\u00f3n a\u00fan no se puede compartir con los participantes.",
+        "context": "table assessment tooltip status draft body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_draft_action",
+        "definition": "Haz clic para cambiar el estado a \u00ab Abierto \u00bb y compartir tu evaluaci\u00f3n con los participantes.",
+        "context": "table assessment tooltip status draft action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_open_body",
+        "definition": "La evaluaci\u00f3n ya no se puede editar.*\nLa evaluaci\u00f3n se puede compartir con los participantes.",
+        "context": "table assessment tooltip status open body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_open_action",
+        "definition": "Haz clic para cambiar el estado a \u00ab Cerrado \u00bb si has terminado de compartir tu evaluaci\u00f3n con los participantes.",
+        "context": "table assessment tooltip status open action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_close_body",
+        "definition": "La evaluaci\u00f3n ya no se puede editar.*\nLa evaluaci\u00f3n ya no se puede compartir con los participantes.",
+        "context": "table assessment tooltip status close body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_copy_footnote",
+        "definition": "* a\u00fan puedes copiar tu evaluaci\u00f3n si necesitas una versi\u00f3n editable.",
+        "context": "table assessment tooltip status copy footnote",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_open_title",
+        "definition": "\u00bfAbrir la evaluaci\u00f3n?",
+        "context": "warning status open title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_open_message",
+        "definition": "Si cambias el estado a \u00ab Abierto \u00bb, ya no podr\u00e1s editar la evaluaci\u00f3n.",
+        "context": "warning status open message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_close_title",
+        "definition": "\u00bfCerrar la evaluaci\u00f3n?",
+        "context": "warning status close title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_close_message",
+        "definition": "Si cambias el estado a \u00ab Cerrado \u00bb, ya no podr\u00e1s compartir tus evaluaciones con los participantes.",
+        "context": "warning status close message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "table_assessments_today",
         "definition": "Hoy",
         "context": "table assessments today",

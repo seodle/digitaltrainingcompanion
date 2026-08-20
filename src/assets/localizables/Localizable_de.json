@@ -2700,6 +2700,96 @@
         "fuzzy": 0
     },
     {
+        "term": "table_assessment_tooltip_status_draft_body",
+        "definition": "Die Evaluation kann bearbeitet werden.\nDie Evaluation kann noch nicht mit Teilnehmenden geteilt werden.",
+        "context": "table assessment tooltip status draft body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_draft_action",
+        "definition": "Klicken Sie, um den Status auf \u201eGe\u00f6ffnet\u201c zu \u00e4ndern und Ihre Evaluation mit Teilnehmenden zu teilen.",
+        "context": "table assessment tooltip status draft action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_open_body",
+        "definition": "Die Evaluation kann nicht mehr bearbeitet werden.*\nDie Evaluation kann mit Teilnehmenden geteilt werden.",
+        "context": "table assessment tooltip status open body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_open_action",
+        "definition": "Klicken Sie, um den Status auf \u201eGeschlossen\u201c zu \u00e4ndern, wenn Sie das Teilen Ihrer Evaluation mit Teilnehmenden abgeschlossen haben.",
+        "context": "table assessment tooltip status open action",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_close_body",
+        "definition": "Die Evaluation kann nicht mehr bearbeitet werden.*\nDie Evaluation kann nicht mehr mit Teilnehmenden geteilt werden.",
+        "context": "table assessment tooltip status close body",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "table_assessment_tooltip_status_copy_footnote",
+        "definition": "* Sie k\u00f6nnen Ihre Evaluation weiterhin kopieren, falls Sie eine bearbeitbare Version ben\u00f6tigen.",
+        "context": "table assessment tooltip status copy footnote",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_open_title",
+        "definition": "Evaluation \u00f6ffnen?",
+        "context": "warning status open title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_open_message",
+        "definition": "Wenn Sie den Status auf \u201eGe\u00f6ffnet\u201c \u00e4ndern, k\u00f6nnen Sie die Evaluation nicht mehr bearbeiten.",
+        "context": "warning status open message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_close_title",
+        "definition": "Evaluation schliessen?",
+        "context": "warning status close title",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "warning_status_close_message",
+        "definition": "Wenn Sie den Status auf \u201eGeschlossen\u201c \u00e4ndern, k\u00f6nnen Sie Ihre Evaluationen nicht mehr mit Teilnehmenden teilen.",
+        "context": "warning status close message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "table_assessments_today",
         "definition": "Heute",
         "context": "table assessments today",

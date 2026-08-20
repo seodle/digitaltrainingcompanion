@@ -20,8 +20,8 @@ function transformAssessments(assessments) {
     let options;
     switch (assessment.status) {
       case 'Draft': options = [OptionTypes.EDIT, OptionTypes.PREVIEW, OptionTypes.OPEN, OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS]; break;
-      case 'Open': options = [OptionTypes.CLOSE, OptionTypes.PREVIEW, OptionTypes.EDIT, OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS]; break;
-      case 'Close': options = [OptionTypes.OPEN, OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS]; break;
+      case 'Open': options = [OptionTypes.CLOSE, OptionTypes.PREVIEW, OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS]; break;
+      case 'Close': options = [OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS]; break;
       default: break;
     }
     return {
