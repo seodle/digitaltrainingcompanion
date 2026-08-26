@@ -189,6 +189,7 @@ export const addOption = (setQuestions, questionId) => {
 
 /**
  * Removes an option from a specific question's options array based on the option's index.
+ * Also removes that option from correctAnswer when it was marked as a right answer.
  *
  * @param {Function} setQuestions - The state setter function for questions.
  * @param {string} questionId - The ID of the question from which the option is to be removed.
@@ -196,11 +197,31 @@ export const addOption = (setQuestions, questionId) => {
 */
 export const removeOption = (setQuestions, questionId, optionIndex) => {
     setQuestions(prevQuestions =>
-        prevQuestions.map(question =>
-            question.questionId === questionId
-                ? { ...question, options: question.options.filter((_, index) => index !== optionIndex) }
-                : question
-        )
+        prevQuestions.map(question => {
+            if (question.questionId !== questionId) {
+                return question;
+            }
+
+            const removedLabel = question.options[optionIndex]?.label;
+            const updatedOptions = question.options.filter((_, index) => index !== optionIndex);
+
+            let updatedCorrectAnswer = question.correctAnswer;
+            if (removedLabel != null && question.correctAnswer != null) {
+                if (Array.isArray(question.correctAnswer)) {
+                    updatedCorrectAnswer = question.correctAnswer.filter(
+                        answer => answer !== removedLabel
+                    );
+                } else if (question.correctAnswer === removedLabel) {
+                    updatedCorrectAnswer = '';
+                }
+            }
+
+            return {
+                ...question,
+                options: updatedOptions,
+                correctAnswer: updatedCorrectAnswer,
+            };
+        })
     );
 };
 

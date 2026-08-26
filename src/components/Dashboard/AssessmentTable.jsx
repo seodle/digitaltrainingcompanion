@@ -1526,7 +1526,6 @@ const handleAssessmentPreview = (assessment) => {
                 setStatusWarningDialog({ open: false, assessment: null, newStatus: null });
               }}
               color="primary"
-              autoFocus
             >
               {getMessage('label_continue')}
             </Button>

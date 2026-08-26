@@ -16,7 +16,22 @@ import {
 import { Delete } from '@mui/icons-material';
 
 const ChooseOptions = ({ getMessage, buttonStyle }) => {
-  const { values, touched, errors, handleChange, handleBlur } = useFormikContext();
+  const { values, touched, errors, handleChange, handleBlur, setFieldValue } = useFormikContext();
+
+  const handleRemoveOption = (remove, index) => {
+    const removedOption = values.options[index];
+    remove(index);
+    if (
+      removedOption != null &&
+      Array.isArray(values.correctAnswer) &&
+      values.correctAnswer.includes(removedOption)
+    ) {
+      setFieldValue(
+        'correctAnswer',
+        values.correctAnswer.filter(answer => answer !== removedOption)
+      );
+    }
+  };
 
   return (
     <>
@@ -53,7 +68,7 @@ const ChooseOptions = ({ getMessage, buttonStyle }) => {
                   fullWidth
                   multiline
                 />
-                <IconButton onClick={() => remove(index)} sx={{ ml: 1 }}>
+                <IconButton onClick={() => handleRemoveOption(remove, index)} sx={{ ml: 1 }}>
                   <Delete />
                 </IconButton>
               </Box>
