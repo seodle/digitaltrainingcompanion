@@ -82,7 +82,7 @@ const AssessmentTable = ({
     onCreateAssessment,
     fillHeight = false
 }) => {
-  
+  const sharePanelOpen = (selectedAssessmentsIds || []).length > 0;
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -1293,7 +1293,7 @@ const handleAssessmentPreview = (assessment) => {
                         )}
                         </Box>
                     </TableCell>
-                    <TableCell sx={{ width: fillHeight ? 48 : 150, padding: '6px 4px' }}>
+                    <TableCell sx={{ width: sharePanelOpen ? 48 : 150, padding: '6px 4px' }}>
                         <Typography variant="caption" noWrap sx={{ display: 'block', fontWeight: 600 }}>
                           {getMessage('table_assessments_type')}
                         </Typography>
@@ -1390,7 +1390,7 @@ const handleAssessmentPreview = (assessment) => {
                               </Box>
                               </TableCell>
                             <TableCell>
-                              {renderAssessmentType(assessment, fillHeight)}
+                              {renderAssessmentType(assessment, sharePanelOpen)}
                             </TableCell>
                             <TableCell sx={{ minWidth: 0 }}>
                               {renderOwnerCell(assessment, fillHeight)}
