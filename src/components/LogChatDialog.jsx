@@ -218,7 +218,7 @@ const LogChatDialog = ({ open, log, onClose, onChatUpdated }) => {
         >
           {messages.length === 0 ? (
             <Box sx={{ py: 6, textAlign: "center" }}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body1" color="text.secondary">
                 {getMessage("label_log_chat_empty")}
               </Typography>
             </Box>
@@ -235,17 +235,17 @@ const LogChatDialog = ({ open, log, onClose, onChatUpdated }) => {
                     alignItems: isMine ? "flex-end" : "flex-start",
                   }}
                 >
-                  <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ mb: 0.25 }}>
+                  <Typography variant="body2" fontWeight={700} color="text.secondary" sx={{ mb: 0.25 }}>
                     {getPersonName(message.userId, getMessage("label_log_author"))}
                     {message.createdAt
                       ? ` · ${new Date(message.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`
                       : ""}
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant="body1"
                     sx={{
-                      px: 1.5,
-                      py: 1,
+                      px: 1.75,
+                      py: 1.25,
                       borderRadius: "12px",
                       maxWidth: "86%",
                       whiteSpace: "pre-wrap",
@@ -266,7 +266,6 @@ const LogChatDialog = ({ open, log, onClose, onChatUpdated }) => {
 
       <DialogActions sx={{ px: { xs: 2, sm: 3 }, py: 2, gap: 1, alignItems: "stretch", flexDirection: { xs: "column", sm: "row" } }}>
         <TextField
-          size="small"
           fullWidth
           multiline
           minRows={1}
@@ -281,7 +280,7 @@ const LogChatDialog = ({ open, log, onClose, onChatUpdated }) => {
           disabled={busy || !draft.trim()}
           onClick={handleSend}
           endIcon={<SendRoundedIcon />}
-          sx={{ ...buttonStyle, mr: 0, minWidth: 110, height: 40 }}
+          sx={{ ...buttonStyle, mr: 0, minWidth: 110, minHeight: 48 }}
         >
           {getMessage("label_log_send_message")}
         </Button>
