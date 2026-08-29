@@ -53,7 +53,8 @@ const AssessmentTabResultWithFilter = ({
             >
                 <FormControl variant="outlined" size="small" 
                 sx={{ 
-                    minWidth: 150,
+                    minWidth: { xs: 120, sm: 150 },
+                    maxWidth: { xs: 'calc(100% - 24px)', sm: 'none' },
                     mt: 1.5,
                     backgroundColor: 'rgba(255, 255, 255, 1)'}}>
                     <InputLabel id="label_set_selected_user">{getMessage("label_choose_teacher")}</InputLabel>
@@ -92,13 +93,14 @@ const AssessmentTabResultWithFilter = ({
     return (
         <>
             <Box 
-                gridColumn={`span ${fullScreen ? 12 : 6}`} 
-                gridRow={gridRow} 
+                gridColumn={{ xs: 'auto', md: `span ${fullScreen ? 12 : 6}` }} 
+                gridRow={{ xs: 'auto', md: gridRow }} 
                 sx={{ 
                     boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', 
                     borderRadius: '15px', 
                     backgroundColor: '#fff',
-                    position: 'relative'
+                    position: 'relative',
+                    minWidth: 0
                 }}
             >
                 {content(false)}

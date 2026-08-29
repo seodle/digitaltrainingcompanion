@@ -64,7 +64,11 @@ const BarChartReports = ({ data, hide_students_name, workshopName, showPercentag
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
   }, []);
 
   const getBarColor = (bar) => {
@@ -170,7 +174,7 @@ const BarChartReports = ({ data, hide_students_name, workshopName, showPercentag
           axisBottom={null}
           labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
           role="application"
-          onClick={(bar) => {
+          onClick={(bar, event) => {
             const tooltipContent = handleTooltip(bar);
             if (!tooltipContent) return;
             const isSamePinned =
@@ -179,8 +183,18 @@ const BarChartReports = ({ data, hide_students_name, workshopName, showPercentag
               pinnedTooltipData.choice === tooltipContent.choice;
             if (isSamePinned) {
               setPinnedTooltipData(null);
+              return;
+            }
+            setPinnedTooltipData(tooltipContent);
+            if (chartRef.current && event) {
+              const bounds = chartRef.current.getBoundingClientRect();
+              const clientX = event.clientX ?? event.changedTouches?.[0]?.clientX ?? bounds.width / 2;
+              const clientY = event.clientY ?? event.changedTouches?.[0]?.clientY ?? bounds.height / 2;
+              setPinnedPosition({
+                x: Math.min(Math.max(clientX - bounds.left, 90), Math.max(bounds.width - 90, 90)),
+                y: Math.min(Math.max(clientY - bounds.top, 48), Math.max(bounds.height - 48, 48)),
+              });
             } else {
-              setPinnedTooltipData(tooltipContent);
               setPinnedPosition(mousePosition);
             }
           }}

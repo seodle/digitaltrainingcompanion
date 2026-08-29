@@ -171,7 +171,7 @@ const Logbooks = () => {
             minHeight: 0,
             gap: { xs: 3, md: 4 },
             px: { xs: 2, md: 2.5 },
-            pb: { xs: 3, md: 2.5 },
+            pb: { xs: "calc(80px + env(safe-area-inset-bottom, 0px))", md: 2.5 },
             alignItems: 'flex-start',
           }}
         >

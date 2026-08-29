@@ -347,7 +347,8 @@ const EditQuestionView = ({
     };
 
     return (
-            <Box component="div" sx={{ width: '98%', p: 2, margin: "10px 5px 10px 5px", borderRadius: '8px' }}>            <Typography mb="20px" variant="h4" fontWeight="bold">
+            <Box component="div" sx={{ width: 'auto', maxWidth: '100%', boxSizing: 'border-box', p: { xs: 1, md: 2 }, m: { xs: 1, md: "10px 5px" }, borderRadius: '8px' }}>
+            <Typography mb="20px" variant="h4" fontWeight="bold">
                 {question.questionType === 'single-text' 
                     ? getMessage("label_edit_context")
                     : getMessage("label_edit_question")

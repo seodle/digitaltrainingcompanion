@@ -336,24 +336,24 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
  
    return (
     <>
-        <Box display="flex" flexDirection="column" alignItems="center" minHeight="100vh" ml="10px" backgroundColor="white">  
-                <Box display="flex" flexDirection="column" justifyContent="space-between" minHeight="5vh" sx={{backgroundColor: "#fff", width: {xs: "90vw", md: "75vw",}, }}>
-                    <Box display="flex" flexDirection="row" alignItems="baseline" ml="10px" mb="20px">
+        <Box display="flex" flexDirection="column" alignItems="center" minHeight="100vh" sx={{ px: { xs: 1, md: "10px" }, pb: { xs: 4, md: 2 }, backgroundColor: "white", width: "100%", boxSizing: "border-box" }}>  
+                <Box display="flex" flexDirection="column" justifyContent="space-between" minHeight="5vh" sx={{backgroundColor: "#fff", width: {xs: "100%", md: "75vw"}, maxWidth: "100%" }}>
+                    <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} alignItems={{ xs: "flex-start", sm: "baseline" }} ml="10px" mb="20px">
                         <Typography variant="h3" fontWeight="bold">
                             {getMessage("label_evaluate")} {localizeAssessmentType(assessmentType, getMessage)}
                         </Typography>
                         {assessmentName && (
-                            <Typography variant="h4" color="text.secondary" ml="10px">
+                            <Typography variant="h4" color="text.secondary" ml={{ xs: 0, sm: "10px" }}>
                                 - {assessmentName}
                             </Typography>
                         )}
                     </Box>
                 </Box>                            
-            <Box display="flex" flexDirection="column" justifyContent="space-between" minHeight="80vh" sx={{boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)", borderRadius: "15px", backgroundColor: "#fff", width: {xs: "90vw", md: "75vw",},}}>
-                <Box display="flex" flexDirection="row" justifyContent="space-between" minHeight="80vh" sx={{backgroundColor: "#fff", width: {xs: "90vw", md: "75vw",},}}>
+            <Box display="flex" flexDirection="column" justifyContent="space-between" minHeight="80vh" sx={{boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)", borderRadius: "15px", backgroundColor: "#fff", width: {xs: "100%", md: "75vw",}, maxWidth: "100%"}}>
+                <Box display="flex" flexDirection={{ xs: "column", md: "row" }} justifyContent="space-between" minHeight={{ xs: "auto", md: "80vh" }} sx={{backgroundColor: "#fff", width: "100%"}}>
 
-                <Box sx={{ display: "flex", flexDirection: "column", bgcolor: "#fff", width: { xs: "45vw", md: "37vw" }, height: '78vh', overflowY: 'auto', }}>
-                    <Box sx={{ display: "flex", flexDirection: "column", mt: "20px", pl: "20px",}}>
+                <Box sx={{ display: "flex", flexDirection: "column", bgcolor: "#fff", width: { xs: "100%", md: "37vw" }, height: { xs: "auto", md: "78vh" }, maxHeight: { xs: "none", md: "78vh" }, overflowY: 'auto', }}>
+                    <Box sx={{ display: "flex", flexDirection: "column", mt: "20px", px: { xs: 2, md: 0 }, pl: { md: "20px" },}}>
                         <FormControlLabel
                             control={<Switch checked={splitWorkshops} onChange={handleSplitWorkshopsChange} />}
                             label={getMessage("label_create_sections")} 
@@ -369,7 +369,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                         </Box>
                     )}
 
-                    <Box sx={{ display: "flex", flexDirection: "column", mt: "30px", ml: "20px", }} >
+                    <Box sx={{ display: "flex", flexDirection: "column", mt: "30px", mx: { xs: 2, md: 0 }, ml: { md: "20px" }, }} >
                         <Typography mb= "20px" variant="h4" fontWeight="bold">
                             {getMessage("label_create_new_question")}
                         </Typography>
@@ -398,7 +398,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                     </Box>
                 </Box>
 
-                <Box flexDirection="column" display="flex" sx={{backgroundColor: "#fff",width: {xs: "45vw", md: "37vw",}, height: '78vh', overflowY: 'auto',}} >
+                <Box flexDirection="column" display="flex" sx={{backgroundColor: "#fff", width: {xs: "100%", md: "37vw"}, height: { xs: "auto", md: "78vh" }, maxHeight: { xs: "none", md: "78vh" }, overflowY: 'auto'}} >
                     
                     <Formik
                         initialValues={{}}
@@ -435,6 +435,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                                         zIndex: 10,
                                         bgcolor: '#fff',
                                         borderTop: '1px solid #eee',
+                                        pb: { xs: 3, md: 1 },
                                     }}
                                 >
                                     <FormActions 

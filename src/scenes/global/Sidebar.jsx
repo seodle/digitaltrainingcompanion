@@ -17,7 +17,7 @@ import logo_epfl from "../../assets/medias/logo-epfl.svg";
 import { useMessageService } from '../../services/MessageService';
 
 
-const Item = ({ title, to, icon, selected, setSelected, disabled }) => {
+const Item = ({ title, to, icon, selected, setSelected, disabled, onNavigate }) => {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -25,6 +25,7 @@ const Item = ({ title, to, icon, selected, setSelected, disabled }) => {
   const handleClick = () => {
     if (!disabled) {
       setSelected(title);
+      onNavigate?.();
     }
   };
 
@@ -84,8 +85,48 @@ const Sidebar = () => {
 
 
   return (
+    <>
+      {isMobile && isCollapsed && (
+        <IconButton
+          onClick={() => setIsCollapsed(false)}
+          aria-label="Open menu"
+          sx={{
+            position: "fixed",
+            top: 12,
+            left: 12,
+            zIndex: 1400,
+            bgcolor: "white",
+            boxShadow: 2,
+            "&:hover": { bgcolor: "white" },
+          }}
+        >
+          <MenuOutlinedIcon />
+        </IconButton>
+      )}
+      {isMobile && !isCollapsed && (
+        <Box
+          onClick={() => setIsCollapsed(true)}
+          sx={{
+            position: "fixed",
+            inset: 0,
+            bgcolor: "rgba(0,0,0,0.35)",
+            zIndex: 1299,
+          }}
+        />
+      )}
     <Box
       sx={{
+        ...(isMobile
+          ? {
+              position: "fixed",
+              left: 0,
+              top: 0,
+              zIndex: 1300,
+              height: "100vh",
+              transform: isCollapsed ? "translateX(-110%)" : "translateX(0)",
+              transition: "transform 0.2s ease",
+            }
+          : {}),
         "& .pro-sidebar-inner": {
           background: `${"white"} !important`,
         },
@@ -105,7 +146,7 @@ const Sidebar = () => {
       }}
     >
       <ProSidebar
-        collapsed={isCollapsed}
+        collapsed={isMobile ? false : isCollapsed}
         style={{height: "100vh", position: "relative"}}
 
       >
@@ -122,7 +163,7 @@ const Sidebar = () => {
               color: "colors.grey[100]",
             }}
           >
-            {!isCollapsed && (
+            {(isMobile || !isCollapsed) && (
               <Box
                 display="flex"
                 justifyContent="space-between"
@@ -136,7 +177,7 @@ const Sidebar = () => {
             )}
           </MenuItem>
 
-          {!isCollapsed && (
+          {(isMobile || !isCollapsed) && (
             <Box
               mb="0px"
               ml="10px"
@@ -159,16 +200,17 @@ const Sidebar = () => {
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box paddingLeft={isMobile || !isCollapsed ? "10%" : undefined}>
             <Item
               title={getMessage('label_home')}
               to="/"
               icon={<HomeIcon />}
               selected={selected}
               setSelected={setSelected}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
-            {!isCollapsed && (
+            {(isMobile || !isCollapsed) && (
               <Typography
                 variant="h5"
                 color={colors.grey[300]}
@@ -184,9 +226,10 @@ const Sidebar = () => {
               icon={< MonitorHeartIcon/>}
               selected={selected}
               setSelected={setSelected}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
-            {!isCollapsed && (
+            {(isMobile || !isCollapsed) && (
               <Typography
                 variant="h5"
                 color={colors.grey[300]}
@@ -202,9 +245,10 @@ const Sidebar = () => {
               icon={<PollIcon />}
               selected={selected}
               setSelected={setSelected}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
-            {!isCollapsed && (
+            {(isMobile || !isCollapsed) && (
               <Typography
                 variant="h5"
                 color={colors.grey[300]}
@@ -220,9 +264,10 @@ const Sidebar = () => {
               icon={<MenuBookIcon />}
               selected={selected}
               setSelected={setSelected}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
-             {!isCollapsed && (
+             {(isMobile || !isCollapsed) && (
               <Typography
                 variant="h5"
                 color={colors.grey[300]}
@@ -239,9 +284,10 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
               disabled={false}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
-            {!isCollapsed && (
+            {(isMobile || !isCollapsed) && (
               <Typography
                 variant="h5"
                 color={colors.grey[300]}
@@ -257,6 +303,7 @@ const Sidebar = () => {
               icon={<AccountCircleIcon />}
               selected={selected}
               setSelected={setSelected}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
           </Box>
@@ -272,6 +319,7 @@ const Sidebar = () => {
         )}
       </ProSidebar>
     </Box>
+    </>
   );
 };
 

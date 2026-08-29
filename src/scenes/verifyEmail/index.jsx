@@ -55,12 +55,12 @@ const VerifyEmail = () => {
           borderRadius: "15px",
           backgroundColor: "#fff",
           width: {
-            xs: "50vw",
+            xs: "90vw",
             md: "30vw",
           },
         }}
       >
-        <Box padding="60px">
+        <Box sx={{ p: { xs: 3, md: "60px" }, boxSizing: "border-box", width: "100%" }}>
           <Box
             mb="20px"
             display="flex"

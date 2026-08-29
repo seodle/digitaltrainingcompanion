@@ -264,7 +264,16 @@ const LogChatDialog = ({ open, log, onClose, onChatUpdated }) => {
         </Box>
       </DialogContent>
 
-      <DialogActions sx={{ px: { xs: 2, sm: 3 }, py: 2, gap: 1, alignItems: "stretch", flexDirection: { xs: "column", sm: "row" } }}>
+      <DialogActions
+        sx={{
+          px: { xs: 2, sm: 3 },
+          pt: 2,
+          pb: { xs: "calc(56px + env(safe-area-inset-bottom, 0px))", sm: 2.5 },
+          gap: 1,
+          alignItems: "stretch",
+          flexDirection: { xs: "column", sm: "row" },
+        }}
+      >
         <TextField
           fullWidth
           multiline

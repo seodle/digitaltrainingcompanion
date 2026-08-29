@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { InputLabel, Box, Divider, MenuItem, FormControl, Button, Typography, Tooltip, IconButton, ToggleButtonGroup, ToggleButton } from "@mui/material";
+import { InputLabel, Box, Divider, MenuItem, FormControl, Button, Typography, Tooltip, IconButton, ToggleButtonGroup, ToggleButton, useMediaQuery, useTheme } from "@mui/material";
 import { CircularProgress } from '@mui/material';
 import Select from '@mui/material/Select';
 import jwt_decode from "jwt-decode";
@@ -14,6 +14,7 @@ import Sidebar from "../../scenes/global/Sidebar";
 import Topbar from "../../scenes/global/Topbar";
 import AssessmentTabResult from '../../components/AssessmentTabResult';
 import AssessmentTabResultWithFilter from '../../components/AssessmentTabResultWithFilter';
+import { AssessmentResultStack } from '../../components/AssessmentTabResultsComponents';
 import { buttonStyle } from '../../components/styledComponents'
 import { useMessageService } from '../../services/MessageService';
 import { useAuthUser } from '../../contexts/AuthUserContext';
@@ -38,6 +39,8 @@ const Reports = () => {
 
     const [days, setDays] = useState([]);
     const [selectedDay, setSelectedDay] = useState('');
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [selectedDayAssessments, setSelectedDayAssessments] = useState([]);
 
     const [totalAssessments, setTotalAssessments] = useState(0)
@@ -990,23 +993,29 @@ const Reports = () => {
     };
 
     return (
-    <Box display="flex" backgroundColor="white" style={{ height: '100vh', overflow: 'auto' }}>
+    <Box display="flex" backgroundColor="white" sx={{ minHeight: '100vh', overflow: 'auto', maxWidth: '100vw' }}>
         <Sidebar/>
 
-        <Box flex={1}>
+        <Box flex={1} sx={{ minWidth: 0 }}>
 
             { /* Title */}
-            <Box mt="10px" ml="10px">
+            <Box sx={{ mt: { xs: 1, md: '10px' } }}>
                 <Topbar title = {getMessage("label_my_results")} />
             </Box>
 
 
-            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridTemplateRows={`4vh ${currentUser.userStatus === UserType.TEACHER_TRAINER ? "39vh 39vh" : "78vh"}`} gap="20px" ml="20px" mr="20px">   
+            <Box
+              display="grid"
+              gridTemplateColumns={{ xs: '1fr', md: 'repeat(12, 1fr)' }}
+              gridTemplateRows={{ xs: 'auto', md: `auto ${currentUser?.userStatus === UserType.TEACHER_TRAINER ? "39vh 39vh" : "78vh"}` }}
+              gap="20px"
+              sx={{ mx: { xs: 2, md: '20px' }, mb: 2 }}
+            >   
 
                 { /* Block choose monitoring and session */}
-                <Box gridColumn="span 12" gridRow="1" display="flex" justifyContent="space-between" alignItems="center">
-                    <Box display="flex" alignItems="center">
-                        <FormControl variant="outlined" size="small" sx={{ minWidth: 220, marginRight: '20px'}}>
+                <Box gridColumn={{ xs: 'auto', md: 'span 12' }} display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={1.5}>
+                    <Box display="flex" alignItems="center" flexWrap="wrap" gap={1.5} sx={{ width: { xs: '100%', md: 'auto' } }}>
+                        <FormControl variant="outlined" size="small" sx={{ minWidth: { xs: '100%', md: 220 }, flex: { xs: '1 1 100%', md: '0 0 auto' } }}>
                             <InputLabel id="monitoring">{getMessage("label_choose_monitoring")}</InputLabel>
 
                             <Select
@@ -1026,7 +1035,8 @@ const Reports = () => {
                             </Select>   
                         </FormControl>
 
-                        <FormControl variant="outlined" size="small" sx={{ minWidth: 220, marginRight: '10px' }}>
+                        <Box display="flex" alignItems="center" gap={1} sx={{ width: { xs: '100%', md: 'auto' }, minWidth: 0 }}>
+                        <FormControl variant="outlined" size="small" sx={{ flex: { xs: 1, md: '0 0 auto' }, minWidth: { xs: 0, md: 220 } }}>
                             <InputLabel id="day">{getMessage("label_choose_session")}</InputLabel>
                 
                             <Select
@@ -1058,6 +1068,7 @@ const Reports = () => {
                                     disabled={!selectedDay || isRefreshing}
                                     sx={{
                                         backgroundColor: 'white',
+                                        flexShrink: 0,
                                         '&:hover': {
                                             backgroundColor: '#f5f5f5'
                                         }
@@ -1071,15 +1082,16 @@ const Reports = () => {
                                 </IconButton>
                             </span>
                         </Tooltip>
+                        </Box>
                     </Box>
-                <Box>
+                <Box sx={{ width: { xs: '100%', md: 'auto' }, display: 'flex', justifyContent: 'flex-end' }}>
 
                 { /* Block buttons export pdf, docx and csv */}
-                <Box display="flex" alignItems="center" gap={1.5}>
+                <Box display="flex" alignItems="center" gap={{ xs: 1, md: 1.5 }} sx={{ justifyContent: 'flex-end', flexWrap: 'nowrap' }}>
 
                 {/* Display toggle */}
                 <Box display="flex" alignItems="center" gap={1}>
-                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'nowrap' }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'nowrap', display: { xs: 'none', sm: 'block' } }}>
                         {getMessage("label_display")}
                     </Typography>
                     <ToggleButtonGroup
@@ -1097,7 +1109,7 @@ const Reports = () => {
 
                 {/* Export buttons */}
                 <Box display="flex" alignItems="center" gap={0.5}>
-                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'nowrap', mr: 1 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'nowrap', mr: 1, display: { xs: 'none', sm: 'block' } }}>
                         {getMessage("label_export")}
                     </Typography>
                     <Button
@@ -1173,7 +1185,34 @@ const Reports = () => {
             {/* The 4 blocks of assessment */}
             </Box>
             </Box>
-                
+
+                {isMobile ? (
+                    <Box gridColumn="auto" sx={{ minWidth: 0 }}>
+                        <AssessmentResultStack
+                            assessments={(selectedDayAssessments || []).filter((assessment) => {
+                                if (!currentUser) return false;
+                                if (currentUser.userStatus === UserType.TEACHER) {
+                                    return [
+                                        AssessmentType.STUDENT_CHARACTERISTICS,
+                                        AssessmentType.STUDENT_LEARNING_OUTCOMES,
+                                    ].includes(assessment.type);
+                                }
+                                return true;
+                            })}
+                            groupChartData={groupChartData}
+                            groupCommentData={groupCommentData}
+                            hide_students_name={currentUser?.userStatus === UserType.TEACHER_TRAINER}
+                            aiSummaries={aiSummaries}
+                            loadingSummaries={loadingSummaries}
+                            showPercentage={showPercentage}
+                            showTeacherFilter={currentUser?.userStatus === UserType.TEACHER_TRAINER}
+                            allUsers={allUsers}
+                            selectedUser={selectedUser}
+                            handleChangeUser={handleChangeUser}
+                        />
+                    </Box>
+                ) : (
+                    <>
                 {currentUser && currentUser.userStatus === UserType.TEACHER_TRAINER && (
                     <>
                         <AssessmentTabResult
@@ -1242,6 +1281,8 @@ const Reports = () => {
                             loadingSummaries={loadingSummaries}
                             showPercentage={showPercentage}
                         />
+                    </>
+                )}
                     </>
                 )}
             </Box>

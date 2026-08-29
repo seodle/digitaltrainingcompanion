@@ -599,7 +599,8 @@ const Reporting = () => {
               }
             }}
             sx={{
-              width: '300px',
+              width: { xs: '100%', sm: '300px' },
+              maxWidth: '300px',
               mb: 2,
               '& .MuiOutlinedInput-root': {
                 backgroundImage: 'url("data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"300\\" height=\\"24\\"><line x1=\\"0\\" y1=\\"20\\" x2=\\"100%\\" y2=\\"20\\" stroke=\\"#000\\" stroke-width=\\"2\\" stroke-dasharray=\\"6,6\\"/></svg>")',
@@ -652,7 +653,8 @@ const Reporting = () => {
               }
             }}
             sx={{
-              width: '300px',
+              width: { xs: '100%', sm: '300px' },
+              maxWidth: '300px',
               mb: 2,
               '& .MuiOutlinedInput-root': {
                 backgroundImage: 'url("data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"300\\" height=\\"24\\"><line x1=\\"0\\" y1=\\"20\\" x2=\\"100%\\" y2=\\"20\\" stroke=\\"#000\\" stroke-width=\\"2\\" stroke-dasharray=\\"6,6\\"/></svg>")',
@@ -706,7 +708,7 @@ const Reporting = () => {
               variant="outlined"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              sx={{ width: '300px', maxWidth: '500px', mb: 2 }}
+              sx={{ width: { xs: '100%', sm: '300px' }, maxWidth: '500px', mb: 2 }}
               inputProps={{
                 maxLength: 30,
                 style: {

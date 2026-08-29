@@ -26,7 +26,9 @@ import {
   DialogTitle,
   Button,
   CircularProgress,
-  Select
+  Select,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import {
@@ -76,6 +78,8 @@ const AssessmentTable = ({
 }) => {
   
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(-1);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -1045,7 +1049,7 @@ const handleAssessmentPreview = (assessment) => {
       }}
     >
       <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1, flexWrap: 'wrap', gap: 1.5 }}>
           <Box>
             <Typography variant="h4" sx={{ fontWeight: 800, mb: 2 }}>
                 {getMessage('label_table_assessment')} {monitorings.find(monitoring => monitoring._id === currentMonitoringId)?.name || ''}
@@ -1089,9 +1093,171 @@ const handleAssessmentPreview = (assessment) => {
         </Box>
       </Box>
 
+      {isMobile ? (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, p: 1.5 }}>
+          {(rowsPerPage > 0
+            ? sortedAssessments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : sortedAssessments
+          ).map((assessment) => (
+            <Box
+              key={assessment._id}
+              sx={{
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 2,
+                p: 1.5,
+                bgcolor: isOwner(assessment) ? 'rgba(25, 118, 210, 0.04)' : 'background.paper',
+              }}
+            >
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 1, mb: 1 }}>
+                <Box sx={{ minWidth: 0, flex: 1 }}>
+                  <Box sx={{ mb: 0.5, '& .MuiTypography-root': { fontWeight: 700, fontSize: '1.05rem', maxWidth: '100% !important', whiteSpace: 'normal', overflow: 'visible' } }}>
+                    {renderTextFieldCell({
+                      id: assessment._id,
+                      row: assessment,
+                      value: assessment.name,
+                      field: 'name'
+                    }, 'name')}
+                  </Box>
+                  <Box sx={{ mt: 0.5 }}>
+                    {renderAssessmentType(assessment)}
+                  </Box>
+                </Box>
+                <IconButton
+                  size="small"
+                  onClick={(e) => handleMenuOpen(e, assessment)}
+                >
+                  <MoreVertical size={16} />
+                </IconButton>
+              </Box>
+
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    {getMessage('table_assessments_session')}
+                  </Typography>
+                  <Box sx={{ maxWidth: '60%' }}>
+                    {renderNumberFieldCell({
+                      id: assessment._id,
+                      row: assessment,
+                      value: assessment.day,
+                      field: 'day'
+                    }, 'day')}
+                  </Box>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    {getMessage('table_assessments_owner')}
+                  </Typography>
+                  {renderOwnerCell(assessment)}
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 1 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    {getMessage('table_assessments_dates')}
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 0.25 }}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      <CalendarDays size={12} />
+                      {formatDate(assessment.creationDate)}
+                    </Typography>
+                    {assessment.lastModificationDate && (
+                      <Typography variant="caption" sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <Edit2 size={12} />
+                        {formatDate(assessment.lastModificationDate)}
+                      </Typography>
+                    )}
+                  </Box>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    {getMessage('table_assessments_scheduled_send')}
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                    {formatScheduledSend(assessment)}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 1, mt: 0.5 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    {getMessage('label_status_assessment')}
+                  </Typography>
+                  <Tooltip
+                    title={getStatusTooltip(assessment)}
+                    componentsProps={{
+                      tooltip: { sx: { maxWidth: 360, p: 1.5 } },
+                    }}
+                  >
+                    <Box
+                      onClick={() => handleStatusClick(assessment)}
+                      sx={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        padding: '6px 12px',
+                        borderRadius: '8px',
+                        border: '2px solid',
+                        cursor: getAssessmentUserId(assessment) === currentUser._id && assessment.status !== 'Close' ? 'pointer' : 'default',
+                        ...(() => {
+                          switch (assessment.status) {
+                            case 'Open':
+                              return { borderColor: '#4CAF50', backgroundColor: '#e8f5e9', color: '#2e7d32' };
+                            case 'Draft':
+                              return { borderColor: '#FF9800', backgroundColor: '#fff3e0', color: '#ed6c02' };
+                            case 'Close':
+                              return { borderColor: '#F44336', backgroundColor: '#ffebee', color: '#d32f2f' };
+                            default:
+                              return {};
+                          }
+                        })(),
+                      }}
+                    >
+                      <Typography sx={{ fontSize: '0.8rem', fontWeight: 600 }}>
+                        {getMessage(`label_status_${assessment.status.toLowerCase()}`)}
+                      </Typography>
+                    </Box>
+                  </Tooltip>
+                </Box>
+              </Box>
+
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 1, mt: 1.5, pt: 1, borderTop: '1px solid', borderColor: 'divider' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 0.5 }}>
+                  {isOwner(assessment) && assessment.status === 'Draft' && (
+                    <Button
+                      size="small"
+                      startIcon={<Edit2 size={14} />}
+                      onClick={() => handleEditAssessment(assessment)}
+                      sx={{ textTransform: 'none', minWidth: 0 }}
+                    >
+                      {getMessage('label_edit')}
+                    </Button>
+                  )}
+                  <Button
+                    size="small"
+                    startIcon={<Eye size={14} />}
+                    onClick={() => handleAssessmentPreview(assessment)}
+                    sx={{ textTransform: 'none', minWidth: 0 }}
+                  >
+                    {getMessage('label_preview')}
+                  </Button>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography variant="body2" sx={{ mr: 0.5 }}>
+                    {getMessage('label_share')}
+                  </Typography>
+                  {renderCheckboxCell({
+                    row: {
+                      _id: assessment._id,
+                      status: assessment.status
+                    }
+                  })}
+                </Box>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      ) : (
       <TableContainer 
         sx={{ 
           maxHeight: 350,
+          overflowX: 'auto',
           '&::-webkit-scrollbar': {
             width: '8px',
             height: '8px',
@@ -1419,6 +1585,7 @@ const handleAssessmentPreview = (assessment) => {
           </Droppable>
         </DragDropContext>
       </TableContainer>
+      )}
 
       <TablePagination
         component="div"

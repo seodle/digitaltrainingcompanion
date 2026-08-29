@@ -65,17 +65,20 @@ const Home = () => {
       padding={2}
       sx={{
         boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
-        minHeight: { xs: "160px", md: "100px" },
+        minHeight: { xs: "auto", md: "100px" },
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        flexDirection: { xs: "column", sm: "row" },
+        flexWrap: "wrap",
+        gap: 1.5,
       }}
     >
       {/* Logo */}
       <Box
         sx={{
           borderRadius: "16px",
-          padding: "12px",
+          padding: { xs: "4px", md: "12px" },
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -86,7 +89,7 @@ const Home = () => {
           src={logo}
           style={{
             cursor: "pointer",
-            width: isMobile ? "200px" : "200px",
+            width: isMobile ? "150px" : "200px",
             height: "auto",
           }}
         />
@@ -134,57 +137,57 @@ const Home = () => {
         >
           <YouTubeIcon fontSize="small" />
         </IconButton>
+        <Button
+          onClick={scrollToNews}
+          variant="text"
+          startIcon={<NewsIcon />}
+          endIcon={<ArrowDownIcon sx={{ fontSize: '16px' }} />}
+          sx={{
+            fontSize: "0.8rem",
+            padding: { xs: "6px 10px", md: "8px 16px" },
+            borderRadius: "12px",
+            color: palette.teal,
+            fontWeight: "600",
+            whiteSpace: "nowrap",
+            textTransform: "none",
+            border: `1px solid ${palette.teal}`,
+            background: 'rgba(87, 193, 202, 0.05)',
+            display: { xs: "none", sm: "inline-flex" },
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            '&:hover': {
+              backgroundColor: palette.teal,
+              color: 'white',
+              transform: 'translateY(-1px)',
+              boxShadow: '0 4px 12px rgba(87, 193, 202, 0.3)',
+              '& .MuiSvgIcon-root': {
+                transform: 'scale(1.1)',
+              }
+            },
+            '& .MuiSvgIcon-root': {
+              transition: 'transform 0.2s ease',
+            }
+          }}
+        >
+          {getMessage('label_news')}
+        </Button>
         {!isMobile && (
-          <>
-            <Button
-              onClick={scrollToNews}
-              variant="text"
-              startIcon={<NewsIcon />}
-              endIcon={<ArrowDownIcon sx={{ fontSize: '16px' }} />}
-              sx={{
-                fontSize: "0.8rem",
-                padding: "8px 16px",
-                borderRadius: "12px",
-                color: palette.teal,
-                fontWeight: "600",
-                whiteSpace: "nowrap",
-                textTransform: "none",
-                border: `1px solid ${palette.teal}`,
-                background: 'rgba(87, 193, 202, 0.05)',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                '&:hover': {
-                  backgroundColor: palette.teal,
-                  color: 'white',
-                  transform: 'translateY(-1px)',
-                  boxShadow: '0 4px 12px rgba(87, 193, 202, 0.3)',
-                  '& .MuiSvgIcon-root': {
-                    transform: 'scale(1.1)',
-                  }
-                },
-                '& .MuiSvgIcon-root': {
-                  transition: 'transform 0.2s ease',
-                }
-              }}
-            >
-              {getMessage('label_news')}
-            </Button>
-            <Button
-              onClick={() => navigate("/dashboard")}
-              variant="contained"
-              sx={{
-                ...buttonStyle,
-                fontSize: "0.8rem",
-                padding: "8px 16px",
-                borderRadius: "8px",
-                color: "white",
-                fontWeight: "bold",
-                boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {getMessage('label_go_dashboard')}
-            </Button>
-          </>
+          <Button
+            onClick={() => navigate("/dashboard")}
+            variant="contained"
+            sx={{
+              ...buttonStyle,
+              mr: 0,
+              fontSize: "0.8rem",
+              padding: "8px 16px",
+              borderRadius: "8px",
+              color: "white",
+              fontWeight: "bold",
+              boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {getMessage('label_go_dashboard')}
+          </Button>
         )}
         <LanguageSelector />
       </Box>
@@ -228,26 +231,22 @@ const Home = () => {
 
             <Box display="flex" flexDirection="column" alignItems={isMobile ? "center" : "flex-start"} gap={2} mb={3}>
               {isMobile && (
-                <Box display="flex" justifyContent="center" mb={2}>
-                  <Box component="span" title="Digital Training Companion sera bientôt optimisé pour mobile">
-                    <Button
-                      variant="contained"
-                      disabled
-                      sx={{
-                        ...buttonStyle,
-                        fontSize: "0.8rem",
-                        padding: "10px 20px",
-                        borderRadius: "8px",
-                        color: "white",
-                        fontWeight: "bold",
-                        boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
-                        cursor: "not-allowed",
-                      }}
-                    >
-                      {getMessage('label_go_dashboard')}
-                    </Button>
-                  </Box>
-                </Box>
+                <Button
+                  variant="contained"
+                  onClick={() => navigate("/dashboard")}
+                  sx={{
+                    ...buttonStyle,
+                    mr: 0,
+                    fontSize: "0.8rem",
+                    padding: "10px 20px",
+                    borderRadius: "8px",
+                    color: "white",
+                    fontWeight: "bold",
+                    boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                  }}
+                >
+                  {getMessage('label_go_dashboard')}
+                </Button>
               )}
 
               <Button
@@ -255,6 +254,7 @@ const Home = () => {
                 onClick={() => navigate("/signup", { state: { isSandboxMode }})} 
                 sx={{
                   ...buttonStyle,
+                  mr: { xs: 0, md: 2 },
                   fontSize: isMobile ? "0.8rem" : "1rem",
                   padding: isMobile ? "10px 20px" : "16px 32px",
                   borderRadius: "8px",

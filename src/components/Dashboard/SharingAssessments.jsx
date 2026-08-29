@@ -425,8 +425,10 @@ const handleDownloadPaperVersion = async () => {
         >
         <Box
             sx={{
-            width: 300,
-            height: 300,
+            width: { xs: '100%', sm: 300 },
+            maxWidth: 300,
+            height: { xs: 'auto', sm: 300 },
+            aspectRatio: '1',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -434,6 +436,7 @@ const handleDownloadPaperVersion = async () => {
             borderColor: 'divider',
             borderRadius: '16px',
             mb: 3,
+            '& canvas': { maxWidth: '100%', height: 'auto !important' },
             }}
         >
             {selectedAssessmentIds.length > 0 ? (

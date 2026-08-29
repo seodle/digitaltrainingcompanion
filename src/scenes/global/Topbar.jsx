@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Typography, Box, IconButton, Avatar, Popover, Button, useMediaQuery, Menu, MenuItem } from "@mui/material";
+import { Typography, Box, IconButton, Avatar, Popover, Button, useMediaQuery } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router-dom";
 
 import { useMessageService } from '../../services/MessageService';
@@ -14,7 +13,6 @@ const Topbar = ({ title, logo, boxShadow }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [openLogoutPopover, setOpenLogoutPopover] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [mobileMenuAnchorEl, setMobileMenuAnchorEl] = useState(null);
   const { getMessage } = useMessageService();
 
   const handleLogout = () => {
@@ -31,14 +29,6 @@ const Topbar = ({ title, logo, boxShadow }) => {
     setOpenLogoutPopover(false);
   };
 
-  const handleOpenMobileMenu = (event) => {
-    setMobileMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleCloseMobileMenu = () => {
-    setMobileMenuAnchorEl(null);
-  };
-
   let initials = "";
   let isLoggedIn = false;
   let token = localStorage.getItem('token');
@@ -52,69 +42,49 @@ const Topbar = ({ title, logo, boxShadow }) => {
   }
 
   return (
-    <Box display="flex" justifyContent="space-between" padding={2} sx={{ boxShadow }}>
-      <Box display="flex" flexDirection="column" mt={1}>
+    <Box display="flex" justifyContent="space-between" alignItems="flex-start" sx={{ boxShadow, px: { xs: 2, md: 2 }, py: { xs: 1.5, md: 2 }, pl: { xs: 7, md: 2 } }}>
+      <Box display="flex" flexDirection="column" mt={{ xs: 0.5, md: 1 }} sx={{ minWidth: 0, pr: 1 }}>
+        {logo && (
         <img 
           alt="" 
           src={logo} 
           style={{ 
             cursor: "pointer", 
             borderRadius: "1%", 
-            maxWidth: isMobile ? "200px" : "300px", 
-            minWidth: isMobile ? "150px" : "300px" 
+            maxWidth: isMobile ? "160px" : "300px", 
+            minWidth: isMobile ? "120px" : "300px" 
           }}
         />
-        <Typography variant={isMobile ? "h4" : "h2"} fontWeight="bold">{title}</Typography>
+        )}
+        <Typography variant={isMobile ? "h5" : "h2"} fontWeight="bold" sx={{ wordBreak: "break-word" }}>{title}</Typography>
       </Box>
 
-      {isMobile ? (
-        <Box>
-          <IconButton onClick={handleOpenMobileMenu}>
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            anchorEl={mobileMenuAnchorEl}
-            open={Boolean(mobileMenuAnchorEl)}
-            onClose={handleCloseMobileMenu}
-          >
-            {isLoggedIn ? (
-              <MenuItem onClick={handleLogout}>{getMessage('label_logout')}</MenuItem>
-            ) : (
-              <MenuItem onClick={() => navigate('/signin')}>{getMessage('label_signup')}</MenuItem>
-            )}
-            <MenuItem>
-              <LanguageSelector />
-            </MenuItem>
-          </Menu>
-        </Box>
-      ) : (
-        <Box display="flex" alignItems="center">
-          {isLoggedIn ? (
-            <>
-              <IconButton onClick={handleOpenLogoutPopover}>
-                <Avatar>{initials}</Avatar>
-              </IconButton>
-              <Popover
-                open={openLogoutPopover}
-                onClose={handleCloseLogoutPopover}
-                anchorEl={anchorEl}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-              >
-                <Box p={2}>
-                  <Button onClick={handleLogout} color="error">{getMessage('label_logout')}</Button>
-                </Box>
-              </Popover>
-            </>
-          ) : (
-            <IconButton onClick={() => navigate('/signin')}>
-              <PersonOutlinedIcon sx={{ mr: '8px' }} />
-              <Typography>{getMessage('label_signup')}</Typography>
+      <Box display="flex" alignItems="center" sx={{ flexShrink: 0 }}>
+        {isLoggedIn ? (
+          <>
+            <IconButton onClick={handleOpenLogoutPopover} size={isMobile ? "small" : "medium"}>
+              <Avatar sx={{ width: isMobile ? 32 : 40, height: isMobile ? 32 : 40, fontSize: isMobile ? "0.85rem" : "1rem" }}>{initials}</Avatar>
             </IconButton>
-          )}
-          <LanguageSelector />
-        </Box>
-      )}
+            <Popover
+              open={openLogoutPopover}
+              onClose={handleCloseLogoutPopover}
+              anchorEl={anchorEl}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+              <Box p={2}>
+                <Button onClick={handleLogout} color="error">{getMessage('label_logout')}</Button>
+              </Box>
+            </Popover>
+          </>
+        ) : (
+          <IconButton onClick={() => navigate('/signin')}>
+            <PersonOutlinedIcon sx={{ mr: { xs: 0, md: '8px' } }} />
+            <Typography sx={{ display: { xs: "none", sm: "block" } }}>{getMessage('label_signup')}</Typography>
+          </IconButton>
+        )}
+        <LanguageSelector />
+      </Box>
     </Box>
   );
 };

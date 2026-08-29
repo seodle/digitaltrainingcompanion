@@ -613,8 +613,8 @@ const WarningDialog = () => (
   return (
     <Card
       sx={{
-        width: 280,
-        minWidth: 280,
+        width: { xs: 240, sm: 280 },
+        minWidth: { xs: 240, sm: 280 },
         maxWidth: 280,
         height: 200,
         borderRadius: 2,

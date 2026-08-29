@@ -314,6 +314,7 @@ const Signup = () => {
         top={0}
         left={0}
         height="100vh"
+        width="100%"
         bgcolor="rgba(0,0,0,0.5)"
       />
 
@@ -340,7 +341,7 @@ const Signup = () => {
             component="form"
             onSubmit={handleSubmit}
           >
-            <Box flexGrow={2} flexBasis={0} padding="60px">
+            <Box flexGrow={2} flexBasis={0} sx={{ p: { xs: 3, md: "60px" }, boxSizing: "border-box" }}>
               <LanguageSelector/>
               <DTCLogo/>
               
@@ -502,7 +503,7 @@ const Signup = () => {
                     onClick={handleAcceptTerms}
                     disabled={!acceptEnabled}
                     variant="contained" 
-                    sx={{ ...buttonStyle, width: '20%' }}>
+                    sx={{ ...buttonStyle, width: { xs: '100%', sm: '40%' }, mr: { xs: 0, sm: 2 } }}>
                     <Typography variant="h5">{getMessage('label_accept')}</Typography>
                 </Button>
 
@@ -518,7 +519,7 @@ const Signup = () => {
               </Box>
 
               <Box mt={5} display="flex" justifyContent="center">
-                <Button type="submit" variant="contained" sx={{ ...buttonStyle, width: '20%' }}>
+                <Button type="submit" variant="contained" sx={{ ...buttonStyle, width: { xs: '100%', sm: '40%' }, mr: { xs: 0, sm: 2 } }}>
                   <Typography variant="h5">{getMessage('label_next')}</Typography>
                 </Button>
               </Box>

@@ -50,7 +50,7 @@ const ResetPassword = () => {
   return (
     <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
       <Box display="flex" flexDirection="row" alignItems="stretch" justifyContent="center" sx={authentificationFormStyle}>
-        <Box flexGrow={2} flexBasis={0} padding="60px">
+        <Box flexGrow={2} flexBasis={0} sx={{ p: { xs: 3, md: "60px" }, boxSizing: "border-box" }}>
 
           <LanguageSelector />
           <DTCLogo />
@@ -75,7 +75,7 @@ const ResetPassword = () => {
           </Box>
 
           <Box mt={5} display="flex" justifyContent="center">
-            <Button type="submit" variant="contained" sx={{ ...buttonStyle, width: '30%' }} onClick={() => handleForgotPassword()}>
+            <Button type="submit" variant="contained" sx={{ ...buttonStyle, width: { xs: '100%', sm: '40%' }, mr: { xs: 0, sm: 2 } }} onClick={() => handleForgotPassword()}>
               <Typography variant="h5">{getMessage('label_next')}</Typography>
             </Button>
           </Box>

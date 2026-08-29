@@ -10,6 +10,21 @@ body,
   font-family: "Source Sans Pro", sans-serif;
 }
 
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.rdw-editor-toolbar {
+  flex-wrap: wrap !important;
+}
+
+.rdw-editor-wrapper,
+.rdw-editor-main {
+  max-width: 100%;
+}
+
 .app {
   display: flex;
   position: relative;

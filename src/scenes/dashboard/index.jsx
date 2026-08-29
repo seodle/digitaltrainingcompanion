@@ -533,9 +533,9 @@ const Dashboard = () => {
   return (
     <Box
       display="flex"
-      height="100vh"
+      minHeight="100vh"
       bgcolor="#f9f9f9"
-      sx={{ maxWidth: "100vw", overflow: "hidden" }}
+      sx={{ maxWidth: "100vw", overflow: "auto" }}
     >
       <Sidebar />
       <Box
@@ -543,18 +543,18 @@ const Dashboard = () => {
         flex={1}
         flexDirection="column"
         justifyContent="space-between"
-        sx={{ width: 0 }}
+        sx={{ minWidth: 0, width: "100%" }}
       >
         <Topbar title={getMessage("label_dashboard_title")} />
         <Box
-          p={3}
           sx={{
             flex: 1,
             width: "100%",
             overflowY: "auto",
             display: "flex",
             flexDirection: "column",
-            gap: 3
+            gap: { xs: 1.5, md: 3 },
+            p: { xs: 2, md: 3 },
           }}
         >
           {/** Only show the search bar & monitoring cards if monitorings exist **/}
@@ -580,7 +580,7 @@ const Dashboard = () => {
               </Box>
 
               {/* Monitoring Cards */}
-              <Box sx={{ position: "relative", width: "100%", mb: 7 }}>
+              <Box sx={{ position: "relative", width: "100%", mb: { xs: 0.5, md: 7 } }}>
                 {filteredMonitorings.length > 0 && (
                   <IconButton
                     onClick={() => scroll("left")}
@@ -590,6 +590,7 @@ const Dashboard = () => {
                       top: "50%",
                       transform: "translateY(-50%)",
                       zIndex: 2,
+                      display: { xs: "none", sm: "inline-flex" },
                       bgcolor: "background.paper",
                       boxShadow: 2,
                       "&:hover": { bgcolor: "background.paper" }
@@ -606,12 +607,12 @@ const Dashboard = () => {
                     overflowX: "auto",
                     gap: 2,
                     pb: 2,
-                    px: 6,
+                    px: { xs: 1, md: 6 },
                     scrollBehavior: "smooth",
                     "&::-webkit-scrollbar": { display: "none" },
                     msOverflowStyle: "none",
                     scrollbarWidth: "none",
-                    width: "calc(100% - 48px)",
+                    width: { xs: "100%", md: "calc(100% - 48px)" },
                     margin: "0 auto",
                     position: "relative"
                   }}
@@ -644,6 +645,7 @@ const Dashboard = () => {
                       top: "50%",
                       transform: "translateY(-50%)",
                       zIndex: 2,
+                      display: { xs: "none", sm: "inline-flex" },
                       bgcolor: "background.paper",
                       boxShadow: 2,
                       "&:hover": { bgcolor: "background.paper" }
@@ -667,16 +669,18 @@ const Dashboard = () => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: { xs: "stretch", md: "flex-end" },
+              flexDirection: { xs: "column", sm: "row" },
+              flexWrap: "wrap",
               gap: 2,
-              mt: -8,
+              mt: { xs: 0, md: -8 },
               mb: 1
             }}
           >
             <Button
               variant="contained"
               startIcon={<AddIcon />}
-              sx={buttonStyle}
+              sx={{ ...buttonStyle, width: { xs: "100%", sm: "auto" }, mr: { xs: 0, sm: 2 } }}
               onClick={handleImportMonitoring}
             >
               {getMessage("label_button_import_monitoring")}
@@ -684,7 +688,7 @@ const Dashboard = () => {
             <Button
               variant="contained"
               startIcon={<AddIcon />}
-              sx={buttonStyle}
+              sx={{ ...buttonStyle, width: { xs: "100%", sm: "auto" }, mr: { xs: 0, sm: 2 } }}
               onClick={() => {
                 setOpenMonitoringDialog(true);
                 if (currentUser?.sandbox && monitorings.length >= 1) {
@@ -699,6 +703,8 @@ const Dashboard = () => {
           {/* Create Monitoring Dialog */}
           {/* Create Monitoring Dialog */}
           <Dialog
+            fullWidth
+            maxWidth="sm"
             open={openMonitoringDialog}
             onClose={() => {
               handleCloseMonitoringDialog();
@@ -794,7 +800,7 @@ const Dashboard = () => {
           </Dialog>
 
           {/* Import Monitoring Dialog */}
-          <Dialog open={openLoadCodeDialog} onClose={handleCloseLoadCodeDialog}>
+          <Dialog fullWidth maxWidth="sm" open={openLoadCodeDialog} onClose={handleCloseLoadCodeDialog}>
             <DialogTitle>{getMessage("load_code_dialog_title")}</DialogTitle>
             <DialogContent>
               {currentUser?.sandbox && (
@@ -834,6 +840,8 @@ const Dashboard = () => {
 
           {/* Create Assessment Dialog */}
           <Dialog
+            fullWidth
+            maxWidth="sm"
             open={openAssessmentDialog}
             onClose={handleCloseAssessmentDialog}
           >
@@ -841,7 +849,7 @@ const Dashboard = () => {
               {getMessage("label_create_new_assessment")}
             </DialogTitle>
             <DialogContent>
-              <Box display="flex" alignItems="center">
+              <Box display="flex" alignItems="center" flexWrap="wrap" gap={1}>
                 <Typography>{getMessage("new_assessment_day")} &nbsp; </Typography>
                 <TextField
                   id="day"
@@ -1018,8 +1026,8 @@ const Dashboard = () => {
 
           {/* Assessments and Sharing Section */}
           {selectedMonitoring && (
-            <Box sx={{ display: "flex", gap: 2 }}>
-              <Box sx={{ flex: 2 }}>
+            <Box sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, gap: 2 }}>
+              <Box sx={{ flex: 2, minWidth: 0 }}>
                 <AssessmentsTable
                   assessments={assessments}
                   setAssessments={setAssessments}
@@ -1061,7 +1069,7 @@ const Dashboard = () => {
               </Box>
 
               {selectedAssessmentsIds.length > 0 && (
-                <Box sx={{ flex: 1 }}>
+                <Box sx={{ flex: 1, minWidth: 0, width: { xs: "100%", lg: "auto" } }}>
                   <SharingAssessments
                     selectedAssessmentsIds={selectedAssessmentsIds}
                     assessments={assessments}

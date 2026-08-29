@@ -93,7 +93,7 @@ const UpdatePassword = () => {
       >
        
 
-        <Box padding="60px">
+        <Box sx={{ p: { xs: 3, md: "60px" }, boxSizing: "border-box", width: "100%" }}>
 
         <LanguageSelector/>
 

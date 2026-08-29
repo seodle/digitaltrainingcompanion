@@ -47,7 +47,7 @@ const AssessmentTabResult = ({
 
     return (
         <>
-            <Box gridColumn={`span ${fullScreen ? 12 : 6}`} gridRow={gridRow} sx={{ boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', borderRadius: '15px', backgroundColor: '#fff' }}>
+            <Box gridColumn={{ xs: 'auto', md: `span ${fullScreen ? 12 : 6}` }} gridRow={{ xs: 'auto', md: gridRow }} sx={{ boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', borderRadius: '15px', backgroundColor: '#fff', minWidth: 0 }}>
                 {content(false)}
             </Box>
             <Dialog fullScreen open={expanded} onClose={() => setExpanded(false)}

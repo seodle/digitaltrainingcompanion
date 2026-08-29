@@ -213,7 +213,8 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
         borderRadius: "16px",
         border: "1px solid",
         borderColor: "divider",
-        overflow: "hidden",
+        overflow: { xs: "visible", md: "hidden" },
+        mb: { xs: 2, md: 0 },
       }}
     >
       <Box sx={{ px: { xs: 2, md: 2.5 }, pt: 2.25, pb: 1.5, display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -227,7 +228,7 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
 
       <Box sx={{
         px: { xs: 2, md: 2.5 },
-        pb: 2.5,
+        pb: { xs: "calc(80px + env(safe-area-inset-bottom, 0px))", md: 3 },
         overflowY: 'auto',
         flex: 1,
         minHeight: 0,

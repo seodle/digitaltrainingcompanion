@@ -181,14 +181,14 @@ const Admin = () => {
   const handleTabChange = (e, newValue) => setTab(newValue);
 
   return (
-    <Box display="flex" style={{ height: '100vh', overflow: 'auto' }}>
+    <Box display="flex" sx={{ minHeight: '100vh', overflow: 'auto', maxWidth: '100vw' }}>
       <Sidebar />
-      <Box flex="1" flexDirection="column">
+      <Box flex="1" flexDirection="column" sx={{ minWidth: 0 }}>
         <Box p={2}>
           <Topbar title="Admin" />
         </Box>
         <Box mx={2} mb={2}>
-          <Tabs value={tab} onChange={handleTabChange} indicatorColor="primary" textColor="primary">
+          <Tabs value={tab} onChange={handleTabChange} indicatorColor="primary" textColor="primary" variant="scrollable" scrollButtons="auto" allowScrollButtonsMobile>
             <Tab label="Dashboard" />
             <Tab label="Users" />
             <Tab label="Monitoring and Assessment" />
@@ -294,7 +294,8 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
           <Paper sx={{ p: 2, height: 300 }}>
             <Typography variant="h6" mb={2}>User Growth - Registered Users</Typography>
             {chartData.userGrowth.length > 0 ? (
-              <BarChart width={500} height={250} data={chartData.userGrowth}>
+              <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={chartData.userGrowth}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month" 
@@ -307,6 +308,7 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
                 <Legend />
                 <Bar dataKey="newUsers" fill="#0088FE" name="Registered Users" />
               </BarChart>
+              </ResponsiveContainer>
             ) : (
               <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Typography>No data available</Typography>
@@ -320,7 +322,8 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
           <Paper sx={{ p: 2, height: 300 }}>
             <Typography variant="h6" mb={2}>User Status Distribution</Typography>
             {chartData.userStatusPie.length > 0 ? (
-              <PieChart width={400} height={250}>
+              <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
                 <Pie
                   data={chartData.userStatusPie}
                   cx="50%"
@@ -338,6 +341,7 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
                 </Pie>
                 <Tooltip />
               </PieChart>
+              </ResponsiveContainer>
             ) : (
               <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Typography>No data available</Typography>
@@ -351,7 +355,8 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
           <Paper sx={{ p: 2, height: 300 }}>
             <Typography variant="h6" mb={2}>Monitorings Created Over Time</Typography>
             {chartData.monitoringGrowth && chartData.monitoringGrowth.length > 0 ? (
-              <BarChart width={500} height={250} data={chartData.monitoringGrowth}>
+              <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={chartData.monitoringGrowth}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month" 
@@ -364,6 +369,7 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
                 <Legend />
                 <Bar dataKey="count" fill="#00C49F" name="Monitorings" />
               </BarChart>
+              </ResponsiveContainer>
             ) : (
               <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Typography>No data available</Typography>
@@ -377,7 +383,8 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
           <Paper sx={{ p: 2, height: 300 }}>
             <Typography variant="h6" mb={2}>Assessments Created Over Time</Typography>
             {chartData.assessmentGrowth && chartData.assessmentGrowth.length > 0 ? (
-              <BarChart width={500} height={250} data={chartData.assessmentGrowth}>
+              <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={chartData.assessmentGrowth}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month" 
@@ -390,6 +397,7 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
                 <Legend />
                 <Bar dataKey="count" fill="#FFBB28" name="Assessments" />
               </BarChart>
+              </ResponsiveContainer>
             ) : (
               <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Typography>No data available</Typography>
@@ -403,7 +411,8 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
           <Paper sx={{ p: 2, height: 300 }}>
             <Typography variant="h6" mb={2}>Responses Created Over Time</Typography>
             {chartData.responseGrowth && chartData.responseGrowth.length > 0 ? (
-              <BarChart width={500} height={250} data={chartData.responseGrowth}>
+              <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={chartData.responseGrowth}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month" 
@@ -416,6 +425,7 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
                 <Legend />
                 <Bar dataKey="count" fill="#FF8042" name="Responses" />
               </BarChart>
+              </ResponsiveContainer>
             ) : (
               <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Typography>No data available</Typography>
@@ -511,7 +521,7 @@ const UsersTab = ({
           Active Users (Last 2 Months) - {activeUsersList?.length || 0}
         </Typography>
         {activeUsersList && activeUsersList.length > 0 ? (
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -545,7 +555,7 @@ const UsersTab = ({
       {/* All Users List */}
       <Typography variant="h5" mb={2}>All Users</Typography>
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -614,7 +624,7 @@ const MonitoringAndAssessmentTab = ({
         {/* Monitorings Table */}
         <Grid item xs={12}>
           <Typography variant="h5" mb={2}>Monitorings</Typography>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -657,7 +667,7 @@ const MonitoringAndAssessmentTab = ({
         {/* Assessments Table */}
         <Grid item xs={12}>
           <Typography variant="h5" mb={2} mt={4}>Assessments</Typography>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
             <Table>
               <TableHead>
                 <TableRow>
