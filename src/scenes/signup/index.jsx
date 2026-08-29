@@ -324,6 +324,7 @@ const Signup = () => {
         alignItems="center"
         justifyContent="center"
         minHeight="100vh"
+        sx={{ position: "relative", zIndex: 1 }}
       >
         <Box
           display="flex"
@@ -444,10 +445,16 @@ const Signup = () => {
                   control={
                     <Checkbox
                       checked={termsAccepted}
-                      onChange={handleChange}
+                      onChange={(event) => {
+                        if (!termsAccepted) {
+                          event.preventDefault();
+                          handleOpenTermsDialog();
+                          return;
+                        }
+                        handleChange(event);
+                      }}
                       name="termsAccepted"
                       color="primary"
-                      disabled={!termsAccepted} 
                     />
                   }
                   label={
@@ -460,13 +467,18 @@ const Signup = () => {
                       </Typography>
                       <Typography
                         component="span"
-                        onClick={handleOpenTermsDialog}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          event.stopPropagation();
+                          handleOpenTermsDialog();
+                        }}
                         sx={{ 
                           ml: 0.5,
                           color: 'primary.main',
                           textDecoration: 'underline',
                           cursor: 'pointer',
-                          fontWeight: 'bold'
+                          fontWeight: 'bold',
+                          pointerEvents: 'auto',
                         }}
                       >
                         {getMessage('label_legal_terms')}

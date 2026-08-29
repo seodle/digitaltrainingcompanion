@@ -13,7 +13,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import logo from "../../assets/medias/logo.svg"; 
-import logo_epfl from "../../assets/medias/logo-epfl.svg";
+import logo_evalution from "../../assets/medias/logo-evalution.png";
 import { useMessageService } from '../../services/MessageService';
 
 
@@ -70,20 +70,6 @@ const Sidebar = () => {
     }
   }, [isMobile]);
 
-  // Create a state to hold the window height
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-
-  // Update the window height on resize
-  useEffect(() => {
-    const handleResize = () => setWindowHeight(window.innerHeight);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Determine if the logo should be displayed
-  const showLogo = windowHeight >= 875;
-
-
   return (
     <>
       {isMobile && isCollapsed && (
@@ -129,6 +115,15 @@ const Sidebar = () => {
           : {}),
         "& .pro-sidebar-inner": {
           background: `${"white"} !important`,
+          overflowY: "auto",
+          overflowX: "hidden",
+        },
+        "& .pro-sidebar-inner > .pro-sidebar-layout": {
+          height: "auto !important",
+          minHeight: "100%",
+          overflow: "visible !important",
+          display: "flex",
+          flexDirection: "column",
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
@@ -308,12 +303,23 @@ const Sidebar = () => {
 
           </Box>
         </Menu>
-        {!isCollapsed && showLogo && (
-            <Box mt={20} position="absolute" bottom={0} width="100%" display="flex" justifyContent="center" alignItems="center">
+        {!isCollapsed && (
+            <Box
+              sx={{
+                mt: "auto",
+                flexShrink: 0,
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                pt: 2,
+                pb: 4,
+              }}
+            >
               <img
-                alt=""
-                src={logo_epfl}
-                style={{ cursor: "pointer", borderRadius: "0%", width: "150px", height: "150px" }}
+                alt="evalution"
+                src={logo_evalution}
+                style={{ cursor: "pointer", borderRadius: "0%", width: "170px", height: "auto" }}
               />
             </Box>
         )}

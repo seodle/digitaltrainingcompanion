@@ -23,7 +23,7 @@ import NewsSection from '../../components/NewsSection';
 // Assets
 import logo from "../../assets/medias/logo.svg";
 import illustrationHomePage from "../../assets/medias/illustrationHomePage.png";
-import logoEpfl from "../../assets/medias/logo-epfl.svg";
+import logoEvalution from "../../assets/medias/logo-evalution.png";
 import myMonitorings from "../../assets/medias/home-my-monitorings.png";
 import editAssessments from "../../assets/medias/home-edit-assessments.png";
 import visualizeResults from "../../assets/medias/home-visualize-results.png";
@@ -413,7 +413,7 @@ const Home = () => {
             <Box component="img" src={logo} alt="logo" sx={{ width: 180 }} />
           </Grid>
           <Grid item>
-            <Box component="img" src={logoEpfl} alt="logo epfl" sx={{ width: 110 }} />
+            <Box component="img" src={logoEvalution} alt="evalution" sx={{ width: 160, height: "auto" }} />
           </Grid>
           <Grid item>
             <Typography variant="body2">© {YEAR} The Digital Training Companion</Typography>
