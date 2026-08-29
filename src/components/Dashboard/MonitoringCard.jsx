@@ -640,7 +640,7 @@ const WarningDialog = () => (
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          gap: 1.5,
+          gap: 1.25,
           overflow: 'hidden', // Ajouter cette ligne
           minHeight: 0, // Ajouter cette ligne pour permettre le shrink
         }}
@@ -869,7 +869,7 @@ const WarningDialog = () => (
           sx={{
             display: 'flex',
             gap: 2,
-            mb: 2,
+            mb: 0.5,
             fontSize: '0.75rem',
             color: 'text.secondary',
           }}

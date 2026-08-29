@@ -12,6 +12,7 @@ const AssessmentTabResult = ({
     groupChartData,
     groupCommentData,
     fullScreen=false,
+    hide_students_name,
     aiSummaries,
     loadingSummaries,
     showPercentage,
@@ -38,6 +39,7 @@ const AssessmentTabResult = ({
                 groupChartData={groupChartData}
                 groupCommentData={groupCommentData}
                 fullScreen={isExpanded}
+                hide_students_name={hide_students_name}
                 aiSummaries={aiSummaries}
                 loadingSummaries={loadingSummaries}
                 showPercentage={showPercentage}
@@ -47,7 +49,7 @@ const AssessmentTabResult = ({
 
     return (
         <>
-            <Box gridColumn={{ xs: 'auto', md: `span ${fullScreen ? 12 : 6}` }} gridRow={{ xs: 'auto', md: gridRow }} sx={{ boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', borderRadius: '15px', backgroundColor: '#fff', minWidth: 0 }}>
+            <Box gridColumn={{ xs: 'auto', md: `span ${fullScreen ? 12 : 6}` }} gridRow={{ xs: 'auto', md: gridRow }} sx={{ boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.06)', borderRadius: '16px', backgroundColor: '#fff', minWidth: 0, overflow: 'hidden' }}>
                 {content(false)}
             </Box>
             <Dialog fullScreen open={expanded} onClose={() => setExpanded(false)}

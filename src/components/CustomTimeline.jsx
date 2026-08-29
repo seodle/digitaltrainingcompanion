@@ -16,12 +16,12 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
+import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useAuthUser } from "../contexts/AuthUserContext";
 import { LogType } from "../utils/enums";
 import { useMessageService } from "../services/MessageService";
-import { localizeAssessmentType } from "../utils/ObjectsUtils";
 import LogChatDialog from "./LogChatDialog";
 import { ActivityIcon, IconWell, LogTypeGlyph } from "./logbookIcons";
 
@@ -32,6 +32,29 @@ const getPersonName = (person, fallback) => {
     return `${person.firstName || ""} ${person.lastName || ""}`.trim() || fallback;
   }
   return fallback;
+};
+
+const formatLogWhen = (value) => {
+  if (!value) {
+    return "";
+  }
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+  return date.toLocaleString(undefined, {
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+const isSameMoment = (first, second) => {
+  if (!first || !second) {
+    return false;
+  }
+  return Math.abs(new Date(first) - new Date(second)) < 60 * 1000;
 };
 
 const CustomTimeline = ({
@@ -95,7 +118,13 @@ const CustomTimeline = ({
     }
     const focused = logs.find((log) => String(log._id) === String(focusLogId));
     const focusedAuthor = focused ? getAuthorId(focused) : "";
-    if (focused && isMonitoringOwner && focusedAuthor && focusedAuthor !== String(currentUser?._id || "")) {
+    if (
+      focused &&
+      isMonitoringOwner &&
+      focused.logType === LogType.ASK_FOR_HELP &&
+      focusedAuthor &&
+      focusedAuthor !== String(currentUser?._id || "")
+    ) {
       setChatLog(focused);
     }
   }, [focusLogId, logs, isMonitoringOwner, currentUser?._id]);
@@ -221,10 +250,9 @@ const CustomTimeline = ({
       sx={{
         display: "flex",
         flexWrap: "wrap",
-        gap: 1.5,
-        minWidth: { xs: "100%", sm: "auto" },
-        ml: { md: "auto" },
-        justifyContent: { xs: "stretch", md: "flex-end" },
+        gap: 2,
+        minWidth: "100%",
+        justifyContent: { xs: "stretch", md: "flex-start" },
       }}
     >
       <FormControl size="small" sx={{ minWidth: { xs: "100%", sm: 180 } }}>
@@ -290,13 +318,11 @@ const CustomTimeline = ({
       sx={{
         px: { xs: 2, md: 2.5 },
         pt: 2.25,
-        pb: 1.5,
+        pb: 2.5,
         display: "flex",
-        flexDirection: { xs: "column", md: "row" },
-        alignItems: { xs: "stretch", md: "center" },
-        justifyContent: { md: "space-between" },
-        flexWrap: "wrap",
-        gap: 1.5,
+        flexDirection: "column",
+        alignItems: "stretch",
+        gap: 2.5,
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, minWidth: 0 }}>
@@ -349,6 +375,7 @@ const CustomTimeline = ({
       <Box
         sx={{
           px: { xs: 1.5, md: 2 },
+          pt: 1.5,
           pb: 2,
           overflowY: "auto",
           maxHeight: { xs: "none", md: "72vh" },
@@ -366,11 +393,11 @@ const CustomTimeline = ({
           const isEditing = editingId === log._id;
           const isOwn = getAuthorId(log) === currentUserId;
           const visibility = log.visibility || "private";
-          const helpSent = Boolean(log.helpRequestedAt) || log.logType === LogType.ASK_FOR_HELP;
           const messageCount = (log.chat || []).length;
-          const canOpenChat = isMonitoringOwner
-            ? !isOwn
-            : (isOwn && messageCount > 0);
+          const isAskForHelp = log.logType === LogType.ASK_FOR_HELP;
+          const canOpenChat = isAskForHelp && (isMonitoringOwner ? !isOwn : isOwn);
+          const canResolveHelp = isAskForHelp && (isOwn || isMonitoringOwner);
+          const highlightHelp = isAskForHelp && !log.isCompleted;
           const isFocused = focusLogId && String(focusLogId) === String(log._id);
 
           return (
@@ -381,8 +408,9 @@ const CustomTimeline = ({
                 p: { xs: 1.5, md: 1.75 },
                 borderRadius: "12px",
                 border: "1px solid",
-                borderColor: isFocused ? "#F7941E" : "divider",
-                bgcolor: "white",
+                borderColor: isFocused || highlightHelp ? "#F7941E" : "divider",
+                borderLeft: highlightHelp ? "4px solid #F7941E" : undefined,
+                bgcolor: highlightHelp ? "#FFFBF6" : "white",
               }}
             >
               <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.25, mb: 1 }}>
@@ -391,9 +419,7 @@ const CustomTimeline = ({
                 </IconWell>
                 <Box sx={{ minWidth: 0, flex: 1 }}>
                   <Typography variant="subtitle1" fontWeight={700} sx={{ lineHeight: 1.3, pr: 1 }}>
-                    {log.assessment
-                      ? localizeAssessmentType(log.assessment, getMessage)
-                      : getMessage(`label_log_type_${Object.entries(LogType).find(([, value]) => value === log.logType)?.[0]?.toLowerCase() || "observation"}`)}
+                    {getMessage(`label_log_type_${Object.entries(LogType).find(([, value]) => value === log.logType)?.[0]?.toLowerCase() || "observation"}`)}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
                     {getPersonName(log.userId, getMessage("label_log_author"))}
@@ -474,6 +500,7 @@ const CustomTimeline = ({
                 )}
               </Box>
 
+              <Box sx={{ pl: "42px", mt: 1.5 }}>
               {!isDetailCard(log) && Array.isArray(log.assessmentNames) && log.assessmentNames.length > 0 && (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, mb: 1 }}>
                   {log.assessmentNames.map((assessmentName, index) => (
@@ -524,6 +551,9 @@ const CustomTimeline = ({
                     whiteSpace: "pre-wrap",
                     wordBreak: "break-word",
                     lineHeight: 1.55,
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                    color: "#1a1a1a",
                     cursor: isOwn ? "pointer" : "default",
                   }}
                 >
@@ -532,60 +562,97 @@ const CustomTimeline = ({
               )}
 
               <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 1.5 }}>
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, alignItems: "center" }}>
                   {log.logType === LogType.CHANGE && isOwn && !log.isCompleted && (
                     <Button
                       size="small"
                       variant="outlined"
                       onClick={() => handleChangeCompletion(log)}
-                      sx={{ borderColor: "#F5D4A8", color: "#D17A1D", width: { xs: "100%", sm: "auto" } }}
+                      sx={{ borderColor: "#F5D4A8", color: "#D17A1D" }}
                     >
                       {getMessage("label_log_isCompleted")}
                     </Button>
                   )}
-                  {helpSent && (
-                    <Chip
+                  {canResolveHelp && !log.isCompleted && (
+                    <Button
                       size="small"
-                      label={getMessage("label_log_help_sent")}
-                      sx={{ bgcolor: "#FFF6EC", border: "1px solid #F5D4A8" }}
-                    />
+                      variant="outlined"
+                      onClick={() => handleChangeCompletion(log)}
+                      sx={{ borderColor: "#F5D4A8", color: "#D17A1D" }}
+                    >
+                      {getMessage("label_log_mark_resolved")}
+                    </Button>
                   )}
                   {canOpenChat && (
                     <Button
                       size="small"
-                      variant="outlined"
+                      variant="text"
                       startIcon={<ChatBubbleOutlineRoundedIcon />}
                       onClick={() => setChatLog(log)}
-                      sx={{ borderColor: "#F5D4A8", color: "#D17A1D", width: { xs: "100%", sm: "auto" } }}
+                      sx={{
+                        ml: "auto",
+                        fontWeight: 700,
+                        color: "#C56A12",
+                        textDecoration: "underline",
+                        textUnderlineOffset: "3px",
+                        "&:hover": {
+                          bgcolor: "#FFF6EC",
+                          textDecoration: "underline",
+                        },
+                      }}
                     >
                       {getMessage("label_log_open_discussion")}
                       {messageCount > 0 ? ` (${messageCount})` : ""}
                     </Button>
                   )}
                 </Box>
-                {(log.isCompleted || log.lastModificationDate) && (
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 0.25 }}>
+                {(log.isCompleted || (log.lastModificationDate && !isSameMoment(log.lastModificationDate, log.completionDate))) && (
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, alignItems: "center" }}>
                     {log.logType === LogType.CHANGE && log.isCompleted && (
-                      <Typography
-                        variant="caption"
-                        onClick={() => isOwn && handleChangeCompletion(log)}
+                      <Chip
+                        size="small"
+                        icon={<CheckCircleOutlineRoundedIcon sx={{ fontSize: "1rem" }} />}
+                        label={`${getMessage("label_log_completed")} · ${formatLogWhen(log.completionDate)}`}
+                        onClick={isOwn ? () => handleChangeCompletion(log) : undefined}
                         sx={{
-                          color: "text.secondary",
-                          cursor: isOwn ? "pointer" : "default",
-                          width: "fit-content",
+                          bgcolor: "#EEF6EE",
+                          border: "1px solid #C4DCC4",
+                          color: "#2F6A32",
+                          fontWeight: 600,
+                          "& .MuiChip-icon": { color: "#2F6A32" },
                         }}
-                      >
-                        {getMessage("label_log_completed")}{" "}
-                        {log.completionDate ? new Date(log.completionDate).toLocaleString() : ""}
-                      </Typography>
+                      />
                     )}
-                    {log.lastModificationDate && (
-                      <Typography variant="caption" color="text.secondary" sx={{ fontStyle: "italic" }}>
-                        {getMessage("label_last_modified")}: {new Date(log.lastModificationDate).toLocaleString()}
-                      </Typography>
+                    {isAskForHelp && log.isCompleted && (
+                      <Chip
+                        size="small"
+                        icon={<CheckCircleOutlineRoundedIcon sx={{ fontSize: "1rem" }} />}
+                        label={`${getMessage("label_log_resolved")} · ${formatLogWhen(log.completionDate)}`}
+                        onClick={canResolveHelp ? () => handleChangeCompletion(log) : undefined}
+                        sx={{
+                          bgcolor: "#EEF6EE",
+                          border: "1px solid #C4DCC4",
+                          color: "#2F6A32",
+                          fontWeight: 600,
+                          "& .MuiChip-icon": { color: "#2F6A32" },
+                        }}
+                      />
+                    )}
+                    {log.lastModificationDate && !isSameMoment(log.lastModificationDate, log.completionDate) && (
+                      <Chip
+                        size="small"
+                        label={`${getMessage("label_last_modified")} · ${formatLogWhen(log.lastModificationDate)}`}
+                        sx={{
+                          bgcolor: "transparent",
+                          border: "1px solid",
+                          borderColor: "divider",
+                          color: "text.secondary",
+                        }}
+                      />
                     )}
                   </Box>
                 )}
+              </Box>
               </Box>
             </Box>
           );

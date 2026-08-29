@@ -100,6 +100,16 @@ const Sidebar = () => {
           }}
         />
       )}
+    {!isMobile && (
+      <Box
+        aria-hidden
+        sx={{
+          width: isCollapsed ? 80 : 270,
+          flexShrink: 0,
+          alignSelf: "stretch",
+        }}
+      />
+    )}
     <Box
       sx={{
         ...(isMobile
@@ -112,7 +122,13 @@ const Sidebar = () => {
               transform: isCollapsed ? "translateX(-110%)" : "translateX(0)",
               transition: "transform 0.2s ease",
             }
-          : {}),
+          : {
+              position: "fixed",
+              left: 0,
+              top: 0,
+              height: "100vh",
+              zIndex: 1200,
+            }),
         "& .pro-sidebar-inner": {
           background: `${"white"} !important`,
           overflowY: "auto",

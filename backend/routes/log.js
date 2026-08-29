@@ -96,7 +96,7 @@ router.patch('/:logId', requireLogOwner, async (req, res) => {
     }
 });
 
-router.patch('/:logId/completion', requireLogOwner, async (req, res) => {
+router.patch('/:logId/completion', async (req, res) => {
     const { logId } = req.params;
     const { isCompleted } = req.body;
     if (typeof isCompleted !== 'boolean') {

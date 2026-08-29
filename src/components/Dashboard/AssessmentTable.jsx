@@ -37,11 +37,14 @@ import {
   User,
   Users,
   CalendarDays,
+  Mail,
+  Check,
   Edit2,
   Eye,
   GripVertical,
   X,
-  RefreshCw
+  RefreshCw,
+  Plus
 } from 'lucide-react';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import ShareIcon from '@mui/icons-material/Share';
@@ -58,6 +61,7 @@ import { useMessageService } from '../../services/MessageService';
 import { useAuthUser } from '../../contexts/AuthUserContext';
 import { AssessmentType, OptionTypes, UserType } from '../../utils/enums';
 import { localizeAssessmentType } from '../../utils/ObjectsUtils';
+import { getAssessmentTypeConfig } from '../../utils/assessmentTypeConfig';
 import { buttonStyle } from '../styledComponents';
 
 const AssessmentTable = ({ 
@@ -74,7 +78,9 @@ const AssessmentTable = ({
     setIsOpen,
     setOpenAssessmentsCount,
     selectedAssessmentsIds,
-    setSelectedAssessmentsIds
+    setSelectedAssessmentsIds,
+    onCreateAssessment,
+    fillHeight = false
 }) => {
   
   const navigate = useNavigate();
@@ -303,7 +309,7 @@ const AssessmentTable = ({
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Typography 
                     sx={{ 
-                        maxWidth: '230px',
+                        maxWidth: '100%',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap'
@@ -318,7 +324,7 @@ const AssessmentTable = ({
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Typography 
                 sx={{ 
-                    maxWidth: '230px',
+                    maxWidth: '100%',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap'
@@ -398,104 +404,47 @@ const AssessmentTable = ({
  * If the assessment type is not found in typeConfigs, falls back to default styling
  * Uses getMessage for localization and localizeAssessmentType as fallback
  */
-const renderAssessmentType = (assessment) => {
+const renderAssessmentType = (assessment, compact = false) => {
   const type = assessment.type;
-  let displayName = "";
-  let config = {};
-
-  const typeConfigs = {
-  [AssessmentType.TRAINEE_CHARACTERISTICS]: {
-    color: '#2196F3',  // Bright Blue
-    icon: '👥',
-    name: 'label_assessment_type_trainee_characteristics'
-  },
-  [AssessmentType.TRAINING_CHARACTERISTICS]: {
-    color: '#9C27B0',  // Purple
-    icon: '📚',
-    name: 'label_assessment_type_training_characteristics'
-  },
-  [AssessmentType.IMMEDIATE_REACTIONS]: {
-    color: '#FF9800',  // Orange
-    icon: '⚡',
-    name: 'label_assessment_type_immediate_reactions'
-  },
-  [AssessmentType.LEARNING]: {
-    color: '#4CAF50',  // Green
-    icon: '🎯',
-    name: 'label_assessment_type_learning'
-  },
-  [AssessmentType.ORGANIZATIONAL_CONDITIONS]: {
-    color: '#E91E63',  // Pink
-    icon: '🏢',
-    name: 'label_assessment_type_organizational_conditions'
-  },
-  [AssessmentType.BEHAVIORAL_CHANGES]: {
-    color: '#00BCD4',  // Cyan
-    icon: '🔄',
-    name: 'label_assessment_type_behavioral_changes'
-  },
-  [AssessmentType.SUSTAINABILITY_CONDITIONS]: {
-    color: '#673AB7',  // Deep Purple
-    icon: '♻️',
-    name: 'label_assessment_type_sustainability_conditions'
-  },
-  [AssessmentType.STUDENT_CHARACTERISTICS]: {
-    color: '#F44336',  // Red
-    icon: '👨‍🎓',
-    name: 'label_assessment_type_student_characteristics'
-  },
-  [AssessmentType.STUDENT_LEARNING_OUTCOMES]: {
-    color: '#009688',  // Teal
-    icon: '📊',
-    name: 'label_assessment_type_student_learning_outcomes'
-  }
-};
-
-  config = typeConfigs[type] || { color: '#95A5A6', icon: '📋', name: type };
-  displayName = getMessage(config.name) || localizeAssessmentType(type, getMessage);
+  const config = getAssessmentTypeConfig(type);
+  const displayName = getMessage(config.name) || localizeAssessmentType(type, getMessage);
 
   return (
-    <Box
-      sx={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '8px',
-        padding: '6px 12px',
-        borderRadius: '8px',
-        border: '1px solid',
-        borderColor: config.color,
-        backgroundColor: `${config.color}10`,
-        color: config.color,
-        transition: 'all 0.2s ease',
-        cursor: 'default',
-        '&:hover': {
-          backgroundColor: `${config.color}20`,
-        }
-      }}
-    >
-      <Typography
-        component="span"
+    <Tooltip title={displayName}>
+      <Box
         sx={{
-          fontSize: '16px',
-          lineHeight: 1,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: compact ? 0 : '6px',
+          padding: compact ? '4px 6px' : '4px 8px',
+          borderRadius: '8px',
+          border: '1px solid',
+          borderColor: config.color,
+          backgroundColor: `${config.color}10`,
+          color: config.color,
+          maxWidth: '100%',
+          minWidth: 0,
         }}
       >
-        {config.icon}
-      </Typography>
-      <Typography
-        sx={{
-          fontSize: '13px',
-          fontWeight: 500,
-          lineHeight: '1.2',
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          maxWidth: '140px'
-        }}
-      >
-        {displayName}
-      </Typography>
-    </Box>
+        <Typography component="span" sx={{ fontSize: '15px', lineHeight: 1 }}>
+          {config.icon}
+        </Typography>
+        {!compact && (
+          <Typography
+            sx={{
+              fontSize: '0.75rem',
+              fontWeight: 500,
+              lineHeight: 1.2,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {displayName}
+          </Typography>
+        )}
+      </Box>
+    </Tooltip>
   );
 };
 
@@ -514,39 +463,25 @@ const renderAssessmentType = (assessment) => {
  * @requires currentUser - Global/context object containing current user details
  * @requires getMessage - Function to get localized messages
  */
-const renderOwnerCell = (assessment) => {
-  // If no userId, display information not available
+const renderOwnerCell = (assessment, compact = false) => {
   if (!getAssessmentUserId(assessment)) {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <Typography variant="body2" sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
-            {''}
-        </Typography>
-      </Box>
-    );
+    return null;
   }
 
-  // If it's owned by current user
-  if (getAssessmentUserId(assessment) === currentUser._id) {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <User size={14} />
-        <Typography variant="body2">
-          {`${currentUser.firstName} ${currentUser.lastName}`}
-        </Typography>
-      </Box>
-    );
-  }
+  const isMine = getAssessmentUserId(assessment) === currentUser._id;
+  const owner = isMine ? currentUser : getAssessmentOwner(assessment);
+  const fullName = owner ? `${owner.firstName} ${owner.lastName}` : '';
+  const shortName = owner?.firstName || fullName;
 
-  // If assessment is owned by someone else than current user
-  const owner = getAssessmentOwner(assessment);
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-      <Users size={14} />
-      <Typography variant="body2">
-        {owner ? `${owner.firstName} ${owner.lastName}` : ''}
-      </Typography>
-    </Box>
+    <Tooltip title={fullName}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 0 }}>
+        {isMine ? <User size={14} /> : <Users size={14} />}
+        <Typography variant="body2" noWrap sx={{ fontSize: compact ? '0.75rem' : '0.8125rem' }}>
+          {compact ? shortName : fullName}
+        </Typography>
+      </Box>
+    </Tooltip>
   );
 };
 
@@ -613,6 +548,35 @@ const handleAssessmentPreview = (assessment) => {
         : getMessage('label_scheduled_sent');
     }
     return dateLabel;
+  };
+
+  const renderScheduledSendChip = (assessment) => {
+    const isSent = assessment.scheduledSendStatus === 'sent';
+    if (!assessment.scheduledSendAt && !isSent) {
+      return null;
+    }
+    const tooltip = formatScheduledSend(assessment) || getMessage('table_assessments_scheduled_send');
+
+    return (
+      <Tooltip title={tooltip}>
+        <Box
+          sx={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 20,
+            height: 20,
+            borderRadius: '50%',
+            flexShrink: 0,
+            ...(isSent
+              ? { bgcolor: '#e8f5e9', color: '#2e7d32' }
+              : { bgcolor: '#FFF6EC', color: '#D17A1D' }),
+          }}
+        >
+          {isSent ? <Check size={12} /> : <Mail size={12} />}
+        </Box>
+      </Tooltip>
+    );
   };
 
   const formatDate = (dateString) => {
@@ -1045,13 +1009,17 @@ const handleAssessmentPreview = (assessment) => {
         border: '1px solid',
         borderColor: 'divider',
         borderRadius: 2,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        width: '100%',
+        height: fillHeight ? '100%' : 'auto',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
-      <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1, flexWrap: 'wrap', gap: 1.5 }}>
+      <Box sx={{ px: 2, pt: 2, pb: 1.5, minHeight: 96, boxSizing: 'border-box', borderBottom: '1px solid', borderColor: 'divider', flexShrink: 0 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 1 }}>
           <Box>
-            <Typography variant="h4" sx={{ fontWeight: 800, mb: 2 }}>
+            <Typography variant="h4" sx={{ fontWeight: 800, lineHeight: 1.3, mb: 0 }}>
                 {getMessage('label_table_assessment')} {monitorings.find(monitoring => monitoring._id === currentMonitoringId)?.name || ''}
             </Typography>
             <ToggleButtonGroup
@@ -1060,6 +1028,7 @@ const handleAssessmentPreview = (assessment) => {
               exclusive
               onChange={(e, value) => value && setOwnerFilter(value)}
               aria-label="owner filter"
+              sx={{ mt: 1 }}
             >
               <ToggleButton value="all">{getMessage('table_assessment_all')}</ToggleButton>
               <ToggleButton value="mine">{getMessage('table_assessment_mine')}</ToggleButton>
@@ -1094,7 +1063,7 @@ const handleAssessmentPreview = (assessment) => {
       </Box>
 
       {isMobile ? (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, p: 1.5 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, p: 1.5, flex: fillHeight ? 1 : 'none', minHeight: 0, overflowY: fillHeight ? 'auto' : 'visible' }}>
           {(rowsPerPage > 0
             ? sortedAssessments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : sortedAssessments
@@ -1155,26 +1124,21 @@ const handleAssessmentPreview = (assessment) => {
                   <Typography variant="caption" color="text.secondary">
                     {getMessage('table_assessments_dates')}
                   </Typography>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 0.25 }}>
-                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                      <CalendarDays size={12} />
-                      {formatDate(assessment.creationDate)}
-                    </Typography>
-                    {assessment.lastModificationDate && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 0.25 }}>
                       <Typography variant="caption" sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                        <Edit2 size={12} />
-                        {formatDate(assessment.lastModificationDate)}
+                        <CalendarDays size={12} />
+                        {formatDate(assessment.creationDate)}
                       </Typography>
-                    )}
+                      {assessment.lastModificationDate && (
+                        <Typography variant="caption" sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                          <Edit2 size={12} />
+                          {formatDate(assessment.lastModificationDate)}
+                        </Typography>
+                      )}
+                    </Box>
+                    {renderScheduledSendChip(assessment)}
                   </Box>
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 1 }}>
-                  <Typography variant="caption" color="text.secondary">
-                    {getMessage('table_assessments_scheduled_send')}
-                  </Typography>
-                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                    {formatScheduledSend(assessment)}
-                  </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 1, mt: 0.5 }}>
                   <Typography variant="caption" color="text.secondary">
@@ -1256,8 +1220,11 @@ const handleAssessmentPreview = (assessment) => {
       ) : (
       <TableContainer 
         sx={{ 
-          maxHeight: 350,
+          flex: fillHeight ? 1 : 'none',
+          minHeight: 0,
+          maxHeight: fillHeight ? 'none' : { xs: 350, md: 'min(560px, calc(100vh - 340px))' },
           overflowX: 'auto',
+          overflowY: 'auto',
           '&::-webkit-scrollbar': {
             width: '8px',
             height: '8px',
@@ -1281,12 +1248,13 @@ const handleAssessmentPreview = (assessment) => {
               <Table 
                 stickyHeader 
                 size="small"
+                sx={{ tableLayout: 'fixed', width: '100%' }}
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
                 <TableHead>
                   <TableRow>
-                  <TableCell sx={{ width: 50, padding: '6px 8px' }}>
+                  <TableCell sx={{ width: fillHeight ? 36 : 44, padding: '6px 4px' }}>
                       {isCurrentMonitoringOwner() && !canUseDragAndDrop() ? (
                         <Tooltip title={getMessage('tooltip_enable_reorder')}>
                           <span>
@@ -1301,60 +1269,64 @@ const handleAssessmentPreview = (assessment) => {
                         </Tooltip>
                       ) : null}
                     </TableCell>
-                    <TableCell sx={{ width: 100, padding: '6px 8px' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, cursor: 'pointer' }}
+                    <TableCell sx={{ width: fillHeight ? 56 : 72, padding: '6px 4px' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25, cursor: 'pointer' }}
                             onClick={() => handleSort('day')}>
                         {getMessage('table_assessments_session')}
-                        <ArrowUpwardIcon sx={{ fontSize: '0.875rem' }} />
-                        <ArrowDownwardIcon sx={{ fontSize: '0.875rem' }} />
+                        {!fillHeight && (
+                          <>
+                            <ArrowUpwardIcon sx={{ fontSize: '0.75rem' }} />
+                            <ArrowDownwardIcon sx={{ fontSize: '0.75rem' }} />
+                          </>
+                        )}
                         </Box>
                     </TableCell>
-                    <TableCell sx={{ width: '20%', padding: '6px 8px' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, cursor: 'pointer' }}
+                    <TableCell sx={{ width: fillHeight ? 176 : 210, padding: '6px 4px' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25, cursor: 'pointer' }}
                             onClick={() => handleSort('name')}>
                         {getMessage('label_name')}
-                        <ArrowUpwardIcon sx={{ fontSize: '0.875rem' }} />
-                        <ArrowDownwardIcon sx={{ fontSize: '0.875rem' }} />
+                        {!fillHeight && (
+                          <>
+                            <ArrowUpwardIcon sx={{ fontSize: '0.75rem' }} />
+                            <ArrowDownwardIcon sx={{ fontSize: '0.75rem' }} />
+                          </>
+                        )}
                         </Box>
                     </TableCell>
-                    <TableCell sx={{ width: 180, padding: '6px 8px' }}>
-                        {getMessage('table_assessments_type')}
+                    <TableCell sx={{ width: fillHeight ? 48 : 150, padding: '6px 4px' }}>
+                        <Typography variant="caption" noWrap sx={{ display: 'block', fontWeight: 600 }}>
+                          {getMessage('table_assessments_type')}
+                        </Typography>
                     </TableCell>
-                    <TableCell sx={{ width: 180, padding: '6px 8px' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                            {getMessage('table_assessments_owner')}
-                        </Box>
+                    <TableCell sx={{ width: fillHeight ? 88 : 140, padding: '6px 4px' }}>
+                        {getMessage('table_assessments_owner')}
                     </TableCell>  
-                    <TableCell sx={{ width: 190, padding: '6px 8px' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, cursor: 'pointer' }}
+                    <TableCell sx={{ width: fillHeight ? 108 : 140, padding: '6px 4px' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25, cursor: 'pointer' }}
                             onClick={() => handleSort('date')}>
                         {getMessage('table_assessments_dates')}
-                        <ArrowUpwardIcon sx={{ fontSize: '0.875rem' }} />
-                        <ArrowDownwardIcon sx={{ fontSize: '0.875rem' }} />
                         </Box>
                     </TableCell>
-                    <TableCell sx={{ width: 180, padding: '6px 8px' }}>
-                        {getMessage('table_assessments_scheduled_send')}
-                    </TableCell>
-                    <TableCell sx={{ width: 140, padding: '6px 8px' }}>
+                    <TableCell sx={{ width: fillHeight ? 78 : 110, padding: '6px 4px' }}>
                         {getMessage('label_status_assessment')}
                     </TableCell>
-                    <TableCell sx={{ width: 52, padding: '6px 4px', textAlign: 'center' }}>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2, fontSize: '0.75rem' }}>
-                            <span>{getMessage('label_edit')}</span>
-                            <span>{getMessage('label_preview')}</span>
-                        </Box>
+                    <TableCell sx={{ width: 40, padding: '6px 2px', textAlign: 'center' }}>
+                        <Tooltip title={`${getMessage('label_edit')} / ${getMessage('label_preview')}`}>
+                          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Eye size={14} />
+                          </Box>
+                        </Tooltip>
                     </TableCell>
                     <TableCell 
                         padding="checkbox"
                         sx={{ 
-                          width: 50,
-                          padding: '6px 4px'
+                          width: 36,
+                          padding: '6px 2px'
                         }}>
                         <ShareIcon sx={{ fontSize: '1.1rem' }} />
                     </TableCell>
-                    <TableCell sx={{ width: 120, textAlign: 'center', padding: '6px 8px' }}>
-                        {getMessage('table_assessments_more')}
+                    <TableCell sx={{ width: 36, textAlign: 'center', padding: '6px 2px' }}>
+                        <MoreVertical size={14} />
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -1379,7 +1351,7 @@ const handleAssessmentPreview = (assessment) => {
                                   '&:hover': { bgcolor: 'action.hover' },
                                   bgcolor: snapshot.isDragging ? 'action.hover' : (isOwner(assessment) ? 'rgba(25, 118, 210, 0.04)' : 'inherit'),
                                   '& .MuiTableCell-root': {
-                                    padding: '4px 8px',
+                                    padding: fillHeight ? '4px 4px' : '4px 6px',
                                     height: '40px'
                                   }
                               }}
@@ -1407,8 +1379,8 @@ const handleAssessmentPreview = (assessment) => {
                                   field: 'day'
                               }, 'day')}
                               </TableCell>
-                            <TableCell sx={{ maxWidth: 250, padding: '6px 8px' }}>
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <TableCell sx={{ width: fillHeight ? 176 : 210, minWidth: 0, overflow: 'hidden' }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0 }}>
                                   {renderTextFieldCell({
                                   id: assessment._id,
                                   row: assessment,
@@ -1418,12 +1390,13 @@ const handleAssessmentPreview = (assessment) => {
                               </Box>
                               </TableCell>
                             <TableCell>
-                              {renderAssessmentType(assessment)}
+                              {renderAssessmentType(assessment, fillHeight)}
+                            </TableCell>
+                            <TableCell sx={{ minWidth: 0 }}>
+                              {renderOwnerCell(assessment, fillHeight)}
                             </TableCell>
                             <TableCell>
-                              {renderOwnerCell(assessment)}
-                            </TableCell>
-                            <TableCell>
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
                               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                                   <Typography
                                   variant="caption"
@@ -1454,12 +1427,9 @@ const handleAssessmentPreview = (assessment) => {
                                   </Typography>
                                   )}
                               </Box>
+                              {renderScheduledSendChip(assessment)}
+                              </Box>
                               </TableCell>
-                            <TableCell>
-                              <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
-                                {formatScheduledSend(assessment)}
-                              </Typography>
-                            </TableCell>
                             <TableCell>
                               <Tooltip
                                 title={getStatusTooltip(assessment)}
@@ -1477,8 +1447,8 @@ const handleAssessmentPreview = (assessment) => {
                                   sx={{
                                       display: 'inline-flex',
                                       alignItems: 'center',
-                                      gap: '8px',
-                                      padding: '6px 12px',
+                                      gap: '6px',
+                                      padding: fillHeight ? '3px 6px' : '4px 8px',
                                       borderRadius: '8px',
                                       border: '2px solid',
                                       cursor: getAssessmentUserId(assessment) === currentUser._id && assessment.status !== 'Close' ? 'pointer' : 'default',
@@ -1517,7 +1487,7 @@ const handleAssessmentPreview = (assessment) => {
                                   >
                                   <Typography
                                       sx={{
-                                      fontSize: '0.8rem',
+                                      fontSize: fillHeight ? '0.7rem' : '0.8rem',
                                       fontWeight: 600,
                                       lineHeight: '1.2',
                                       letterSpacing: '0.01em'
@@ -1587,8 +1557,50 @@ const handleAssessmentPreview = (assessment) => {
       </TableContainer>
       )}
 
+      {onCreateAssessment && (
+        <Box
+          component="button"
+          type="button"
+          onClick={onCreateAssessment}
+          sx={{
+            width: '100%',
+            border: 0,
+            borderTop: '1.5px dashed #E0E0E0',
+            bgcolor: '#ffffff',
+            py: 1.15,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1,
+            cursor: 'pointer',
+            color: '#1a1a1a',
+            flexShrink: 0,
+            '&:hover': { bgcolor: 'rgba(247, 148, 30, 0.12)' },
+          }}
+        >
+          <Box
+            sx={{
+              width: 26,
+              height: 26,
+              borderRadius: '50%',
+              bgcolor: '#F7941E',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}
+          >
+            <Plus size={15} color="#1a1a1a" />
+          </Box>
+          <Typography variant="body2" fontWeight={600}>
+            {getMessage('label_new_assessment')}
+          </Typography>
+        </Box>
+      )}
+
       <TablePagination
         component="div"
+        sx={{ flexShrink: 0 }}
         count={filteredAssessments.length}
         page={page}
         onPageChange={(e, newPage) => setPage(newPage)}

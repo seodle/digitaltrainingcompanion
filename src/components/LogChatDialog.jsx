@@ -18,7 +18,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useAuthUser } from "../contexts/AuthUserContext";
 import { useMessageService } from "../services/MessageService";
-import { localizeAssessmentType } from "../utils/ObjectsUtils";
+import { LogType } from "../utils/enums";
 import { buttonStyle } from "./styledComponents";
 
 const POLL_MS = 2500;
@@ -140,10 +140,11 @@ const LogChatDialog = ({ open, log, onClose, onChatUpdated }) => {
     return null;
   }
 
+  const logTypeKey = Object.entries(LogType).find(([, value]) => value === log.logType)?.[0]?.toLowerCase() || "observation";
   const subtitle = [
+    getMessage(`label_log_type_${logTypeKey}`),
     getPersonName(log.userId, getMessage("label_log_author")),
     log.day ? `${getMessage("label_log_session")} ${log.day}` : "",
-    localizeAssessmentType(log.assessment, getMessage),
   ].filter(Boolean).join(" · ");
 
   return (

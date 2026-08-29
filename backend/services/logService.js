@@ -76,6 +76,10 @@ const chatPartnerId = (log, ownerId) => {
 };
 
 const canAccessChat = (log, requesterId, ownerId) => {
+    const isHelpRequest = log.logType === "Ask for help" || Boolean(log.helpRequestedAt);
+    if (!isHelpRequest) {
+        return false;
+    }
     const partner = chatPartnerId(log, ownerId);
     if (!partner || partner === String(ownerId)) {
         return false;
@@ -294,16 +298,31 @@ const updateLog = async (logId, userId, updates) => {
 };
 
 const updateCompletion = async (logId, userId, isCompleted) => {
-    const now = new Date();
-    const updated = await Log.findOneAndUpdate(
-        { _id: logId, userId },
-        { $set: { isCompleted, completionDate: isCompleted ? now : null, lastModificationDate: now } },
-        { new: true }
-    );
-    if (!updated) {
-        throw httpError(404, "Log not found or not owned by user");
+    const log = await Log.findById(logId);
+    if (!log) {
+        throw httpError(404, "Log not found");
     }
-    return populateLog(Log.findById(updated._id));
+
+    const isAuthor = authorId(log) === String(userId);
+    const access = await assertCanAccessMonitoring(log.monitoringId, userId);
+
+    if (log.logType === "Ask for help") {
+        if (!isAuthor && !access.isOwner) {
+            throw httpError(403, "Forbidden");
+        }
+        if (!canViewLog(log, userId, access)) {
+            throw httpError(403, "Forbidden");
+        }
+    } else if (!isAuthor) {
+        throw httpError(403, "Forbidden");
+    }
+
+    const now = new Date();
+    log.isCompleted = Boolean(isCompleted);
+    log.completionDate = log.isCompleted ? now : null;
+    log.lastModificationDate = now;
+    await log.save();
+    return populateLog(Log.findById(log._id));
 };
 
 const deleteLog = async (logId, userId) => {

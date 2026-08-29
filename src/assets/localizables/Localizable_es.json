@@ -1234,7 +1234,7 @@
     },
     {
         "term": "dashboard_share_open_assessments_together",
-        "definition": "Las evaluaciones se presentar\u00e1n en este orden:",
+        "definition": "Orden de las p\u00e1ginas",
         "context": "message for sharing assessments",
         "term_plural": "",
         "reference": "",
@@ -1618,6 +1618,78 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
+    },
+    {
+        "term": "label_participant",
+        "definition": "Participante",
+        "context": "Label for a picker to filter results by one participant",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_participant",
+        "definition": "Elegir un participante",
+        "context": "ask the user to choose a participant in results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_all_participants",
+        "definition": "Todos los participantes",
+        "context": "Default option to show aggregated results for the whole group",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_results_for_all",
+        "definition": "Resultados para todo el grupo",
+        "context": "Caption on the results page when no participant is selected",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_results_for_participant",
+        "definition": "Resultados para",
+        "context": "Caption prefix on the results page when one participant is selected",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_participant_ranking",
+        "definition": "Por criterio",
+        "context": "Title of the participant ranking panel on results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_hide_ranking_names",
+        "definition": "Ocultar nombres",
+        "context": "Toggle to hide participant names in the results ranking panel",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ranking_no_criteria",
+        "definition": "No hay criterios clasificables en esta categor\u00eda",
+        "context": "Empty state when results ranking has no scored questions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
     },
     {
         "term": "label_no_account_yet",
@@ -2080,7 +2152,7 @@
     },
     {
         "term": "label_choose_log_type",
-        "definition": "Tipo de comentario",
+        "definition": "Tipo de nota",
         "context": "addressed to a user",
         "term_plural": "",
         "reference": "",
@@ -2125,7 +2197,7 @@
     },
     {
         "term": "label_my_training_activity",
-        "definition": "Mis observaciones y mejoras",
+        "definition": "Mis observaciones, mejoras y discusiones",
         "context": "title of the entire logbook",
         "term_plural": "",
         "reference": "",
@@ -2368,7 +2440,7 @@
     },
     {
         "term": "label_last_modified",
-        "definition": "\u00daltima modificaci\u00f3n",
+        "definition": "Editado",
         "context": "label last modified logbook",
         "term_plural": "",
         "reference": "",
@@ -2386,7 +2458,7 @@
     },
     {
         "term": "label_log_completed",
-        "definition": "Terminado el : ",
+        "definition": "Terminado",
         "context": "label log completed",
         "term_plural": "",
         "reference": "",
@@ -4816,7 +4888,7 @@
     },
     {
         "term": "label_log_filter_all",
-        "definition": "Todos los tipos",
+        "definition": "Todas las notas",
         "context": "Logbook filter showing every log type",
         "term_plural": "",
         "reference": "",
@@ -4890,6 +4962,24 @@
         "term": "label_log_toggle_participants",
         "definition": "Participantes",
         "context": "Toggle to add participant fields on a trainer log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_mark_resolved",
+        "definition": "Marcar como resuelto",
+        "context": "Button to mark an ask-for-help log as resolved",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_resolved",
+        "definition": "Resuelto",
+        "context": "Shown when an ask-for-help log is resolved; click to undo",
         "term_plural": "",
         "reference": "",
         "comment": "",

@@ -94,9 +94,13 @@ const Logbooks = () => {
             }
             return {
               ...old,
+              description: fresh.description,
               chat: fresh.chat,
               helpRequestedAt: fresh.helpRequestedAt,
               helpRequestedBy: fresh.helpRequestedBy,
+              isCompleted: fresh.isCompleted,
+              completionDate: fresh.completionDate,
+              lastModificationDate: fresh.lastModificationDate,
             };
           });
         });
@@ -136,7 +140,26 @@ const Logbooks = () => {
     <Box display="flex" sx={{ minHeight: '100vh', overflow: { xs: 'auto', md: 'hidden' }, bgcolor: 'white' }}>
       <Sidebar />
 
-      <Box display="flex" flex="1" flexDirection="column" sx={{ minWidth: 0, overflow: 'auto' }}>
+      <Box
+        display="flex"
+        flex="1"
+        flexDirection="column"
+        sx={{
+          minWidth: 0,
+          overflow: 'auto',
+          '& .MuiTypography-h2': { fontSize: { xs: '1.4rem', md: '1.85rem' } },
+          '& .MuiTypography-h5': { fontSize: '1.2rem' },
+          '& .MuiTypography-subtitle1': { fontSize: '1.05rem' },
+          '& .MuiTypography-body1': { fontSize: '0.95rem', lineHeight: 1.5 },
+          '& .MuiTypography-body2': { fontSize: '0.875rem' },
+          '& .MuiTypography-caption': { fontSize: '0.78rem' },
+          '& .MuiInputBase-input': { fontSize: '0.95rem' },
+          '& .MuiInputLabel-root': { fontSize: '0.9rem' },
+          '& .MuiButton-root': { fontSize: '0.875rem' },
+          '& .MuiChip-label': { fontSize: '0.78rem' },
+          '& .MuiMenuItem-root': { fontSize: '0.95rem' },
+        }}
+      >
         <Box sx={{ mt: { xs: 1, md: '10px' }, ml: { xs: 1, md: '10px' } }}>
           <Topbar title={getMessage("label_my_logbooks")} />
         </Box>

@@ -6,7 +6,8 @@ import {
   IconButton,
   Typography,
   Button,
-  useTheme,
+  Card,
+  Divider,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -18,6 +19,7 @@ import {
   CircularProgress
 } from "@mui/material";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 
 // dependencies
 import { loadMonitoringAndAssessments } from "../../utils/ObjectsUtils";
@@ -36,6 +38,85 @@ import { useMessageService } from '../../services/MessageService';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useAuthUser } from '../../contexts/AuthUserContext';
 import { AssessmentType, OptionTypes, UserType } from '../../utils/enums';
+
+const MonitoringActionCard = ({ onCreate, onImport, getMessage }) => (
+  <Card
+    elevation={0}
+    sx={{
+      width: { xs: 200, sm: 220 },
+      minWidth: { xs: 200, sm: 220 },
+      height: 200,
+      borderRadius: 2,
+      border: "1.5px dashed #D8D8D8",
+      boxShadow: "none",
+      bgcolor: "#ffffff",
+      display: "flex",
+      flexDirection: "column",
+      flexShrink: 0,
+      overflow: "hidden",
+    }}
+  >
+    <Box
+      component="button"
+      type="button"
+      onClick={onCreate}
+      sx={{
+        flex: 1,
+        border: 0,
+        bgcolor: "transparent",
+        cursor: "pointer",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 1,
+        px: 2,
+        color: "#1a1a1a",
+        "&:hover": { bgcolor: "rgba(247, 148, 30, 0.1)" },
+      }}
+    >
+      <Box
+        sx={{
+          width: 40,
+          height: 40,
+          borderRadius: "50%",
+          bgcolor: "#F7941E",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <AddIcon sx={{ fontSize: 24, color: "#1a1a1a" }} />
+      </Box>
+      <Typography variant="body2" fontWeight={700} textAlign="center">
+        {getMessage("table_monitoring_button_new_monitoring")}
+      </Typography>
+    </Box>
+    <Divider />
+    <Box
+      component="button"
+      type="button"
+      onClick={onImport}
+      sx={{
+        py: 1.25,
+        border: 0,
+        bgcolor: "transparent",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 0.75,
+        color: "text.secondary",
+        "&:hover": { bgcolor: "rgba(0,0,0,0.04)", color: "text.primary" },
+      }}
+    >
+      <FileUploadOutlinedIcon sx={{ fontSize: 18 }} />
+      <Typography variant="body2" fontWeight={500}>
+        {getMessage("label_import")}
+      </Typography>
+    </Box>
+  </Card>
+);
 
 const Dashboard = () => {
 
@@ -92,7 +173,6 @@ const Dashboard = () => {
   const [isLinked, setIsLinked] = useState(false);
   const [isCodeVisible, setIsCodeVisible] = useState(false);
   const [generatedCode, setGeneratedCode] = useState('');
-  const theme = useTheme();
   const navigate = useNavigate();
 
   // Function to check if the token is expired
@@ -533,171 +613,132 @@ const Dashboard = () => {
   return (
     <Box
       display="flex"
-      minHeight="100vh"
       bgcolor="#f9f9f9"
-      sx={{ maxWidth: "100vw", overflow: "auto" }}
+      sx={{ height: "100vh", maxWidth: "100vw", overflow: "hidden" }}
     >
       <Sidebar />
       <Box
         display="flex"
         flex={1}
         flexDirection="column"
-        justifyContent="space-between"
-        sx={{ minWidth: 0, width: "100%" }}
+        sx={{ minWidth: 0, width: "100%", height: "100%", overflow: "hidden" }}
       >
         <Topbar title={getMessage("label_dashboard_title")} />
         <Box
           sx={{
             flex: 1,
+            minHeight: 0,
             width: "100%",
-            overflowY: "auto",
+            overflow: { xs: "auto", md: "hidden" },
             display: "flex",
             flexDirection: "column",
-            gap: { xs: 1.5, md: 3 },
-            p: { xs: 2, md: 3 },
+            gap: { xs: 1.25, md: 1.5 },
+            p: { xs: 2, md: 2 },
           }}
         >
-          {/** Only show the search bar & monitoring cards if monitorings exist **/}
           {monitorings.length > 0 ? (
-            <>
-              {/* Search Bar */}
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <TextField
-                  fullWidth
-                  placeholder={getMessage("label_search_monitoring")}
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  InputProps={{
-                    endAdornment: <Search size={20} />,
-                    sx: { bgcolor: "background.paper" }
-                  }}
-                  sx={{ flex: 1 }}
-                />
-              </Box>
-
-              {/* Monitoring Cards */}
-              <Box sx={{ position: "relative", width: "100%", mb: { xs: 0.5, md: 7 } }}>
-                {filteredMonitorings.length > 0 && (
-                  <IconButton
-                    onClick={() => scroll("left")}
-                    sx={{
-                      position: "absolute",
-                      left: 0,
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      zIndex: 2,
-                      display: { xs: "none", sm: "inline-flex" },
-                      bgcolor: "background.paper",
-                      boxShadow: 2,
-                      "&:hover": { bgcolor: "background.paper" }
-                    }}
-                  >
-                    <ChevronLeft />
-                  </IconButton>
-                )}
-
-                <Box
-                  ref={scrollContainerRef}
-                  sx={{
-                    display: "flex",
-                    overflowX: "auto",
-                    gap: 2,
-                    pb: 2,
-                    px: { xs: 1, md: 6 },
-                    scrollBehavior: "smooth",
-                    "&::-webkit-scrollbar": { display: "none" },
-                    msOverflowStyle: "none",
-                    scrollbarWidth: "none",
-                    width: { xs: "100%", md: "calc(100% - 48px)" },
-                    margin: "0 auto",
-                    position: "relative"
-                  }}
-                >
-                  {filteredMonitorings.map(monitoring => (
-                    <MonitoringCard
-                      key={monitoring._id}
-                      monitoring={monitoring}
-                      expandedMonitoring={expandedMonitoring}
-                      setExpandedMonitoring={id => {
-                        setExpandedMonitoring(id);
-                        setCurrentMonitoringId(id);
-                        setSelectedAssessmentsIds([]);
-                      }}
-                      setMonitorings={setMonitorings}
-                      setCurrentMonitoringId={setCurrentMonitoringId}
-                      setAssessments={setAssessments}
-                      assessments={assessments}
-                      monitorings={monitorings}
-                    />
-                  ))}
-                </Box>
-
-                {filteredMonitorings.length > 0 && (
-                  <IconButton
-                    onClick={() => scroll("right")}
-                    sx={{
-                      position: "absolute",
-                      right: 0,
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      zIndex: 2,
-                      display: { xs: "none", sm: "inline-flex" },
-                      bgcolor: "background.paper",
-                      boxShadow: 2,
-                      "&:hover": { bgcolor: "background.paper" }
-                    }}
-                  >
-                    <ChevronRight />
-                  </IconButton>
-                )}
-              </Box>
-            </>
+            <TextField
+              size="small"
+              fullWidth
+              placeholder={getMessage("label_search_monitoring")}
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              InputProps={{
+                endAdornment: <Search size={18} />,
+                sx: { bgcolor: "background.paper" }
+              }}
+              sx={{ width: "100%", flexShrink: 0 }}
+            />
           ) : (
-            // Fallback if no monitorings
-            <Box>
-              <Typography variant="h6">
-                {getMessage("label_no_monitorings_found")}
-              </Typography>
-            </Box>
+            <Typography variant="h6">
+              {getMessage("label_no_monitorings_found")}
+            </Typography>
           )}
 
-          {/* New Monitoring/Import Buttons (always visible) */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: { xs: "stretch", md: "flex-end" },
-              flexDirection: { xs: "column", sm: "row" },
-              flexWrap: "wrap",
-              gap: 2,
-              mt: { xs: 0, md: -8 },
-              mb: 1
-            }}
-          >
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              sx={{ ...buttonStyle, width: { xs: "100%", sm: "auto" }, mr: { xs: 0, sm: 2 } }}
-              onClick={handleImportMonitoring}
-            >
-              {getMessage("label_button_import_monitoring")}
-            </Button>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              sx={{ ...buttonStyle, width: { xs: "100%", sm: "auto" }, mr: { xs: 0, sm: 2 } }}
-              onClick={() => {
-                setOpenMonitoringDialog(true);
-                if (currentUser?.sandbox && monitorings.length >= 1) {
-                  setShowSandboxLimitAlert(true);
-                }
+          <Box sx={{ position: "relative", width: "100%", flexShrink: 0 }}>
+            {filteredMonitorings.length > 0 && (
+              <IconButton
+                onClick={() => scroll("left")}
+                sx={{
+                  position: "absolute",
+                  left: 0,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  zIndex: 2,
+                  display: { xs: "none", sm: "inline-flex" },
+                  bgcolor: "background.paper",
+                  boxShadow: 2,
+                  "&:hover": { bgcolor: "background.paper" }
+                }}
+              >
+                <ChevronLeft />
+              </IconButton>
+            )}
+
+            <Box
+              ref={scrollContainerRef}
+              sx={{
+                display: "flex",
+                overflowX: "auto",
+                gap: 1.5,
+                pb: 0.5,
+                px: { xs: 1, md: 6 },
+                scrollBehavior: "smooth",
+                "&::-webkit-scrollbar": { display: "none" },
+                msOverflowStyle: "none",
+                scrollbarWidth: "none",
+                width: { xs: "100%", md: "calc(100% - 48px)" },
+                margin: "0 auto",
+                position: "relative"
               }}
             >
-              {getMessage("table_monitoring_button_new_monitoring")}
-            </Button>
+              <MonitoringActionCard
+                getMessage={getMessage}
+                onImport={handleImportMonitoring}
+                onCreate={() => {
+                  setOpenMonitoringDialog(true);
+                  if (currentUser?.sandbox && monitorings.length >= 1) {
+                    setShowSandboxLimitAlert(true);
+                  }
+                }}
+              />
+              {filteredMonitorings.map(monitoring => (
+                <MonitoringCard
+                  key={monitoring._id}
+                  monitoring={monitoring}
+                  expandedMonitoring={expandedMonitoring}
+                  setExpandedMonitoring={id => {
+                    setExpandedMonitoring(id);
+                    setCurrentMonitoringId(id);
+                    setSelectedAssessmentsIds([]);
+                  }}
+                  setMonitorings={setMonitorings}
+                  setCurrentMonitoringId={setCurrentMonitoringId}
+                  setAssessments={setAssessments}
+                  assessments={assessments}
+                  monitorings={monitorings}
+                />
+              ))}
+            </Box>
+
+            {filteredMonitorings.length > 0 && (
+              <IconButton
+                onClick={() => scroll("right")}
+                sx={{
+                  position: "absolute",
+                  right: 0,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  zIndex: 2,
+                  display: { xs: "none", sm: "inline-flex" },
+                  bgcolor: "background.paper",
+                  boxShadow: 2,
+                  "&:hover": { bgcolor: "background.paper" }
+                }}
+              >
+                <ChevronRight />
+              </IconButton>
+            )}
           </Box>
 
           {/* Create Monitoring Dialog */}
@@ -1026,8 +1067,8 @@ const Dashboard = () => {
 
           {/* Assessments and Sharing Section */}
           {selectedMonitoring && (
-            <Box sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, gap: 2 }}>
-              <Box sx={{ flex: 2, minWidth: 0 }}>
+            <Box sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, gap: 2, alignItems: "stretch", flex: { xs: "none", md: 1 }, minHeight: { md: 0 } }}>
+              <Box sx={{ flex: 2, minWidth: 0, minHeight: 0, display: "flex" }}>
                 <AssessmentsTable
                   assessments={assessments}
                   setAssessments={setAssessments}
@@ -1046,30 +1087,16 @@ const Dashboard = () => {
                   setOpenAssessmentsCount={setOpenAssessmentsCount}
                   selectedAssessmentsIds={selectedAssessmentsIds}
                   setSelectedAssessmentsIds={setSelectedAssessmentsIds}
-                />
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    mt: 2
+                  onCreateAssessment={() => {
+                    setError(null);
+                    setOpenAssessmentDialog(true);
                   }}
-                >
-                  <Button
-                    variant="contained"
-                    startIcon={<AddIcon />}
-                    sx={buttonStyle}
-                    onClick={() => {
-                      setError(null);
-                      setOpenAssessmentDialog(true);
-                    }}
-                  >
-                    {getMessage("label_new_assessment")}
-                  </Button>
-                </Box>
+                  fillHeight
+                />
               </Box>
 
               {selectedAssessmentsIds.length > 0 && (
-                <Box sx={{ flex: 1, minWidth: 0, width: { xs: "100%", lg: "auto" } }}>
+                <Box sx={{ flex: { xs: '1 1 auto', lg: '0 0 360px' }, width: { xs: '100%', lg: 360 }, maxWidth: { lg: 380 }, minWidth: { lg: 320 }, minHeight: 0, display: "flex" }}>
                   <SharingAssessments
                     selectedAssessmentsIds={selectedAssessmentsIds}
                     assessments={assessments}

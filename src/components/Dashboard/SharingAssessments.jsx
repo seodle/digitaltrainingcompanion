@@ -22,11 +22,12 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import EditIcon from '@mui/icons-material/Edit';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { frFR, deDE, itIT, esES, enUS } from '@mui/x-date-pickers/locales';
-import { QRCodeCanvas } from 'qrcode.react';
+import BrandedQrCode from '../BrandedQrCode';
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { saveAs } from 'file-saver';
@@ -91,19 +92,25 @@ const SharingAssessments = ({
 
   // assessments states 
   const [selectedAssessmentIds, setSelectedAssessmentIds] = useState([]); // assessments selected to "share" -> will be included in the QR code
-  const qrCodeRef = useRef(null); // the qrCodeReference
+  const qrCodeRef = useRef(null);
+  const brandedQrRef = useRef(null);
 
   useEffect(() => {
   setSelectedAssessmentIds(selectedAssessmentsIds);
 }, [selectedAssessmentsIds]);
   
-  const selectedAssessmentDetails = selectedAssessmentsIds.map((id, index) => {
-    const assessment = assessments.find(a => a._id === id);
-    return {
-      ...assessment,
-      pageNumber: index + 1, // Keep user-selected order
-    };
-  });
+  const selectedAssessmentDetails = selectedAssessmentsIds
+    .map((id, index) => {
+      const assessment = (assessments || []).find(a => a._id === id);
+      if (!assessment) {
+        return null;
+      }
+      return {
+        ...assessment,
+        pageNumber: index + 1,
+      };
+    })
+    .filter(Boolean);
 
 
 
@@ -111,15 +118,24 @@ const SharingAssessments = ({
   * Generate a QR code for the current monitoringID containing every assessment
   */
   const generateQRCodeValue = () => {
-  const assessmentsQuery = selectedAssessmentsIds
-    .map(id => `assessment[]=${id}`)
-    .join('&');
+  const fallback = FRONTEND_URL || 'https://evalution-asso.ch';
+  try {
+    const token = localStorage.getItem('token');
+    if (!token || !currentUser?._id) {
+      return fallback;
+    }
 
-  const token = localStorage.getItem('token');
-  const decodedToken = jwt_decode(token);
-  const sandbox = decodedToken.sandbox;
+    const decodedToken = jwt_decode(token);
+    const sandbox = decodedToken.sandbox;
+    const assessmentsQuery = selectedAssessmentsIds
+      .map(id => `assessment[]=${id}`)
+      .join('&');
 
-  return `${FRONTEND_URL}/completeSurvey?userId=${currentUser._id}&monitoring=${currentMonitoringId}&${assessmentsQuery}&link=${isLinked}&lng=${languageCode}&sandbox=${sandbox}`;
+    return `${FRONTEND_URL}/completeSurvey?userId=${currentUser._id}&monitoring=${currentMonitoringId}&${assessmentsQuery}&link=${isLinked}&lng=${languageCode}&sandbox=${sandbox}`;
+  } catch (error) {
+    console.error('Error generating QR value:', error);
+    return fallback;
+  }
 };
 
 
@@ -130,19 +146,7 @@ const SharingAssessments = ({
    * is removed from the document body to clean up.
    */
   const handleDownloadQR = () => {
-    if (qrCodeRef.current) {
-      const canvas = qrCodeRef.current.querySelector('canvas');
-
-      if (canvas) {
-        const image = canvas.toDataURL("image/png");
-        const link = document.createElement('a');
-        link.download = "QRCode.png";
-        link.href = image;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    }
+    brandedQrRef.current?.download();
   };
 
   /**
@@ -378,78 +382,98 @@ const handleDownloadPaperVersion = async () => {
         borderRadius: 2,
         overflow: 'hidden',
         height: '100%',
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
       }}
     >
       {/* Header Section */}
-      <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
-        <Typography variant="h4" fontWeight={800} gutterBottom>
+      <Box sx={{ px: 2, pt: 2, pb: 1.5, boxSizing: 'border-box', borderBottom: '1px solid', borderColor: 'divider', flexShrink: 0 }}>
+        <Typography variant="h4" sx={{ fontWeight: 800, lineHeight: 1.3 }}>
           {getMessage("label_qr_code_section")}
         </Typography>
       </Box>
 
-      {/* Assessment Order Section */}
-      <Box sx={{ textAlign: 'center', mt : 2, bgcolor: 'background.default' }}>
-        <Typography variant="h5" gutterBottom>
-          {getMessage("dashboard_share_open_assessments_together")}
-        </Typography>
-        <div style={{ marginTop: '10px', marginBottom: '15px' }}>
-          {selectedAssessmentDetails.map((assessment, index) => (
-            <Typography
-              key={assessment._id}
-              variant="body1"
-              sx={{
-                fontSize: '1rem',
-                marginBottom: '5px',
-                lineHeight: 1.4,
-              }}
-            >
-              {`${getMessage("label_page_qr_code")} ${assessment.pageNumber}: ${assessment.name}`}
-            </Typography>
-          ))}
-        </div>
-      </Box>
-
-      {/* QR Code Section */}
       <Box
         ref={qrCodeRef}
         sx={{
-            p: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flex: 1,
+          flex: 1,
+          minHeight: 0,
+          width: '100%',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
-        >
+      >
         <Box
-            sx={{
-            width: { xs: '100%', sm: 300 },
-            maxWidth: 300,
-            height: { xs: 'auto', sm: 300 },
-            aspectRatio: '1',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '1px solid',
-            borderColor: 'divider',
-            borderRadius: '16px',
-            mb: 3,
-            '& canvas': { maxWidth: '100%', height: 'auto !important' },
-            }}
+          sx={{
+            width: 268,
+            height: 268,
+            minWidth: 268,
+            minHeight: 268,
+            flex: '0 0 268px',
+          }}
         >
-            {selectedAssessmentIds.length > 0 ? (
-            <QRCodeCanvas
-                value={generateQRCodeValue()}
-                size={280}
-                level="H"
-                includeMargin={true}
+          {selectedAssessmentIds.length > 0 ? (
+            <BrandedQrCode
+              ref={brandedQrRef}
+              value={generateQRCodeValue()}
+              size={268}
             />
-            ) : (
-            <QrCodeScannerIcon sx={{ fontSize: 160, color: 'text.secondary' }} />
-            )}
+          ) : (
+            <Box sx={{ width: 268, height: 268, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <QrCodeScannerIcon sx={{ fontSize: 72, color: 'text.secondary' }} />
+            </Box>
+          )}
         </Box>
+        {selectedAssessmentDetails.length > 0 && (
+          <Tooltip
+            placement="left-start"
+            enterTouchDelay={0}
+            slotProps={{
+              tooltip: {
+                sx: { fontSize: '0.95rem', maxWidth: 300, px: 1.5, py: 1 },
+              },
+            }}
+            title={
+              <Box sx={{ py: 0.25 }}>
+                <Typography sx={{ display: 'block', fontWeight: 700, fontSize: '0.95rem', mb: 0.75 }}>
+                  {getMessage("dashboard_share_open_assessments_together")}
+                </Typography>
+                {selectedAssessmentDetails.map((assessment, index) => (
+                  <Typography
+                    key={assessment._id}
+                    sx={{ display: 'block', fontSize: '0.9rem', lineHeight: 1.55 }}
+                  >
+                    {assessment.pageNumber || index + 1}. {assessment.name}
+                  </Typography>
+                ))}
+              </Box>
+            }
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 8,
+                right: 8,
+                zIndex: 1,
+                width: 24,
+                height: 24,
+                borderRadius: '50%',
+                bgcolor: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'text.secondary',
+                cursor: 'default',
+              }}
+            >
+              <InfoOutlinedIcon sx={{ fontSize: 18 }} />
+            </Box>
+          </Tooltip>
+        )}
+      </Box>
 
         <Box
             sx={{
@@ -457,6 +481,8 @@ const handleDownloadPaperVersion = async () => {
             gap: 1,
             justifyContent: 'center',
             width: '100%',
+            py: 1.25,
+            flexShrink: 0,
             }}
         >
             <Tooltip title={getMessage('label_tooltip_download_pdf')}>
@@ -525,10 +551,9 @@ const handleDownloadPaperVersion = async () => {
                 </span>
             </Tooltip>
         </Box>
-        </Box>
 
       {/* Paper Code Section */}
-      <Box sx={{ p: 2, borderTop: '1px solid', borderColor: 'divider', textAlign: 'center' }}>
+      <Box sx={{ p: 1.5, borderTop: '1px solid', borderColor: 'divider', textAlign: 'center', flexShrink: 0 }}>
   <Box
     sx={{
       display: 'flex',
