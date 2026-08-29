@@ -158,7 +158,7 @@ const getMonitoringsByUserId = async (userId) => {
         { userId: userId },
         { sharingCode: { $in: redeemedCodes } }
       ]
-    });
+    }).select("-scheduledEmailRecipients");
 
     return monitorings;
   } catch (error) {
@@ -174,11 +174,13 @@ const getMonitoringsByUserId = async (userId) => {
  */
 const getMonitoringById = async (monitoringId) => {
   try {
-    const monitoring = await Monitoring.findById(monitoringId).populate({
-      path: 'userId',
-      select: 'firstName lastName',
-      model: 'Users'
-    });
+    const monitoring = await Monitoring.findById(monitoringId)
+      .select("-scheduledEmailRecipients")
+      .populate({
+        path: "userId",
+        select: "firstName lastName",
+        model: "Users",
+      });
     if (!monitoring) {
       throw new Error("Monitoring not found");
     }
@@ -227,6 +229,7 @@ const updateMonitoring = async (monitoringId, updatedMonitoringData) => {
   try {
     // Remove the non-ObjectId id from updatedMonitoringData if it exists
     delete updatedMonitoringData.id;
+    delete updatedMonitoringData.scheduledEmailRecipients;
 
     // Finds a monitoring document by its ID and updates it with the provided data
     const updatedMonitoring = await Monitoring.findByIdAndUpdate(

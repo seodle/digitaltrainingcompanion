@@ -590,6 +590,27 @@ const handleAssessmentPreview = (assessment) => {
     setActiveAssessment(null);
   };
 
+  const formatScheduledSend = (assessment) => {
+    if (!assessment.scheduledSendAt && assessment.scheduledSendStatus !== 'sent') {
+      return '';
+    }
+    const dateLabel = assessment.scheduledSendAt
+      ? new Date(assessment.scheduledSendAt).toLocaleString(undefined, {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        })
+      : '';
+    if (assessment.scheduledSendStatus === 'sent') {
+      return dateLabel
+        ? `${getMessage('label_scheduled_sent')} (${dateLabel})`
+        : getMessage('label_scheduled_sent');
+    }
+    return dateLabel;
+  };
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const today = new Date();
@@ -1138,19 +1159,25 @@ const handleAssessmentPreview = (assessment) => {
                             {getMessage('table_assessments_owner')}
                         </Box>
                     </TableCell>  
-                   <TableCell sx={{ width: 190, padding: '6px 8px' }}>
+                    <TableCell sx={{ width: 190, padding: '6px 8px' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, cursor: 'pointer' }}
                             onClick={() => handleSort('date')}>
                         {getMessage('table_assessments_dates')}
                         <ArrowUpwardIcon sx={{ fontSize: '0.875rem' }} />
                         <ArrowDownwardIcon sx={{ fontSize: '0.875rem' }} />
                         </Box>
-                    </TableCell>        
+                    </TableCell>
+                    <TableCell sx={{ width: 180, padding: '6px 8px' }}>
+                        {getMessage('table_assessments_scheduled_send')}
+                    </TableCell>
                     <TableCell sx={{ width: 140, padding: '6px 8px' }}>
                         {getMessage('label_status_assessment')}
                     </TableCell>
-                    <TableCell sx={{ width: 100, padding: '6px 8px' }}>
-                        {getMessage('label_edit_preview')}
+                    <TableCell sx={{ width: 52, padding: '6px 4px', textAlign: 'center' }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2, fontSize: '0.75rem' }}>
+                            <span>{getMessage('label_edit')}</span>
+                            <span>{getMessage('label_preview')}</span>
+                        </Box>
                     </TableCell>
                     <TableCell 
                         padding="checkbox"
@@ -1263,6 +1290,11 @@ const handleAssessmentPreview = (assessment) => {
                               </Box>
                               </TableCell>
                             <TableCell>
+                              <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
+                                {formatScheduledSend(assessment)}
+                              </Typography>
+                            </TableCell>
+                            <TableCell>
                               <Tooltip
                                 title={getStatusTooltip(assessment)}
                                 componentsProps={{
@@ -1330,8 +1362,8 @@ const handleAssessmentPreview = (assessment) => {
                                   </Box>
                               </Tooltip>
                             </TableCell>
-                            <TableCell>
-        <Box sx={{ display: 'flex', gap: 0.5 }}>
+                            <TableCell sx={{ width: 52, padding: '2px 4px !important', height: 'auto !important', verticalAlign: 'middle' }}>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
                                     {isOwner(assessment) && assessment.status === 'Draft' && (
                                         <Tooltip title={getMessage('label_edit')}>
                                             <IconButton
@@ -1339,7 +1371,7 @@ const handleAssessmentPreview = (assessment) => {
                                                 onClick={() => handleEditAssessment(assessment)}
                                                 sx={{
                                                     color: 'primary.main',
-                                                    padding: '4px',
+                                                    padding: '2px',
                                                 }}
                                             >
                                                 <Edit2 size={16} />
@@ -1352,7 +1384,7 @@ const handleAssessmentPreview = (assessment) => {
                                             onClick={() => handleAssessmentPreview(assessment)}
                                             sx={{
                                                 color: 'info.main',
-                                                padding: '4px',
+                                                padding: '2px',
                                             }}
                                         >
                                             <Eye size={16} />

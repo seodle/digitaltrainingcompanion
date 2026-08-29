@@ -1,16 +1,10 @@
 const bcrypt = require('bcrypt');
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
 
 const User = require("../models/userModel");
 const { validateUserCredentialsRegister } = require('../utils/passwordValidationUtils.js');
+const { sendMail, FRONTEND_URL, LOGO_URL } = require('./emailService');
 require('dotenv').config();
-
-// TODO add all this in config
-const FRONTEND_URL = process.env.NODE_ENV === "production" ? process.env.FRONTEND_URL_PRODUCTION : process.env.FRONTEND_URL_DEVELOPMENT;
-const EMAIL_USER = process.env.EMAIL_USER;
-const EMAIL_PASS = process.env.EMAIL_PASS;
-const imageUrl = "https://digitaltrainingcompanion.ch/static/media/logo.f1c87519c7fdc5afd373433868125e44.svg";
 
 /**
  * Asynchronously authenticates a user by their email and password.
@@ -83,24 +77,13 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
         await newUser.save();
 
         if (sendEmailForVerification) {
-            // send an email to verify the account
-            let transporter = nodemailer.createTransport({
-                host: "mail.infomaniak.com",
-                port: 465,
-                secure: true,
-                requireTLS: true,
-                auth: { user: EMAIL_USER, pass: EMAIL_PASS },
-            });
-
-            // TODO add this in localizable
-            await transporter.sendMail({
-                from: `"The Digital Training Companion" <${EMAIL_USER}>`,
+            await sendMail({
                 to: userData.email,
                 subject: "Please verify your email",
                 html: `<p>Hello,</p><p>Please click the link below to verify your email:</p>
                         <p><a href="${FRONTEND_URL}/verifyEmail?token=${verificationToken}" target="_blank">Verify Your Email</a></p>
                         <p>If you did not request this, please ignore this email.</p>
-                        <p>Best regards,<br><br><img src="${imageUrl}" alt="The Digital Training Companion" width="200px" height="auto"></p>`,
+                        <p>Best regards,<br><br><img src="${LOGO_URL}" alt="The Digital Training Companion" width="200px" height="auto"></p>`,
             });
         }
 
@@ -144,17 +127,7 @@ const initiatePasswordReset = async (email) => {
         // Email URL for resetting password
         const resetURL = `${FRONTEND_URL}/updatePassword/${resetToken}`;
 
-        let transporter = nodemailer.createTransport({
-            host: "mail.infomaniak.com",
-            port: 465,
-            secure: true,
-            auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-        });
-
-        // send the email to reset the password
-        // TODO all the text in localizable
-        await transporter.sendMail({
-            from: `"The Digital Training Companion" <${process.env.EMAIL_USER}>`,
+        await sendMail({
             to: email,
             subject: "Forgot Password - Password Reset Instructions",
             text: `To reset your password, please click the following link: ${resetURL}`,

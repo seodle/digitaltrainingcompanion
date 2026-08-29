@@ -35,6 +35,8 @@ const assessmentSchema = new mongoose.Schema({
     status: String,
     creationDate: { type: Date, default: Date.now() }, // should be createdAt
     lastModificationDate: Date, // should be updatedAt
+    scheduledSendAt: { type: Date, default: null },
+    scheduledSendStatus: { type: String, enum: ['pending', 'sent', null], default: null },
     position: Number,
     workshops: { type: [workshopSchema], default: [] },
     questions: [questionSchema],

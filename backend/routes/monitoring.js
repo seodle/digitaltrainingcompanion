@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const Monitoring = require('../models/monitoringModel');
-const { requireMonitoringOwner, requireMonitoringOwnerOrRedeemer } = require('../middleware/authorization');
+const { requireMonitoringOwner, requireMonitoringOwnerOrRedeemer, requireTeacherTrainer } = require('../middleware/authorization');
 const { stopSharingMonitoring, startSharingMonitoring } = require('../services/monitoringService');
 
 const { createMonitoring, getMonitoringsByUserId, deleteMonitoring, updateMonitoring, getMonitoringById, getUsersByRedeemedCode } = require('../services/monitoringService');
 const { deleteAssessmentsFromMonitoring } = require('../services/assessmentService');
+const { getEmailSchedule, updateEmailSchedule } = require('../services/emailScheduleService');
 
 require("dotenv").config();
 
@@ -151,6 +152,33 @@ router.get("/:monitoringId", requireMonitoringOwnerOrRedeemer('monitoringId'), a
   } catch (error) {
     const statusCode = error.message.includes("not found") ? 404 : 500;
     res.status(statusCode).json({ error: error.message });
+  }
+});
+
+router.get("/:monitoringId/email-schedule", requireTeacherTrainer, requireMonitoringOwner('monitoringId'), async (req, res) => {
+  try {
+    const schedule = await getEmailSchedule(req.params.monitoringId);
+    return res.json(schedule);
+  } catch (error) {
+    console.error("Error fetching email schedule:", error);
+    const status = error.status || 500;
+    return res.status(status).json({ error: error.message || "Failed to fetch email schedule" });
+  }
+});
+
+router.put("/:monitoringId/email-schedule", requireTeacherTrainer, requireMonitoringOwner('monitoringId'), async (req, res) => {
+  try {
+    const { emails, assessmentIds, scheduledSendAt } = req.body || {};
+    const schedule = await updateEmailSchedule(req.params.monitoringId, {
+      emails,
+      assessmentIds,
+      scheduledSendAt,
+    });
+    return res.json(schedule);
+  } catch (error) {
+    console.error("Error updating email schedule:", error);
+    const status = error.status || 500;
+    return res.status(status).json({ error: error.message || "Failed to update email schedule" });
   }
 });
 

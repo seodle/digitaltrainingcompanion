@@ -29,6 +29,7 @@ function transformAssessments(assessments) {
       id: idx + 1,
       creationDate: new Date(assessment.creationDate),
       lastModification: assessment.lastModificationDate ? new Date(assessment.lastModificationDate) : new Date(assessment.creationDate),
+      scheduledSendAt: assessment.scheduledSendAt ? new Date(assessment.scheduledSendAt) : null,
       options: options,
     };
   });

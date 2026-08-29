@@ -5,6 +5,14 @@ import {
   Paper,
   IconButton,
   Tooltip,
+  Dialog,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Button,
+  Chip,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
@@ -12,10 +20,21 @@ import SwipeRightAltIcon from '@mui/icons-material/SwipeRightAlt';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import EditIcon from '@mui/icons-material/Edit';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { frFR, deDE, itIT, esES, enUS } from '@mui/x-date-pickers/locales';
 import { QRCodeCanvas } from 'qrcode.react';
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { saveAs } from 'file-saver';
+import dayjs from 'dayjs';
+import 'dayjs/locale/fr';
+import 'dayjs/locale/de';
+import 'dayjs/locale/it';
+import 'dayjs/locale/es';
 
 //dependencies
 import { useMessageService } from '../../services/MessageService';
@@ -23,11 +42,34 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { FRONTEND_URL } from "../../config";
 import { BACKEND_URL } from "../../config";
 import { useAuthUser } from '../../contexts/AuthUserContext';
+import { UserType } from '../../utils/enums';
+import { buttonStyle } from '../styledComponents';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const PICKER_LOCALE_TEXT = {
+  en: enUS.components.MuiLocalizationProvider.defaultProps.localeText,
+  fr: frFR.components.MuiLocalizationProvider.defaultProps.localeText,
+  de: deDE.components.MuiLocalizationProvider.defaultProps.localeText,
+  it: itIT.components.MuiLocalizationProvider.defaultProps.localeText,
+  es: esES.components.MuiLocalizationProvider.defaultProps.localeText,
+};
 
+const DATE_TIME_FORMATS = {
+  en: 'MMM D, YYYY HH:mm',
+  fr: 'DD/MM/YYYY HH:mm',
+  de: 'DD.MM.YYYY HH:mm',
+  it: 'DD/MM/YYYY HH:mm',
+  es: 'DD/MM/YYYY HH:mm',
+};
 
-const SharingAssessments = ({ selectedAssessmentsIds, assessments, currentMonitoringId }) => {
+const SharingAssessments = ({
+  selectedAssessmentsIds,
+  assessments,
+  currentMonitoringId,
+  isMonitoringOwner = false,
+  onScheduleSaved,
+}) => {
   const [showPaperCode, setShowPaperCode] = useState(false);
   const [generatedCode, setGeneratedCode] = useState('');
   const [isCodeVisible, setIsCodeVisible] = useState(false);
@@ -35,7 +77,16 @@ const SharingAssessments = ({ selectedAssessmentsIds, assessments, currentMonito
   const { getMessage } = useMessageService();
   const sharingCode = "123456";
   const { languageCode } = useLanguage();
-  const { currentUser } = useAuthUser(); 
+  const { currentUser } = useAuthUser();
+  const canSchedule = currentUser?.userStatus === UserType.TEACHER_TRAINER && isMonitoringOwner;
+
+  const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [scheduleEmails, setScheduleEmails] = useState([]);
+  const [emailInput, setEmailInput] = useState('');
+  const [scheduledAt, setScheduledAt] = useState(null);
+  const [scheduleLoading, setScheduleLoading] = useState(false);
+  const [scheduleSaving, setScheduleSaving] = useState(false);
+  const [scheduleError, setScheduleError] = useState(''); 
 
 
   // assessments states 
@@ -201,7 +252,124 @@ const handleDownloadPaperVersion = async () => {
     setIsCodeVisible(!isCodeVisible);
   };
 
+  const parseEmailList = (text) => {
+    return [...new Set(
+      String(text || "")
+        .split(/[\s,;]+/)
+        .map((email) => email.trim().toLowerCase())
+        .filter(Boolean)
+    )];
+  };
+
+  const addEmailsFromText = (text) => {
+    const parsed = parseEmailList(text);
+    if (parsed.length === 0) {
+      setScheduleError(getMessage('label_schedule_invalid_email'));
+      return;
+    }
+
+    const valid = parsed.filter((email) => EMAIL_REGEX.test(email));
+    const invalid = parsed.filter((email) => !EMAIL_REGEX.test(email));
+
+    if (valid.length > 0) {
+      setScheduleEmails((prev) => {
+        const next = [...prev];
+        valid.forEach((email) => {
+          if (!next.includes(email)) {
+            next.push(email);
+          }
+        });
+        return next;
+      });
+    }
+
+    if (invalid.length > 0) {
+      setEmailInput(invalid.join('\n'));
+      setScheduleError(`${getMessage('label_schedule_invalid_email')}: ${invalid.join(', ')}`);
+      return;
+    }
+
+    setEmailInput('');
+    setScheduleError('');
+  };
+
+  const addScheduleEmail = () => {
+    addEmailsFromText(emailInput);
+  };
+
+  const removeScheduleEmail = (emailToRemove) => {
+    setScheduleEmails((prev) => prev.filter((email) => email !== emailToRemove));
+  };
+
+  const openScheduleDialog = async () => {
+    setScheduleOpen(true);
+    setScheduleError('');
+    setEmailInput('');
+    setScheduleLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(
+        `${BACKEND_URL}/monitorings/${currentMonitoringId}/email-schedule`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setScheduleEmails(res.data.emails || []);
+
+      const selectedSchedules = (res.data.assessments || [])
+        .filter((assessment) => selectedAssessmentsIds.includes(assessment._id) && assessment.scheduledSendAt)
+        .map((assessment) => new Date(assessment.scheduledSendAt).toISOString());
+      const uniqueTimes = [...new Set(selectedSchedules)];
+      if (uniqueTimes.length === 1) {
+        setScheduledAt(dayjs(uniqueTimes[0]));
+      } else {
+        setScheduledAt(null);
+      }
+    } catch (error) {
+      console.error('Error loading email schedule:', error);
+      setScheduleError(getMessage('label_schedule_save_error'));
+      setScheduleEmails([]);
+      setScheduledAt(null);
+    } finally {
+      setScheduleLoading(false);
+    }
+  };
+
+  const handleSaveSchedule = async () => {
+    if (scheduleEmails.length === 0) {
+      setScheduleError(getMessage('label_schedule_email_required'));
+      return;
+    }
+    if (!scheduledAt || !scheduledAt.isValid() || !scheduledAt.isAfter(dayjs())) {
+      setScheduleError(getMessage('label_schedule_date_required'));
+      return;
+    }
+
+    setScheduleSaving(true);
+    setScheduleError('');
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.put(
+        `${BACKEND_URL}/monitorings/${currentMonitoringId}/email-schedule`,
+        {
+          emails: scheduleEmails,
+          assessmentIds: selectedAssessmentsIds,
+          scheduledSendAt: scheduledAt.toISOString(),
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (typeof onScheduleSaved === 'function') {
+        onScheduleSaved(res.data.assessments || []);
+      }
+      setScheduleOpen(false);
+    } catch (error) {
+      console.error('Error saving email schedule:', error);
+      setScheduleError(error.response?.data?.error || getMessage('label_schedule_save_error'));
+    } finally {
+      setScheduleSaving(false);
+    }
+  };
+
   return (
+    <>
     <Paper
       elevation={0}
       sx={{
@@ -321,6 +489,19 @@ const handleDownloadPaperVersion = async () => {
                     </IconButton>
                 </span>
             </Tooltip>
+            {canSchedule && (
+            <Tooltip title={getMessage('tooltip_schedule_questionnaires')}>
+                <span>
+                    <IconButton
+                        onClick={openScheduleDialog}
+                        sx={{ border: '1px solid', borderColor: 'divider' }}
+                        disabled={selectedAssessmentIds.length === 0}
+                    >
+                        <ScheduleIcon />
+                    </IconButton>
+                </span>
+            </Tooltip>
+            )}
             <Tooltip title={isLinked ? getMessage('tooltip_unlink_answers') : getMessage('tooltip_link_answers')}>
                 <span>
                     <IconButton
@@ -388,6 +569,224 @@ const handleDownloadPaperVersion = async () => {
   </Box>
 </Box>
     </Paper>
+    <LocalizationProvider
+      dateAdapter={AdapterDayjs}
+      adapterLocale={languageCode || 'en'}
+      localeText={PICKER_LOCALE_TEXT[languageCode] || PICKER_LOCALE_TEXT.en}
+    >
+      <Dialog
+        open={scheduleOpen}
+        onClose={() => !scheduleSaving && setScheduleOpen(false)}
+        fullWidth
+        maxWidth="sm"
+        PaperProps={{
+          sx: {
+            borderRadius: '20px',
+            overflow: 'hidden',
+          },
+        }}
+      >
+        <Box
+          sx={{
+            px: 3,
+            py: 2.5,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            background: 'linear-gradient(180deg, #FFF6EC 0%, #FFFFFF 100%)',
+            borderBottom: '1px solid',
+            borderColor: 'divider',
+          }}
+        >
+          <Box
+            sx={{
+              width: 48,
+              height: 48,
+              borderRadius: '14px',
+              bgcolor: '#F7941E',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}
+          >
+            <ScheduleIcon sx={{ color: '#1a1a1a' }} />
+          </Box>
+          <Box sx={{ minWidth: 0 }}>
+            <Typography variant="h5" fontWeight={800} sx={{ lineHeight: 1.2 }}>
+              {getMessage('dialog_schedule_title')}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" noWrap>
+              {selectedAssessmentDetails.map((assessment) => assessment.name).filter(Boolean).join(' · ')}
+            </Typography>
+          </Box>
+        </Box>
+        <DialogContent sx={{ px: 3, py: 2.5 }}>
+          {scheduleError && (
+            <Alert severity="error" sx={{ mb: 2, borderRadius: '12px' }}>{scheduleError}</Alert>
+          )}
+          {scheduleLoading ? (
+            <Box display="flex" justifyContent="center" py={6}>
+              <CircularProgress size={28} />
+            </Box>
+          ) : (
+            <>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 2,
+                  mb: 2,
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  borderRadius: '16px',
+                  bgcolor: '#fafafa',
+                }}
+              >
+                <Box display="flex" alignItems="center" gap={1} mb={1.5}>
+                  <MailOutlineIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    {getMessage('label_schedule_emails')}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 1.5, minHeight: 36 }}>
+                  {scheduleEmails.length === 0 ? (
+                    <Typography variant="body2" color="text.secondary">
+                      {getMessage('label_schedule_no_emails')}
+                    </Typography>
+                  ) : (
+                    scheduleEmails.map((email) => (
+                      <Chip
+                        key={email}
+                        label={email}
+                        onDelete={() => removeScheduleEmail(email)}
+                        disabled={scheduleSaving}
+                        sx={{
+                          bgcolor: 'white',
+                          border: '1px solid #F7941E',
+                          '& .MuiChip-deleteIcon': { color: '#D17A1D' },
+                        }}
+                      />
+                    ))
+                  )}
+                </Box>
+                <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    multiline
+                    minRows={3}
+                    placeholder={getMessage('label_schedule_email_placeholder')}
+                    value={emailInput}
+                    onChange={(event) => setEmailInput(event.target.value)}
+                    onPaste={(event) => {
+                      const pasted = event.clipboardData.getData('text');
+                      if (/[\n\r,;]/.test(pasted) || parseEmailList(pasted).length > 1) {
+                        event.preventDefault();
+                        addEmailsFromText(`${emailInput}\n${pasted}`);
+                      }
+                    }}
+                    disabled={scheduleSaving}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        bgcolor: 'white',
+                        borderRadius: '12px',
+                      },
+                    }}
+                  />
+                  <Button
+                    variant="contained"
+                    onClick={addScheduleEmail}
+                    disabled={scheduleSaving}
+                    sx={{ ...buttonStyle, mr: 0, minWidth: 88, height: 40 }}
+                  >
+                    {getMessage('label_schedule_add_email')}
+                  </Button>
+                </Box>
+              </Paper>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 2,
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  borderRadius: '16px',
+                  bgcolor: '#fafafa',
+                }}
+              >
+                <Box display="flex" alignItems="center" gap={1} mb={1.5}>
+                  <ScheduleIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    {getMessage('label_schedule_datetime')}
+                  </Typography>
+                </Box>
+                <DateTimePicker
+                  value={scheduledAt}
+                  onChange={(value) => {
+                    if (!value || !value.isValid()) {
+                      setScheduledAt(value);
+                      return;
+                    }
+                    const now = dayjs();
+                    setScheduledAt(value.isBefore(now) ? now.add(1, 'minute').startOf('minute') : value);
+                  }}
+                  minDateTime={dayjs()}
+                  disablePast
+                  disableIgnoringDatePartForTimeValidation
+                  shouldDisableTime={(value, view) => {
+                    if (!value || !value.isValid()) {
+                      return false;
+                    }
+                    const now = dayjs();
+                    if (!value.isSame(now, 'day')) {
+                      return false;
+                    }
+                    if (view === 'hours') {
+                      return value.hour() < now.hour();
+                    }
+                    if (view === 'minutes') {
+                      return value.hour() === now.hour() && value.minute() <= now.minute();
+                    }
+                    return false;
+                  }}
+                  ampm={false}
+                  format={DATE_TIME_FORMATS[languageCode] || DATE_TIME_FORMATS.en}
+                  disabled={scheduleSaving}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      sx: {
+                        '& .MuiOutlinedInput-root': {
+                          bgcolor: 'white',
+                          borderRadius: '12px',
+                        },
+                      },
+                    },
+                  }}
+                />
+              </Paper>
+            </>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ px: 3, py: 2, gap: 1 }}>
+          <Button
+            onClick={() => setScheduleOpen(false)}
+            disabled={scheduleSaving}
+            sx={{ borderRadius: '50px', px: 2.5 }}
+          >
+            {getMessage('label_cancel')}
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleSaveSchedule}
+            disabled={scheduleLoading || scheduleSaving}
+            sx={{ ...buttonStyle, mr: 0, px: 3 }}
+          >
+            {getMessage('label_schedule_save')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </LocalizationProvider>
+  </>
   );
 };
 

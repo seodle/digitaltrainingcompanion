@@ -1066,6 +1066,22 @@ const Dashboard = () => {
                     selectedAssessmentsIds={selectedAssessmentsIds}
                     assessments={assessments}
                     currentMonitoringId={currentMonitoringId}
+                    isMonitoringOwner={selectedMonitoring?.userId === currentUser?._id}
+                    onScheduleSaved={(updatedAssessments) => {
+                      setAssessments((prev) => prev.map((assessment) => {
+                        const updated = updatedAssessments.find((item) => item._id === assessment._id);
+                        if (!updated) {
+                          return assessment;
+                        }
+                        return {
+                          ...assessment,
+                          scheduledSendAt: updated.scheduledSendAt
+                            ? new Date(updated.scheduledSendAt)
+                            : null,
+                          scheduledSendStatus: updated.scheduledSendStatus || null,
+                        };
+                      }));
+                    }}
                   />
                 </Box>
               )}

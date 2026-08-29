@@ -27,6 +27,7 @@ const aiBeaconRoutes = require("./routes/aiBeacon");
 const aiBeaconPublicRoutes = require("./routes/aiBeaconPublic");
 const questionWidgetRoutes = require('./routes/questionWidget');
 const adminRoutes = require('./routes/admin');
+const { startScheduledQuestionnaireJob } = require('./services/scheduledQuestionnaireJob');
 
 const app = express();
 
@@ -137,6 +138,7 @@ mongoose
   })
   .then(() => {
     console.log(`DB connected! (Using ${isDevelopment ? "local" : "cloud"} database)`);
+    startScheduledQuestionnaireJob();
   })
   .catch((err) => {
     console.error("Failed to connect to the database", err);
