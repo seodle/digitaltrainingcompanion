@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
@@ -56,9 +56,18 @@ const Item = ({ title, to, icon, selected, setSelected, disabled }) => {
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [isCollapsed, setIsCollapsed] = useState(() =>
+    typeof window !== "undefined" && window.innerWidth < theme.breakpoints.values.md
+  );
   const [selected, setSelected] = useState("Dashboard");
   const { getMessage } = useMessageService();
+
+  useEffect(() => {
+    if (isMobile) {
+      setIsCollapsed(true);
+    }
+  }, [isMobile]);
 
   // Create a state to hold the window height
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);

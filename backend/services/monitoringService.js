@@ -12,7 +12,7 @@ const getUsersByRedeemedCode = async (code) => {
     // Get users who redeemed the code
     const usersRedeemed = await User.find(
       { sharingCodeRedeemed: code },
-      'firstName lastName -_id'
+      'firstName lastName'
     ).lean();
 
     // Find the monitoring with this sharing code to get the owner's ID

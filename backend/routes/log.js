@@ -1,11 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const { createLog, getLogsByMonitoringAndUser, updateLog, deleteLog, updateCompletion } = require('../services/logService');
+const {
+    createLog,
+    getVisibleLogsForMonitoring,
+    getMonitoringFollowersForLog,
+    updateLog,
+    deleteLog,
+    updateCompletion,
+    requestHelp,
+    getLogChat,
+    addLogChatMessage,
+} = require('../services/logService');
 const { requireLogOwner, requireMonitoringOwnerOrRedeemer } = require('../middleware/authorization');
 
-/**
- * Route to create a new log
- */
+const sendServiceError = (res, err, fallbackStatus = 500) => {
+    const status = err.status || fallbackStatus;
+    return res.status(status).json({ error: err.message || 'Server error' });
+};
+
 router.post('/', async (req, res) => {
     try {
         const { monitoringId, ...rest } = req.body;
@@ -14,42 +26,64 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ error: 'Missing required field: monitoringId' });
         }
 
-        const logData = {
-            ...rest,
-            monitoringId,
-            userId: req.user._id
-        };
-
-        const createdLog = await createLog(logData);
-        console.log('Created log:', createdLog);
+        const createdLog = await createLog({ ...rest, monitoringId }, req.user._id);
         res.status(200).json(createdLog);
     } catch (err) {
         console.error('Error creating log:', err);
-        console.error('Error message:', err.message);
-        res.status(500).json({ error: err.message });
+        sendServiceError(res, err);
     }
 });
 
-/**
- * Route to get logs by monitoring ID for the current user
- */
-router.get('/monitoring/:monitoringId', requireMonitoringOwnerOrRedeemer('monitoringId'), async (req, res) => {
-    const { monitoringId } = req.params;
-    const userId = req.user && req.user._id;
+router.get('/monitoring/:monitoringId/followers', requireMonitoringOwnerOrRedeemer('monitoringId'), async (req, res) => {
     try {
-        const logs = await getLogsByMonitoringAndUser(monitoringId, userId);
+        const followers = await getMonitoringFollowersForLog(req.params.monitoringId, req.user._id);
+        res.status(200).json(followers);
+    } catch (err) {
+        console.error(err);
+        sendServiceError(res, err);
+    }
+});
 
-        // Instead of sending 404, send empty array with 200 status
-        res.status(200).json(logs); // This will be [] if no logs found
+router.get('/monitoring/:monitoringId', requireMonitoringOwnerOrRedeemer('monitoringId'), async (req, res) => {
+    try {
+        const logs = await getVisibleLogsForMonitoring(req.params.monitoringId, req.user._id);
+        res.status(200).json(logs);
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({ error: 'Server error' });
+        sendServiceError(res, err);
     }
 });
 
-/**
- * Update a single log by id (partial update)
- */
+router.post('/:logId/help-request', async (req, res) => {
+    try {
+        const updated = await requestHelp(req.params.logId, req.user._id, req.user.userStatus);
+        res.status(200).json(updated);
+    } catch (err) {
+        console.error(err);
+        sendServiceError(res, err, 400);
+    }
+});
+
+router.get('/:logId/chat', async (req, res) => {
+    try {
+        const chat = await getLogChat(req.params.logId, req.user._id);
+        res.status(200).json(chat);
+    } catch (err) {
+        console.error(err);
+        sendServiceError(res, err, 400);
+    }
+});
+
+router.post('/:logId/chat', async (req, res) => {
+    try {
+        const chat = await addLogChatMessage(req.params.logId, req.user._id, req.body && req.body.text);
+        res.status(200).json(chat);
+    } catch (err) {
+        console.error(err);
+        sendServiceError(res, err, 400);
+    }
+});
+
 router.patch('/:logId', requireLogOwner, async (req, res) => {
     const { logId } = req.params;
 
@@ -58,13 +92,10 @@ router.patch('/:logId', requireLogOwner, async (req, res) => {
         res.status(200).json(updated);
     } catch (err) {
         console.error(err.message);
-        res.status(400).json({ error: err.message });
+        sendServiceError(res, err, 400);
     }
 });
 
-/**
- * Toggle/set completion on a single log
- */
 router.patch('/:logId/completion', requireLogOwner, async (req, res) => {
     const { logId } = req.params;
     const { isCompleted } = req.body;
@@ -76,13 +107,10 @@ router.patch('/:logId/completion', requireLogOwner, async (req, res) => {
         res.status(200).json(updated);
     } catch (err) {
         console.error(err.message);
-        res.status(400).json({ error: err.message });
+        sendServiceError(res, err, 400);
     }
 });
 
-/**
- * Delete a single log by id
- */
 router.delete('/:logId', requireLogOwner, async (req, res) => {
     const { logId } = req.params;
     try {
@@ -90,7 +118,7 @@ router.delete('/:logId', requireLogOwner, async (req, res) => {
         res.status(204).send();
     } catch (err) {
         console.error(err.message);
-        res.status(400).json({ error: err.message });
+        sendServiceError(res, err, 400);
     }
 });
 

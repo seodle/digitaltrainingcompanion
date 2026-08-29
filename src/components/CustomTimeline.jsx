@@ -1,422 +1,604 @@
-import React, { useState } from 'react';
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
-import { Box, Typography, IconButton, TextField, Chip } from "@mui/material";
-import Delete from "@mui/icons-material/Delete";
-import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import RepeatIcon from '@mui/icons-material/Repeat';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  IconButton,
+  TextField,
+  Chip,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Paper,
+} from "@mui/material";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
+import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
+import axios from "axios";
 import { BACKEND_URL } from "../config";
-import { useAuthUser } from '../contexts/AuthUserContext';
-import { AssessmentType, LogType } from '../utils/enums';
-import { useMessageService } from '../services/MessageService';
-import { localizeAssessmentType } from '../utils/ObjectsUtils';
+import { useAuthUser } from "../contexts/AuthUserContext";
+import { LogType } from "../utils/enums";
+import { useMessageService } from "../services/MessageService";
+import { localizeAssessmentType } from "../utils/ObjectsUtils";
+import LogChatDialog from "./LogChatDialog";
+import { ActivityIcon, IconWell, LogTypeGlyph } from "./logbookIcons";
 
-const CustomTimeline = ({ logs, setLogs, currentMonitoringId }) => {
+const getAuthorId = (log) => String(log.userId?._id || log.userId || "");
+
+const getPersonName = (person, fallback) => {
+  if (person && typeof person === "object") {
+    return `${person.firstName || ""} ${person.lastName || ""}`.trim() || fallback;
+  }
+  return fallback;
+};
+
+const CustomTimeline = ({
+  logs,
+  setLogs,
+  isMonitoringOwner = false,
+  currentMonitoringId = "",
+  focusLogId = null,
+}) => {
   const { currentUser } = useAuthUser();
   const { getMessage } = useMessageService();
   const [editingId, setEditingId] = useState(null);
   const [tempDescription, setTempDescription] = useState("");
+  const [chatLog, setChatLog] = useState(null);
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [visibilityFilter, setVisibilityFilter] = useState("all");
+  const [teacherFilter, setTeacherFilter] = useState("all");
+  const [teachers, setTeachers] = useState([]);
+  const [cardToggles, setCardToggles] = useState({});
 
-  const displayLogs = [...logs].reverse();
+  useEffect(() => {
+    if (!isMonitoringOwner && visibilityFilter === "selected") {
+      setVisibilityFilter("all");
+    }
+    if (isMonitoringOwner && visibilityFilter === "trainer") {
+      setVisibilityFilter("all");
+    }
+    if (!isMonitoringOwner && teacherFilter !== "all") {
+      setTeacherFilter("all");
+    }
+  }, [isMonitoringOwner, visibilityFilter, teacherFilter]);
+
+  useEffect(() => {
+    setTeacherFilter("all");
+  }, [currentMonitoringId]);
+
+  useEffect(() => {
+    const loadTeachers = async () => {
+      if (!isMonitoringOwner || !currentMonitoringId) {
+        setTeachers([]);
+        return;
+      }
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${BACKEND_URL}/logs/monitoring/${currentMonitoringId}/followers`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setTeachers(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.error("Error fetching teachers for log filter:", error);
+        setTeachers([]);
+      }
+    };
+    loadTeachers();
+  }, [currentMonitoringId, isMonitoringOwner]);
+
+  useEffect(() => {
+    if (!focusLogId || !logs.length) {
+      return;
+    }
+    const focused = logs.find((log) => String(log._id) === String(focusLogId));
+    const focusedAuthor = focused ? getAuthorId(focused) : "";
+    if (focused && isMonitoringOwner && focusedAuthor && focusedAuthor !== String(currentUser?._id || "")) {
+      setChatLog(focused);
+    }
+  }, [focusLogId, logs, isMonitoringOwner, currentUser?._id]);
+
+  const currentUserId = String(currentUser?._id || "");
+
+  const teacherOptions = (() => {
+    const byId = new Map();
+    teachers.forEach((teacher) => {
+      if (teacher?._id) {
+        byId.set(String(teacher._id), teacher);
+      }
+    });
+    logs.forEach((log) => {
+      const id = getAuthorId(log);
+      if (id && id !== currentUserId && log.userId && typeof log.userId === "object") {
+        byId.set(id, log.userId);
+      }
+    });
+    return [...byId.values()].sort((a, b) =>
+      getPersonName(a, "").localeCompare(getPersonName(b, ""))
+    );
+  })();
+
+  const displayLogs = [...logs]
+    .filter((log) => typeFilter === "all" || log.logType === typeFilter)
+    .filter((log) => visibilityFilter === "all" || (log.visibility || "private") === visibilityFilter)
+    .filter((log) => teacherFilter === "all" || getAuthorId(log) === teacherFilter)
+    .reverse();
+
+  const getVisibilityLabel = (visibility) => {
+    if (visibility === "private") {
+      return getMessage(
+        isMonitoringOwner
+          ? "label_log_visibility_private_trainer"
+          : "label_log_visibility_private"
+      );
+    }
+    if (visibility === "followers") {
+      return getMessage(
+        isMonitoringOwner
+          ? "label_log_visibility_followers"
+          : "label_log_visibility_followers_teacher"
+      );
+    }
+    return getMessage(`label_log_visibility_${visibility}`);
+  };
 
   const handleDelete = async (logId) => {
-    // optimistic update
-    setLogs(prev => prev.filter(l => l._id !== logId));
-
+    setLogs((prev) => prev.filter((log) => log._id !== logId));
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(
-        `${BACKEND_URL}/logs/${logId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-      console.log('Log deleted successfully');
+      await axios.delete(`${BACKEND_URL}/logs/${logId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     } catch (error) {
-      console.log('An error occurred while deleting the log:', error);
+      console.log("An error occurred while deleting the log:", error);
     }
   };
 
-    const handleStartEdit = (log) => {
-      setEditingId(log._id);
-      setTempDescription(log.description);
-    };
+  const handleStartEdit = (log) => {
+    setEditingId(log._id);
+    setTempDescription(log.description);
+  };
 
-    const handleSave = async (logId) => {
-
+  const handleSave = async (logId) => {
     try {
       const token = localStorage.getItem("token");
       const { data: updated } = await axios.patch(
         `${BACKEND_URL}/logs/${logId}`,
         { description: tempDescription },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-      setLogs(prev => prev.map(l => (l._id === logId ? updated : l)));
+      setLogs((prev) => prev.map((log) => (log._id === logId ? updated : log)));
       setEditingId(null);
-      console.log('Log updated successfully');
     } catch (error) {
-      console.error('Error updating log:', error);
+      console.error("Error updating log:", error);
     }
   };
 
-  if (logs.length === 0) {
-    return <Typography mt="50px" variant="h6">{getMessage("label_no_entries")}</Typography>;
-  }
-
-const handleChangeCompletion = async (log) => {
-    const logId = log._id;
-    const isNowCompleted = !log.isCompleted;
-
+  const handleChangeCompletion = async (log) => {
     try {
       const token = localStorage.getItem("token");
       const { data: updated } = await axios.patch(
-        `${BACKEND_URL}/logs/${logId}/completion`,
-        { isCompleted: isNowCompleted },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        `${BACKEND_URL}/logs/${log._id}/completion`,
+        { isCompleted: !log.isCompleted },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-      setLogs(prev => prev.map(l => (l._id === logId ? updated : l)));
-      console.log('Change completion status updated successfully');
+      setLogs((prev) => prev.map((item) => (item._id === log._id ? updated : item)));
     } catch (error) {
-      console.error('Error updating change completion status:', error);
+      console.error("Error updating change completion status:", error);
     }
-};
+  };
 
-return (
-    <Box mt="12px">
-      <Typography variant="h3" fontWeight="bold">
-        {getMessage("label_my_training_activity")}
-      </Typography>
+  const isDetailCard = (log) =>
+    log.logType === LogType.OBSERVATION || log.logType === LogType.CHANGE;
 
-      <Box mt="30px" sx={{overflowY: 'auto', height: "70vh", minWidth: "40vw"}}>
-        <Timeline sx={{ 
-          flexDirection: 'column', 
-          '& .MuiTimelineItem-root': { 
-            minHeight: 'auto',
-            '&:before': {
-              flex: 0.2
-            }
-          }
-        }}>
-          {displayLogs.map((log) => {
-            const isEditing = editingId === log._id;
+  const isToggleOn = (log, key) => {
+    const stored = cardToggles[`${log._id}:${key}`];
+    if (stored !== undefined) {
+      return stored;
+    }
+    if (key === "assessment") {
+      return Array.isArray(log.assessmentNames) && log.assessmentNames.length > 0;
+    }
+    return Array.isArray(log.displayNames) && log.displayNames.length > 0;
+  };
 
-            return (
-              <TimelineItem 
-                key={log._id}
-                sx={{
-                  '&::before': {
-                    display: 'none'
-                  }
-                }}
-              >
-              <TimelineOppositeContent 
-                  sx={{ 
-                    flex: '0.2 !important',
-                    display: 'flex', 
-                    alignItems: 'center',
-                    py: 1,
-                    pr: 1
-                  }} 
-                  variant="body2" 
-                  color="text.secondary"
-                >
-                  <Box 
-                    display="flex" 
-                    flexDirection="column"
-                    flexGrow={1} 
-                    sx={{ 
-                      bgcolor: '#fff',
-                      borderRadius: 2,
-                      p: 1,
-                      border: '1px solid rgba(0, 0, 0, 0.12)',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-                      '&:hover': {
-                        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.12)'
-                      },
-                      transition: 'box-shadow 0.2s ease-in-out'
-                    }}
-                  >
-                    <Box 
-                      display="flex" 
-                      alignItems="center"
+  const toggleCardDetail = (log, key) => {
+    setCardToggles((prev) => ({
+      ...prev,
+      [`${log._id}:${key}`]: !isToggleOn(log, key),
+    }));
+  };
+
+  const handleChatUpdated = (logId, chat) => {
+    setLogs((prev) => prev.map((item) => (item._id === logId ? { ...item, chat } : item)));
+    setChatLog((prev) => (prev && prev._id === logId ? { ...prev, chat } : prev));
+  };
+
+  const filters = (
+    <Box
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 1.5,
+        minWidth: { xs: "100%", sm: "auto" },
+        ml: { md: "auto" },
+        justifyContent: { xs: "stretch", md: "flex-end" },
+      }}
+    >
+      <FormControl size="small" sx={{ minWidth: { xs: "100%", sm: 180 } }}>
+        <InputLabel id="type-filter-label">{getMessage("label_choose_log_type")}</InputLabel>
+        <Select
+          labelId="type-filter-label"
+          id="type-filter"
+          value={typeFilter}
+          label={getMessage("label_choose_log_type")}
+          onChange={(event) => setTypeFilter(event.target.value)}
+        >
+          <MenuItem value="all">{getMessage("label_log_filter_all")}</MenuItem>
+          {Object.entries(LogType).map(([key, value]) => (
+            <MenuItem key={key} value={value}>
+              {getMessage(`label_log_type_${key.toLowerCase()}`)}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl size="small" sx={{ minWidth: { xs: "100%", sm: 180 } }}>
+        <InputLabel id="visibility-filter-label">{getMessage("label_log_filter_visible_to")}</InputLabel>
+        <Select
+          labelId="visibility-filter-label"
+          id="visibility-filter"
+          value={visibilityFilter}
+          label={getMessage("label_log_filter_visible_to")}
+          onChange={(event) => setVisibilityFilter(event.target.value)}
+        >
+          <MenuItem value="all">{getMessage("label_log_filter_visible_all")}</MenuItem>
+          <MenuItem value="private">{getVisibilityLabel("private")}</MenuItem>
+          {isMonitoringOwner ? (
+            <MenuItem value="selected">{getVisibilityLabel("selected")}</MenuItem>
+          ) : (
+            <MenuItem value="trainer">{getVisibilityLabel("trainer")}</MenuItem>
+          )}
+          <MenuItem value="followers">{getVisibilityLabel("followers")}</MenuItem>
+        </Select>
+      </FormControl>
+      {isMonitoringOwner && (
+        <FormControl size="small" sx={{ minWidth: { xs: "100%", sm: 180 } }}>
+          <InputLabel id="teacher-filter-label">{getMessage("label_log_filter_teacher")}</InputLabel>
+          <Select
+            labelId="teacher-filter-label"
+            id="teacher-filter"
+            value={teacherFilter}
+            label={getMessage("label_log_filter_teacher")}
+            onChange={(event) => setTeacherFilter(event.target.value)}
+          >
+            <MenuItem value="all">{getMessage("label_log_filter_author_all")}</MenuItem>
+            {teacherOptions.map((teacher) => (
+              <MenuItem key={teacher._id} value={String(teacher._id)}>
+                {getPersonName(teacher, getMessage("label_log_author"))}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
+    </Box>
+  );
+
+  const sectionHeader = (
+    <Box
+      sx={{
+        px: { xs: 2, md: 2.5 },
+        pt: 2.25,
+        pb: 1.5,
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        alignItems: { xs: "stretch", md: "center" },
+        justifyContent: { md: "space-between" },
+        flexWrap: "wrap",
+        gap: 1.5,
+      }}
+    >
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, minWidth: 0 }}>
+        <IconWell>
+          <ActivityIcon />
+        </IconWell>
+        <Typography variant="h5" fontWeight={700} sx={{ lineHeight: 1.2, minWidth: 0 }}>
+          {getMessage("label_my_training_activity")}
+        </Typography>
+      </Box>
+      {logs.length > 0 && filters}
+    </Box>
+  );
+
+  if (logs.length === 0) {
+    return (
+      <Paper
+        elevation={0}
+        sx={{
+          width: "100%",
+          borderRadius: "16px",
+          border: "1px solid",
+          borderColor: "divider",
+        }}
+      >
+        {sectionHeader}
+        <Typography color="text.secondary" sx={{ px: { xs: 2, md: 2.5 }, pb: 2.5 }}>
+          {getMessage("label_no_entries")}
+        </Typography>
+      </Paper>
+    );
+  }
+
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: 0,
+        width: "100%",
+        borderRadius: "16px",
+        border: "1px solid",
+        borderColor: "divider",
+        overflow: "hidden",
+      }}
+    >
+      {sectionHeader}
+
+      <Box
+        sx={{
+          px: { xs: 1.5, md: 2 },
+          pb: 2,
+          overflowY: "auto",
+          maxHeight: { xs: "none", md: "72vh" },
+          display: "flex",
+          flexDirection: "column",
+          gap: 1.25,
+        }}
+      >
+        {displayLogs.length === 0 && (
+          <Typography color="text.secondary" sx={{ py: 3, textAlign: "center" }}>
+            {getMessage("label_log_filter_empty")}
+          </Typography>
+        )}
+        {displayLogs.map((log) => {
+          const isEditing = editingId === log._id;
+          const isOwn = getAuthorId(log) === currentUserId;
+          const visibility = log.visibility || "private";
+          const helpSent = Boolean(log.helpRequestedAt) || log.logType === LogType.ASK_FOR_HELP;
+          const messageCount = (log.chat || []).length;
+          const canOpenChat = isMonitoringOwner
+            ? !isOwn
+            : (isOwn && messageCount > 0);
+          const isFocused = focusLogId && String(focusLogId) === String(log._id);
+
+          return (
+            <Box
+              key={log._id}
+              id={`log-${log._id}`}
+              sx={{
+                p: { xs: 1.5, md: 1.75 },
+                borderRadius: "12px",
+                border: "1px solid",
+                borderColor: isFocused ? "#F7941E" : "divider",
+                bgcolor: "white",
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.25, mb: 1 }}>
+                <IconWell size={32}>
+                  <LogTypeGlyph logType={log.logType} />
+                </IconWell>
+                <Box sx={{ minWidth: 0, flex: 1 }}>
+                  <Typography variant="subtitle1" fontWeight={700} sx={{ lineHeight: 1.3, pr: 1 }}>
+                    {log.assessment
+                      ? localizeAssessmentType(log.assessment, getMessage)
+                      : getMessage(`label_log_type_${Object.entries(LogType).find(([, value]) => value === log.logType)?.[0]?.toLowerCase() || "observation"}`)}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {getPersonName(log.userId, getMessage("label_log_author"))}
+                    {log.creationDate ? ` · ${new Date(log.creationDate).toLocaleDateString()}` : ""}
+                  </Typography>
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, mt: 1, alignItems: "center" }}>
+                    {log.day ? (
+                      <Chip
+                        size="small"
+                        label={`${getMessage("label_log_session")} ${log.day}`}
+                        sx={{ bgcolor: "#FFF6EC", border: "1px solid #F5D4A8" }}
+                      />
+                    ) : null}
+                    <Chip
+                      size="small"
+                      label={getVisibilityLabel(visibility)}
+                      sx={{ bgcolor: "#FFF6EC", border: "1px solid #F5D4A8" }}
+                    />
+                    {isDetailCard(log) && (
+                      <>
+                        <Chip
+                          size="small"
+                          clickable
+                          label={getMessage("label_log_toggle_assessment")}
+                          onClick={() => toggleCardDetail(log, "assessment")}
+                          sx={{
+                            border: "1px solid #F5D4A8",
+                            bgcolor: isToggleOn(log, "assessment") ? "#F7941E" : "#FFF6EC",
+                            color: "#1a1a1a",
+                          }}
+                        />
+                        <Chip
+                          size="small"
+                          clickable
+                          label={getMessage("label_log_toggle_participants")}
+                          onClick={() => toggleCardDetail(log, "participants")}
+                          sx={{
+                            border: "1px solid #F5D4A8",
+                            bgcolor: isToggleOn(log, "participants") ? "#F7941E" : "#FFF6EC",
+                            color: "#1a1a1a",
+                          }}
+                        />
+                        {isToggleOn(log, "assessment") &&
+                          (log.assessmentNames || []).map((assessmentName, index) => (
+                            <Chip
+                              key={`assessment-name-${index}`}
+                              label={assessmentName}
+                              size="small"
+                              sx={{ bgcolor: "white", border: "1px solid", borderColor: "divider" }}
+                            />
+                          ))}
+                        {isToggleOn(log, "participants") &&
+                          (log.displayNames || []).map((displayName, index) => (
+                            <Chip
+                              key={`display-name-${index}`}
+                              label={displayName}
+                              size="small"
+                              sx={{ bgcolor: "white", border: "1px solid", borderColor: "divider" }}
+                            />
+                          ))}
+                      </>
+                    )}
+                  </Box>
+                </Box>
+                {isOwn && (
+                  <Box sx={{ display: "flex", flexShrink: 0 }}>
+                    <IconButton
+                      size="small"
+                      onClick={() => (isEditing ? handleSave(log._id) : handleStartEdit(log))}
+                      aria-label={isEditing ? `Save log ${log.day}` : `Edit log ${log.day}`}
                     >
-                      <IconButton 
-                        onClick={() => handleDelete(log._id)}
-                        sx={{ padding: 0.5 }}
-                      >
-                        <Delete sx={{ 
-                          color: 'rgba(211, 47, 47, 0.8)', 
-                          fontSize: '1.2rem' 
-                        }} />     
-                      </IconButton>
+                      {isEditing ? <SaveRoundedIcon color="primary" /> : <EditOutlinedIcon fontSize="small" />}
+                    </IconButton>
+                    <IconButton size="small" onClick={() => handleDelete(log._id)}>
+                      <DeleteOutlineRoundedIcon sx={{ color: "#D14A38", fontSize: "1.2rem" }} />
+                    </IconButton>
+                  </Box>
+                )}
+              </Box>
 
-                      <Typography 
-                        variant="h4" 
-                        fontWeight="bold" 
-                        sx={{ 
-                          ml: 1, 
-                          mr: 1,
-                          whiteSpace: 'nowrap',
-                          fontSize: '1.2rem',
-                          color: 'text.primary'
+              {!isDetailCard(log) && Array.isArray(log.assessmentNames) && log.assessmentNames.length > 0 && (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, mb: 1 }}>
+                  {log.assessmentNames.map((assessmentName, index) => (
+                    <Chip
+                      key={`assessment-name-${index}`}
+                      label={assessmentName}
+                      size="small"
+                      sx={{ bgcolor: "white", border: "1px solid", borderColor: "divider" }}
+                    />
+                  ))}
+                </Box>
+              )}
+
+              {!isDetailCard(log) && Array.isArray(log.displayNames) && log.displayNames.length > 0 && (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, mb: 1 }}>
+                  {log.displayNames.map((displayName, index) => (
+                    <Chip
+                      key={`display-name-${index}`}
+                      label={displayName}
+                      size="small"
+                      sx={{ bgcolor: "white", border: "1px solid", borderColor: "divider" }}
+                    />
+                  ))}
+                </Box>
+              )}
+
+              {isEditing && isOwn ? (
+                <TextField
+                  fullWidth
+                  multiline
+                  minRows={4}
+                  value={tempDescription}
+                  onChange={(event) => {
+                    if (event.target.value.length <= 1000) {
+                      setTempDescription(event.target.value);
+                    }
+                  }}
+                  autoFocus
+                  inputProps={{ maxLength: 1000 }}
+                  helperText={`${tempDescription.length}/1000`}
+                    sx={{ mt: 1 }}
+                />
+              ) : (
+                <Typography
+                  variant="body1"
+                  onClick={() => isOwn && handleStartEdit(log)}
+                  sx={{
+                    whiteSpace: "pre-wrap",
+                    wordBreak: "break-word",
+                    lineHeight: 1.55,
+                    cursor: isOwn ? "pointer" : "default",
+                  }}
+                >
+                  {log.description}
+                </Typography>
+              )}
+
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 1.5 }}>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                  {log.logType === LogType.CHANGE && isOwn && !log.isCompleted && (
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() => handleChangeCompletion(log)}
+                      sx={{ borderColor: "#F5D4A8", color: "#D17A1D", width: { xs: "100%", sm: "auto" } }}
+                    >
+                      {getMessage("label_log_isCompleted")}
+                    </Button>
+                  )}
+                  {helpSent && (
+                    <Chip
+                      size="small"
+                      label={getMessage("label_log_help_sent")}
+                      sx={{ bgcolor: "#FFF6EC", border: "1px solid #F5D4A8" }}
+                    />
+                  )}
+                  {canOpenChat && (
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      startIcon={<ChatBubbleOutlineRoundedIcon />}
+                      onClick={() => setChatLog(log)}
+                      sx={{ borderColor: "#F5D4A8", color: "#D17A1D", width: { xs: "100%", sm: "auto" } }}
+                    >
+                      {getMessage("label_log_open_discussion")}
+                      {messageCount > 0 ? ` (${messageCount})` : ""}
+                    </Button>
+                  )}
+                </Box>
+                {(log.isCompleted || log.lastModificationDate) && (
+                  <Box sx={{ display: "flex", flexDirection: "column", gap: 0.25 }}>
+                    {log.logType === LogType.CHANGE && log.isCompleted && (
+                      <Typography
+                        variant="caption"
+                        onClick={() => isOwn && handleChangeCompletion(log)}
+                        sx={{
+                          color: "text.secondary",
+                          cursor: isOwn ? "pointer" : "default",
+                          width: "fit-content",
                         }}
                       >
-                        Session {log.day}
+                        {getMessage("label_log_completed")}{" "}
+                        {log.completionDate ? new Date(log.completionDate).toLocaleString() : ""}
                       </Typography>
-                    </Box>
-
-                    {log.creationDate && (
-                      <Typography 
-                        variant="caption" 
-                        sx={{ 
-                          ml: 4,
-                          color: 'text.secondary',
-                          fontSize: '0.75rem'
-                        }}
-                      >
-                        {new Date(log.creationDate).toLocaleDateString()}
+                    )}
+                    {log.lastModificationDate && (
+                      <Typography variant="caption" color="text.secondary" sx={{ fontStyle: "italic" }}>
+                        {getMessage("label_last_modified")}: {new Date(log.lastModificationDate).toLocaleString()}
                       </Typography>
                     )}
                   </Box>
-                </TimelineOppositeContent>
-                <TimelineSeparator>
-                  <TimelineConnector sx={{ bgcolor: 'primary.main' }} />
-                  <TimelineDot style={{ backgroundColor: 'rgb(236, 141, 53)' }}>
-                    {log.logType === LogType.OBSERVATION ? <VisibilityIcon /> : <RepeatIcon />}
-                  </TimelineDot>
-                  <TimelineConnector sx={{ bgcolor: 'primary.main' }} />
-                </TimelineSeparator>
-                <TimelineContent 
-                  sx={{
-                    py: '2%', 
-                    border: '1px solid rgba(0, 0, 0, 0.12)', 
-                    borderRadius: 2,
-                    margin: '10px',
-                    position: 'relative',
-                    flex: '0.8 !important',
-                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', 
-                    backgroundColor: '#fff', 
-                    '& .edit-button': {
-                      opacity: 0,
-                      transition: 'opacity 0.2s'
-                    },
-                    '&:hover .edit-button': {
-                      opacity: 1
-                    }
-                  }}
-                >
-                  <IconButton 
-                    onClick={() => isEditing ? handleSave(log._id) : handleStartEdit(log)}
-                    aria-label={isEditing ? `Save log ${log.day}` : `Edit log ${log.day}`}
-                    sx={{
-                      position: 'absolute',
-                      top: 8,
-                      right: 8,
-                      bgcolor: 'white',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-                      '&:hover': {
-                        bgcolor: 'rgba(255, 255, 255, 0.9)',
-                        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.12)'
-                      }
-                    }}
-                  >
-                    {isEditing ? <SaveIcon color="primary" /> : <EditIcon />}
-                  </IconButton>
-
-                  {/* Main Assessment Label */}
-                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                    <Typography 
-                      variant="h4" 
-                      fontWeight="bold" 
-                      sx={{ 
-                        color: 'text.primary',
-                      }}
-                    >
-                      {localizeAssessmentType(log.assessment, getMessage)}
-                    </Typography>
-                  </Box>
-
-                  {/* Assessment Names */}
-                  {Array.isArray(log.assessmentNames) && log.assessmentNames.length > 0 && (
-                    <Box sx={{ mb: 1 }}>
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                        {log.assessmentNames.map((assessmentName, index) => (
-                          <Chip
-                            key={`assessment-name-${index}`}
-                            label={assessmentName}
-                            size="small"
-                            sx={{
-                              bgcolor: `rgb(236, 141, 53)`,
-                              color: 'white',
-                              '& .MuiChip-label': {
-                                fontWeight: 500
-                              }
-                            }}
-                          />
-                        ))}
-                      </Box>
-                    </Box>
-                  )}
-
-                  {/* Display Names */}
-                  {Array.isArray(log.displayNames) && log.displayNames.length > 0 && (
-                    <Box sx={{ mb: 2 }}>
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                        {log.displayNames.map((displayName, index) => (
-                          <Chip
-                            key={`display-name-${index}`}
-                            label={displayName}
-                            size="small"
-                            sx={{
-                              bgcolor: 'rgba(0, 0, 0, 0.3)',
-                              color: 'white',
-                              '& .MuiChip-label': {
-                                fontWeight: 500
-                              }
-                            }}
-                          />
-                        ))}
-                      </Box>
-                    </Box>
-                  )}
-
-                  {/* Description Section */}
-                  {isEditing ? (
-                    <Box sx={{ position: 'relative', mt: 2 }}>
-                      <TextField
-                        fullWidth
-                        multiline
-                        rows={10}
-                        value={tempDescription}
-                        onChange={(e) => {
-                          if (e.target.value.length <= 1000) {
-                            setTempDescription(e.target.value);
-                          }
-                        }}
-                        autoFocus
-                        variant="outlined"
-                        inputProps={{ maxLength: 1000 }}
-                        sx={{
-                          '& .MuiInputBase-root': {
-                            width: '100%',
-                            bgcolor: 'white',
-                            '& textarea': {
-                              width: '100%',
-                              whiteSpace: 'pre-wrap',
-                              lineHeight: '1.5',
-                              fontSize: '16px',
-                              wordBreak: 'break-word',
-                              padding: '10px',
-                              columnWidth: '100ch',
-                              maxWidth: '100%'
-                            }
-                          }
-                        }}
-                      />
-                      <Typography 
-                        variant="caption" 
-                        sx={{ 
-                          position: 'absolute', 
-                          bottom: -20, 
-                          right: 0 
-                        }}
-                      >
-                        {tempDescription.length}/1000
-                      </Typography>
-                    </Box>
-                  ) : (
-                    <Typography 
-                      variant="h5" 
-                      onClick={() => handleStartEdit(log)}
-                      sx={{ 
-                        cursor: 'pointer',
-                        whiteSpace: 'pre-wrap',
-                        lineHeight: '1.5',
-                        fontSize: '16px',
-                        wordBreak: 'break-word',
-                        padding: '10px',
-                        columnWidth: '100ch',
-                        maxWidth: '100%',
-                        mt: 2
-                      }}
-                    >
-                      {log.description}
-                    </Typography>
-                  )}
-
-                    {/* Last Modified Info */}
-                    <Box sx={{ 
-                      display: 'flex', 
-                      justifyContent: log.logType === LogType.OBSERVATION ? 'flex-end' : 'space-between',
-                      alignItems: 'flex-end',
-                      mt: 1 
-                    }}>
-                                            
-                      {log.logType !== LogType.OBSERVATION && (
-                        <Box sx={{ 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: 1,
-                          bgcolor: log.isCompleted ? 'success.light' : 'grey.100',
-                          color: log.isCompleted ? 'white' : 'text.secondary',
-                          borderRadius: 2,
-                          px: 2,
-                          py: 0.5,
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease-in-out',
-                          '&:hover': {
-                            bgcolor: log.isCompleted ? 'success.main' : 'grey.200'
-                          }
-                        }}
-                        onClick={() => handleChangeCompletion(log)}
-                        >
-
-                          <Typography variant="caption">
-                            {log.isCompleted 
-                              ? `${getMessage("label_log_completed")} ${new Date(log.completionDate).toLocaleString()}` 
-                              : getMessage("label_log_isCompleted")
-                            }
-                          </Typography>                         
-                        </Box>
-                      )}
-
-                      {log.lastModificationDate && (
-                        <Typography 
-                          variant="caption" 
-                          sx={{ 
-                            color: 'text.secondary',
-                            fontStyle: 'italic',
-                          }}
-                        >
-                          {getMessage("label_last_modified")}: {new Date(log.lastModificationDate).toLocaleString()}
-                        </Typography>
-                      )}
-                    </Box>
-                  </TimelineContent>
-              </TimelineItem>
-            );
-          })}
-        </Timeline>
+                )}
+              </Box>
+            </Box>
+          );
+        })}
       </Box>
-    </Box>
+
+      <LogChatDialog
+        open={Boolean(chatLog)}
+        log={chatLog}
+        onClose={() => setChatLog(null)}
+        onChatUpdated={handleChatUpdated}
+      />
+    </Paper>
   );
 };
 
