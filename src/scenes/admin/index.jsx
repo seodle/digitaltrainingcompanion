@@ -16,6 +16,7 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Switch,
 } from '@mui/material';
 import { BarChart, PieChart, LineChart, XAxis, YAxis, Tooltip, Legend, CartesianGrid, Line, Bar, Pie, Cell, ResponsiveContainer } from 'recharts';
 import Sidebar from '../global/Sidebar';
@@ -42,6 +43,8 @@ const Admin = () => {
   const [assessmentsTotal, setAssessmentsTotal] = useState(0);
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState('');
+  const [actionError, setActionError] = useState('');
+  const [updatingSandboxId, setUpdatingSandboxId] = useState(null);
 
 
   const fetchStats = useCallback(async () => {
@@ -122,6 +125,37 @@ const Admin = () => {
     }
   }, [assessmentsPage, assessmentsRowsPerPage]);
 
+  const handleSandboxToggle = async (userId, sandbox) => {
+    setUpdatingSandboxId(userId);
+    try {
+      await axios.patch(
+        `${BACKEND_URL}/admin/users/${userId}/sandbox`,
+        { sandbox },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      );
+      setUsers((prev) => prev.map((user) => (
+        user._id === userId ? { ...user, sandbox } : user
+      )));
+      setStats((prev) => {
+        if (!prev) {
+          return prev;
+        }
+        return {
+          ...prev,
+          activeUsersList: (prev.activeUsersList || []).map((user) => (
+            user._id === userId ? { ...user, sandbox } : user
+          )),
+        };
+      });
+      setActionError('');
+    } catch (err) {
+      console.error('Error updating sandbox:', err);
+      setActionError('Failed to update sandbox');
+    } finally {
+      setUpdatingSandboxId(null);
+    }
+  };
+
   useEffect(() => {
     fetchStats();
   }, []);
@@ -161,6 +195,11 @@ const Admin = () => {
           </Tabs>
         </Box>
         <Box flex="1" overflow="auto" p={2}>
+          {actionError && (
+            <Alert severity="error" sx={{ mb: 2 }} onClose={() => setActionError('')}>
+              {actionError}
+            </Alert>
+          )}
           {loading ? (
             <Box display="flex" justifyContent="center" alignItems="center" height="100%">
               <CircularProgress />
@@ -178,6 +217,8 @@ const Admin = () => {
               setPage={setUsersPage}
               setRowsPerPage={setUsersRowsPerPage}
               activeUsersList={stats?.activeUsersList || []}
+              onSandboxToggle={handleSandboxToggle}
+              updatingSandboxId={updatingSandboxId}
             />
           ) : (
             <MonitoringAndAssessmentTab
@@ -422,12 +463,45 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
 };
 
 // USERS TAB COMPONENT
-const UsersTab = ({ users, page, rowsPerPage, total, setPage, setRowsPerPage, activeUsersList }) => {
+const formatAdminDate = (value) => {
+  if (!value) {
+    return 'N/A';
+  }
+  return new Date(value).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
+
+const UsersTab = ({
+  users,
+  page,
+  rowsPerPage,
+  total,
+  setPage,
+  setRowsPerPage,
+  activeUsersList,
+  onSandboxToggle,
+  updatingSandboxId,
+}) => {
   const handleChangePage = (_, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (e) => {
     setRowsPerPage(parseInt(e.target.value, 10));
     setPage(0);
   };
+
+  const renderSandboxSwitch = (user) => (
+    <Switch
+      checked={Boolean(user.sandbox)}
+      onChange={(event) => onSandboxToggle(user._id, event.target.checked)}
+      disabled={updatingSandboxId === user._id}
+      size="small"
+      inputProps={{ 'aria-label': `Toggle sandbox for ${user.email}` }}
+    />
+  );
 
   return (
     <Box>
@@ -445,7 +519,7 @@ const UsersTab = ({ users, page, rowsPerPage, total, setPage, setRowsPerPage, ac
                   <TableCell>Email</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Sandbox</TableCell>
-                  <TableCell>Registration Date</TableCell>
+                  <TableCell>Last response</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -455,17 +529,7 @@ const UsersTab = ({ users, page, rowsPerPage, total, setPage, setRowsPerPage, ac
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.userStatus || 'N/A'}</TableCell>
                     <TableCell>{user.sandbox ? 'Yes' : 'No'}</TableCell>
-                    <TableCell>
-                      {user.registrationDate 
-                        ? new Date(user.registrationDate).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })
-                        : 'N/A'}
-                    </TableCell>
+                    <TableCell>{formatAdminDate(user.lastResponseDate)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -498,18 +562,8 @@ const UsersTab = ({ users, page, rowsPerPage, total, setPage, setRowsPerPage, ac
                 <TableCell>{user.firstName} {user.lastName}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.userStatus || 'N/A'}</TableCell>
-                <TableCell>{user.sandbox ? 'Yes' : 'No'}</TableCell>
-                <TableCell>
-                  {user.registrationDate 
-                    ? new Date(user.registrationDate).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })
-                    : 'N/A'}
-                </TableCell>
+                <TableCell>{renderSandboxSwitch(user)}</TableCell>
+                <TableCell>{formatAdminDate(user.registrationDate)}</TableCell>
               </TableRow>
             ))}
           </TableBody>

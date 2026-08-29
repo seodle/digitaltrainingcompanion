@@ -338,15 +338,19 @@ const fetchAdminStats = async () => {
             .select('firstName lastName email sandbox userStatus')
             .lean();
 
-        // Format active users with registration date from _id
+        const lastResponseDates = await getLastResponseDates(activeUserIds);
+
         const activeUsersWithDate = activeUsers.map(user => {
-            const timestamp = user._id.toString().substring(0, 8);
-            const registrationDate = new Date(parseInt(timestamp, 16) * 1000);
+            const lastResponseDate = lastResponseDates.get(user._id.toString()) || null;
             return {
                 ...user,
-                registrationDate: registrationDate
+                lastResponseDate
             };
-        }).sort((a, b) => b.registrationDate - a.registrationDate); // Sort by most recent first
+        }).sort((a, b) => {
+            const dateA = a.lastResponseDate ? new Date(a.lastResponseDate).getTime() : 0;
+            const dateB = b.lastResponseDate ? new Date(b.lastResponseDate).getTime() : 0;
+            return dateB - dateA;
+        });
 
         const [userGrowth, responseGrowth, monitoringGrowth, assessmentGrowth, monitoringNames, assessmentNames, assessmentTypesDistribution] = await Promise.all([
             getUserGrowthData(),
@@ -420,6 +424,57 @@ const fetchDatabaseRecords = async (page, limit, filter = "") => {
 // Delete a specific record from the database
 const deleteRecord = async (id) => {
     return Responses.findByIdAndDelete(id) !== null;
+};
+
+const getLastResponseDates = async (userIds) => {
+    const dateByUserId = new Map();
+    if (!userIds || userIds.length === 0) {
+        return dateByUserId;
+    }
+
+    const objectIds = userIds
+        .filter(Boolean)
+        .map((id) => (id instanceof mongoose.Types.ObjectId ? id : new mongoose.Types.ObjectId(id)));
+
+    const lastResponses = await Responses.aggregate([
+        { $match: { userId: { $in: objectIds } } },
+        {
+            $group: {
+                _id: '$userId',
+                lastResponseDate: { $max: '$completionDate' }
+            }
+        }
+    ]);
+
+    lastResponses.forEach((item) => {
+        if (item._id && item.lastResponseDate) {
+            dateByUserId.set(item._id.toString(), item.lastResponseDate);
+        }
+    });
+
+    return dateByUserId;
+};
+
+const updateUserSandbox = async (userId, sandbox) => {
+    if (typeof sandbox !== 'boolean') {
+        const error = new Error('sandbox must be a boolean');
+        error.status = 400;
+        throw error;
+    }
+
+    const user = await Users.findByIdAndUpdate(
+        userId,
+        { sandbox },
+        { new: true, runValidators: true }
+    ).select('firstName lastName email sandbox userStatus');
+
+    if (!user) {
+        const error = new Error('User not found');
+        error.status = 404;
+        throw error;
+    }
+
+    return user;
 };
 
 // Fetch users with registration date calculated from MongoDB _id
@@ -633,5 +688,6 @@ module.exports = {
     fetchMonitoringsWithDetails,
     getMonitoringsCount,
     fetchAssessmentsWithDetails,
-    getAssessmentsCount
+    getAssessmentsCount,
+    updateUserSandbox
 };

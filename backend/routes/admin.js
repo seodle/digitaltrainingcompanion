@@ -8,7 +8,8 @@ const { fetchAdminStats,
     fetchMonitoringsWithDetails,
     getMonitoringsCount,
     fetchAssessmentsWithDetails,
-    getAssessmentsCount } = require("../services/adminService");
+    getAssessmentsCount,
+    updateUserSandbox } = require("../services/adminService");
 const router = express.Router();
 
 
@@ -31,6 +32,21 @@ router.get("/stats", async (req, res) => {
     } catch (error) {
         console.error("Error fetching admin stats:", error);
         res.status(500).json({ error: "Failed to fetch admin stats" });
+    }
+});
+
+router.patch("/users/:id/sandbox", async (req, res) => {
+    try {
+        const { sandbox } = req.body;
+        if (typeof sandbox !== 'boolean') {
+            return res.status(400).json({ error: "sandbox must be a boolean" });
+        }
+        const user = await updateUserSandbox(req.params.id, sandbox);
+        res.json(user);
+    } catch (error) {
+        console.error("Error updating user sandbox:", error);
+        const status = error.status || 500;
+        res.status(status).json({ error: error.message || "Failed to update sandbox" });
     }
 });
 
