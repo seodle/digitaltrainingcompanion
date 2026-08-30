@@ -28,7 +28,6 @@ import myMonitorings from "../../assets/medias/home-my-monitorings.png";
 import editAssessments from "../../assets/medias/home-edit-assessments.png";
 import visualizeResults from "../../assets/medias/home-visualize-results.png";
 import logbooks from "../../assets/medias/home-logbooks.png";
-import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { buttonStyle } from '../../components/styledComponents';
 
 // Palette
