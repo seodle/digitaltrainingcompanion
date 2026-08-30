@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Divider, Typography, CircularProgress, Alert } from '@mui/material';
+import { Box, Button, Divider, Typography, CircularProgress, Alert } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import { useAuthUser } from '../contexts/AuthUserContext';
 import { useMessageService } from '../services/MessageService';
 
-const DisplayTextQuestion = ({ title, content, displayName, comment = false, aiSummary, loadingSummary = false }) => {
+const DisplayTextQuestion = ({ title, content, displayName, comment = false, aiSummary, loadingSummary = false, onGenerateSummary }) => {
 
     const { currentUser } = useAuthUser();
     const { getMessage } = useMessageService();
@@ -65,6 +65,15 @@ const DisplayTextQuestion = ({ title, content, displayName, comment = false, aiS
                         >
                             {aiSummary}
                         </Typography>
+                    ) : onGenerateSummary ? (
+                        <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={onGenerateSummary}
+                            sx={{ textTransform: 'none' }}
+                        >
+                            {getMessage('label_generate_summary')}
+                        </Button>
                     ) : (
                         <Typography variant="body2" color="text.secondary" fontStyle="italic">
                             {getMessage('label_no_summary_available') || 'No summary available'}

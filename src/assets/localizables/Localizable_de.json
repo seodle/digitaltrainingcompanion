@@ -3753,6 +3753,15 @@
         "fuzzy": 0
     },
     {
+        "term": "label_generate_summary",
+        "definition": "Zusammenfassung erstellen",
+        "context": "Button to request an AI summary of text responses",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "tooltip_enable_reorder",
         "definition": "Standardansicht: Neuordnung der Assessments aktivieren",
         "context": "tooltip_enable_reorder",

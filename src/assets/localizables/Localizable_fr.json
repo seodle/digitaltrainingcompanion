@@ -3753,6 +3753,15 @@
         "fuzzy": 0
     },
     {
+        "term": "label_generate_summary",
+        "definition": "G\u00e9n\u00e9rer le r\u00e9sum\u00e9",
+        "context": "Button to request an AI summary of text responses",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "tooltip_enable_reorder",
         "definition": "Vue par d\u00e9faut : activer le r\u00e9ordonnancement des \u00e9valuations",
         "context": "tooltip_enable_reorder",

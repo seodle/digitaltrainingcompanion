@@ -420,13 +420,6 @@ const Reports = () => {
         updateChartsFromAssessments(assessmentsWithResponses, nextSelectedUser, nextSelectedTeacher);
     }
 
-    // Generate AI summaries when comment data changes
-    useEffect(() => {
-        if (commentData && Object.keys(commentData).length > 0) {
-            generateAllAiSummaries(commentData);
-        }
-    }, [commentData]);
-
     // Reset AI summaries when monitoring or day changes
     useEffect(() => {
         setAiSummaries({});
@@ -1039,38 +1032,6 @@ const Reports = () => {
         }
     };
 
-    /**
-     * Generate AI summaries for all text questions in the comment data
-     */
-    const generateAllAiSummaries = async (commentDataByType) => {
-        const summaryPromises = [];
-
-        // Parcourir tous les types d'assessment
-        Object.keys(commentDataByType).forEach(assessmentType => {
-            // Parcourir tous les workshops
-            Object.keys(commentDataByType[assessmentType]).forEach(workshopKey => {
-                // Parcourir toutes les questions
-                commentDataByType[assessmentType][workshopKey].forEach(item => {
-                    const questionKey = item.uniqueQuestionKey;
-                    const questionText = item.question;
-                    const responses = item.responses || [];
-                    
-                    // Ne générer le résumé que si on ne l'a pas déjà
-                    if (!aiSummaries[questionKey] && !loadingSummaries[questionKey]) {
-                        summaryPromises.push(
-                            generateAiSummary(responses, questionText, questionKey)
-                        );
-                    }
-                });
-            });
-        });
-
-        // Attendre que tous les résumés soient générés
-        if (summaryPromises.length > 0) {
-            await Promise.all(summaryPromises);
-        }
-    };
-
     const selectedParticipantLabel = allUsers.find((participant) => participant.id === selectedUser)?.label || '';
     const showTeacherFilter = currentUser?.userStatus === UserType.TEACHER_TRAINER && isStudentType(selectedCategory);
     const filteredDayAssessments = applyResultFilters(selectedDayAssessments, selectedUser, selectedTeacher);
@@ -1327,6 +1288,7 @@ const Reports = () => {
                         showChoiceLabels={Boolean(selectedUser)}
                         highlightedParticipant={hideRankingNames ? '' : selectedParticipantLabel}
                         anonymizeRanking={hideRankingNames}
+                        onGenerateSummary={generateAiSummary}
                     />
                 ) : (
                     <Typography variant="body1" color="text.secondary" sx={{ py: 6, textAlign: 'center' }}>

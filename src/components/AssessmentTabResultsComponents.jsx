@@ -154,6 +154,7 @@ const AssessmentResultCard = ({
     teachers,
     selectedTeacher,
     handleChangeTeacher,
+    onGenerateSummary,
 }) => {
     const { getMessage } = useMessageService();
     const [tab, setTab] = useState(0);
@@ -239,6 +240,15 @@ const AssessmentResultCard = ({
                             }
                             aiSummary={aiSummaries?.[item.uniqueQuestionKey]}
                             loadingSummary={loadingSummaries?.[item.uniqueQuestionKey]}
+                            onGenerateSummary={
+                                onGenerateSummary
+                                    ? () => onGenerateSummary(
+                                        item.responses || [],
+                                        item.question,
+                                        item.uniqueQuestionKey
+                                    )
+                                    : undefined
+                            }
                         />
                     ))}
                 </Box>
@@ -264,6 +274,7 @@ export const AssessmentResultStack = ({
     handleChangeTeacher,
     highlightedParticipant,
     anonymizeRanking,
+    onGenerateSummary,
 }) => {
     const ordered = [...(assessments || [])].sort(
         (a, b) => (a.position ?? Number.MAX_SAFE_INTEGER) - (b.position ?? Number.MAX_SAFE_INTEGER)
@@ -320,6 +331,7 @@ export const AssessmentResultStack = ({
                                 showPercentage={showPercentage}
                                 hideValueLabels={hideValueLabels}
                                 showChoiceLabels={showChoiceLabels}
+                                onGenerateSummary={onGenerateSummary}
                             />
                         </Box>
                         <Box
