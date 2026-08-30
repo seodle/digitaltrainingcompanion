@@ -228,6 +228,7 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
 
       <Box sx={{
         px: { xs: 2, md: 2.5 },
+        pt: 1.5,
         pb: { xs: "calc(80px + env(safe-area-inset-bottom, 0px))", md: 3 },
         overflowY: 'auto',
         flex: 1,
@@ -246,7 +247,7 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
                 flexDirection: 'column',
                 gap: 2
               }}>
-                <Box position="relative">
+                <Box>
                 <TextField
                   id="description"
                   name="description"
@@ -254,22 +255,35 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
                   value={values.description}
                   fullWidth
                   multiline
-                  minRows={3}
-                  maxRows={8}
+                  minRows={2}
+                  maxRows={4}
+                  InputLabelProps={{ shrink: true }}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  onFocus={(event) => {
+                    if (!window.matchMedia("(max-width: 899px)").matches) {
+                      return;
+                    }
+                    const field = event.target;
+                    window.setTimeout(() => {
+                      field.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }, 350);
+                  }}
                   error={touched.description && Boolean(errors.description)}
+                  sx={{
+                    scrollMargin: { xs: "120px", md: 0 },
+                    "& .MuiInputBase-input": {
+                      fontSize: { xs: "16px", md: "0.95rem" },
+                    },
+                  }}
                 />
                 <Typography
-                  variant="caption" 
-                  sx={{ 
-                    position: 'absolute', 
-                    bottom: 10,  
-                    right: 14,                             
-                    color: values.description?.length >= 1000 ? 'error.main' : 'text.secondary',
-                    backgroundColor: 'white',              
-                    px: 0.5,                              
-                    zIndex: 1                             
+                  variant="caption"
+                  sx={{
+                    display: "block",
+                    textAlign: "right",
+                    mt: 0.5,
+                    color: values.description?.length >= 1000 ? "error.main" : "text.secondary",
                   }}
                 >
                   {values.description?.length || 0}/1000

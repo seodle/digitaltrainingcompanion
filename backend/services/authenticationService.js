@@ -4,6 +4,7 @@ const crypto = require("crypto");
 const User = require("../models/userModel");
 const { validateUserCredentialsRegister } = require('../utils/passwordValidationUtils.js');
 const { sendMail, FRONTEND_URL, LOGO_URL } = require('./emailService');
+const { normalizeLang, t } = require('../utils/emailI18n');
 require('dotenv').config();
 
 /**
@@ -70,6 +71,7 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
         // create an save a new user
         const newUser = new User({
             ...userData,
+            language: normalizeLang(userData.language),
             password: hashPassword,
             verificationToken,
             isVerified: false,
@@ -77,13 +79,13 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
         await newUser.save();
 
         if (sendEmailForVerification) {
+            const lang = normalizeLang(userData.language);
+            const verifyUrl = `${FRONTEND_URL}/verifyEmail?token=${verificationToken}`;
             await sendMail({
                 to: userData.email,
-                subject: "Please verify your email",
-                html: `<p>Hello,</p><p>Please click the link below to verify your email:</p>
-                        <p><a href="${FRONTEND_URL}/verifyEmail?token=${verificationToken}" target="_blank">Verify Your Email</a></p>
-                        <p>If you did not request this, please ignore this email.</p>
-                        <p>Best regards,<br><br><img src="${LOGO_URL}" alt="The Digital Training Companion" width="200px" height="auto"></p>`,
+                subject: t(lang, "verify_subject"),
+                html: `${t(lang, "verify_html", { url: verifyUrl })}
+                        <p><img src="${LOGO_URL}" alt="The Digital Training Companion" width="200px" height="auto"></p>`,
             });
         }
 
@@ -102,7 +104,7 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
  * @return {Promise<Object>} the status and message of the operation
  * @throws {Error} Throws an error if an unexpected condition is encountered
  */
-const initiatePasswordReset = async (email) => {
+const initiatePasswordReset = async (email, language) => {
 
 
 
@@ -127,11 +129,12 @@ const initiatePasswordReset = async (email) => {
         // Email URL for resetting password
         const resetURL = `${FRONTEND_URL}/updatePassword/${resetToken}`;
 
+        const lang = normalizeLang(language || user.language);
         await sendMail({
             to: email,
-            subject: "Forgot Password - Password Reset Instructions",
-            text: `To reset your password, please click the following link: ${resetURL}`,
-            html: `<p>To reset your password, please click the link below:</p><a href="${resetURL}">Reset Password</a>`,
+            subject: t(lang, "reset_subject"),
+            text: t(lang, "reset_text", { url: resetURL }),
+            html: t(lang, "reset_html", { url: resetURL }),
         });
 
         return { status: 'success', message: "An email with password reset instructions has been sent." };

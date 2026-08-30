@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ResponsiveBar } from "@nivo/bar";
-import { QuestionType } from "../utils/enums";
-import { redYellowGreenPalette } from "../components/styledComponents";
+import { getChartChoiceColor } from "../components/styledComponents";
 import { useMessageService } from '../services/MessageService';
 import './BarChartReports.css';
 import { Typography, useMediaQuery, useTheme } from '@mui/material';
@@ -67,9 +66,6 @@ const BarChartReports = ({ data, hide_students_name, workshopName, showPercentag
     };
   }, []);
 
-  const pastelBlue = 'rgb(173, 216, 230)';
-  const brightPastelBlue = 'rgb(193, 236, 250)';
-
   if (!Array.isArray(data) || data.length === 0) {
     return null;
   }
@@ -98,48 +94,18 @@ const BarChartReports = ({ data, hide_students_name, workshopName, showPercentag
   const chartHeight = Math.max(200, data.length * 30);
 
   const getBarColor = (bar) => {
-  const choiceNumber = parseInt(bar.id.replace('choice_', ''), 10) - 1;
-  const questionData = data.find(item => (item.shortName || item.question) === bar.data.shortName);
-
-
-  if (!questionData || !Array.isArray(questionData.choices)) return 'grey';
-
-  const { type, correctAnswer, choices } = questionData;
-  const choiceIndex = choiceNumber;
-  const hasCorrectAnswer = Array.isArray(correctAnswer) ? correctAnswer.length > 0 : correctAnswer !== undefined;
-
-  // Handle radio-ordered questions
-  if (type === QuestionType.RADIO_ORDERED) {
-    if (choices.length === 1) return redYellowGreenPalette[0];
-    const paletteIndex = Math.round((redYellowGreenPalette.length - 1) * (choiceIndex / (choices.length - 1)));
-    return redYellowGreenPalette[paletteIndex] || redYellowGreenPalette[0];
-  }
-
-  // Handle radio-unordered questions (updated)
-  if (type === QuestionType.RADIO_UNORDERED) {
-    if (hasCorrectAnswer) {
-      // Normalize correct answer format
-      const normalizedCorrect = Array.isArray(correctAnswer) ? correctAnswer[0] : correctAnswer;
-      const correctIndex = choices.indexOf(normalizedCorrect);
-      return choiceIndex === correctIndex ? redYellowGreenPalette[9] : redYellowGreenPalette[0];
+    const choiceIndex = parseInt(bar.id.replace('choice_', ''), 10) - 1;
+    const questionData = data.find(item => (item.shortName || item.question) === bar.data.shortName);
+    if (!questionData || !Array.isArray(questionData.choices)) {
+      return 'grey';
     }
-    return choiceIndex % 2 === 0 ? pastelBlue : brightPastelBlue;
-  }
-
-  // Handle checkbox questions (already handles single/multiple answers)
-  if (type === QuestionType.CHECKBOX) {
-    if (hasCorrectAnswer) {
-      const isCorrect = Array.isArray(correctAnswer) 
-        ? correctAnswer.includes(choices[choiceIndex])
-        : correctAnswer === choices[choiceIndex];
-      return isCorrect ? redYellowGreenPalette[9] : redYellowGreenPalette[0];
-    }
-    return choiceIndex % 2 === 0 ? pastelBlue : brightPastelBlue;
-  }
-
-  // Default case
-  return choiceIndex % 2 === 0 ? pastelBlue : brightPastelBlue;
-};
+    return getChartChoiceColor({
+      questionType: questionData.type,
+      choices: questionData.choices,
+      choiceIndex,
+      correctAnswer: questionData.correctAnswer,
+    });
+  };
 
 
   const handleTooltip = ({ id, value, indexValue }) => {

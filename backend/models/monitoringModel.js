@@ -17,7 +17,8 @@ const monitoringSchema = new mongoose.Schema({
     creationDate: { type: Date, default: Date.now }, // should be createdAt
     lastModificationDate: { type: Date, default: Date.now }, // should be updatedAt
     sharingCode: { type: String, default: null },
-    scheduledEmailRecipients: { type: [String], default: [] }
+    scheduledEmailRecipients: { type: [String], default: [] },
+    scheduledEmailLanguage: { type: String, default: "en" }
 });
 
 const omitScheduledRecipients = (_doc, ret) => {

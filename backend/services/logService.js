@@ -2,6 +2,7 @@ const Log = require("../models/logModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
 const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL } = require("./emailService");
+const { normalizeLang, t } = require("../utils/emailI18n");
 
 const VISIBILITY = ["private", "trainer", "selected", "followers"];
 const AUTHOR_POPULATE = { path: "userId", select: "firstName lastName" };
@@ -136,9 +137,10 @@ const resolveVisibility = async (logData, { isOwner, monitoring }) => {
 const populateLog = (query) => query.populate(AUTHOR_POPULATE).populate(CHAT_POPULATE);
 
 const notifyOwnerOfHelpRequest = async (log, monitoring, requesterId) => {
-    const owner = await User.findById(monitoring.userId).select("email firstName lastName");
+    const owner = await User.findById(monitoring.userId).select("email firstName lastName language");
     const teacher = await User.findById(requesterId).select("firstName lastName");
-    const teacherName = [teacher?.firstName, teacher?.lastName].filter(Boolean).join(" ") || "A teacher";
+    const lang = normalizeLang(owner?.language);
+    const teacherName = [teacher?.firstName, teacher?.lastName].filter(Boolean).join(" ") || t(lang, "a_teacher");
     const logUrl = `${FRONTEND_URL}/logbooks?monitoring=${log.monitoringId}&log=${log._id}`;
 
     if (!owner?.email) {
@@ -146,21 +148,21 @@ const notifyOwnerOfHelpRequest = async (log, monitoring, requesterId) => {
     }
 
     const inner = `
-            <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">Logbook</p>
-            <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">A teacher asked for your help</h1>
+            <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">${escapeHtml(t(lang, "logbook"))}</p>
+            <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">${escapeHtml(t(lang, "help_title"))}</h1>
             <p style="margin:0 0 16px;font-size:18px;line-height:28px;color:#525252;">
                 <strong style="color:#141b2d;">${escapeHtml(teacherName)}</strong>
-                requested help on a logbook message for
+                ${escapeHtml(t(lang, "help_body"))}
                 <strong style="color:#141b2d;">${escapeHtml(monitoring.name)}</strong>.
             </p>
             <p style="margin:0 0 24px;font-size:16px;line-height:24px;color:#525252;">${escapeHtml(log.description || "")}</p>
-            <div style="text-align:center;">${ctaButton(logUrl, "Open the logbook")}</div>
+            <div style="text-align:center;">${ctaButton(logUrl, t(lang, "open_logbook"))}</div>
         `;
     await sendMail({
         to: owner.email,
-        subject: `Help requested in the logbook for ${monitoring.name}`,
-        html: wrapEmail(inner),
-        text: `${teacherName} requested help on a logbook message for ${monitoring.name}: ${logUrl}`,
+        subject: t(lang, "help_subject", { name: monitoring.name }),
+        html: wrapEmail(inner, lang),
+        text: t(lang, "help_text", { teacher: teacherName, name: monitoring.name, url: logUrl }),
     });
 };
 

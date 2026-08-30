@@ -1,5 +1,6 @@
 const Monitoring = require("../models/monitoringModel");
 const Assessment = require("../models/assessmentModel");
+const { normalizeLang } = require("../utils/emailI18n");
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -20,7 +21,7 @@ const normalizeEmails = (emails) => {
 
 const getEmailSchedule = async (monitoringId) => {
     const monitoring = await Monitoring.findById(monitoringId)
-        .select("scheduledEmailRecipients name");
+        .select("scheduledEmailRecipients scheduledEmailLanguage name");
     if (!monitoring) {
         const error = new Error("Monitoring not found");
         error.status = 404;
@@ -32,11 +33,12 @@ const getEmailSchedule = async (monitoringId) => {
 
     return {
         emails: monitoring.scheduledEmailRecipients || [],
+        language: monitoring.scheduledEmailLanguage || "en",
         assessments,
     };
 };
 
-const updateEmailSchedule = async (monitoringId, { emails, assessmentIds, scheduledSendAt }) => {
+const updateEmailSchedule = async (monitoringId, { emails, assessmentIds, scheduledSendAt, language }) => {
     const normalizedEmails = normalizeEmails(emails);
     if (normalizedEmails.length === 0) {
         const error = new Error("At least one email address is required");
@@ -84,6 +86,7 @@ const updateEmailSchedule = async (monitoringId, { emails, assessmentIds, schedu
     }
 
     monitoring.scheduledEmailRecipients = normalizedEmails;
+    monitoring.scheduledEmailLanguage = normalizeLang(language);
     await monitoring.save();
 
     await Assessment.updateMany(
@@ -101,6 +104,7 @@ const updateEmailSchedule = async (monitoringId, { emails, assessmentIds, schedu
 
     return {
         emails: normalizedEmails,
+        language: monitoring.scheduledEmailLanguage,
         assessments: updatedAssessments,
     };
 };

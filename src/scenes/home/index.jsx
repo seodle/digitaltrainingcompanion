@@ -421,7 +421,7 @@ const Home = () => {
   );
 
   return (
-    <Box display="flex" flexDirection="column" minHeight="100vh">
+    <Box display="flex" flexDirection="column" sx={{ minHeight: "100%", height: "100%", overflowY: "auto" }}>
       <PrimaryNav />
       <Hero />
       <ImagesSection />

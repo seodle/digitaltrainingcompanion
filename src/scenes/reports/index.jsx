@@ -1100,7 +1100,7 @@ const Reports = () => {
     };
 
     return (
-    <Box display="flex" sx={{ height: '100vh', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
+    <Box display="flex" sx={{ height: '100%', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
         <Sidebar/>
 
         <Box flex={1} sx={{ minWidth: 0, overflow: 'auto', bgcolor: '#f9f9f9' }}>

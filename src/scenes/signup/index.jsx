@@ -199,6 +199,7 @@ const Signup = () => {
 
   const isSandboxMode = location.state?.isSandboxMode || false;
   const { getMessage } = useMessageService();
+  const { languageCode } = useLanguage();
 
   const [data, setData] = useState({
     firstName: "",
@@ -286,7 +287,7 @@ const Signup = () => {
       await signupSchema.validate(data, { abortEarly: false });
 
       // API call
-      const res = await axios.post(`${BACKEND_URL}/register`, data);
+      const res = await axios.post(`${BACKEND_URL}/register`, { ...data, language: languageCode });
       
       // Show success
       setError("");
@@ -323,8 +324,8 @@ const Signup = () => {
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
-        minHeight="100vh"
-        sx={{ position: "relative", zIndex: 1 }}
+        minHeight="100%"
+        sx={{ position: "relative", zIndex: 1, height: "100%", overflowY: "auto" }}
       >
         <Box
           display="flex"

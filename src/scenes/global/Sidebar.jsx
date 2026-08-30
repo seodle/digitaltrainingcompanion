@@ -118,7 +118,7 @@ const Sidebar = () => {
               left: 0,
               top: 0,
               zIndex: 1300,
-              height: "100vh",
+              height: "100%",
               transform: isCollapsed ? "translateX(-110%)" : "translateX(0)",
               transition: "transform 0.2s ease",
             }
@@ -126,7 +126,7 @@ const Sidebar = () => {
               position: "fixed",
               left: 0,
               top: 0,
-              height: "100vh",
+              height: "100%",
               zIndex: 1200,
             }),
         "& .pro-sidebar-inner": {
@@ -158,7 +158,7 @@ const Sidebar = () => {
     >
       <ProSidebar
         collapsed={isMobile ? false : isCollapsed}
-        style={{height: "100vh", position: "relative"}}
+        style={{height: "100%", position: "relative"}}
 
       >
         

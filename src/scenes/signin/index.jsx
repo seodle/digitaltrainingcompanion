@@ -61,7 +61,7 @@ const handleMouseDownPassword = (event) => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" sx={{ minHeight: "100%", height: "100%", overflowY: "auto" }}>
       <Box display="flex" flexDirection="row" alignItems="stretch" justifyContent="center" sx={authentificationFormStyle} component="form" onSubmit={handleSubmit}>
         <Box flexGrow={2} flexBasis={0} sx={{ p: { xs: 3, md: "60px" }, boxSizing: "border-box" }}>
           

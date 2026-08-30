@@ -266,9 +266,9 @@ const Settings = () => {
     };
 
     return (
-        <Box display="flex" sx={{ minHeight: '100vh', overflow: 'auto', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
+        <Box display="flex" sx={{ height: '100%', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
             <Sidebar />
-            <Box display="flex" flex="1" flexDirection="column" sx={{ minWidth: 0 }}>
+            <Box display="flex" flex="1" flexDirection="column" sx={{ minWidth: 0, minHeight: 0, overflow: 'auto' }}>
                 <Box mt="10px" ml="10px">
                     <Topbar title={getMessage("label_my_account")} />
                 </Box>

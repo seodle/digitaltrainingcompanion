@@ -1,4 +1,9 @@
-import { QuestionType } from './enums';
+import { AssessmentType, QuestionType } from './enums';
+import { getChartChoiceColor } from '../components/styledComponents';
+
+const isLearningAssessmentType = (type) => (
+  type === AssessmentType.LEARNING || type === AssessmentType.STUDENT_LEARNING_OUTCOMES
+);
 
 const scoreAnswer = (item) => {
   const { questionType, choices, response, correctAnswer } = item;
@@ -20,31 +25,59 @@ const scoreAnswer = (item) => {
     return {
       value: idx / max,
       detail: String(answers[0]),
+      mode: 'scale',
+      correct: null,
+      color: getChartChoiceColor({ questionType, choices, choiceIndex: idx, correctAnswer }),
     };
   }
 
   if (questionType === QuestionType.RADIO_UNORDERED) {
     const correct = Array.isArray(correctAnswer) ? correctAnswer[0] : correctAnswer;
     const hasCorrect = correct != null && correct !== '';
+    const isCorrect = hasCorrect && answers[0] === correct;
+    const choiceIndex = choices.indexOf(answers[0]);
     return {
-      value: hasCorrect ? (answers[0] === correct ? 1 : 0) : 0,
+      value: isCorrect ? 1 : 0,
       detail: String(answers[0]),
+      mode: hasCorrect ? 'correctness' : 'scale',
+      correct: hasCorrect ? isCorrect : null,
+      color: getChartChoiceColor({
+        questionType,
+        choices,
+        choiceIndex: choiceIndex < 0 ? 0 : choiceIndex,
+        correctAnswer,
+      }),
     };
   }
 
   if (questionType === QuestionType.CHECKBOX) {
     const selected = answers;
     const correct = (Array.isArray(correctAnswer) ? correctAnswer : [correctAnswer]).filter(Boolean);
+    const firstIndex = choices.indexOf(selected[0]);
+    const color = getChartChoiceColor({
+      questionType,
+      choices,
+      choiceIndex: firstIndex < 0 ? 0 : firstIndex,
+      correctAnswer,
+    });
     if (correct.length > 0) {
-      const hits = correct.filter((choice) => selected.includes(choice)).length;
+      const selectedSet = new Set(selected);
+      const isCorrect =
+        selectedSet.size === correct.length && correct.every((choice) => selectedSet.has(choice));
       return {
-        value: hits / correct.length,
+        value: isCorrect ? 1 : 0,
         detail: selected.join(', '),
+        mode: 'correctness',
+        correct: isCorrect,
+        color,
       };
     }
     return {
       value: 0,
       detail: selected.join(', '),
+      mode: 'scale',
+      correct: null,
+      color,
     };
   }
 
@@ -87,6 +120,10 @@ export const buildCriteriaRankings = (assessments, { anonymousLabel = 'Anonymous
           return;
         }
 
+        const mode = isLearningAssessmentType(assessment.type) && scored.correct != null
+          ? 'correctness'
+          : 'scale';
+
         const key = item.matrixId
           ? `${assessment._id}-${item.shortName || item.question}-#${item.matrixPosition ?? ''}`
           : `${assessment._id}-${item.shortName || item.question}`;
@@ -98,6 +135,7 @@ export const buildCriteriaRankings = (assessments, { anonymousLabel = 'Anonymous
             question: item.question,
             assessmentName: assessment.name,
             choices: item.choices || [],
+            mode,
             scoresByKey: new Map(),
           });
         }
@@ -106,6 +144,8 @@ export const buildCriteriaRankings = (assessments, { anonymousLabel = 'Anonymous
           key: identity.key,
           name: identity.name || anonymousLabel,
           score: scored.value,
+          correct: scored.correct,
+          color: scored.color,
         });
       });
     });
@@ -121,6 +161,7 @@ export const buildCriteriaRankings = (assessments, { anonymousLabel = 'Anonymous
           title: criterion.title,
           question: criterion.question,
           assessmentName: criterion.assessmentName,
+          mode: criterion.mode,
           ranking,
         });
       }

@@ -357,6 +357,7 @@ const handleDownloadPaperVersion = async () => {
           emails: scheduleEmails,
           assessmentIds: selectedAssessmentsIds,
           scheduledSendAt: scheduledAt.toISOString(),
+          language: languageCode,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );

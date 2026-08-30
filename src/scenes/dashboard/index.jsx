@@ -614,7 +614,7 @@ const Dashboard = () => {
     <Box
       display="flex"
       bgcolor="#f9f9f9"
-      sx={{ height: "100vh", maxWidth: "100vw", overflow: "hidden" }}
+      sx={{ height: "100%", maxWidth: "100vw", overflow: "hidden" }}
     >
       <Sidebar />
       <Box

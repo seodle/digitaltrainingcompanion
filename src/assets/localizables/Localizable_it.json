@@ -1692,6 +1692,24 @@
         "fuzzy": 0
     },
     {
+        "term": "label_ranking_correct",
+        "definition": "Corretto",
+        "context": "Learning ranking: participant answered correctly",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ranking_incorrect",
+        "definition": "Errato",
+        "context": "Learning ranking: participant answered incorrectly",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
         "term": "label_no_account_yet",
         "definition": "Non avete un account?",
         "context": "Ask if the user has an account?",

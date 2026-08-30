@@ -137,7 +137,7 @@ const Logbooks = () => {
   );
 
   return (
-    <Box display="flex" sx={{ minHeight: '100vh', overflow: { xs: 'auto', md: 'hidden' }, bgcolor: '#f9f9f9' }}>
+    <Box display="flex" sx={{ height: '100%', overflow: 'hidden', bgcolor: '#f9f9f9' }}>
       <Sidebar />
 
       <Box
@@ -146,6 +146,7 @@ const Logbooks = () => {
         flexDirection="column"
         sx={{
           minWidth: 0,
+          minHeight: 0,
           overflow: 'auto',
           '& .MuiTypography-h2': { fontSize: { xs: '1.4rem', md: '1.85rem' } },
           '& .MuiTypography-h5': { fontSize: '1.2rem' },
@@ -153,8 +154,8 @@ const Logbooks = () => {
           '& .MuiTypography-body1': { fontSize: '0.95rem', lineHeight: 1.5 },
           '& .MuiTypography-body2': { fontSize: '0.875rem' },
           '& .MuiTypography-caption': { fontSize: '0.78rem' },
-          '& .MuiInputBase-input': { fontSize: '0.95rem' },
-          '& .MuiInputLabel-root': { fontSize: '0.9rem' },
+          '& .MuiInputBase-input': { fontSize: { xs: '16px', md: '0.95rem' } },
+          '& .MuiInputLabel-root:not(.MuiInputLabel-shrink)': { fontSize: '0.9rem' },
           '& .MuiButton-root': { fontSize: '0.875rem' },
           '& .MuiChip-label': { fontSize: '0.78rem' },
           '& .MuiMenuItem-root': { fontSize: '0.95rem' },

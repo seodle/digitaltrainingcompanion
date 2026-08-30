@@ -3,6 +3,7 @@ const Log = require("../models/logModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
 const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL } = require("./emailService");
+const { normalizeLang, t } = require("../utils/emailI18n");
 const { chatPartnerId } = require("./logService");
 
 const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
@@ -32,28 +33,29 @@ const personName = (user, fallback) => {
 };
 
 const sendPendingChatReminder = async (log, monitoring, lastMessage, recipient, sender) => {
+    const lang = normalizeLang(recipient.language);
     const logUrl = `${FRONTEND_URL}/logbooks?monitoring=${log.monitoringId}&log=${log._id}`;
-    const senderName = personName(sender, "Someone");
+    const senderName = personName(sender, t(lang, "someone"));
     const snippet = String(lastMessage.text || "").trim();
     const preview = snippet.length > 220 ? `${snippet.slice(0, 217)}…` : snippet;
 
     const inner = `
-            <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">Logbook</p>
-            <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">A message is waiting for you</h1>
+            <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">${escapeHtml(t(lang, "logbook"))}</p>
+            <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">${escapeHtml(t(lang, "reminder_title"))}</h1>
             <p style="margin:0 0 16px;font-size:18px;line-height:28px;color:#525252;">
                 <strong style="color:#141b2d;">${escapeHtml(senderName)}</strong>
-                sent you a message more than 3 days ago in the discussion for
+                ${escapeHtml(t(lang, "reminder_body_start"))}
                 <strong style="color:#141b2d;">${escapeHtml(monitoring.name)}</strong>.
             </p>
             ${preview ? `<p style="margin:0 0 24px;font-size:16px;line-height:24px;color:#525252;">${escapeHtml(preview)}</p>` : ""}
-            <div style="text-align:center;">${ctaButton(logUrl, "Open the discussion")}</div>
+            <div style="text-align:center;">${ctaButton(logUrl, t(lang, "open_discussion"))}</div>
         `;
 
     await sendMail({
         to: recipient.email,
-        subject: `A message is waiting for you in the logbook for ${monitoring.name}`,
-        html: wrapEmail(inner),
-        text: `${senderName} sent you a message more than 3 days ago in the logbook for ${monitoring.name}: ${logUrl}`,
+        subject: t(lang, "reminder_subject", { name: monitoring.name }),
+        html: wrapEmail(inner, lang),
+        text: t(lang, "reminder_text", { sender: senderName, name: monitoring.name, url: logUrl }),
     });
 };
 
@@ -91,7 +93,7 @@ const processPendingChatReminders = async (now = new Date()) => {
             }
 
             const [recipient, sender] = await Promise.all([
-                User.findById(waitingId).select("email firstName lastName"),
+                User.findById(waitingId).select("email firstName lastName language"),
                 User.findById(senderId).select("firstName lastName"),
             ]);
             if (!recipient?.email) {

@@ -2,90 +2,24 @@ const cron = require("node-cron");
 const Assessment = require("../models/assessmentModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
-const { sendMail, FRONTEND_URL, LOGO_URL } = require("./emailService");
-
-const ASSESSMENT_PURPOSE = {
-    "Trainee characteristics": "Collects background information about the trainees taking part in this training.",
-    "Training characteristics": "Describes the training context, organisation, and setup.",
-    "Immediate reactions": "Captures first reactions and satisfaction right after the training.",
-    "Sustainability conditions": "Looks at the conditions that support lasting use of what was learned.",
-    "Student characteristics": "Collects background information about the students.",
-    "Organizational conditions": "Looks at organisational factors that influence the training.",
-    "Learning": "Assesses knowledge, skills, and attitudes acquired during the training.",
-    "Behavioral changes": "Looks at how practices change after the training.",
-    "Student learning outcomes": "Assesses student learning outcomes related to this training.",
-};
+const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL } = require("./emailService");
+const { normalizeLang, t } = require("../utils/emailI18n");
 
 const sendingLocks = new Set();
 
-const escapeHtml = (value) => String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-
-const buildSurveyUrl = (owner, monitoringId, assessments) => {
+const buildSurveyUrl = (owner, monitoringId, assessments, lang) => {
     const assessmentsQuery = assessments
         .map((assessment) => `assessment[]=${assessment._id}`)
         .join("&");
     const sandbox = owner && owner.sandbox ? "true" : "false";
-    return `${FRONTEND_URL}/completeSurvey?userId=${owner._id}&monitoring=${monitoringId}&${assessmentsQuery}&link=false&lng=en&sandbox=${sandbox}`;
+    return `${FRONTEND_URL}/completeSurvey?userId=${owner._id}&monitoring=${monitoringId}&${assessmentsQuery}&link=false&lng=${lang}&sandbox=${sandbox}`;
 };
 
-const wrapEmail = (innerHtml) => `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Digital Training Companion</title>
-</head>
-<body style="margin:0;padding:0;background-color:#eef1f6;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#eef1f6;padding:40px 16px;">
-        <tr>
-            <td align="center">
-                <table role="presentation" width="720" cellpadding="0" cellspacing="0" style="max-width:720px;width:100%;background-color:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 8px 24px rgba(20,27,45,0.08);">
-                    <tr>
-                        <td style="font-size:0;line-height:0;">
-                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td width="50%" height="10" bgcolor="#4cceac" style="height:10px;background-color:#4cceac;font-size:0;line-height:0;">&nbsp;</td>
-                                    <td width="50%" height="10" bgcolor="#6870fa" style="height:10px;background-color:#6870fa;font-size:0;line-height:0;">&nbsp;</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding:40px 48px 16px;text-align:center;">
-                            <img src="${LOGO_URL}" alt="The Digital Training Companion" width="280" style="display:block;margin:0 auto;max-width:280px;height:auto;border:0;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding:8px 48px 48px;font-family:Arial,Helvetica,sans-serif;color:#141b2d;">
-                            ${innerHtml}
-                        </td>
-                    </tr>
-                </table>
-                <table role="presentation" width="720" cellpadding="0" cellspacing="0" style="max-width:720px;width:100%;">
-                    <tr>
-                        <td style="padding:20px 16px 0;text-align:center;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:22px;color:#858585;">
-                            The Digital Training Companion
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-</body>
-</html>
-`;
-
-const questionnaireCard = (assessment, index, total) => {
-    const purpose = ASSESSMENT_PURPOSE[assessment.type]
-        || "This page is part of the questionnaire.";
-    const typeLabel = escapeHtml(assessment.type || "Questionnaire");
+const questionnaireCard = (assessment, index, total, lang) => {
+    const purpose = t(lang, `purpose_${assessment.type}`) || t(lang, "default_purpose");
+    const typeLabel = escapeHtml(t(lang, `type_${assessment.type}`) || assessment.type || t(lang, "questionnaire"));
     const pageLabel = total > 1
-        ? `<div style="font-size:13px;font-weight:bold;letter-spacing:0.4px;text-transform:uppercase;color:#6870fa;margin-bottom:6px;">Page ${index + 1}</div>`
+        ? `<div style="font-size:13px;font-weight:bold;letter-spacing:0.4px;text-transform:uppercase;color:#6870fa;margin-bottom:6px;">${escapeHtml(t(lang, "page", { n: index + 1 }))}</div>`
         : "";
     return `
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 16px;background-color:#f7f8fc;border-radius:12px;border-left:6px solid #4cceac;">
@@ -101,47 +35,35 @@ const questionnaireCard = (assessment, index, total) => {
     `;
 };
 
-const ctaButton = (href, label) => `
-    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:12px auto 0;">
-        <tr>
-            <td align="center" bgcolor="#4cceac" style="border-radius:12px;background-color:#4cceac;">
-                <a href="${escapeHtml(href)}" target="_blank" style="display:inline-block;padding:18px 36px;font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:bold;color:#141b2d;text-decoration:none;">
-                    ${escapeHtml(label)}
-                </a>
-            </td>
-        </tr>
-    </table>
-`;
-
-const buildParticipantHtml = (monitoring, assessments, surveyUrl) => {
+const buildParticipantHtml = (monitoring, assessments, surveyUrl, lang) => {
     const cards = assessments
-        .map((assessment, index) => questionnaireCard(assessment, index, assessments.length))
+        .map((assessment, index) => questionnaireCard(assessment, index, assessments.length, lang))
         .join("");
     const inner = `
-        <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">Invitation</p>
-        <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">You are invited to complete a questionnaire</h1>
+        <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">${escapeHtml(t(lang, "invitation"))}</p>
+        <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">${escapeHtml(t(lang, "invite_title"))}</h1>
         <p style="margin:0 0 28px;font-size:18px;line-height:28px;color:#525252;">
-            Please take a few minutes to complete the questionnaire below for
+            ${escapeHtml(t(lang, "invite_body"))}
             <strong style="color:#141b2d;">${escapeHtml(monitoring.name)}</strong>.
         </p>
         ${cards}
         <div style="text-align:center;padding:20px 0 8px;">
-            ${ctaButton(surveyUrl, "Open the questionnaire")}
+            ${ctaButton(surveyUrl, t(lang, "open_questionnaire"))}
         </div>
         <p style="margin:28px 0 0;font-size:14px;line-height:22px;color:#858585;text-align:center;">
-            If the button does not work, copy this link into your browser:<br>
+            ${escapeHtml(t(lang, "copy_link"))}<br>
             <a href="${escapeHtml(surveyUrl)}" style="color:#535ac8;word-break:break-all;">${escapeHtml(surveyUrl)}</a>
         </p>
     `;
-    return wrapEmail(inner);
+    return wrapEmail(inner, lang);
 };
 
-const buildOwnerHtml = (monitoring, assessments, recipients) => {
+const buildOwnerHtml = (monitoring, assessments, recipients, lang) => {
     const names = assessments.map((assessment) => `
         <tr>
             <td style="padding:12px 0;border-bottom:1px solid #eef1f6;font-size:17px;line-height:26px;color:#141b2d;">
                 ${escapeHtml(assessment.name)}
-                <span style="color:#858585;"> · ${escapeHtml(assessment.type || "Questionnaire")}</span>
+                <span style="color:#858585;"> · ${escapeHtml(t(lang, `type_${assessment.type}`) || assessment.type || t(lang, "questionnaire"))}</span>
             </td>
         </tr>
     `).join("");
@@ -149,23 +71,23 @@ const buildOwnerHtml = (monitoring, assessments, recipients) => {
         <span style="display:inline-block;margin:0 8px 8px 0;padding:6px 14px;background-color:#f7f8fc;border-radius:999px;font-size:15px;color:#141b2d;">${escapeHtml(email)}</span>
     `).join("");
     const inner = `
-        <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#3da58a;font-weight:bold;">Sent</p>
-        <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">The questionnaire has been sent</h1>
+        <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#3da58a;font-weight:bold;">${escapeHtml(t(lang, "sent"))}</p>
+        <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">${escapeHtml(t(lang, "sent_title"))}</h1>
         <p style="margin:0 0 28px;font-size:18px;line-height:28px;color:#525252;">
-            The scheduled questionnaire for
+            ${escapeHtml(t(lang, "sent_body"))}
             <strong style="color:#141b2d;">${escapeHtml(monitoring.name)}</strong>
-            was sent successfully.
+            ${escapeHtml(t(lang, "sent_body_end"))}
         </p>
-        <p style="margin:0 0 10px;font-size:14px;font-weight:bold;letter-spacing:0.3px;text-transform:uppercase;color:#858585;">Pages</p>
+        <p style="margin:0 0 10px;font-size:14px;font-weight:bold;letter-spacing:0.3px;text-transform:uppercase;color:#858585;">${escapeHtml(t(lang, "pages"))}</p>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px;">
             ${names}
         </table>
         <p style="margin:0 0 12px;font-size:14px;font-weight:bold;letter-spacing:0.3px;text-transform:uppercase;color:#858585;">
-            Recipients (${recipients.length})
+            ${escapeHtml(t(lang, "recipients", { n: recipients.length }))}
         </p>
         <div>${emails}</div>
     `;
-    return wrapEmail(inner);
+    return wrapEmail(inner, lang);
 };
 
 const processDueScheduledEmails = async () => {
@@ -212,7 +134,7 @@ const processDueScheduledEmails = async () => {
             }
 
             const monitoring = await Monitoring.findById(monitoringId)
-                .select("name userId scheduledEmailRecipients");
+                .select("name userId scheduledEmailRecipients scheduledEmailLanguage");
             if (!monitoring) {
                 continue;
             }
@@ -225,20 +147,21 @@ const processDueScheduledEmails = async () => {
                 continue;
             }
 
-            const owner = await User.findById(monitoring.userId).select("email sandbox firstName lastName");
+            const owner = await User.findById(monitoring.userId).select("email sandbox firstName lastName language");
             if (!owner) {
                 console.warn(`Skipping scheduled send for monitoring ${monitoringId}: owner not found`);
                 continue;
             }
 
-            const surveyUrl = buildSurveyUrl(owner, monitoringId, openAssessments);
-            const participantHtml = buildParticipantHtml(monitoring, openAssessments, surveyUrl);
-            const participantText = `You are invited to complete a questionnaire for ${monitoring.name}: ${surveyUrl}`;
+            const lang = normalizeLang(monitoring.scheduledEmailLanguage || owner.language);
+            const surveyUrl = buildSurveyUrl(owner, monitoringId, openAssessments, lang);
+            const participantHtml = buildParticipantHtml(monitoring, openAssessments, surveyUrl, lang);
+            const participantText = t(lang, "invite_text", { name: monitoring.name, url: surveyUrl });
 
             for (const recipient of recipients) {
                 await sendMail({
                     to: recipient,
-                    subject: `Questionnaire for ${monitoring.name}`,
+                    subject: t(lang, "invite_subject", { name: monitoring.name }),
                     html: participantHtml,
                     text: participantText,
                 });
@@ -253,9 +176,9 @@ const processDueScheduledEmails = async () => {
             if (owner.email) {
                 await sendMail({
                     to: owner.email,
-                    subject: `Questionnaire sent for ${monitoring.name}`,
-                    html: buildOwnerHtml(monitoring, openAssessments, recipients),
-                    text: `The questionnaire for ${monitoring.name} was sent to ${recipients.join(", ")}.`,
+                    subject: t(lang, "sent_subject", { name: monitoring.name }),
+                    html: buildOwnerHtml(monitoring, openAssessments, recipients, lang),
+                    text: t(lang, "sent_text", { name: monitoring.name, emails: recipients.join(", ") }),
                 });
             }
         } catch (error) {

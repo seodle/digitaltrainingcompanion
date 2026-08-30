@@ -43,7 +43,7 @@ const VerifyEmail = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      minHeight="100vh"
+      sx={{ minHeight: "100%", height: "100%", overflowY: "auto" }}
     >
       <Box
         display="flex"

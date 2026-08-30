@@ -168,11 +168,12 @@ router.get("/:monitoringId/email-schedule", requireTeacherTrainer, requireMonito
 
 router.put("/:monitoringId/email-schedule", requireTeacherTrainer, requireMonitoringOwner('monitoringId'), async (req, res) => {
   try {
-    const { emails, assessmentIds, scheduledSendAt } = req.body || {};
+    const { emails, assessmentIds, scheduledSendAt, language } = req.body || {};
     const schedule = await updateEmailSchedule(req.params.monitoringId, {
       emails,
       assessmentIds,
       scheduledSendAt,
+      language,
     });
     return res.json(schedule);
   } catch (error) {
