@@ -381,7 +381,7 @@ const CustomTimeline = ({
         borderRadius: "16px",
         border: "1px solid",
         borderColor: "divider",
-        overflow: "hidden",
+        overflow: "visible",
       }}
     >
       {sectionHeader}
@@ -391,8 +391,8 @@ const CustomTimeline = ({
           px: { xs: 1.5, md: 2 },
           pt: 1.5,
           pb: 2,
-          overflowY: "auto",
-          maxHeight: { xs: "none", md: "72vh" },
+          overflow: "visible",
+          maxHeight: "none",
           display: "flex",
           flexDirection: "column",
           gap: 1.25,

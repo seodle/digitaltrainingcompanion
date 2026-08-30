@@ -1103,7 +1103,7 @@ const Reports = () => {
     <Box display="flex" sx={{ height: '100%', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
         <Sidebar/>
 
-        <Box flex={1} sx={{ minWidth: 0, overflow: 'auto', bgcolor: '#f9f9f9' }}>
+        <Box flex={1} sx={{ minWidth: 0, minHeight: 0, height: '100%', overflow: 'auto', bgcolor: '#f9f9f9' }}>
 
             <Box sx={{ mt: { xs: 1, md: '10px' } }}>
                 <Topbar title={getMessage("label_my_results")} />

@@ -213,7 +213,7 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
         borderRadius: "16px",
         border: "1px solid",
         borderColor: "divider",
-        overflow: { xs: "visible", md: "hidden" },
+        overflow: "visible",
         mb: { xs: 2, md: 0 },
       }}
     >
@@ -230,10 +230,10 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
         px: { xs: 2, md: 2.5 },
         pt: 1.5,
         pb: { xs: "calc(80px + env(safe-area-inset-bottom, 0px))", md: 3 },
-        overflowY: 'auto',
+        overflow: 'visible',
         flex: 1,
         minHeight: 0,
-        maxHeight: { xs: 'none', md: '72vh' },
+        maxHeight: 'none',
       }}>
         <Formik
           initialValues={initialLogValue}

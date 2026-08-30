@@ -62,14 +62,37 @@ const scoreAnswer = (item) => {
     });
     if (correct.length > 0) {
       const selectedSet = new Set(selected);
+      const correctSet = new Set(correct);
       const isCorrect =
         selectedSet.size === correct.length && correct.every((choice) => selectedSet.has(choice));
+      const choiceResults = correct.length > 1
+        ? choices.map((choice, choiceIndex) => {
+            const isCorrectOption = correctSet.has(choice);
+            const isSelected = selectedSet.has(choice);
+            return {
+              label: choice,
+              selected: isSelected,
+              isCorrectOption,
+              participantCorrect: isSelected === isCorrectOption,
+              color: getChartChoiceColor({
+                questionType,
+                choices,
+                choiceIndex,
+                correctAnswer,
+              }),
+            };
+          })
+        : undefined;
+      const multiScore = choiceResults
+        ? choiceResults.filter((choice) => choice.participantCorrect).length / choiceResults.length
+        : (isCorrect ? 1 : 0);
       return {
-        value: isCorrect ? 1 : 0,
+        value: multiScore,
         detail: selected.join(', '),
-        mode: 'correctness',
+        mode: choiceResults ? 'multi' : 'correctness',
         correct: isCorrect,
         color,
+        choiceResults,
       };
     }
     return {
@@ -115,14 +138,22 @@ export const buildCriteriaRankings = (assessments, { anonymousLabel = 'Anonymous
           return;
         }
 
+        const isLearning = isLearningAssessmentType(assessment.type);
+        const isUnordered =
+          item.questionType === QuestionType.RADIO_UNORDERED
+          || item.questionType === QuestionType.CHECKBOX;
+        if (!isLearning && isUnordered) {
+          return;
+        }
+
         const scored = scoreAnswer(item);
         if (!scored) {
           return;
         }
 
-        const mode = isLearningAssessmentType(assessment.type) && scored.correct != null
-          ? 'correctness'
-          : 'scale';
+        const mode = !isLearning
+          ? 'scale'
+          : (scored.mode === 'multi' ? 'multi' : (scored.correct != null ? 'correctness' : 'scale'));
 
         const key = item.matrixId
           ? `${assessment._id}-${item.shortName || item.question}-#${item.matrixPosition ?? ''}`
@@ -146,6 +177,7 @@ export const buildCriteriaRankings = (assessments, { anonymousLabel = 'Anonymous
           score: scored.value,
           correct: scored.correct,
           color: scored.color,
+          choiceResults: scored.choiceResults,
         });
       });
     });

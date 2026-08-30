@@ -66,6 +66,8 @@ const Home = () => {
       sx={{
         boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
         minHeight: { xs: "auto", md: "100px" },
+        flexShrink: 0,
+        overflow: "visible",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -82,6 +84,7 @@ const Home = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          flexShrink: 0,
         }}
       >
         <img
@@ -91,6 +94,8 @@ const Home = () => {
             cursor: "pointer",
             width: isMobile ? "150px" : "200px",
             height: "auto",
+            objectFit: "contain",
+            display: "block",
           }}
         />
       </Box>
@@ -421,7 +426,16 @@ const Home = () => {
   );
 
   return (
-    <Box display="flex" flexDirection="column" sx={{ minHeight: "100%", height: "100%", overflowY: "auto" }}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      sx={{
+        minHeight: "100%",
+        height: "100%",
+        overflowY: "auto",
+        "& > *": { flexShrink: 0 },
+      }}
+    >
       <PrimaryNav />
       <Hero />
       <ImagesSection />

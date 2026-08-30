@@ -510,7 +510,14 @@ const CompleteSurvey = () => {
   };
 
    return (
-        <>
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
+            overflow: "auto",
+            WebkitOverflowScrolling: "touch",
+          }}
+        >
             <Box>
                <DTCLogo />
             </Box>
@@ -768,7 +775,7 @@ const CompleteSurvey = () => {
             )}
         </div>
         )}
-    </>
+    </Box>
     );
 };
 

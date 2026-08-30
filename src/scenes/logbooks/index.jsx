@@ -147,6 +147,7 @@ const Logbooks = () => {
         sx={{
           minWidth: 0,
           minHeight: 0,
+          height: '100%',
           overflow: 'auto',
           '& .MuiTypography-h2': { fontSize: { xs: '1.4rem', md: '1.85rem' } },
           '& .MuiTypography-h5': { fontSize: '1.2rem' },
@@ -191,8 +192,8 @@ const Logbooks = () => {
             display: 'flex',
             flexDirection: { xs: 'column-reverse', md: 'row' },
             width: '100%',
-            flex: 1,
-            minHeight: 0,
+            flex: 'none',
+            minHeight: 'auto',
             gap: { xs: 3, md: 4 },
             px: { xs: 2, md: 2.5 },
             pb: { xs: "calc(80px + env(safe-area-inset-bottom, 0px))", md: 2.5 },

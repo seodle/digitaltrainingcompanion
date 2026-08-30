@@ -110,6 +110,9 @@ const ParticipantRankingPanel = ({
       >
         {[...(current?.ranking || [])]
           .sort((a, b) => {
+            if (current?.mode === 'multi') {
+              return (b.score - a.score) || (a.name || '').localeCompare(b.name || '');
+            }
             if (current?.mode === 'correctness' && a.correct !== b.correct) {
               return a.correct ? -1 : 1;
             }
@@ -121,6 +124,7 @@ const ParticipantRankingPanel = ({
             || entry.key.toLowerCase() === String(highlightedParticipant).toLowerCase()
           );
           const width = `${Math.max(6, Math.round(entry.score * 100))}%`;
+          const showChoices = current?.mode === 'multi' && Array.isArray(entry.choiceResults);
           const showCorrectness = current?.mode === 'correctness';
 
           return (
@@ -139,13 +143,41 @@ const ParticipantRankingPanel = ({
                 flexDirection: showCorrectness ? 'row' : 'column',
                 alignItems: showCorrectness ? 'center' : 'stretch',
                 justifyContent: 'space-between',
-                gap: showCorrectness ? 1 : 0,
+                gap: showCorrectness ? 1 : 0.5,
               }}
             >
-              <Typography noWrap sx={{ fontSize: '0.875rem', fontWeight: highlighted ? 600 : 500, mb: showCorrectness ? 0 : 0.5, minWidth: 0, flex: 1 }}>
+              <Typography noWrap sx={{ fontSize: '0.875rem', fontWeight: highlighted ? 600 : 500, mb: showCorrectness ? 0 : 0.25, minWidth: 0, flex: showCorrectness ? 1 : 'none' }}>
                 {entry.name}
               </Typography>
-              {showCorrectness ? (
+              {showChoices ? (
+                <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 0.5, overflowX: 'auto' }}>
+                  {entry.choiceResults.map((choice) => {
+                    const ok = choice.participantCorrect;
+                    return (
+                      <Chip
+                        key={choice.label}
+                        size="small"
+                        title={choice.label}
+                        icon={
+                          ok
+                            ? <CheckCircleOutlineRoundedIcon sx={{ fontSize: '1rem' }} />
+                            : <HighlightOffRoundedIcon sx={{ fontSize: '1rem' }} />
+                        }
+                        label={ok ? getMessage('label_ranking_correct') : getMessage('label_ranking_incorrect')}
+                        sx={{
+                          fontWeight: 600,
+                          flexShrink: 0,
+                          bgcolor: ok ? '#EEF6EE' : '#FBECEC',
+                          border: '1px solid',
+                          borderColor: ok ? '#C4DCC4' : '#E8C4C4',
+                          color: ok ? '#2F6A32' : '#A33B3B',
+                          '& .MuiChip-icon': { color: ok ? '#2F6A32' : '#A33B3B' },
+                        }}
+                      />
+                    );
+                  })}
+                </Box>
+              ) : showCorrectness ? (
                 <Chip
                   size="small"
                   icon={
