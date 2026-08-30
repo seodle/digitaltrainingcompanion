@@ -46,10 +46,7 @@ const ParticipantRankingPanel = ({
         overflow: 'hidden',
       }}
     >
-      <Box sx={{ px: 2, pt: 2, pb: 1.5, flexShrink: 0 }}>
-        <Typography variant="subtitle1" fontWeight={700} color="rgb(102,102,102)" sx={{ mb: 1.25 }}>
-          {getMessage('label_participant_ranking')}
-        </Typography>
+      <Box sx={{ px: 2, pt: 1.5, pb: 1.5, flexShrink: 0 }}>
         {current ? (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <IconButton

@@ -232,7 +232,11 @@ const AssessmentResultCard = ({
                             key={item.uniqueQuestionKey}
                             title={`${item.question}`}
                             content={item.responses}
-                            displayName={item.displayName}
+                            displayName={
+                                hide_students_name
+                                    ? (item.displayName || []).map(() => getMessage('label_anonymous'))
+                                    : item.displayName
+                            }
                             aiSummary={aiSummaries?.[item.uniqueQuestionKey]}
                             loadingSummary={loadingSummaries?.[item.uniqueQuestionKey]}
                         />
@@ -294,11 +298,12 @@ export const AssessmentResultStack = ({
                                 charts={charts}
                                 comments={comments}
                                 hide_students_name={
-                                    hide_students_name &&
+                                    anonymizeRanking ||
+                                    (hide_students_name &&
                                     [
                                         AssessmentType.STUDENT_CHARACTERISTICS,
                                         AssessmentType.STUDENT_LEARNING_OUTCOMES,
-                                    ].includes(assessment.type)
+                                    ].includes(assessment.type))
                                 }
                                 showTeacherFilter={
                                     showTeacherFilter &&

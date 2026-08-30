@@ -11,6 +11,11 @@ import {
   Select,
   MenuItem,
   Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -74,6 +79,7 @@ const CustomTimeline = ({
   const [teacherFilter, setTeacherFilter] = useState("all");
   const [teachers, setTeachers] = useState([]);
   const [cardToggles, setCardToggles] = useState({});
+  const [logToDelete, setLogToDelete] = useState(null);
 
   useEffect(() => {
     if (!isMonitoringOwner && visibilityFilter === "selected") {
@@ -182,6 +188,14 @@ const CustomTimeline = ({
       });
     } catch (error) {
       console.log("An error occurred while deleting the log:", error);
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    const logId = logToDelete?._id;
+    setLogToDelete(null);
+    if (logId) {
+      await handleDelete(logId);
     }
   };
 
@@ -493,7 +507,7 @@ const CustomTimeline = ({
                     >
                       {isEditing ? <SaveRoundedIcon color="primary" /> : <EditOutlinedIcon fontSize="small" />}
                     </IconButton>
-                    <IconButton size="small" onClick={() => handleDelete(log._id)}>
+                    <IconButton size="small" onClick={() => setLogToDelete(log)}>
                       <DeleteOutlineRoundedIcon sx={{ color: "#D14A38", fontSize: "1.2rem" }} />
                     </IconButton>
                   </Box>
@@ -665,6 +679,23 @@ const CustomTimeline = ({
         onClose={() => setChatLog(null)}
         onChatUpdated={handleChatUpdated}
       />
+
+      <Dialog open={Boolean(logToDelete)} onClose={() => setLogToDelete(null)}>
+        <DialogTitle>{getMessage("label_confirmation")}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {getMessage("label_log_delete_confirm")}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setLogToDelete(null)}>
+            {getMessage("label_cancel")}
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            {getMessage("label_delete")}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 };

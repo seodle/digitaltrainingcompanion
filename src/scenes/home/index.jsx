@@ -271,9 +271,6 @@ const Home = () => {
                   {getMessage('label_trial_version')}
                 </Typography>
                 <Typography variant="body2" sx={{ opacity: 0.9 }}>
-                  {getMessage('label_deleted_data')}
-                </Typography>
-                <Typography variant="body2" sx={{ opacity: 0.9 }}>
                   {getMessage('label_contact')} <a href="mailto:contact@digitaltrainingcompanion.ch" style={{ color: "white", textDecoration: "underline" }}>contact@digitaltrainingcompanion.ch</a>.
                 </Typography>
               </Box>

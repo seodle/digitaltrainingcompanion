@@ -1100,10 +1100,10 @@ const Reports = () => {
     };
 
     return (
-    <Box display="flex" sx={{ height: '100vh', overflow: 'hidden', maxWidth: '100vw', backgroundColor: 'white' }}>
+    <Box display="flex" sx={{ height: '100vh', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
         <Sidebar/>
 
-        <Box flex={1} sx={{ minWidth: 0, overflow: 'auto', backgroundColor: 'white' }}>
+        <Box flex={1} sx={{ minWidth: 0, overflow: 'auto', bgcolor: '#f9f9f9' }}>
 
             <Box sx={{ mt: { xs: 1, md: '10px' } }}>
                 <Topbar title={getMessage("label_my_results")} />
@@ -1249,7 +1249,7 @@ const Reports = () => {
                 {selectedDay && (
                     <Typography variant="body2" color="text.secondary">
                         {selectedUser
-                            ? `${getMessage("label_results_for_participant")} ${selectedParticipantLabel}`
+                            ? `${getMessage("label_results_for_participant")} ${hideRankingNames ? getMessage("label_anonymous") : selectedParticipantLabel}`
                             : getMessage("label_results_for_all")}
                     </Typography>
                 )}

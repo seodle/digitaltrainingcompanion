@@ -82,7 +82,7 @@
     },
     {
         "term": "dtc_description",
-        "definition": "Bewerte Schulungen mit belegebasierten Daten",
+        "definition": "Vertiefte Schulungsevaluation, vereinfacht.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -91,7 +91,7 @@
     },
     {
         "term": "dtc_description_2",
-        "definition": "Erstelle Bewertungen, visualisiere Ergebnisse, verbessere deine Schulungen \u2013 alles mit wenigen Klicks",
+        "definition": "Organisieren, erstellen, visualisieren und verbessern Sie Ihre Schulungsbewertungen mit wenigen Klicks, ohne den Kontakt zu Ihren Teilnehmenden zu verlieren.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -127,7 +127,7 @@
     },
     {
         "term": "dtc_description_6",
-        "definition": "Entwerfen Sie evidenzbasierte Bewertungen",
+        "definition": "Die richtige Bewertung entwerfen, einfach und schnell",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -163,7 +163,7 @@
     },
     {
         "term": "dtc_description_10",
-        "definition": "F\u00fchren Sie ein Protokoll zur kontinuierlichen Verbesserung",
+        "definition": "F\u00fchren Sie ein Protokoll zur kontinuierlichen Verbesserung mit Ihren Teilnehmenden",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -172,7 +172,7 @@
     },
     {
         "term": "dtc_description_11",
-        "definition": "Nutzen Sie unser benutzerfreundliches Klassestagebuch, um wichtige Beobachtungen und Ver\u00e4nderungen festzuhalten und Ihr Training kontinuierlich zu verbessern.",
+        "definition": "Nutzen Sie unser einfaches Klassentagebuch, um Beobachtungen, Verbesserungen und Diskussionen mit Ihren Teilnehmenden festzuhalten und Ihre Schulungen gemeinsam weiterzuentwickeln.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -4980,6 +4980,15 @@
         "term": "label_log_resolved",
         "definition": "Gel\u00f6st",
         "context": "Shown when an ask-for-help log is resolved; click to undo",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_delete_confirm",
+        "definition": "Diese Notiz l\u00f6schen? Das kann nicht r\u00fcckg\u00e4ngig gemacht werden.",
+        "context": "Confirmation before deleting a logbook entry",
         "term_plural": "",
         "reference": "",
         "comment": "",

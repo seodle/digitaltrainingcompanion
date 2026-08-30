@@ -1016,10 +1016,10 @@ const handleAssessmentPreview = (assessment) => {
         flexDirection: 'column',
       }}
     >
-      <Box sx={{ px: 2, pt: 2, pb: 1.5, minHeight: 96, boxSizing: 'border-box', borderBottom: '1px solid', borderColor: 'divider', flexShrink: 0 }}>
+      <Box sx={{ px: 2, pt: 1.25, pb: 1, boxSizing: 'border-box', borderBottom: '1px solid', borderColor: 'divider', flexShrink: 0 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 1 }}>
           <Box>
-            <Typography variant="h4" sx={{ fontWeight: 800, lineHeight: 1.3, mb: 0 }}>
+            <Typography variant="h4" sx={{ fontWeight: 800, lineHeight: 1.25, mb: 0 }}>
                 {getMessage('label_table_assessment')} {monitorings.find(monitoring => monitoring._id === currentMonitoringId)?.name || ''}
             </Typography>
             <ToggleButtonGroup
@@ -1028,7 +1028,7 @@ const handleAssessmentPreview = (assessment) => {
               exclusive
               onChange={(e, value) => value && setOwnerFilter(value)}
               aria-label="owner filter"
-              sx={{ mt: 1 }}
+              sx={{ mt: 0.5 }}
             >
               <ToggleButton value="all">{getMessage('table_assessment_all')}</ToggleButton>
               <ToggleButton value="mine">{getMessage('table_assessment_mine')}</ToggleButton>
@@ -1310,12 +1310,10 @@ const handleAssessmentPreview = (assessment) => {
                     <TableCell sx={{ width: fillHeight ? 78 : 110, padding: '6px 4px' }}>
                         {getMessage('label_status_assessment')}
                     </TableCell>
-                    <TableCell sx={{ width: 40, padding: '6px 2px', textAlign: 'center' }}>
-                        <Tooltip title={`${getMessage('label_edit')} / ${getMessage('label_preview')}`}>
-                          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <Eye size={14} />
-                          </Box>
-                        </Tooltip>
+                    <TableCell sx={{ width: fillHeight ? 118 : 140, padding: '6px 4px' }}>
+                        <Typography variant="caption" noWrap sx={{ display: 'block', fontWeight: 600 }}>
+                          {getMessage('label_edit_preview')}
+                        </Typography>
                     </TableCell>
                     <TableCell 
                         padding="checkbox"
@@ -1498,8 +1496,8 @@ const handleAssessmentPreview = (assessment) => {
                                   </Box>
                               </Tooltip>
                             </TableCell>
-                            <TableCell sx={{ width: 52, padding: '2px 4px !important', height: 'auto !important', verticalAlign: 'middle' }}>
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+                            <TableCell sx={{ width: fillHeight ? 118 : 140, padding: '2px 4px !important', height: 'auto !important', verticalAlign: 'middle' }}>
+                                <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: 0.25 }}>
                                     {isOwner(assessment) && assessment.status === 'Draft' && (
                                         <Tooltip title={getMessage('label_edit')}>
                                             <IconButton
@@ -1557,64 +1555,75 @@ const handleAssessmentPreview = (assessment) => {
       </TableContainer>
       )}
 
-      {onCreateAssessment && (
-        <Box
-          component="button"
-          type="button"
-          onClick={onCreateAssessment}
-          sx={{
-            width: '100%',
-            border: 0,
-            borderTop: '1.5px dashed #E0E0E0',
-            bgcolor: '#ffffff',
-            py: 1.15,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 1,
-            cursor: 'pointer',
-            color: '#1a1a1a',
-            flexShrink: 0,
-            '&:hover': { bgcolor: 'rgba(247, 148, 30, 0.12)' },
-          }}
-        >
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          borderTop: '1px solid',
+          borderColor: 'divider',
+          flexShrink: 0,
+          minHeight: 0,
+        }}
+      >
+        {onCreateAssessment && (
           <Box
+            component="button"
+            type="button"
+            onClick={onCreateAssessment}
             sx={{
-              width: 26,
-              height: 26,
-              borderRadius: '50%',
-              bgcolor: '#F7941E',
+              flex: 1,
+              border: 0,
+              bgcolor: '#ffffff',
+              py: 0.75,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              flexShrink: 0,
+              gap: 1,
+              cursor: 'pointer',
+              color: '#1a1a1a',
+              '&:hover': { bgcolor: 'rgba(247, 148, 30, 0.12)' },
             }}
           >
-            <Plus size={15} color="#1a1a1a" />
+            <Box
+              sx={{
+                width: 22,
+                height: 22,
+                borderRadius: '50%',
+                bgcolor: '#F7941E',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}
+            >
+              <Plus size={14} color="#1a1a1a" />
+            </Box>
+            <Typography variant="body2" fontWeight={600}>
+              {getMessage('label_new_assessment')}
+            </Typography>
           </Box>
-          <Typography variant="body2" fontWeight={600}>
-            {getMessage('label_new_assessment')}
-          </Typography>
-        </Box>
-      )}
-
-      <TablePagination
-        component="div"
-        sx={{ flexShrink: 0 }}
-        count={filteredAssessments.length}
-        page={page}
-        onPageChange={(e, newPage) => setPage(newPage)}
-        rowsPerPage={rowsPerPage}
-        onRowsPerPageChange={(event) => {
-          // Convert the selected value to a number
-          const value = parseInt(event.target.value, 10);
-          setRowsPerPage(value);
-          setPage(0);
-        }}
-        // Define the options: 10, 25, 50, 100, and "All" (-1)
-        rowsPerPageOptions={[10, 25, 50, 100, { label: 'All', value: -1 }]}
-        labelRowsPerPage=""
-      />
+        )}
+        <TablePagination
+          component="div"
+          sx={{
+            flexShrink: 0,
+            border: 0,
+            '& .MuiTablePagination-toolbar': { minHeight: 40, pl: 1, pr: 1 },
+            '& .MuiTablePagination-displayedRows': { m: 0 },
+          }}
+          count={filteredAssessments.length}
+          page={page}
+          onPageChange={(e, newPage) => setPage(newPage)}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={(event) => {
+            const value = parseInt(event.target.value, 10);
+            setRowsPerPage(value);
+            setPage(0);
+          }}
+          rowsPerPageOptions={[10, 25, 50, 100, { label: 'All', value: -1 }]}
+          labelRowsPerPage=""
+        />
+      </Box>
 
 
       <Menu

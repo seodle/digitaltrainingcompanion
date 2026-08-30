@@ -82,7 +82,7 @@
     },
     {
         "term": "dtc_description",
-        "definition": "Valutare i programmi di formazione utilizzando dati basati sull'evidenza",
+        "definition": "La valutazione approfondita della formazione, semplificata.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -91,7 +91,7 @@
     },
     {
         "term": "dtc_description_2",
-        "definition": "Creare valutazioni, visualizzare i risultati, migliorare i programmi di allenamento, il tutto con pochi clic.",
+        "definition": "Organizza, crea, visualizza e migliora le tue valutazioni della formazione in pochi clic, senza perdere il contatto con i tuoi partecipanti.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -127,7 +127,7 @@
     },
     {
         "term": "dtc_description_6",
-        "definition": "Progettare valutazioni basate sull'evidenza",
+        "definition": "Progettare la valutazione giusta, facilmente e rapidamente",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -163,7 +163,7 @@
     },
     {
         "term": "dtc_description_10",
-        "definition": "Mantenere un registro del miglioramento continuo",
+        "definition": "Mantenere un registro del miglioramento continuo con i tuoi partecipanti",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -172,7 +172,7 @@
     },
     {
         "term": "dtc_description_11",
-        "definition": "Utilizzate il nostro diario di bordo, facile da usare, per tenere traccia delle osservazioni e dei cambiamenti vitali, migliorando continuamente la vostra formazione.",
+        "definition": "Utilizzate il nostro diario di bordo per tenere traccia di osservazioni, miglioramenti e discussioni con i vostri partecipanti, e migliorare continuamente la vostra formazione.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -4980,6 +4980,15 @@
         "term": "label_log_resolved",
         "definition": "Risolto",
         "context": "Shown when an ask-for-help log is resolved; click to undo",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_delete_confirm",
+        "definition": "Eliminare questa nota? L'azione non pu\u00f2 essere annullata.",
+        "context": "Confirmation before deleting a logbook entry",
         "term_plural": "",
         "reference": "",
         "comment": "",

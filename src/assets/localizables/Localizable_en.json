@@ -82,7 +82,7 @@
     },
     {
         "term": "dtc_description",
-        "definition": "Evaluate training programs using evidence-based data",
+        "definition": "In-depth training evaluation, simplified.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -91,7 +91,7 @@
     },
     {
         "term": "dtc_description_2",
-        "definition": "Create assessments, visualize results, improve your training programs, all with just a few clicks",
+        "definition": "Organize, create, visualize and improve your training evaluations in a few clicks, without losing contact with your participants.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -127,7 +127,7 @@
     },
     {
         "term": "dtc_description_6",
-        "definition": "Design evidence-based assessments",
+        "definition": "Design the right assessment, easily and rapidly",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -163,7 +163,7 @@
     },
     {
         "term": "dtc_description_10",
-        "definition": "Maintain a Continuous Improvement Log",
+        "definition": "Maintain a Continuous Improvement Log with your participants",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -172,7 +172,7 @@
     },
     {
         "term": "dtc_description_11",
-        "definition": "Utilize our user-friendly logbook to track vital observations and changes, enhancing your training continuously.",
+        "definition": "Use our simple logbook to track observations, improvements and discussions with your participants, and keep improving your training together.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -4980,6 +4980,15 @@
         "term": "label_log_resolved",
         "definition": "Resolved",
         "context": "Shown when an ask-for-help log is resolved; click to undo",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_delete_confirm",
+        "definition": "Delete this note? This cannot be undone.",
+        "context": "Confirmation before deleting a logbook entry",
         "term_plural": "",
         "reference": "",
         "comment": "",

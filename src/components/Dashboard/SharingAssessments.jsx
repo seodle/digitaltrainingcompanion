@@ -388,7 +388,7 @@ const handleDownloadPaperVersion = async () => {
       }}
     >
       {/* Header Section */}
-      <Box sx={{ px: 2, pt: 2, pb: 1.5, boxSizing: 'border-box', borderBottom: '1px solid', borderColor: 'divider', flexShrink: 0 }}>
+      <Box sx={{ px: 2, pt: 2, pb: 1.5, boxSizing: 'border-box', borderBottom: '1px solid', borderColor: 'divider', flexShrink: 0, bgcolor: '#ffffff', position: 'relative', zIndex: 2 }}>
         <Typography variant="h4" sx={{ fontWeight: 800, lineHeight: 1.3 }}>
           {getMessage("label_qr_code_section")}
         </Typography>
@@ -404,6 +404,8 @@ const handleDownloadPaperVersion = async () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          overflow: 'hidden',
+          pt: 1.5,
         }}
       >
         <Box

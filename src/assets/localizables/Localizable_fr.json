@@ -82,7 +82,7 @@
     },
     {
         "term": "dtc_description",
-        "definition": "L'\u00e9valuation des formations bas\u00e9es sur des donn\u00e9es probantes",
+        "definition": "L'\u00e9valuation approfondie des formations, simplifi\u00e9e.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -91,7 +91,7 @@
     },
     {
         "term": "dtc_description_2",
-        "definition": "Cr\u00e9er des \u00e9valuations, visualiser les r\u00e9sultats, am\u00e9liorer vos formations, en quelques clics",
+        "definition": "Organisez, cr\u00e9ez, visualisez et am\u00e9liorez vos \u00e9valuations de formation en quelques clics, sans perdre le contact avec vos participants.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -127,7 +127,7 @@
     },
     {
         "term": "dtc_description_6",
-        "definition": "Concevoir des \u00e9valuations bas\u00e9es sur des preuves",
+        "definition": "Concevoir la bonne \u00e9valuation, facilement et rapidement",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -163,7 +163,7 @@
     },
     {
         "term": "dtc_description_10",
-        "definition": "Tenir un registre d'am\u00e9lioration continue",
+        "definition": "Tenir un registre d'am\u00e9lioration continue avec vos participants",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -172,7 +172,7 @@
     },
     {
         "term": "dtc_description_11",
-        "definition": "Utilisez notre journal de bord convivial pour suivre les observations et les changements essentiels, afin d'am\u00e9liorer continuellement votre formation.",
+        "definition": "Utilisez notre journal de bord pour suivre les observations, les am\u00e9liorations et les discussions avec vos participants, et am\u00e9liorer vos formations en continu.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -4980,6 +4980,15 @@
         "term": "label_log_resolved",
         "definition": "R\u00e9solu",
         "context": "Shown when an ask-for-help log is resolved; click to undo",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_delete_confirm",
+        "definition": "Supprimer cette note ? Cette action est irr\u00e9versible.",
+        "context": "Confirmation before deleting a logbook entry",
         "term_plural": "",
         "reference": "",
         "comment": "",

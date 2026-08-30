@@ -137,7 +137,7 @@ const Logbooks = () => {
   );
 
   return (
-    <Box display="flex" sx={{ minHeight: '100vh', overflow: { xs: 'auto', md: 'hidden' }, bgcolor: 'white' }}>
+    <Box display="flex" sx={{ minHeight: '100vh', overflow: { xs: 'auto', md: 'hidden' }, bgcolor: '#f9f9f9' }}>
       <Sidebar />
 
       <Box

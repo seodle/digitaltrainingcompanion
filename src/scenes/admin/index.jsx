@@ -181,7 +181,7 @@ const Admin = () => {
   const handleTabChange = (e, newValue) => setTab(newValue);
 
   return (
-    <Box display="flex" sx={{ minHeight: '100vh', overflow: 'auto', maxWidth: '100vw' }}>
+    <Box display="flex" sx={{ minHeight: '100vh', overflow: 'auto', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
       <Sidebar />
       <Box flex="1" flexDirection="column" sx={{ minWidth: 0 }}>
         <Box p={2}>

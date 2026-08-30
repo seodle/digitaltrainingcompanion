@@ -82,7 +82,7 @@
     },
     {
         "term": "dtc_description",
-        "definition": "Evaluaci\u00f3n de las formaciones basada en la evidencia",
+        "definition": "La evaluaci\u00f3n profunda de las formaciones, simplificada.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -91,7 +91,7 @@
     },
     {
         "term": "dtc_description_2",
-        "definition": "Crear evaluaciones, visualizar resultados, mejorar tus formaciones, en unos pocos clics",
+        "definition": "Organiza, crea, visualiza y mejora tus evaluaciones de formaci\u00f3n en unos pocos clics, sin perder el contacto con tus participantes.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -127,7 +127,7 @@
     },
     {
         "term": "dtc_description_6",
-        "definition": "Dise\u00f1ar evaluaciones basadas en evidencias",
+        "definition": "Dise\u00f1ar la evaluaci\u00f3n adecuada, f\u00e1cil y r\u00e1pidamente",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -163,7 +163,7 @@
     },
     {
         "term": "dtc_description_10",
-        "definition": "Llevar un registro de mejora continua",
+        "definition": "Llevar un registro de mejora continua con tus participantes",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -172,7 +172,7 @@
     },
     {
         "term": "dtc_description_11",
-        "definition": "Utiliza nuestro sencillo cuaderno de bit\u00e1cora para hacer un seguimiento de las principales observaciones y cambios, de modo que puedas mejorar continuamente tu formaci\u00f3n",
+        "definition": "Utiliza nuestro sencillo cuaderno de bit\u00e1cora para seguir observaciones, mejoras y discusiones con tus participantes, y mejorar continuamente tu formaci\u00f3n.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -4980,6 +4980,15 @@
         "term": "label_log_resolved",
         "definition": "Resuelto",
         "context": "Shown when an ask-for-help log is resolved; click to undo",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_delete_confirm",
+        "definition": "\u00bfEliminar esta nota? Esta acci\u00f3n no se puede deshacer.",
+        "context": "Confirmation before deleting a logbook entry",
         "term_plural": "",
         "reference": "",
         "comment": "",

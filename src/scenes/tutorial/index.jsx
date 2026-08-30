@@ -254,7 +254,7 @@ const Tutorial = () => {
 
     if (!tutorialConfig) {
         return (
-            <Box display="flex" sx={{ minHeight: '100vh', maxWidth: '100vw' }}>
+            <Box display="flex" sx={{ minHeight: '100vh', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
                 <Sidebar />
                 <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden" sx={{ minWidth: 0 }}>
                     <Box mt="10px" ml="10px">
@@ -269,7 +269,7 @@ const Tutorial = () => {
     }
 
     return (
-        <Box display="flex" sx={{ minHeight: '100vh', maxWidth: '100vw' }}>
+        <Box display="flex" sx={{ minHeight: '100vh', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
             <Sidebar />
             <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden" sx={{ minWidth: 0 }}>
                 <Box mt="10px" ml="10px">
