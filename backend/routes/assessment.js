@@ -2,7 +2,7 @@ const router = require("express").Router();
 const {
   requireMonitoringOwnerOrRedeemer,
   requireMonitoringOwner,
-  requireAssessmentOwner,
+  requireAssessmentOwnerOrTrainerOnMonitoring,
 } = require('../middleware/authorization');
 const Monitoring = require('../models/monitoringModel');
 
@@ -88,7 +88,7 @@ router.post("/monitoring/:monitoringId/copy", requireMonitoringOwnerOrRedeemer('
  * @param {Object} res - The Express response object used to send back the HTTP response.
  * @return {Promise<Object>} A promise that resolves to a response object containing either the ID of the newly updated assessment or an error message.
 */
-router.put('/:assessmentId', requireAssessmentOwner('assessmentId'), async (req, res) => {
+router.put('/:assessmentId', requireAssessmentOwnerOrTrainerOnMonitoring('assessmentId'), async (req, res) => {
   const { assessmentId } = req.params;
   const updatedAssessment = req.body;
 
@@ -112,7 +112,7 @@ router.put('/:assessmentId', requireAssessmentOwner('assessmentId'), async (req,
  * @param {Object} res - The Express response object used to send back the HTTP response.
  * @return {Promise<Object>} A promise that resolves to a response object. If the deletion is successful, it returns a message indicating the successful deletion of the assessment.
  */
-router.delete("/:assessmentId", requireAssessmentOwner('assessmentId'), async (req, res) => {
+router.delete("/:assessmentId", requireAssessmentOwnerOrTrainerOnMonitoring('assessmentId'), async (req, res) => {
   const { assessmentId } = req.params;
 
   try {
@@ -135,7 +135,7 @@ router.delete("/:assessmentId", requireAssessmentOwner('assessmentId'), async (r
  * @param {Object} res - The Express response object used to send back the HTTP response.
  * @return {Promise<Object>} A promise that resolves to a response object containing either the updated list of questions if the update is successful, or an error message.
 */
-router.put("/:assessmentId/survey", requireAssessmentOwner('assessmentId'), async (req, res) => {
+router.put("/:assessmentId/survey", requireAssessmentOwnerOrTrainerOnMonitoring('assessmentId'), async (req, res) => {
   const { assessmentId } = req.params;
   const { questions: updatedQuestions, workshops } = req.body;
 

@@ -5,7 +5,7 @@ const { stopSharingMonitoring, startSharingMonitoring } = require('../services/m
 
 const { createMonitoring, getMonitoringsByUserId, deleteMonitoring, updateMonitoring, getMonitoringById, getUsersByRedeemedCode } = require('../services/monitoringService');
 const { deleteAssessmentsFromMonitoring } = require('../services/assessmentService');
-const { getEmailSchedule, updateEmailSchedule } = require('../services/emailScheduleService');
+const { getEmailSchedule, updateEmailSchedule, cancelEmailSchedule } = require('../services/emailScheduleService');
 
 require("dotenv").config();
 
@@ -155,7 +155,7 @@ router.get("/:monitoringId", requireMonitoringOwnerOrRedeemer('monitoringId'), a
   }
 });
 
-router.get("/:monitoringId/email-schedule", requireTeacherTrainer, requireMonitoringOwner('monitoringId'), async (req, res) => {
+router.get("/:monitoringId/email-schedule", requireTeacherTrainer, requireMonitoringOwnerOrRedeemer('monitoringId'), async (req, res) => {
   try {
     const schedule = await getEmailSchedule(req.params.monitoringId);
     return res.json(schedule);
@@ -166,7 +166,7 @@ router.get("/:monitoringId/email-schedule", requireTeacherTrainer, requireMonito
   }
 });
 
-router.put("/:monitoringId/email-schedule", requireTeacherTrainer, requireMonitoringOwner('monitoringId'), async (req, res) => {
+router.put("/:monitoringId/email-schedule", requireTeacherTrainer, requireMonitoringOwnerOrRedeemer('monitoringId'), async (req, res) => {
   try {
     const { emails, assessmentIds, scheduledSendAt, language } = req.body || {};
     const schedule = await updateEmailSchedule(req.params.monitoringId, {
@@ -180,6 +180,18 @@ router.put("/:monitoringId/email-schedule", requireTeacherTrainer, requireMonito
     console.error("Error updating email schedule:", error);
     const status = error.status || 500;
     return res.status(status).json({ error: error.message || "Failed to update email schedule" });
+  }
+});
+
+router.put("/:monitoringId/email-schedule/cancel", requireTeacherTrainer, requireMonitoringOwnerOrRedeemer('monitoringId'), async (req, res) => {
+  try {
+    const { assessmentIds } = req.body || {};
+    const schedule = await cancelEmailSchedule(req.params.monitoringId, assessmentIds);
+    return res.json(schedule);
+  } catch (error) {
+    console.error("Error cancelling email schedule:", error);
+    const status = error.status || 500;
+    return res.status(status).json({ error: error.message || "Failed to cancel email schedule" });
   }
 });
 

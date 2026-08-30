@@ -7,6 +7,9 @@ const { normalizeLang, t } = require("../utils/emailI18n");
 const VISIBILITY = ["private", "trainer", "selected", "followers"];
 const AUTHOR_POPULATE = { path: "userId", select: "firstName lastName" };
 const CHAT_POPULATE = { path: "chat.userId", select: "firstName lastName" };
+const SHARED_POPULATE = { path: "sharedWith", select: "firstName lastName" };
+
+const sharedEntryId = (entry) => String(entry?._id || entry || "").trim();
 
 const httpError = (status, message) => {
     const error = new Error(message);
@@ -33,8 +36,16 @@ const getMonitoringAccess = async (monitoringId, requesterId) => {
             && requester.sharingCodeRedeemed.includes(monitoring.sharingCode);
     }
     const isTrainer = isOwner || String(requester?.userStatus) === "Teacher-trainer";
+    const trainerIds = [String(monitoring.userId)];
+    if (monitoring.sharingCode) {
+        const trainers = await User.find(
+            { sharingCodeRedeemed: monitoring.sharingCode, userStatus: "Teacher-trainer" },
+            "_id"
+        ).lean();
+        trainers.forEach((user) => trainerIds.push(String(user._id)));
+    }
 
-    return { monitoring, isOwner, isFollower, isTrainer };
+    return { monitoring, isOwner, isFollower, isTrainer, trainerIds: [...new Set(trainerIds)] };
 };
 
 const assertCanAccessMonitoring = async (monitoringId, requesterId) => {
@@ -45,48 +56,61 @@ const assertCanAccessMonitoring = async (monitoringId, requesterId) => {
     return access;
 };
 
-const canViewLog = (log, requesterId, { isOwner, isFollower, isTrainer, monitoring }) => {
+const canViewLog = (log, requesterId, { isOwner, isFollower, isTrainer, monitoring, trainerIds = [] }) => {
     if (authorId(log) === String(requesterId)) {
         return true;
     }
     const visibility = log.visibility || "private";
-    if (visibility === "private" && isTrainer && String(authorId(log)) === String(monitoring?.userId)) {
+    if (visibility === "private" && isTrainer && trainerIds.includes(authorId(log))) {
         return true;
     }
     if (visibility === "followers" && isFollower) {
         return true;
     }
-    if (visibility === "trainer" && isOwner) {
+    if (visibility === "trainer" && isTrainer) {
         return true;
     }
     if (visibility === "selected") {
-        return (log.sharedWith || []).some((id) => String(id) === String(requesterId));
+        return (log.sharedWith || []).some((entry) => sharedEntryId(entry) === String(requesterId));
     }
     return false;
 };
 
 const chatPartnerId = (log, ownerId) => {
+    const shared = (log.sharedWith || []).map(sharedEntryId).filter(Boolean);
+    if (shared.length) {
+        return shared[0];
+    }
     const author = authorId(log);
     if (author && author !== String(ownerId)) {
         return author;
     }
-    if (log.helpRequestedBy) {
+    if (log.helpRequestedBy && String(log.helpRequestedBy) !== String(ownerId)) {
         return String(log.helpRequestedBy);
     }
     return null;
 };
 
-const canAccessChat = (log, requesterId, ownerId) => {
-    const isHelpRequest = log.logType === "Ask for help" || Boolean(log.helpRequestedAt);
-    if (!isHelpRequest) {
+const isHelpThread = (log) => log.logType === "Ask for help" || Boolean(log.helpRequestedAt);
+
+const canAccessChat = (log, requesterId, access) => {
+    if (!isHelpThread(log)) {
         return false;
     }
-    const partner = chatPartnerId(log, ownerId);
-    if (!partner || partner === String(ownerId)) {
-        return false;
+    if (access.isTrainer) {
+        return true;
     }
     const requester = String(requesterId);
-    return requester === String(ownerId) || requester === partner;
+    if (authorId(log) === requester) {
+        return true;
+    }
+    if (log.helpRequestedBy && String(log.helpRequestedBy) === requester) {
+        return true;
+    }
+    if ((log.visibility || "private") === "followers" && access.isFollower) {
+        return true;
+    }
+    return (log.sharedWith || []).some((entry) => sharedEntryId(entry) === requester);
 };
 
 const getFollowerIds = async (monitoring) => {
@@ -112,9 +136,9 @@ const normalizeSharedWith = (sharedWith, followerIds) => {
     return unique;
 };
 
-const resolveVisibility = async (logData, { isOwner, monitoring }) => {
+const resolveVisibility = async (logData, { isOwner, isTrainer, monitoring }) => {
     const visibility = VISIBILITY.includes(logData.visibility) ? logData.visibility : "private";
-    if (isOwner) {
+    if (isTrainer) {
         if (visibility === "trainer") {
             throw httpError(400, "Trainers cannot use trainer-only visibility");
         }
@@ -134,7 +158,7 @@ const resolveVisibility = async (logData, { isOwner, monitoring }) => {
     return { visibility, sharedWith: [] };
 };
 
-const populateLog = (query) => query.populate(AUTHOR_POPULATE).populate(CHAT_POPULATE);
+const populateLog = (query) => query.populate(AUTHOR_POPULATE).populate(CHAT_POPULATE).populate(SHARED_POPULATE);
 
 const notifyOwnerOfHelpRequest = async (log, monitoring, requesterId) => {
     const owner = await User.findById(monitoring.userId).select("email firstName lastName language");
@@ -166,20 +190,55 @@ const notifyOwnerOfHelpRequest = async (log, monitoring, requesterId) => {
     });
 };
 
-const createLog = async (logData, requesterId) => {
-    const { monitoring, isOwner } = await assertCanAccessMonitoring(logData.monitoringId, requesterId);
-    let { visibility, sharedWith } = await resolveVisibility(logData, { isOwner, monitoring });
-    if (logData.logType === "Ask for help") {
-        if (isOwner) {
-            throw httpError(400, "Trainers cannot ask themselves for help");
+const notifyTeachersOfTrainerContact = async (log, monitoring, requesterId, teacherIds) => {
+    const trainer = await User.findById(requesterId).select("firstName lastName");
+    const teachers = await User.find({ _id: { $in: teacherIds } }).select("email firstName lastName language");
+    const logUrl = `${FRONTEND_URL}/logbooks?monitoring=${log.monitoringId}&log=${log._id}`;
+
+    await Promise.all(teachers.map(async (teacher) => {
+        if (!teacher?.email) {
+            return;
         }
-        if (visibility === "private") {
+        const lang = normalizeLang(teacher.language);
+        const trainerName = [trainer?.firstName, trainer?.lastName].filter(Boolean).join(" ") || t(lang, "a_trainer");
+        const inner = `
+            <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">${escapeHtml(t(lang, "logbook"))}</p>
+            <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">${escapeHtml(t(lang, "contact_title"))}</h1>
+            <p style="margin:0 0 16px;font-size:18px;line-height:28px;color:#525252;">
+                <strong style="color:#141b2d;">${escapeHtml(trainerName)}</strong>
+                ${escapeHtml(t(lang, "contact_body"))}
+                <strong style="color:#141b2d;">${escapeHtml(monitoring.name)}</strong>.
+            </p>
+            <p style="margin:0 0 24px;font-size:16px;line-height:24px;color:#525252;">${escapeHtml(log.description || "")}</p>
+            <div style="text-align:center;">${ctaButton(logUrl, t(lang, "open_logbook"))}</div>
+        `;
+        await sendMail({
+            to: teacher.email,
+            subject: t(lang, "contact_subject", { name: monitoring.name }),
+            html: wrapEmail(inner, lang),
+            text: t(lang, "contact_text", { trainer: trainerName, name: monitoring.name, url: logUrl }),
+        });
+    }));
+};
+
+const createLog = async (logData, requesterId) => {
+    const { monitoring, isOwner, isTrainer } = await assertCanAccessMonitoring(logData.monitoringId, requesterId);
+    let { visibility, sharedWith } = await resolveVisibility(logData, { isOwner, isTrainer, monitoring });
+    if (logData.logType === "Ask for help") {
+        if (isTrainer) {
+            const followerIds = await getFollowerIds(monitoring);
+            sharedWith = normalizeSharedWith(logData.sharedWith, followerIds);
+            if (sharedWith.length === 0) {
+                throw httpError(400, "Select at least one teacher");
+            }
+            visibility = "selected";
+        } else if (visibility === "private") {
             visibility = "trainer";
             sharedWith = [];
         }
     }
 
-    const isHelpRequest = logData.logType === "Ask for help" && !isOwner;
+    const isHelpThreadCreate = logData.logType === "Ask for help";
     const createdLog = await new Log({
         monitoringId: logData.monitoringId,
         userId: requesterId,
@@ -192,17 +251,24 @@ const createLog = async (logData, requesterId) => {
         isCompleted: logData.isCompleted || false,
         visibility,
         sharedWith,
-        helpRequestedAt: isHelpRequest ? new Date() : null,
-        helpRequestedBy: isHelpRequest ? requesterId : null,
+        helpRequestedAt: isHelpThreadCreate ? new Date() : null,
+        helpRequestedBy: isHelpThreadCreate ? requesterId : null,
         creationDate: Date.now(),
         lastModificationDate: null,
     }).save();
 
-    if (isHelpRequest) {
+    if (isHelpThreadCreate && !isTrainer) {
         try {
             await notifyOwnerOfHelpRequest(createdLog, monitoring, requesterId);
         } catch (error) {
             console.error("Error sending help-request email:", error);
+        }
+    }
+    if (isHelpThreadCreate && isTrainer) {
+        try {
+            await notifyTeachersOfTrainerContact(createdLog, monitoring, requesterId, sharedWith);
+        } catch (error) {
+            console.error("Error sending trainer-contact email:", error);
         }
     }
 
@@ -210,18 +276,16 @@ const createLog = async (logData, requesterId) => {
 };
 
 const getVisibleLogsForMonitoring = async (monitoringId, requesterId) => {
-    const { monitoring, isOwner, isFollower, isTrainer } = await assertCanAccessMonitoring(monitoringId, requesterId);
+    const { monitoring, isFollower, isTrainer, trainerIds } = await assertCanAccessMonitoring(monitoringId, requesterId);
 
     const or = [{ userId: requesterId }];
     if (isFollower) {
         or.push({ visibility: "followers" });
     }
-    if (isOwner) {
+    if (isTrainer) {
         or.push({ visibility: "trainer" });
-    }
-    if (isTrainer && !isOwner) {
         or.push({
-            userId: monitoring.userId,
+            userId: { $in: trainerIds },
             $or: [
                 { visibility: "private" },
                 { visibility: { $exists: false } },
@@ -235,8 +299,8 @@ const getVisibleLogsForMonitoring = async (monitoringId, requesterId) => {
 };
 
 const getMonitoringFollowersForLog = async (monitoringId, requesterId) => {
-    const { monitoring, isOwner } = await assertCanAccessMonitoring(monitoringId, requesterId);
-    if (!isOwner) {
+    const { monitoring, isTrainer } = await assertCanAccessMonitoring(monitoringId, requesterId);
+    if (!isTrainer) {
         throw httpError(403, "Forbidden");
     }
     if (!monitoring.sharingCode) {
@@ -261,13 +325,13 @@ const updateLog = async (logId, userId, updates) => {
     }
 
     if (body.visibility !== undefined || body.sharedWith !== undefined) {
-        const { monitoring, isOwner } = await getMonitoringAccess(existing.monitoringId, userId);
+        const { monitoring, isOwner, isTrainer } = await getMonitoringAccess(existing.monitoringId, userId);
         const resolved = await resolveVisibility(
             {
                 visibility: body.visibility !== undefined ? body.visibility : existing.visibility,
                 sharedWith: body.sharedWith !== undefined ? body.sharedWith : existing.sharedWith,
             },
-            { isOwner, monitoring }
+            { isOwner, isTrainer, monitoring }
         );
         body.visibility = resolved.visibility;
         body.sharedWith = resolved.sharedWith;
@@ -309,7 +373,7 @@ const updateCompletion = async (logId, userId, isCompleted) => {
     const access = await assertCanAccessMonitoring(log.monitoringId, userId);
 
     if (log.logType === "Ask for help") {
-        if (!isAuthor && !access.isOwner) {
+        if (!isAuthor && !access.isTrainer) {
             throw httpError(403, "Forbidden");
         }
         if (!canViewLog(log, userId, access)) {
@@ -379,7 +443,7 @@ const getLogChat = async (logId, requesterId) => {
     if (!canViewLog(log, requesterId, access)) {
         throw httpError(403, "Forbidden");
     }
-    if (!canAccessChat(log, requesterId, access.monitoring.userId)) {
+    if (!canAccessChat(log, requesterId, access)) {
         throw httpError(403, "Forbidden");
     }
     return log.chat || [];
@@ -402,7 +466,7 @@ const addLogChatMessage = async (logId, requesterId, text) => {
     if (!canViewLog(log, requesterId, access)) {
         throw httpError(403, "Forbidden");
     }
-    if (!canAccessChat(log, requesterId, access.monitoring.userId)) {
+    if (!canAccessChat(log, requesterId, access)) {
         throw httpError(403, "Forbidden");
     }
 

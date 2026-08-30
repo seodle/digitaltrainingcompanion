@@ -79,7 +79,7 @@ const SharingAssessments = ({
   const sharingCode = "123456";
   const { languageCode } = useLanguage();
   const { currentUser } = useAuthUser();
-  const canSchedule = currentUser?.userStatus === UserType.TEACHER_TRAINER && isMonitoringOwner;
+  const canSchedule = currentUser?.userStatus === UserType.TEACHER_TRAINER;
 
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [scheduleEmails, setScheduleEmails] = useState([]);
@@ -87,7 +87,8 @@ const SharingAssessments = ({
   const [scheduledAt, setScheduledAt] = useState(null);
   const [scheduleLoading, setScheduleLoading] = useState(false);
   const [scheduleSaving, setScheduleSaving] = useState(false);
-  const [scheduleError, setScheduleError] = useState(''); 
+  const [scheduleError, setScheduleError] = useState('');
+  const [hasPendingSchedule, setHasPendingSchedule] = useState(false); 
 
 
   // assessments states 
@@ -327,11 +328,20 @@ const handleDownloadPaperVersion = async () => {
       } else {
         setScheduledAt(null);
       }
+      setHasPendingSchedule(
+        (res.data.assessments || []).some(
+          (assessment) =>
+            selectedAssessmentsIds.includes(assessment._id)
+            && assessment.scheduledSendStatus === 'pending'
+            && assessment.scheduledSendAt
+        )
+      );
     } catch (error) {
       console.error('Error loading email schedule:', error);
       setScheduleError(getMessage('label_schedule_save_error'));
       setScheduleEmails([]);
       setScheduledAt(null);
+      setHasPendingSchedule(false);
     } finally {
       setScheduleLoading(false);
     }
@@ -367,6 +377,30 @@ const handleDownloadPaperVersion = async () => {
       setScheduleOpen(false);
     } catch (error) {
       console.error('Error saving email schedule:', error);
+      setScheduleError(error.response?.data?.error || getMessage('label_schedule_save_error'));
+    } finally {
+      setScheduleSaving(false);
+    }
+  };
+
+  const handleCancelSchedule = async () => {
+    setScheduleSaving(true);
+    setScheduleError('');
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.put(
+        `${BACKEND_URL}/monitorings/${currentMonitoringId}/email-schedule/cancel`,
+        { assessmentIds: selectedAssessmentsIds },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (typeof onScheduleSaved === 'function') {
+        onScheduleSaved(res.data.assessments || []);
+      }
+      setHasPendingSchedule(false);
+      setScheduledAt(null);
+      setScheduleOpen(false);
+    } catch (error) {
+      console.error('Error cancelling email schedule:', error);
       setScheduleError(error.response?.data?.error || getMessage('label_schedule_save_error'));
     } finally {
       setScheduleSaving(false);
@@ -798,7 +832,17 @@ const handleDownloadPaperVersion = async () => {
             </>
           )}
         </DialogContent>
-        <DialogActions sx={{ px: 3, py: 2, gap: 1 }}>
+        <DialogActions sx={{ px: 3, py: 2, gap: 1, flexWrap: 'wrap' }}>
+          {hasPendingSchedule && (
+            <Button
+              onClick={handleCancelSchedule}
+              disabled={scheduleSaving || scheduleLoading}
+              color="error"
+              sx={{ borderRadius: '50px', px: 2.5, mr: 'auto' }}
+            >
+              {getMessage('label_schedule_cancel_send')}
+            </Button>
+          )}
           <Button
             onClick={() => setScheduleOpen(false)}
             disabled={scheduleSaving}

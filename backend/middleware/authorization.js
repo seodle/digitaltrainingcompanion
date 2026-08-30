@@ -199,6 +199,77 @@ const requireAssessmentOwner = (paramName = 'assessmentId') => {
     };
 };
 
+// Assessment owner, or a Teacher-trainer who owns/follows the monitoring
+const requireAssessmentOwnerOrTrainerOnMonitoring = (paramName = 'assessmentId') => {
+    return async (req, res, next) => {
+        try {
+            const requesterId = req.user && req.user._id;
+            if (!requesterId) {
+                return res.status(401).json({ error: 'Authentication required' });
+            }
+            const rawId = String(req.params?.[paramName] || '').trim();
+            if (!rawId) {
+                return res.status(400).json({ error: `Missing ${paramName}` });
+            }
+
+            let assessmentId;
+            const assessmentParam = String(paramName).toLowerCase().includes('assessment');
+            const responseParam = String(paramName).toLowerCase().includes('response');
+            if (assessmentParam) {
+                assessmentId = rawId;
+            } else if (responseParam) {
+                const response = await Response.findById(rawId).select('assessmentId');
+                if (!response) {
+                    return res.status(404).json({ error: 'Response not found' });
+                }
+                assessmentId = String(response.assessmentId || '').trim();
+                if (!assessmentId) {
+                    return res.status(404).json({ error: 'Forbidden' });
+                }
+            } else {
+                return res.status(400).json({ error: `Unsupported param name '${paramName}' for guard` });
+            }
+
+            const assessment = await Assessment.findById(assessmentId).select('userId monitoringId');
+            if (!assessment) {
+                return res.status(404).json({ error: 'Assessment not found' });
+            }
+            if (String(assessment.userId) === String(requesterId)) {
+                return next();
+            }
+            if (String(req.user.userStatus) !== 'Teacher-trainer') {
+                return res.status(403).json({ error: 'Forbidden' });
+            }
+
+            const monitoringId = String(assessment.monitoringId || '').trim();
+            if (!monitoringId) {
+                return res.status(403).json({ error: 'Forbidden' });
+            }
+            const monitoring = await Monitoring.findById(monitoringId).select('userId sharingCode');
+            if (!monitoring) {
+                return res.status(404).json({ error: 'Monitoring not found' });
+            }
+            if (String(monitoring.userId) === String(requesterId)) {
+                return next();
+            }
+            const code = monitoring.sharingCode || null;
+            if (!code) {
+                return res.status(403).json({ error: 'Forbidden' });
+            }
+            const requester = await User.findById(requesterId).select('sharingCodeRedeemed');
+            const isRedeemer = Array.isArray(requester?.sharingCodeRedeemed) &&
+                               requester.sharingCodeRedeemed.includes(code);
+            if (!isRedeemer) {
+                return res.status(403).json({ error: 'Forbidden' });
+            }
+            return next();
+        } catch (err) {
+            console.error('Assessment owner-or-trainer check failed:', err);
+            return res.status(500).json({ error: 'Server error' });
+        }
+    };
+};
+
 // Ensure authenticated user owns the log (param 'logId')
 const requireLogOwner = async (req, res, next) => {
     try {
@@ -387,6 +458,7 @@ module.exports = {
     requireMonitoringOwner,
     requireMonitoringOwnerOrRedeemer,
     requireAssessmentOwner,
+    requireAssessmentOwnerOrTrainerOnMonitoring,
     requireLogOwner,
     requireApiKeyOwner,
     requireAiBeaconApiKey,

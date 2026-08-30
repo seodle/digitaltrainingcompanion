@@ -1684,7 +1684,7 @@
     },
     {
         "term": "label_ranking_no_criteria",
-        "definition": "Aucun crit\u00e8re \u00e0 classer pour cette cat\u00e9gorie",
+        "definition": "Aucun d\u00e9tail de participant pour cette \u00e9valuation",
         "context": "Empty state when results ranking has no scored questions",
         "term_plural": "",
         "reference": "",
@@ -2134,7 +2134,7 @@
     },
     {
         "term": "label_add_log_entry",
-        "definition": "Ajouter une nouvelle entr\u00e9e dans le journal",
+        "definition": "Nouveau message",
         "context": "",
         "term_plural": "",
         "reference": "",
@@ -4680,6 +4680,15 @@
         "fuzzy": 1
     },
     {
+        "term": "label_schedule_cancel_send",
+        "definition": "Annuler l'envoi programmé",
+        "context": "Button to cancel a pending scheduled questionnaire email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "label_schedule_invalid_email",
         "definition": "Veuillez saisir une adresse e-mail valide",
         "context": "Validation error for an invalid email in the schedule dialog",
@@ -4770,6 +4779,15 @@
         "fuzzy": 1
     },
     {
+        "term": "label_log_visibility_all_trainers",
+        "definition": "Tous les formateurs",
+        "context": "Observation/change visible to the monitoring owner and trainer redeemers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
         "term": "label_log_visibility_private_trainer",
         "definition": "Moi et les autres formateurs",
         "context": "Trainer private log, also visible to other trainers",
@@ -4809,6 +4827,15 @@
         "term": "label_log_visibility_followers_teacher",
         "definition": "Formateurs et enseignants",
         "context": "Teacher shares a log with the trainer and all teachers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_contact_teacher",
+        "definition": "Enseignant \u00e0 contacter",
+        "context": "Trainer picks the teacher to contact in the logbook",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -5016,6 +5043,42 @@
         "term": "label_log_delete_confirm",
         "definition": "Supprimer cette note ? Cette action est irr\u00e9versible.",
         "context": "Confirmation before deleting a logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_type_ask_for_help_trainer",
+        "definition": "Contacter un enseignant",
+        "context": "Log type for a trainer starting a discussion with a teacher",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_everyone",
+        "definition": "Tout le monde",
+        "context": "Contact-a-teacher visibility: all teachers can see the message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visible_by",
+        "definition": "Visible par",
+        "context": "Prefix on a logbook message showing who can see it",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_contact_sent",
+        "definition": "Message envoy\u00e9 aux enseignants s\u00e9lectionn\u00e9s",
+        "context": "Confirmation after a trainer contacts teachers in the logbook",
         "term_plural": "",
         "reference": "",
         "comment": "",

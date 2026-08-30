@@ -53,7 +53,7 @@ const getAddLogSchema = (isMonitoringOwner) => Yup.object().shape({
     .of(Yup.string())
 });
 
-const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwner = false}) => {
+const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwner = false, isTrainer = false}) => {
   const { getMessage } = useMessageService();
   const [availableUsers, setAvailableUsers] = useState([]);
   const [availableAssessments, setAvailableAssessments] = useState([]);
@@ -73,7 +73,7 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
 
   useEffect(() => {
     const loadFollowers = async () => {
-      if (!isMonitoringOwner || !currentMonitoringId) {
+      if (!isTrainer || !currentMonitoringId) {
         setFollowers([]);
         return;
       }
@@ -90,7 +90,7 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
       }
     };
     loadFollowers();
-  }, [currentMonitoringId, isMonitoringOwner]);
+  }, [currentMonitoringId, isTrainer]);
 
   const fetchAssessments = async (assessmentType) => {
     if (!assessmentType) return;
@@ -184,7 +184,7 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
       if(response.status === 200) {
         setLogs((prev) => [...prev, response.data]);
         if (values.logType === LogType.ASK_FOR_HELP) {
-          setHelpSentOpen(true);
+          setHelpSentOpen(isTrainer ? "contact" : "help");
         }
         resetForm({
           values: {
@@ -414,23 +414,47 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
                     label={getMessage("label_choose_log_type")}
                     onChange={(event) => {
                       handleChange(event);
-                      if (event.target.value === LogType.ASK_FOR_HELP && values.visibility === "private") {
-                        setFieldValue("visibility", "trainer");
+                      if (event.target.value === LogType.ASK_FOR_HELP) {
+                        setFieldValue("visibility", isTrainer ? "selected" : "trainer");
+                        setFieldValue("sharedWith", []);
                       }
                     }}
                     onBlur={handleBlur}
                     error={touched.logType && Boolean(errors.logType)}
                   >
-                    {Object.entries(LogType)
-                      .filter(([key]) => !isMonitoringOwner || key !== "ASK_FOR_HELP")
-                      .map(([key, value]) => (
+                    {Object.entries(LogType).map(([key, value]) => (
                       <MenuItem key={`log-type-${key}`} value={value}>
-                        {getMessage(`label_log_type_${key.toLowerCase()}`)}
+                        {getMessage(
+                          key === "ASK_FOR_HELP" && isTrainer
+                            ? "label_log_type_ask_for_help_trainer"
+                            : `label_log_type_${key.toLowerCase()}`
+                        )}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
 
+                {isTrainer && values.logType === LogType.ASK_FOR_HELP ? (
+                <FormControl fullWidth>
+                  <Autocomplete
+                    options={followers}
+                    getOptionLabel={(option) => `${option.firstName || ""} ${option.lastName || ""}`.trim()}
+                    value={followers.find((follower) => values.sharedWith[0] === follower._id) || null}
+                    isOptionEqualToValue={(option, value) => option._id === value._id}
+                    onChange={(_, newValue) => {
+                      setFieldValue("sharedWith", newValue?._id ? [newValue._id] : []);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label={getMessage("label_log_contact_teacher")}
+                        error={touched.sharedWith && Boolean(errors.sharedWith)}
+                        helperText={touched.sharedWith && errors.sharedWith}
+                      />
+                    )}
+                  />
+                </FormControl>
+                ) : (
                 <FormControl fullWidth>
                   <InputLabel id="visibility-label">{getMessage("label_log_visibility")}</InputLabel>
                   <Select
@@ -450,29 +474,26 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
                     {values.logType !== LogType.ASK_FOR_HELP && (
                       <MenuItem value="private">
                         {getMessage(
-                          isMonitoringOwner
-                            ? "label_log_visibility_private_trainer"
+                          isTrainer
+                            ? "label_log_visibility_all_trainers"
                             : "label_log_visibility_private"
                         )}
                       </MenuItem>
                     )}
-                    {isMonitoringOwner ? (
+                    {isTrainer ? (
                       <MenuItem value="selected">{getMessage("label_log_visibility_selected")}</MenuItem>
                     ) : (
                       <MenuItem value="trainer">{getMessage("label_log_visibility_trainer")}</MenuItem>
                     )}
                     <MenuItem value="followers">
-                      {getMessage(
-                        isMonitoringOwner
-                          ? "label_log_visibility_followers"
-                          : "label_log_visibility_followers_teacher"
-                      )}
+                      {getMessage("label_log_visibility_followers")}
                     </MenuItem>
                   </Select>
                 </FormControl>
+                )}
                 </Box>
 
-                {isMonitoringOwner && values.visibility === "selected" && (
+                {isTrainer && values.logType !== LogType.ASK_FOR_HELP && values.visibility === "selected" && (
                   <FormControl fullWidth>
                     <Autocomplete
                       multiple
@@ -519,7 +540,7 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
         </Formik>
       </Box>
       <Snackbar
-        open={helpSentOpen}
+        open={Boolean(helpSentOpen)}
         autoHideDuration={4000}
         onClose={() => setHelpSentOpen(false)}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -530,7 +551,7 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
           variant="filled"
           sx={{ borderRadius: "12px", bgcolor: "#F7941E", color: "#1a1a1a" }}
         >
-          {getMessage("label_log_help_sent")}
+          {getMessage(helpSentOpen === "contact" ? "label_log_contact_sent" : "label_log_help_sent")}
         </Alert>
       </Snackbar>
     </Paper>

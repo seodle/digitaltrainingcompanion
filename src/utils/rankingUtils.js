@@ -1,8 +1,8 @@
 import { AssessmentType, QuestionType } from './enums';
 import { getChartChoiceColor } from '../components/styledComponents';
 
-const isLearningAssessmentType = (type) => (
-  type === AssessmentType.LEARNING || type === AssessmentType.STUDENT_LEARNING_OUTCOMES
+const isStudentAssessmentType = (type) => (
+  type === AssessmentType.STUDENT_CHARACTERISTICS || type === AssessmentType.STUDENT_LEARNING_OUTCOMES
 );
 
 const scoreAnswer = (item) => {
@@ -25,6 +25,7 @@ const scoreAnswer = (item) => {
     return {
       value: idx / max,
       detail: String(answers[0]),
+      values: [String(answers[0])],
       mode: 'scale',
       correct: null,
       color: getChartChoiceColor({ questionType, choices, choiceIndex: idx, correctAnswer }),
@@ -39,7 +40,8 @@ const scoreAnswer = (item) => {
     return {
       value: isCorrect ? 1 : 0,
       detail: String(answers[0]),
-      mode: hasCorrect ? 'correctness' : 'scale',
+      values: [String(answers[0])],
+      mode: hasCorrect ? 'correctness' : 'values',
       correct: hasCorrect ? isCorrect : null,
       color: getChartChoiceColor({
         questionType,
@@ -65,40 +67,43 @@ const scoreAnswer = (item) => {
       const correctSet = new Set(correct);
       const isCorrect =
         selectedSet.size === correct.length && correct.every((choice) => selectedSet.has(choice));
-      const choiceResults = correct.length > 1
-        ? choices.map((choice, choiceIndex) => {
-            const isCorrectOption = correctSet.has(choice);
-            const isSelected = selectedSet.has(choice);
-            return {
-              label: choice,
-              selected: isSelected,
-              isCorrectOption,
-              participantCorrect: isSelected === isCorrectOption,
-              color: getChartChoiceColor({
-                questionType,
-                choices,
-                choiceIndex,
-                correctAnswer,
-              }),
-            };
-          })
-        : undefined;
-      const multiScore = choiceResults
-        ? choiceResults.filter((choice) => choice.participantCorrect).length / choiceResults.length
-        : (isCorrect ? 1 : 0);
+      const selectedChoices = selected.filter((choice) => choices.includes(choice));
+      if (selectedChoices.length === 0) {
+        return null;
+      }
+      const choiceResults = selectedChoices.map((choice) => {
+        const ok = correctSet.has(choice);
+        return {
+          label: choice,
+          selected: true,
+          isCorrectOption: ok,
+          participantCorrect: ok,
+          color: getChartChoiceColor({
+            questionType,
+            choices,
+            choiceIndex: choices.indexOf(choice),
+            correctAnswer,
+          }),
+        };
+      });
+      const multi = choiceResults.length > 1;
       return {
-        value: multiScore,
+        value: multi
+          ? choiceResults.filter((choice) => choice.participantCorrect).length / choiceResults.length
+          : (isCorrect ? 1 : 0),
         detail: selected.join(', '),
-        mode: choiceResults ? 'multi' : 'correctness',
+        values: selected.map(String),
+        mode: multi ? 'multi' : 'correctness',
         correct: isCorrect,
         color,
-        choiceResults,
+        choiceResults: multi ? choiceResults : undefined,
       };
     }
     return {
       value: 0,
       detail: selected.join(', '),
-      mode: 'scale',
+      values: selected.map(String),
+      mode: 'values',
       correct: null,
       color,
     };
@@ -107,20 +112,23 @@ const scoreAnswer = (item) => {
   return null;
 };
 
+const responseRecordId = (response, fallbackIndex) => {
+  const raw = response?._id;
+  if (raw && typeof raw === 'object') {
+    return String(raw._id || raw.$oid || fallbackIndex);
+  }
+  return String(raw || response?.id || fallbackIndex);
+};
+
 const participantIdentity = (response, fallbackIndex) => {
   const displayName = (response.displayName || '').trim();
-  const user = response.userId;
-  const userId = user && typeof user === 'object'
-    ? String(user._id || user.id || '')
-    : String(user || '');
-
   return {
-    key: displayName || userId || String(response._id || `anon-${fallbackIndex}`),
+    key: responseRecordId(response, fallbackIndex),
     name: displayName,
   };
 };
 
-export const buildCriteriaRankings = (assessments, { anonymousLabel = 'Anonymous' } = {}) => {
+export const buildCriteriaRankings = (assessments, { anonymousLabel = 'Anonymous', hideStudentValues = false } = {}) => {
   const criteria = [];
 
   (assessments || []).forEach((assessment) => {
@@ -138,22 +146,16 @@ export const buildCriteriaRankings = (assessments, { anonymousLabel = 'Anonymous
           return;
         }
 
-        const isLearning = isLearningAssessmentType(assessment.type);
-        const isUnordered =
-          item.questionType === QuestionType.RADIO_UNORDERED
-          || item.questionType === QuestionType.CHECKBOX;
-        if (!isLearning && isUnordered) {
-          return;
-        }
-
         const scored = scoreAnswer(item);
         if (!scored) {
           return;
         }
 
-        const mode = !isLearning
-          ? 'scale'
-          : (scored.mode === 'multi' ? 'multi' : (scored.correct != null ? 'correctness' : 'scale'));
+        if (hideStudentValues && isStudentAssessmentType(assessment.type) && scored.mode === 'values') {
+          return;
+        }
+
+        const mode = scored.mode;
 
         const key = item.matrixId
           ? `${assessment._id}-${item.shortName || item.question}-#${item.matrixPosition ?? ''}`
@@ -171,12 +173,18 @@ export const buildCriteriaRankings = (assessments, { anonymousLabel = 'Anonymous
           });
         }
 
-        questionMap.get(key).scoresByKey.set(identity.key, {
+        const criterion = questionMap.get(key);
+        if (scored.mode === 'multi') {
+          criterion.mode = 'multi';
+        }
+        criterion.scoresByKey.set(identity.key, {
           key: identity.key,
           name: identity.name || anonymousLabel,
           score: scored.value,
           correct: scored.correct,
           color: scored.color,
+          detail: scored.detail,
+          values: scored.values,
           choiceResults: scored.choiceResults,
         });
       });

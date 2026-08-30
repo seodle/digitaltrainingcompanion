@@ -154,6 +154,15 @@ const AssessmentTable = ({
     return monitoring ? monitoring.userId === currentUser._id : false;
   };
 
+  // Owner of the assessment, or a Teacher-trainer on the same monitoring
+  const canManageAssessment = (assessment) => {
+    if (!currentUser) return false;
+    if (isOwner(assessment)) return true;
+    if (currentUser.userStatus !== UserType.TEACHER_TRAINER) return false;
+    const monitoringId = assessment?.monitoringId || currentMonitoringId;
+    return monitorings.some((m) => String(m._id) === String(monitoringId));
+  };
+
   const statusToOptions = {
         Draft: [OptionTypes.EDIT, OptionTypes.PREVIEW, OptionTypes.OPEN, OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS],
         Open: [OptionTypes.CLOSE, OptionTypes.PREVIEW, OptionTypes.COPY, OptionTypes.DELETE, OptionTypes.DELETE_ALL_ANSWERS],
@@ -195,8 +204,7 @@ const AssessmentTable = ({
 
 
   const renderNumberFieldCell = (params, field) => {
-    // Only the owner can edit and it should not be open
-    const canEdit = isOwner(params.row) && params.row.status !== 'Open';
+    const canEdit = canManageAssessment(params.row) && params.row.status !== 'Open';
 
     return canEdit ? (
         <Tooltip title="Click to modify the session number" placement="top">
@@ -267,8 +275,7 @@ const AssessmentTable = ({
   
     const renderTextFieldCell = (params, field) => {
     
-    // Only the owner can edit and it should not be open
-    const canEdit = isOwner(params.row) && params.row.status !== 'Open';
+    const canEdit = canManageAssessment(params.row) && params.row.status !== 'Open';
 
     return canEdit ? (
         editingCell?.id === params.id && editingCell?.field === field ? (
@@ -817,7 +824,7 @@ const handleAssessmentPreview = (assessment) => {
   };
 
   const getStatusTooltip = (assessment) => {
-    if (!isOwner(assessment)) {
+    if (!canManageAssessment(assessment)) {
       return getMessage('table_assessment_tooltip_status2');
     }
 
@@ -871,8 +878,7 @@ const handleAssessmentPreview = (assessment) => {
   };
 
   const handleStatusClick = (assessment) => {
-  if (!isOwner(assessment)) {
-    console.log("Status change rejected - not owner");
+  if (!canManageAssessment(assessment)) {
     return;
   }
   
@@ -1158,7 +1164,7 @@ const handleAssessmentPreview = (assessment) => {
                         padding: '6px 12px',
                         borderRadius: '8px',
                         border: '2px solid',
-                        cursor: getAssessmentUserId(assessment) === currentUser._id && assessment.status !== 'Close' ? 'pointer' : 'default',
+                        cursor: canManageAssessment(assessment) && assessment.status !== 'Close' ? 'pointer' : 'default',
                         ...(() => {
                           switch (assessment.status) {
                             case 'Open':
@@ -1183,7 +1189,7 @@ const handleAssessmentPreview = (assessment) => {
 
               <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 1, mt: 1.5, pt: 1, borderTop: '1px solid', borderColor: 'divider' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 0.5 }}>
-                  {isOwner(assessment) && assessment.status === 'Draft' && (
+                  {canManageAssessment(assessment) && assessment.status === 'Draft' && (
                     <Button
                       size="small"
                       startIcon={<Edit2 size={14} />}
@@ -1449,7 +1455,7 @@ const handleAssessmentPreview = (assessment) => {
                                       padding: fillHeight ? '3px 6px' : '4px 8px',
                                       borderRadius: '8px',
                                       border: '2px solid',
-                                      cursor: getAssessmentUserId(assessment) === currentUser._id && assessment.status !== 'Close' ? 'pointer' : 'default',
+                                      cursor: canManageAssessment(assessment) && assessment.status !== 'Close' ? 'pointer' : 'default',
                                       ...(() => {
                                       switch (assessment.status) {
                                           case 'Open':
@@ -1457,7 +1463,7 @@ const handleAssessmentPreview = (assessment) => {
                                               borderColor: '#4CAF50',
                                               backgroundColor: '#e8f5e9',
                                               color: '#2e7d32',
-                                              '&:hover': getAssessmentUserId(assessment) === currentUser._id ? {
+                                              '&:hover': canManageAssessment(assessment) ? {
                                               backgroundColor: '#c8e6c9',
                                               } : {}
                                           };
@@ -1466,7 +1472,7 @@ const handleAssessmentPreview = (assessment) => {
                                               borderColor: '#FF9800',
                                               backgroundColor: '#fff3e0',
                                               color: '#ed6c02',
-                                              '&:hover': getAssessmentUserId(assessment) === currentUser._id ? {
+                                              '&:hover': canManageAssessment(assessment) ? {
                                               backgroundColor: '#ffe0b2',
                                               } : {}
                                           };
@@ -1498,7 +1504,7 @@ const handleAssessmentPreview = (assessment) => {
                             </TableCell>
                             <TableCell sx={{ width: fillHeight ? 118 : 140, padding: '2px 4px !important', height: 'auto !important', verticalAlign: 'middle' }}>
                                 <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: 0.25 }}>
-                                    {isOwner(assessment) && assessment.status === 'Draft' && (
+                                    {canManageAssessment(assessment) && assessment.status === 'Draft' && (
                                         <Tooltip title={getMessage('label_edit')}>
                                             <IconButton
                                                 size="small"
@@ -1647,7 +1653,7 @@ const handleAssessmentPreview = (assessment) => {
             </MenuItem>
           </div>
         </Tooltip>
-        {activeAssessment && (typeof activeAssessment.userId === 'object' ? activeAssessment.userId?._id : activeAssessment.userId) === currentUser._id && (
+        {activeAssessment && canManageAssessment(activeAssessment) && (
           <Box>
               <MenuItem
                   onClick={() => {

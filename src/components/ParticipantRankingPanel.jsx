@@ -3,6 +3,7 @@ import { Box, Chip, IconButton, Typography } from '@mui/material';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 import { useMessageService } from '../services/MessageService';
 import { anonymizeRankings, buildCriteriaRankings } from '../utils/rankingUtils';
 
@@ -13,18 +14,21 @@ const ParticipantRankingPanel = ({
   assessments,
   highlightedParticipant = '',
   anonymize = false,
+  hideStudentValues = false,
 }) => {
+  const { languageCode } = useLanguage();
   const { getMessage } = useMessageService();
   const [index, setIndex] = useState(0);
 
   const criteria = useMemo(() => {
     const built = buildCriteriaRankings(assessments, {
       anonymousLabel: getMessage('label_anonymous'),
+      hideStudentValues,
     });
     return anonymize
       ? anonymizeRankings(built, getMessage('label_participant'))
       : built;
-  }, [assessments, anonymize, getMessage]);
+  }, [assessments, anonymize, hideStudentValues, languageCode]);
 
   const signature = criteria.map((criterion) => criterion.id).join('|');
 
@@ -124,8 +128,12 @@ const ParticipantRankingPanel = ({
             || entry.key.toLowerCase() === String(highlightedParticipant).toLowerCase()
           );
           const width = `${Math.max(6, Math.round(entry.score * 100))}%`;
-          const showChoices = current?.mode === 'multi' && Array.isArray(entry.choiceResults);
-          const showCorrectness = current?.mode === 'correctness';
+          const showChoices = Array.isArray(entry.choiceResults) && entry.choiceResults.length > 0;
+          const showValues = !showChoices && current?.mode === 'values' && Array.isArray(entry.values) && entry.values.length > 0;
+          const showCorrectness = !showChoices && !showValues && (
+            current?.mode === 'correctness' || current?.mode === 'multi' || entry.correct != null
+          );
+          const inlineStatus = showCorrectness || (showValues && entry.values.length === 1);
 
           return (
             <Box
@@ -140,22 +148,22 @@ const ParticipantRankingPanel = ({
                 px: 1,
                 borderRadius: 1,
                 display: 'flex',
-                flexDirection: showCorrectness ? 'row' : 'column',
-                alignItems: showCorrectness ? 'center' : 'stretch',
+                flexDirection: inlineStatus ? 'row' : 'column',
+                alignItems: inlineStatus ? 'center' : 'stretch',
                 justifyContent: 'space-between',
-                gap: showCorrectness ? 1 : 0.5,
+                gap: inlineStatus ? 1 : 0.5,
               }}
             >
-              <Typography noWrap sx={{ fontSize: '0.875rem', fontWeight: highlighted ? 600 : 500, mb: showCorrectness ? 0 : 0.25, minWidth: 0, flex: showCorrectness ? 1 : 'none' }}>
+              <Typography noWrap sx={{ fontSize: '0.875rem', fontWeight: highlighted ? 600 : 500, mb: inlineStatus ? 0 : 0.25, minWidth: 0, flex: inlineStatus ? 1 : 'none' }}>
                 {entry.name}
               </Typography>
               {showChoices ? (
                 <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 0.5, overflowX: 'auto' }}>
-                  {entry.choiceResults.map((choice) => {
+                  {entry.choiceResults.map((choice, choiceIndex) => {
                     const ok = choice.participantCorrect;
                     return (
                       <Chip
-                        key={choice.label}
+                        key={`${choice.label}-${choiceIndex}`}
                         size="small"
                         title={choice.label}
                         icon={
@@ -176,6 +184,31 @@ const ParticipantRankingPanel = ({
                       />
                     );
                   })}
+                </Box>
+              ) : showValues ? (
+                <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 0.5, overflowX: 'auto' }}>
+                  {entry.values.map((value, valueIndex) => (
+                    <Chip
+                      key={`${value}-${valueIndex}`}
+                      size="small"
+                      title={value}
+                      label={value}
+                      sx={{
+                        fontWeight: 600,
+                        flexShrink: 0,
+                        maxWidth: 220,
+                        bgcolor: '#F4F4F4',
+                        border: '1px solid',
+                        borderColor: '#E0E0E0',
+                        color: 'rgb(80,80,80)',
+                        '& .MuiChip-label': {
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: 'block',
+                        },
+                      }}
+                    />
+                  ))}
                 </Box>
               ) : showCorrectness ? (
                 <Chip

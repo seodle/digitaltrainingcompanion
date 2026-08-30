@@ -18,13 +18,10 @@ const waitingUserId = (log, ownerId) => {
     if (!partner || !lastAuthor) {
         return null;
     }
-    if (lastAuthor === String(ownerId)) {
-        return partner;
-    }
     if (lastAuthor === partner) {
         return String(ownerId);
     }
-    return null;
+    return partner;
 };
 
 const personName = (user, fallback) => {

@@ -66,6 +66,7 @@ const CustomTimeline = ({
   logs,
   setLogs,
   isMonitoringOwner = false,
+  isTrainer = false,
   currentMonitoringId = "",
   focusLogId = null,
 }) => {
@@ -82,16 +83,16 @@ const CustomTimeline = ({
   const [logToDelete, setLogToDelete] = useState(null);
 
   useEffect(() => {
-    if (!isMonitoringOwner && visibilityFilter === "selected") {
+    if (!isTrainer && visibilityFilter === "selected") {
       setVisibilityFilter("all");
     }
-    if (isMonitoringOwner && visibilityFilter === "trainer") {
+    if (isTrainer && visibilityFilter === "trainer") {
       setVisibilityFilter("all");
     }
-    if (!isMonitoringOwner && teacherFilter !== "all") {
+    if (!isTrainer && teacherFilter !== "all") {
       setTeacherFilter("all");
     }
-  }, [isMonitoringOwner, visibilityFilter, teacherFilter]);
+  }, [isTrainer, visibilityFilter, teacherFilter]);
 
   useEffect(() => {
     setTeacherFilter("all");
@@ -99,7 +100,7 @@ const CustomTimeline = ({
 
   useEffect(() => {
     const loadTeachers = async () => {
-      if (!isMonitoringOwner || !currentMonitoringId) {
+      if (!isTrainer || !currentMonitoringId) {
         setTeachers([]);
         return;
       }
@@ -116,7 +117,7 @@ const CustomTimeline = ({
       }
     };
     loadTeachers();
-  }, [currentMonitoringId, isMonitoringOwner]);
+  }, [currentMonitoringId, isTrainer]);
 
   useEffect(() => {
     if (!focusLogId || !logs.length) {
@@ -126,14 +127,14 @@ const CustomTimeline = ({
     const focusedAuthor = focused ? getAuthorId(focused) : "";
     if (
       focused &&
-      isMonitoringOwner &&
+      isTrainer &&
       focused.logType === LogType.ASK_FOR_HELP &&
       focusedAuthor &&
       focusedAuthor !== String(currentUser?._id || "")
     ) {
       setChatLog(focused);
     }
-  }, [focusLogId, logs, isMonitoringOwner, currentUser?._id]);
+  }, [focusLogId, logs, isTrainer, currentUser?._id]);
 
   const currentUserId = String(currentUser?._id || "");
 
@@ -164,19 +165,39 @@ const CustomTimeline = ({
   const getVisibilityLabel = (visibility) => {
     if (visibility === "private") {
       return getMessage(
-        isMonitoringOwner
-          ? "label_log_visibility_private_trainer"
-          : "label_log_visibility_private"
+        isTrainer ? "label_log_visibility_all_trainers" : "label_log_visibility_private"
       );
     }
     if (visibility === "followers") {
-      return getMessage(
-        isMonitoringOwner
-          ? "label_log_visibility_followers"
-          : "label_log_visibility_followers_teacher"
-      );
+      return getMessage("label_log_visibility_followers");
     }
     return getMessage(`label_log_visibility_${visibility}`);
+  };
+
+  const getSharedPeople = (log) =>
+    (log.sharedWith || [])
+      .map((entry) => {
+        if (entry && typeof entry === "object" && (entry.firstName || entry.lastName)) {
+          return entry;
+        }
+        const id = String(entry?._id || entry || "");
+        return teachers.find((teacher) => String(teacher._id) === id) || null;
+      })
+      .filter(Boolean);
+
+  const getVisibleByLabel = (log) => {
+    const prefix = getMessage("label_log_visible_by");
+    const isContactTeacher =
+      log.logType === LogType.ASK_FOR_HELP && (log.visibility || "private") !== "trainer";
+    if (isContactTeacher) {
+      const names = getSharedPeople(log)
+        .map((person) => getPersonName(person, ""))
+        .filter(Boolean);
+      if (names.length) {
+        return `${prefix} : ${names.join(", ")}`;
+      }
+    }
+    return `${prefix} : ${getVisibilityLabel(log.visibility || "private")}`;
   };
 
   const handleDelete = async (logId) => {
@@ -281,7 +302,11 @@ const CustomTimeline = ({
           <MenuItem value="all">{getMessage("label_log_filter_all")}</MenuItem>
           {Object.entries(LogType).map(([key, value]) => (
             <MenuItem key={key} value={value}>
-              {getMessage(`label_log_type_${key.toLowerCase()}`)}
+              {getMessage(
+                key === "ASK_FOR_HELP" && isTrainer
+                  ? "label_log_type_ask_for_help_trainer"
+                  : `label_log_type_${key.toLowerCase()}`
+              )}
             </MenuItem>
           ))}
         </Select>
@@ -297,7 +322,7 @@ const CustomTimeline = ({
         >
           <MenuItem value="all">{getMessage("label_log_filter_visible_all")}</MenuItem>
           <MenuItem value="private">{getVisibilityLabel("private")}</MenuItem>
-          {isMonitoringOwner ? (
+          {isTrainer ? (
             <MenuItem value="selected">{getVisibilityLabel("selected")}</MenuItem>
           ) : (
             <MenuItem value="trainer">{getVisibilityLabel("trainer")}</MenuItem>
@@ -305,7 +330,7 @@ const CustomTimeline = ({
           <MenuItem value="followers">{getVisibilityLabel("followers")}</MenuItem>
         </Select>
       </FormControl>
-      {isMonitoringOwner && (
+      {isTrainer && (
         <FormControl size="small" sx={{ minWidth: { xs: "100%", sm: 180 } }}>
           <InputLabel id="teacher-filter-label">{getMessage("label_log_filter_teacher")}</InputLabel>
           <Select
@@ -406,11 +431,11 @@ const CustomTimeline = ({
         {displayLogs.map((log) => {
           const isEditing = editingId === log._id;
           const isOwn = getAuthorId(log) === currentUserId;
-          const visibility = log.visibility || "private";
           const messageCount = (log.chat || []).length;
           const isAskForHelp = log.logType === LogType.ASK_FOR_HELP;
-          const canOpenChat = isAskForHelp && (isMonitoringOwner ? !isOwn : isOwn);
-          const canResolveHelp = isAskForHelp && (isOwn || isMonitoringOwner);
+          const isSharedWithMe = (log.sharedWith || []).some((entry) => String(entry?._id || entry) === currentUserId);
+          const canOpenChat = isAskForHelp && (isTrainer || isOwn || isSharedWithMe || (log.visibility || "private") === "followers");
+          const canResolveHelp = isAskForHelp && (isOwn || isTrainer);
           const highlightHelp = isAskForHelp && !log.isCompleted;
           const isFocused = focusLogId && String(focusLogId) === String(log._id);
 
@@ -433,7 +458,11 @@ const CustomTimeline = ({
                 </IconWell>
                 <Box sx={{ minWidth: 0, flex: 1 }}>
                   <Typography variant="subtitle1" fontWeight={700} sx={{ lineHeight: 1.3, pr: 1 }}>
-                    {getMessage(`label_log_type_${Object.entries(LogType).find(([, value]) => value === log.logType)?.[0]?.toLowerCase() || "observation"}`)}
+                    {getMessage(
+                      isAskForHelp && (log.visibility || "private") !== "trainer"
+                        ? "label_log_type_ask_for_help_trainer"
+                        : `label_log_type_${Object.entries(LogType).find(([, value]) => value === log.logType)?.[0]?.toLowerCase() || "observation"}`
+                    )}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
                     {getPersonName(log.userId, getMessage("label_log_author"))}
@@ -449,9 +478,23 @@ const CustomTimeline = ({
                     ) : null}
                     <Chip
                       size="small"
-                      label={getVisibilityLabel(visibility)}
+                      label={getVisibleByLabel(log)}
                       sx={{ bgcolor: "#FFF6EC", border: "1px solid #F5D4A8" }}
                     />
+                    {(log.visibility || "private") === "selected" &&
+                      log.logType !== LogType.ASK_FOR_HELP &&
+                      getSharedPeople(log).map((person) => {
+                        const name = getPersonName(person, "");
+                        if (!name) return null;
+                        return (
+                          <Chip
+                            key={String(person._id || name)}
+                            size="small"
+                            label={name}
+                            sx={{ bgcolor: "white", border: "1px solid", borderColor: "divider" }}
+                          />
+                        );
+                      })}
                     {isDetailCard(log) && (
                       <>
                         <Chip
@@ -597,6 +640,48 @@ const CustomTimeline = ({
                       {getMessage("label_log_mark_resolved")}
                     </Button>
                   )}
+                  {isAskForHelp && log.isCompleted && (
+                    <Chip
+                      size="small"
+                      icon={<CheckCircleOutlineRoundedIcon sx={{ fontSize: "1rem" }} />}
+                      label={`${getMessage("label_log_resolved")} · ${formatLogWhen(log.completionDate)}`}
+                      onClick={canResolveHelp ? () => handleChangeCompletion(log) : undefined}
+                      sx={{
+                        bgcolor: "#EEF6EE",
+                        border: "1px solid #C4DCC4",
+                        color: "#2F6A32",
+                        fontWeight: 600,
+                        "& .MuiChip-icon": { color: "#2F6A32" },
+                      }}
+                    />
+                  )}
+                  {log.logType === LogType.CHANGE && log.isCompleted && (
+                    <Chip
+                      size="small"
+                      icon={<CheckCircleOutlineRoundedIcon sx={{ fontSize: "1rem" }} />}
+                      label={`${getMessage("label_log_completed")} · ${formatLogWhen(log.completionDate)}`}
+                      onClick={isOwn ? () => handleChangeCompletion(log) : undefined}
+                      sx={{
+                        bgcolor: "#EEF6EE",
+                        border: "1px solid #C4DCC4",
+                        color: "#2F6A32",
+                        fontWeight: 600,
+                        "& .MuiChip-icon": { color: "#2F6A32" },
+                      }}
+                    />
+                  )}
+                  {log.lastModificationDate && !isSameMoment(log.lastModificationDate, log.completionDate) && (
+                    <Chip
+                      size="small"
+                      label={`${getMessage("label_last_modified")} · ${formatLogWhen(log.lastModificationDate)}`}
+                      sx={{
+                        bgcolor: "transparent",
+                        border: "1px solid",
+                        borderColor: "divider",
+                        color: "text.secondary",
+                      }}
+                    />
+                  )}
                   {canOpenChat && (
                     <Button
                       size="small"
@@ -620,52 +705,6 @@ const CustomTimeline = ({
                     </Button>
                   )}
                 </Box>
-                {(log.isCompleted || (log.lastModificationDate && !isSameMoment(log.lastModificationDate, log.completionDate))) && (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, alignItems: "center" }}>
-                    {log.logType === LogType.CHANGE && log.isCompleted && (
-                      <Chip
-                        size="small"
-                        icon={<CheckCircleOutlineRoundedIcon sx={{ fontSize: "1rem" }} />}
-                        label={`${getMessage("label_log_completed")} · ${formatLogWhen(log.completionDate)}`}
-                        onClick={isOwn ? () => handleChangeCompletion(log) : undefined}
-                        sx={{
-                          bgcolor: "#EEF6EE",
-                          border: "1px solid #C4DCC4",
-                          color: "#2F6A32",
-                          fontWeight: 600,
-                          "& .MuiChip-icon": { color: "#2F6A32" },
-                        }}
-                      />
-                    )}
-                    {isAskForHelp && log.isCompleted && (
-                      <Chip
-                        size="small"
-                        icon={<CheckCircleOutlineRoundedIcon sx={{ fontSize: "1rem" }} />}
-                        label={`${getMessage("label_log_resolved")} · ${formatLogWhen(log.completionDate)}`}
-                        onClick={canResolveHelp ? () => handleChangeCompletion(log) : undefined}
-                        sx={{
-                          bgcolor: "#EEF6EE",
-                          border: "1px solid #C4DCC4",
-                          color: "#2F6A32",
-                          fontWeight: 600,
-                          "& .MuiChip-icon": { color: "#2F6A32" },
-                        }}
-                      />
-                    )}
-                    {log.lastModificationDate && !isSameMoment(log.lastModificationDate, log.completionDate) && (
-                      <Chip
-                        size="small"
-                        label={`${getMessage("label_last_modified")} · ${formatLogWhen(log.lastModificationDate)}`}
-                        sx={{
-                          bgcolor: "transparent",
-                          border: "1px solid",
-                          borderColor: "divider",
-                          color: "text.secondary",
-                        }}
-                      />
-                    )}
-                  </Box>
-                )}
               </Box>
               </Box>
             </Box>

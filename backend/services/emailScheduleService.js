@@ -109,7 +109,58 @@ const updateEmailSchedule = async (monitoringId, { emails, assessmentIds, schedu
     };
 };
 
+const cancelEmailSchedule = async (monitoringId, assessmentIds) => {
+    const ids = Array.isArray(assessmentIds)
+        ? assessmentIds.map((id) => String(id || "").trim()).filter(Boolean)
+        : [];
+    if (ids.length === 0) {
+        const error = new Error("At least one assessment is required");
+        error.status = 400;
+        throw error;
+    }
+
+    const monitoring = await Monitoring.findById(monitoringId).select("_id");
+    if (!monitoring) {
+        const error = new Error("Monitoring not found");
+        error.status = 404;
+        throw error;
+    }
+
+    const assessments = await Assessment.find({
+        _id: { $in: ids },
+        monitoringId: String(monitoringId),
+    }).select("_id");
+
+    if (assessments.length !== ids.length) {
+        const error = new Error("One or more assessments do not belong to this monitoring");
+        error.status = 400;
+        throw error;
+    }
+
+    await Assessment.updateMany(
+        {
+            _id: { $in: ids },
+            monitoringId: String(monitoringId),
+            scheduledSendStatus: "pending",
+        },
+        {
+            $set: {
+                scheduledSendAt: null,
+                scheduledSendStatus: null,
+            },
+        }
+    );
+
+    const updatedAssessments = await Assessment.find({ _id: { $in: ids } })
+        .select("_id name scheduledSendAt scheduledSendStatus");
+
+    return {
+        assessments: updatedAssessments,
+    };
+};
+
 module.exports = {
     getEmailSchedule,
     updateEmailSchedule,
+    cancelEmailSchedule,
 };

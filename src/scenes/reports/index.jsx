@@ -242,14 +242,18 @@ const Reports = () => {
                 });
             }
 
-            if (!isStudentType(item.type) && participantId) {
-                responses = responses.filter((response) => {
-                    const displayName = (response.displayName || '').trim();
-                    if (participantId === ANONYMOUS_PARTICIPANT) {
-                        return !displayName;
-                    }
-                    return displayName.toLowerCase() === participantId.toLowerCase();
-                });
+            if (participantId) {
+                if (isStudentType(item.type) && currentUser?.userStatus === UserType.TEACHER_TRAINER) {
+                    responses = [];
+                } else if (!isStudentType(item.type) || currentUser?.userStatus === UserType.TEACHER) {
+                    responses = responses.filter((response) => {
+                        const displayName = (response.displayName || '').trim();
+                        if (participantId === ANONYMOUS_PARTICIPANT) {
+                            return !displayName;
+                        }
+                        return displayName.toLowerCase() === participantId.toLowerCase();
+                    });
+                }
             }
 
             return { ...item, responses };
@@ -1039,11 +1043,9 @@ const Reports = () => {
         (selectedDayAssessments || []).some((assessment) => assessment.type === type)
     );
     const assessmentsForCategory = (filteredDayAssessments || []).filter(
-        (assessment) => assessment.type === selectedCategory
+        (assessment) => assessment.type === selectedCategory && (assessment.responses || []).length > 0
     );
-    const rankingAssessments = applyResultFilters(selectedDayAssessments, '', selectedTeacher).filter(
-        (assessment) => assessment.type === selectedCategory
-    );
+    const rankingAssessments = assessmentsForCategory;
     const exportButtonSx = {
         ...buttonStyle,
         mr: 0,

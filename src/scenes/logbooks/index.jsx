@@ -10,6 +10,7 @@ import { useMessageService } from '../../services/MessageService';
 import { useAuthUser } from '../../contexts/AuthUserContext';
 import { loadMonitoringAndAssessments } from "../../utils/ObjectsUtils";
 import { BACKEND_URL } from "../../config";
+import { UserType } from "../../utils/enums";
 
 const Logbooks = () => {
 
@@ -135,6 +136,9 @@ const Logbooks = () => {
   const isMonitoringOwner = Boolean(
     currentMonitoring && currentUser && String(currentMonitoring.userId) === String(currentUser._id)
   );
+  const isTrainer = Boolean(
+    isMonitoringOwner || currentUser?.userStatus === UserType.TEACHER_TRAINER
+  );
 
   return (
     <Box display="flex" sx={{ height: '100%', overflow: 'hidden', bgcolor: '#f9f9f9' }}>
@@ -209,6 +213,7 @@ const Logbooks = () => {
               currentMonitoringId={currentMonitoring._id}
               uniqueDays={uniqueDays}
               isMonitoringOwner={isMonitoringOwner}
+              isTrainer={isTrainer}
             />
             )}
           </Box>
@@ -226,6 +231,7 @@ const Logbooks = () => {
               logs={logs}
               setLogs={setLogs}
               isMonitoringOwner={isMonitoringOwner}
+              isTrainer={isTrainer}
               currentMonitoringId={currentMonitoring?._id}
               focusLogId={queryLogId}
             />

@@ -276,9 +276,18 @@ export const AssessmentResultStack = ({
     anonymizeRanking,
     onGenerateSummary,
 }) => {
+    const { getMessage } = useMessageService();
     const ordered = [...(assessments || [])].sort(
         (a, b) => (a.position ?? Number.MAX_SAFE_INTEGER) - (b.position ?? Number.MAX_SAFE_INTEGER)
     );
+
+    if (ordered.length === 0) {
+        return (
+            <Typography variant="body1" color="text.secondary" sx={{ py: 6, textAlign: 'center' }}>
+                {getMessage('label_no_data_available')}
+            </Typography>
+        );
+    }
 
     return (
         <Box display="flex" flexDirection="column" gap={2} sx={{ width: '100%' }}>
@@ -346,6 +355,13 @@ export const AssessmentResultStack = ({
                                 assessments={[rankingAssessment]}
                                 highlightedParticipant={highlightedParticipant}
                                 anonymize={anonymizeRanking}
+                                hideStudentValues={
+                                    hide_students_name &&
+                                    [
+                                        AssessmentType.STUDENT_CHARACTERISTICS,
+                                        AssessmentType.STUDENT_LEARNING_OUTCOMES,
+                                    ].includes(assessment.type)
+                                }
                             />
                         </Box>
                     </Box>
