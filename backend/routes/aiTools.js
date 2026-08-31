@@ -8,6 +8,21 @@ if (!INFOMANIAK_AI_ENDPOINT_ID) {
     console.error('Error: INFOMANIAK_AI_ENDPOINT_ID environment variable is not set');
 }
 
+const infomaniakChatCompletionsUrl = () =>
+    `https://api.infomaniak.com/2/ai/${INFOMANIAK_AI_ENDPOINT_ID}/openai/v1/chat/completions`;
+
+const infomaniakHeaders = () => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${process.env.INFOMANIAK_KEY}`,
+    'Accept': 'application/json',
+});
+
+const callInfomaniakChat = async (requestBody) => {
+    return axios.post(infomaniakChatCompletionsUrl(), requestBody, {
+        headers: infomaniakHeaders(),
+    });
+};
+
 router.post('/infomaniak/chat', async (req, res) => {
     try {
         if (!INFOMANIAK_AI_ENDPOINT_ID) {
@@ -19,20 +34,11 @@ router.post('/infomaniak/chat', async (req, res) => {
         const requestBody = {
             model: 'qwen3',
             messages: req.body.messages,
-            temperature: 0.1
+            temperature: 0.1,
+            reasoning_effort: 'none'
         };
 
-        const response = await axios.post(
-            `https://api.infomaniak.com/1/ai/${INFOMANIAK_AI_ENDPOINT_ID}/openai/chat/completions`,
-            requestBody,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.INFOMANIAK_KEY}`,
-                    'Accept': 'application/json'
-                }
-            }
-        );
+        const response = await callInfomaniakChat(requestBody);
 
         res.json(response.data);
     } catch (error) {
@@ -96,20 +102,11 @@ router.post('/suggest-options', async (req, res) => {
                     content: prompt
                 }
             ],
-            temperature: 0.3
+            temperature: 0.3,
+            reasoning_effort: 'none'
         };
 
-        const response = await axios.post(
-            `https://api.infomaniak.com/1/ai/${INFOMANIAK_AI_ENDPOINT_ID}/openai/chat/completions`,
-            requestBody,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.INFOMANIAK_KEY}`,
-                    'Accept': 'application/json'
-                }
-            }
-        );
+        const response = await callInfomaniakChat(requestBody);
 
         // Extract the generated options from the LLM response
         const content = response.data.choices[0].message.content;
@@ -229,20 +226,11 @@ router.post('/generate-text-summary', async (req, res) => {
                     Ensure your response is concise, focused, and directly relevant to the question and responses provided. Do not include any prefix like "Summary:" or "Analysis:" at the beginning of your response.
                 `
             }],
-            temperature: 0.1
+            temperature: 0.1,
+            reasoning_effort: 'none'
         };
 
-        const response = await axios.post(
-            `https://api.infomaniak.com/1/ai/${INFOMANIAK_AI_ENDPOINT_ID}/openai/chat/completions`,
-            requestBody,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.INFOMANIAK_KEY}`,
-                    'Accept': 'application/json'
-                }
-            }
-        );
+        const response = await callInfomaniakChat(requestBody);
 
         const summary = response.data?.choices?.[0]?.message?.content || null;
 
