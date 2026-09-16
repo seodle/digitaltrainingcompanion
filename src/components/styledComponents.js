@@ -236,4 +236,44 @@ export const redYellowGreenPalette = [
     'rgb(80, 170, 90)'
 ];
 
+const pastelBlue = 'rgb(173, 216, 230)';
+const brightPastelBlue = 'rgb(193, 236, 250)';
+
+export const getChartChoiceColor = ({ questionType, choices = [], choiceIndex = 0, correctAnswer }) => {
+    const hasCorrectAnswer = Array.isArray(correctAnswer)
+        ? correctAnswer.length > 0
+        : correctAnswer !== undefined && correctAnswer !== '';
+
+    if (questionType === 'radio-ordered') {
+        if (choices.length <= 1) {
+            return redYellowGreenPalette[0];
+        }
+        const paletteIndex = Math.round(
+            (redYellowGreenPalette.length - 1) * (choiceIndex / (choices.length - 1))
+        );
+        return redYellowGreenPalette[paletteIndex] || redYellowGreenPalette[0];
+    }
+
+    if (questionType === 'radio-unordered') {
+        if (hasCorrectAnswer) {
+            const normalizedCorrect = Array.isArray(correctAnswer) ? correctAnswer[0] : correctAnswer;
+            const correctIndex = choices.indexOf(normalizedCorrect);
+            return choiceIndex === correctIndex ? redYellowGreenPalette[9] : redYellowGreenPalette[0];
+        }
+        return choiceIndex % 2 === 0 ? pastelBlue : brightPastelBlue;
+    }
+
+    if (questionType === 'checkbox') {
+        if (hasCorrectAnswer) {
+            const isCorrect = Array.isArray(correctAnswer)
+                ? correctAnswer.includes(choices[choiceIndex])
+                : correctAnswer === choices[choiceIndex];
+            return isCorrect ? redYellowGreenPalette[9] : redYellowGreenPalette[0];
+        }
+        return choiceIndex % 2 === 0 ? pastelBlue : brightPastelBlue;
+    }
+
+    return choiceIndex % 2 === 0 ? pastelBlue : brightPastelBlue;
+};
+
 export const veryLightGray = 'rgb(237, 237, 237)';

@@ -366,7 +366,7 @@ const EditQuestionView = ({ question, matrixQuestions, setQuestions, setEditingQ
     };
 
     return (
-        <Box component="div" sx={{ width: '100%', p: 2, margin: "20px" }}>
+        <Box component="div" sx={{ width: 'auto', maxWidth: '100%', boxSizing: 'border-box', p: { xs: 1, md: 2 }, m: { xs: 1, md: '20px' } }}>
             <Typography mb="20px" variant="h4" fontWeight="bold" sx={{ color: "rgb(82,82,82)" }}>
                 {question.questionType === 'single-text' 
                     ? getMessage("label_edit_context")

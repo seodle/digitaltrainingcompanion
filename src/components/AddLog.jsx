@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { 
@@ -11,24 +11,29 @@ import {
   Typography, 
   FormControl,
   Chip,
-  Autocomplete
+  Autocomplete,
+  Snackbar,
+  Alert,
+  Paper
 } from "@mui/material";
+import { AddLogIcon, IconWell } from "./logbookIcons";
 import axios from 'axios';
 import { BACKEND_URL } from "../config";
-import { useAuthUser } from '../contexts/AuthUserContext';
 import { useMessageService } from '../services/MessageService';
 import { buttonStyle } from "./styledComponents";
 import { AssessmentType, LogType } from '../utils/enums';
 
-const AddLogSchema = Yup.object().shape({
+const getAddLogSchema = (isMonitoringOwner) => Yup.object().shape({
   description: Yup.string()
     .min(5, "Description must be at least 5 characters long")
     .max(1000, "Description must be at maximum 1000 characters long")
     .required("Description is required"),
-  day: Yup.string()
-    .required("Day is required"),
-  assessment: Yup.string()
-    .required("Assessment is required"),
+  day: isMonitoringOwner
+    ? Yup.string().required("Day is required")
+    : Yup.string(),
+  assessment: isMonitoringOwner
+    ? Yup.string().required("Assessment is required")
+    : Yup.string(),
   assessmentNames: Yup.array()
     .of(
       Yup.object().shape({
@@ -38,15 +43,22 @@ const AddLogSchema = Yup.object().shape({
     ),
   logType: Yup.string()  
     .required("Log type is required"),
+  visibility: Yup.string()
+    .required("Visibility is required"),
+  sharedWith: Yup.array().of(Yup.string()).when("visibility", {
+    is: "selected",
+    then: (schema) => schema.min(1, "Select at least one teacher"),
+  }),
   displayNames: Yup.array()
     .of(Yup.string())
 });
 
-const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
-  const { currentUser } = useAuthUser();
+const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwner = false, isTrainer = false}) => {
   const { getMessage } = useMessageService();
   const [availableUsers, setAvailableUsers] = useState([]);
   const [availableAssessments, setAvailableAssessments] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [helpSentOpen, setHelpSentOpen] = useState(false);
   
   const initialLogValue = { 
     description: "", 
@@ -54,8 +66,31 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
     assessment: "", 
     assessmentNames: [],
     logType: "",
+    visibility: "private",
+    sharedWith: [],
     displayNames: []
   };
+
+  useEffect(() => {
+    const loadFollowers = async () => {
+      if (!isTrainer || !currentMonitoringId) {
+        setFollowers([]);
+        return;
+      }
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${BACKEND_URL}/logs/monitoring/${currentMonitoringId}/followers`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setFollowers(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.error("Error fetching logbook followers:", error);
+        setFollowers([]);
+      }
+    };
+    loadFollowers();
+  }, [currentMonitoringId, isTrainer]);
 
   const fetchAssessments = async (assessmentType) => {
     if (!assessmentType) return;
@@ -125,11 +160,13 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const newLog = {
       description: values.description,
-      day: values.day,
-      assessment: values.assessment,
+      day: isMonitoringOwner ? values.day : "",
+      assessment: isMonitoringOwner ? values.assessment : "",
       logType: values.logType,
-      assessmentNames: values.assessmentNames.map(a => a.name),
-      displayNames: values.displayNames
+      visibility: values.visibility,
+      sharedWith: values.visibility === "selected" ? values.sharedWith : [],
+      assessmentNames: isMonitoringOwner ? values.assessmentNames.map(a => a.name) : [],
+      displayNames: isMonitoringOwner ? values.displayNames : []
     };
 
     try {
@@ -145,7 +182,16 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
       );
 
       if(response.status === 200) {
-        setLogs([...logs, response.data]);
+        setLogs((prev) => {
+          const id = String(response.data._id);
+          if (prev.some((log) => String(log._id) === id)) {
+            return prev;
+          }
+          return [...prev, response.data];
+        });
+        if (values.logType === LogType.ASK_FOR_HELP) {
+          setHelpSentOpen(isTrainer ? "contact" : "help");
+        }
         resetForm({
           values: {
             ...initialLogValue,
@@ -162,30 +208,42 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
   };
 
   return (
-    <Box sx={{
-      display: "flex",
-      flexDirection: "column",
-      flex: 1,
-      p: 2,
-      m: 2,
-      height: "80vh"
-    }}>
-      <Typography variant="h3" fontWeight="bold" sx={{ mb: 4 }}>
-        {getMessage("label_add_log_entry")}
-      </Typography>
+    <Paper
+      elevation={0}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+        minHeight: 0,
+        width: "100%",
+        borderRadius: "16px",
+        border: "1px solid",
+        borderColor: "divider",
+        overflow: "visible",
+        mb: { xs: 2, md: 0 },
+      }}
+    >
+      <Box sx={{ px: { xs: 2, md: 2.5 }, pt: 2.25, pb: 1.5, display: "flex", alignItems: "center", gap: 1.5 }}>
+        <IconWell>
+          <AddLogIcon />
+        </IconWell>
+        <Typography variant="h5" fontWeight={700} sx={{ lineHeight: 1.2 }}>
+          {getMessage("label_add_log_entry")}
+        </Typography>
+      </Box>
 
       <Box sx={{
-        backgroundColor: 'background.paper',
-        borderRadius: 2,
-        p: 3,
-        boxShadow: 1,
-        overflowY: 'auto',
+        px: { xs: 2, md: 2.5 },
+        pt: 1.5,
+        pb: { xs: "calc(80px + env(safe-area-inset-bottom, 0px))", md: 3 },
+        overflow: 'visible',
         flex: 1,
-        minHeight: 0
+        minHeight: 0,
+        maxHeight: 'none',
       }}>
         <Formik
           initialValues={initialLogValue}
-          validationSchema={AddLogSchema}
+          validationSchema={getAddLogSchema(isMonitoringOwner)}
           onSubmit={handleSubmit}
         >
           {({ values, errors, touched, handleChange, handleBlur, setFieldValue }) => (
@@ -193,9 +251,9 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
               <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 3
+                gap: 2
               }}>
-                <Box position="relative">
+                <Box>
                 <TextField
                   id="description"
                   name="description"
@@ -203,27 +261,44 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
                   value={values.description}
                   fullWidth
                   multiline
-                  rows={6}
+                  minRows={2}
+                  maxRows={4}
+                  InputLabelProps={{ shrink: true }}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  onFocus={(event) => {
+                    if (!window.matchMedia("(max-width: 899px)").matches) {
+                      return;
+                    }
+                    const field = event.target;
+                    window.setTimeout(() => {
+                      field.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }, 350);
+                  }}
                   error={touched.description && Boolean(errors.description)}
+                  sx={{
+                    scrollMargin: { xs: "120px", md: 0 },
+                    "& .MuiInputBase-input": {
+                      fontSize: { xs: "16px", md: "0.95rem" },
+                    },
+                  }}
                 />
                 <Typography
-                  variant="caption" 
-                  sx={{ 
-                    position: 'absolute', 
-                    bottom: 10,  
-                    right: 14,                             
-                    color: values.description?.length >= 1000 ? 'error.main' : 'text.secondary',
-                    backgroundColor: 'white',              
-                    px: 0.5,                              
-                    zIndex: 1                             
+                  variant="caption"
+                  sx={{
+                    display: "block",
+                    textAlign: "right",
+                    mt: 0.5,
+                    color: values.description?.length >= 1000 ? "error.main" : "text.secondary",
                   }}
                 >
                   {values.description?.length || 0}/1000
                 </Typography>
               </Box>
 
+                {isMonitoringOwner && (
+                <>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
                 <FormControl fullWidth>
                   <InputLabel id="day-label">{getMessage("label_choose_session")}</InputLabel>
                   <Select
@@ -268,6 +343,7 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
                     ))}
                   </Select>
                 </FormControl>
+                </Box>
 
                 <FormControl fullWidth>
                   <Autocomplete
@@ -330,7 +406,10 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
                     )}
                   />
                 </FormControl>
+                </>
+                )}
 
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
                 <FormControl fullWidth>
                   <InputLabel id="logType-label">{getMessage("label_choose_log_type")}</InputLabel>
                   <Select
@@ -339,25 +418,126 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
                     name="logType"
                     value={values.logType}
                     label={getMessage("label_choose_log_type")}
-                    onChange={handleChange}
+                    onChange={(event) => {
+                      handleChange(event);
+                      if (event.target.value === LogType.ASK_FOR_HELP) {
+                        setFieldValue("visibility", isTrainer ? "selected" : "trainer");
+                        setFieldValue("sharedWith", []);
+                      }
+                    }}
                     onBlur={handleBlur}
                     error={touched.logType && Boolean(errors.logType)}
                   >
                     {Object.entries(LogType).map(([key, value]) => (
                       <MenuItem key={`log-type-${key}`} value={value}>
-                        {getMessage(`label_log_type_${key.toLowerCase()}`)}
+                        {getMessage(
+                          key === "ASK_FOR_HELP" && isTrainer
+                            ? "label_log_type_ask_for_help_trainer"
+                            : `label_log_type_${key.toLowerCase()}`
+                        )}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
 
+                {isTrainer && values.logType === LogType.ASK_FOR_HELP ? (
+                <FormControl fullWidth>
+                  <Autocomplete
+                    options={followers}
+                    getOptionLabel={(option) => `${option.firstName || ""} ${option.lastName || ""}`.trim()}
+                    value={followers.find((follower) => values.sharedWith[0] === follower._id) || null}
+                    isOptionEqualToValue={(option, value) => option._id === value._id}
+                    onChange={(_, newValue) => {
+                      setFieldValue("sharedWith", newValue?._id ? [newValue._id] : []);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label={getMessage("label_log_contact_teacher")}
+                        error={touched.sharedWith && Boolean(errors.sharedWith)}
+                        helperText={touched.sharedWith && errors.sharedWith}
+                      />
+                    )}
+                  />
+                </FormControl>
+                ) : (
+                <FormControl fullWidth>
+                  <InputLabel id="visibility-label">{getMessage("label_log_visibility")}</InputLabel>
+                  <Select
+                    labelId="visibility-label"
+                    id="visibility"
+                    name="visibility"
+                    value={values.visibility}
+                    label={getMessage("label_log_visibility")}
+                    onChange={(event) => {
+                      handleChange(event);
+                      if (event.target.value !== "selected") {
+                        setFieldValue("sharedWith", []);
+                      }
+                    }}
+                    onBlur={handleBlur}
+                  >
+                    {values.logType !== LogType.ASK_FOR_HELP && (
+                      <MenuItem value="private">
+                        {getMessage(
+                          isTrainer
+                            ? "label_log_visibility_all_trainers"
+                            : "label_log_visibility_private"
+                        )}
+                      </MenuItem>
+                    )}
+                    {isTrainer ? (
+                      <MenuItem value="selected">{getMessage("label_log_visibility_selected")}</MenuItem>
+                    ) : (
+                      <MenuItem value="trainer">{getMessage("label_log_visibility_trainer")}</MenuItem>
+                    )}
+                    <MenuItem value="followers">
+                      {getMessage("label_log_visibility_followers")}
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+                )}
+                </Box>
+
+                {isTrainer && values.logType !== LogType.ASK_FOR_HELP && values.visibility === "selected" && (
+                  <FormControl fullWidth>
+                    <Autocomplete
+                      multiple
+                      options={followers}
+                      getOptionLabel={(option) => `${option.firstName || ""} ${option.lastName || ""}`.trim()}
+                      value={followers.filter((follower) => values.sharedWith.includes(follower._id))}
+                      isOptionEqualToValue={(option, value) => option._id === value._id}
+                      onChange={(_, newValue) => {
+                        setFieldValue("sharedWith", newValue.map((follower) => follower._id));
+                      }}
+                      renderTags={(value, getTagProps) =>
+                        value.map((option, index) => (
+                          <Chip
+                            {...getTagProps({ index })}
+                            key={option._id}
+                            label={`${option.firstName || ""} ${option.lastName || ""}`.trim()}
+                          />
+                        ))
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label={getMessage("label_log_share_with_teachers")}
+                          error={touched.sharedWith && Boolean(errors.sharedWith)}
+                          helperText={touched.sharedWith && errors.sharedWith}
+                        />
+                      )}
+                    />
+                  </FormControl>
+                )}
+
                  <Box sx={{ mt: 1 }}>
                     <Button 
                       type="submit" 
                       variant="contained" 
-                      sx={buttonStyle}
+                      sx={{ ...buttonStyle, mr: 0, px: 3, width: { xs: '100%', sm: 'auto' } }}
                     >
-                    <Typography variant="h4">{getMessage("label_submit")}</Typography>
+                    {getMessage("label_submit")}
                   </Button>
                 </Box>
               </Box>
@@ -365,7 +545,22 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays}) => {
           )}
         </Formik>
       </Box>
-    </Box>
+      <Snackbar
+        open={Boolean(helpSentOpen)}
+        autoHideDuration={4000}
+        onClose={() => setHelpSentOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setHelpSentOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ borderRadius: "12px", bgcolor: "#F7941E", color: "#1a1a1a" }}
+        >
+          {getMessage(helpSentOpen === "contact" ? "label_log_contact_sent" : "label_log_help_sent")}
+        </Alert>
+      </Snackbar>
+    </Paper>
   );
 };
 

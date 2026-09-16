@@ -37,8 +37,8 @@ router.post("/signin", async (req, res) => {
  * @return {Object} The response object
  */
 router.post("/forgot-password", async (req, res) => {
-  const { email } = req.body;
-  const result = await initiatePasswordReset(email);
+  const { email, language } = req.body;
+  const result = await initiatePasswordReset(email, language);
 
   res.status(result.status === 'success' ? 201 : 500).send({ message: result.message });
 });

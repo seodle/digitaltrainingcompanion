@@ -72,7 +72,7 @@ const UpdatePassword = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      minHeight="100vh"
+      sx={{ minHeight: "100%", height: "100%", overflowY: "auto" }}
     >
       <Box
         display="flex"
@@ -93,7 +93,7 @@ const UpdatePassword = () => {
       >
        
 
-        <Box padding="60px">
+        <Box sx={{ p: { xs: 3, md: "60px" }, boxSizing: "border-box", width: "100%" }}>
 
         <LanguageSelector/>
 

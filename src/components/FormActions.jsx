@@ -25,7 +25,7 @@ const FormActions = ({ handleReset, handleSubmit, questionsExist }) => {
     // Return statement for JSX
     return (
         <>
-            <Box mt={5} display="flex" justifyContent="space-between" m="20px">
+            <Box display="flex" justifyContent="space-between" sx={{ m: "20px", mb: { xs: 3, md: "20px" } }}>
                 <Button
                     type="button"
                     variant="contained"

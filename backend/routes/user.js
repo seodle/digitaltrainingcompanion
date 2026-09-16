@@ -47,6 +47,26 @@ router.put("/monitorings/:monitoringId/stopFollowing", requireMonitoringOwnerOrR
 });
 
 
+router.patch("/me/language", async (req, res) => {
+  try {
+    const userId = req.user && req.user._id;
+    if (!userId) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+    const language = String(req.body?.language || "").toLowerCase().slice(0, 2);
+    if (!["en", "fr", "de", "it", "es"].includes(language)) {
+      return res.status(400).json({ error: "language must be one of: en, fr, de, it, es" });
+    }
+    const user = await Users.findByIdAndUpdate(userId, { language }, { new: true });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    return res.json({ language: user.language });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 router.get("/me", async (req, res) => {
   try {
     const userId = req.user && req.user._id;

@@ -26,7 +26,8 @@ const validateUserCredentialsRegister = (data) => {
         password: passwordComplexity(complexityOptions).required(),
         sandbox: Joi.boolean(),
         userStatus: Joi.string(),
-        termsAccepted: Joi.boolean().valid(true).required()
+        termsAccepted: Joi.boolean().valid(true).required(),
+        language: Joi.string().valid("en", "fr", "de", "it", "es")
     });
 
     return schema.validate(data);

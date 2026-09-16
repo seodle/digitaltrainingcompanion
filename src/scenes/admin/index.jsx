@@ -16,6 +16,7 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Switch,
 } from '@mui/material';
 import { BarChart, PieChart, LineChart, XAxis, YAxis, Tooltip, Legend, CartesianGrid, Line, Bar, Pie, Cell, ResponsiveContainer } from 'recharts';
 import Sidebar from '../global/Sidebar';
@@ -42,6 +43,8 @@ const Admin = () => {
   const [assessmentsTotal, setAssessmentsTotal] = useState(0);
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState('');
+  const [actionError, setActionError] = useState('');
+  const [updatingSandboxId, setUpdatingSandboxId] = useState(null);
 
 
   const fetchStats = useCallback(async () => {
@@ -122,6 +125,37 @@ const Admin = () => {
     }
   }, [assessmentsPage, assessmentsRowsPerPage]);
 
+  const handleSandboxToggle = async (userId, sandbox) => {
+    setUpdatingSandboxId(userId);
+    try {
+      await axios.patch(
+        `${BACKEND_URL}/admin/users/${userId}/sandbox`,
+        { sandbox },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      );
+      setUsers((prev) => prev.map((user) => (
+        user._id === userId ? { ...user, sandbox } : user
+      )));
+      setStats((prev) => {
+        if (!prev) {
+          return prev;
+        }
+        return {
+          ...prev,
+          activeUsersList: (prev.activeUsersList || []).map((user) => (
+            user._id === userId ? { ...user, sandbox } : user
+          )),
+        };
+      });
+      setActionError('');
+    } catch (err) {
+      console.error('Error updating sandbox:', err);
+      setActionError('Failed to update sandbox');
+    } finally {
+      setUpdatingSandboxId(null);
+    }
+  };
+
   useEffect(() => {
     fetchStats();
   }, []);
@@ -147,20 +181,25 @@ const Admin = () => {
   const handleTabChange = (e, newValue) => setTab(newValue);
 
   return (
-    <Box display="flex" style={{ height: '100vh', overflow: 'auto' }}>
+    <Box display="flex" sx={{ height: '100%', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
       <Sidebar />
-      <Box flex="1" flexDirection="column">
+      <Box flex="1" flexDirection="column" sx={{ minWidth: 0, minHeight: 0, overflow: 'auto' }}>
         <Box p={2}>
           <Topbar title="Admin" />
         </Box>
         <Box mx={2} mb={2}>
-          <Tabs value={tab} onChange={handleTabChange} indicatorColor="primary" textColor="primary">
+          <Tabs value={tab} onChange={handleTabChange} indicatorColor="primary" textColor="primary" variant="scrollable" scrollButtons="auto" allowScrollButtonsMobile>
             <Tab label="Dashboard" />
             <Tab label="Users" />
             <Tab label="Monitoring and Assessment" />
           </Tabs>
         </Box>
         <Box flex="1" overflow="auto" p={2}>
+          {actionError && (
+            <Alert severity="error" sx={{ mb: 2 }} onClose={() => setActionError('')}>
+              {actionError}
+            </Alert>
+          )}
           {loading ? (
             <Box display="flex" justifyContent="center" alignItems="center" height="100%">
               <CircularProgress />
@@ -178,6 +217,8 @@ const Admin = () => {
               setPage={setUsersPage}
               setRowsPerPage={setUsersRowsPerPage}
               activeUsersList={stats?.activeUsersList || []}
+              onSandboxToggle={handleSandboxToggle}
+              updatingSandboxId={updatingSandboxId}
             />
           ) : (
             <MonitoringAndAssessmentTab
@@ -253,7 +294,8 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
           <Paper sx={{ p: 2, height: 300 }}>
             <Typography variant="h6" mb={2}>User Growth - Registered Users</Typography>
             {chartData.userGrowth.length > 0 ? (
-              <BarChart width={500} height={250} data={chartData.userGrowth}>
+              <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={chartData.userGrowth}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month" 
@@ -266,6 +308,7 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
                 <Legend />
                 <Bar dataKey="newUsers" fill="#0088FE" name="Registered Users" />
               </BarChart>
+              </ResponsiveContainer>
             ) : (
               <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Typography>No data available</Typography>
@@ -279,7 +322,8 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
           <Paper sx={{ p: 2, height: 300 }}>
             <Typography variant="h6" mb={2}>User Status Distribution</Typography>
             {chartData.userStatusPie.length > 0 ? (
-              <PieChart width={400} height={250}>
+              <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
                 <Pie
                   data={chartData.userStatusPie}
                   cx="50%"
@@ -297,6 +341,7 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
                 </Pie>
                 <Tooltip />
               </PieChart>
+              </ResponsiveContainer>
             ) : (
               <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Typography>No data available</Typography>
@@ -310,7 +355,8 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
           <Paper sx={{ p: 2, height: 300 }}>
             <Typography variant="h6" mb={2}>Monitorings Created Over Time</Typography>
             {chartData.monitoringGrowth && chartData.monitoringGrowth.length > 0 ? (
-              <BarChart width={500} height={250} data={chartData.monitoringGrowth}>
+              <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={chartData.monitoringGrowth}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month" 
@@ -323,6 +369,7 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
                 <Legend />
                 <Bar dataKey="count" fill="#00C49F" name="Monitorings" />
               </BarChart>
+              </ResponsiveContainer>
             ) : (
               <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Typography>No data available</Typography>
@@ -336,7 +383,8 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
           <Paper sx={{ p: 2, height: 300 }}>
             <Typography variant="h6" mb={2}>Assessments Created Over Time</Typography>
             {chartData.assessmentGrowth && chartData.assessmentGrowth.length > 0 ? (
-              <BarChart width={500} height={250} data={chartData.assessmentGrowth}>
+              <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={chartData.assessmentGrowth}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month" 
@@ -349,6 +397,7 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
                 <Legend />
                 <Bar dataKey="count" fill="#FFBB28" name="Assessments" />
               </BarChart>
+              </ResponsiveContainer>
             ) : (
               <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Typography>No data available</Typography>
@@ -362,7 +411,8 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
           <Paper sx={{ p: 2, height: 300 }}>
             <Typography variant="h6" mb={2}>Responses Created Over Time</Typography>
             {chartData.responseGrowth && chartData.responseGrowth.length > 0 ? (
-              <BarChart width={500} height={250} data={chartData.responseGrowth}>
+              <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={chartData.responseGrowth}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month" 
@@ -375,6 +425,7 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
                 <Legend />
                 <Bar dataKey="count" fill="#FF8042" name="Responses" />
               </BarChart>
+              </ResponsiveContainer>
             ) : (
               <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <Typography>No data available</Typography>
@@ -422,12 +473,45 @@ const DashboardTab = ({ stats, fetchStats, loading, setLoading, setStats }) => {
 };
 
 // USERS TAB COMPONENT
-const UsersTab = ({ users, page, rowsPerPage, total, setPage, setRowsPerPage, activeUsersList }) => {
+const formatAdminDate = (value) => {
+  if (!value) {
+    return 'N/A';
+  }
+  return new Date(value).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
+
+const UsersTab = ({
+  users,
+  page,
+  rowsPerPage,
+  total,
+  setPage,
+  setRowsPerPage,
+  activeUsersList,
+  onSandboxToggle,
+  updatingSandboxId,
+}) => {
   const handleChangePage = (_, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (e) => {
     setRowsPerPage(parseInt(e.target.value, 10));
     setPage(0);
   };
+
+  const renderSandboxSwitch = (user) => (
+    <Switch
+      checked={Boolean(user.sandbox)}
+      onChange={(event) => onSandboxToggle(user._id, event.target.checked)}
+      disabled={updatingSandboxId === user._id}
+      size="small"
+      inputProps={{ 'aria-label': `Toggle sandbox for ${user.email}` }}
+    />
+  );
 
   return (
     <Box>
@@ -437,7 +521,7 @@ const UsersTab = ({ users, page, rowsPerPage, total, setPage, setRowsPerPage, ac
           Active Users (Last 2 Months) - {activeUsersList?.length || 0}
         </Typography>
         {activeUsersList && activeUsersList.length > 0 ? (
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -445,7 +529,7 @@ const UsersTab = ({ users, page, rowsPerPage, total, setPage, setRowsPerPage, ac
                   <TableCell>Email</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Sandbox</TableCell>
-                  <TableCell>Registration Date</TableCell>
+                  <TableCell>Last response</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -455,17 +539,7 @@ const UsersTab = ({ users, page, rowsPerPage, total, setPage, setRowsPerPage, ac
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.userStatus || 'N/A'}</TableCell>
                     <TableCell>{user.sandbox ? 'Yes' : 'No'}</TableCell>
-                    <TableCell>
-                      {user.registrationDate 
-                        ? new Date(user.registrationDate).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })
-                        : 'N/A'}
-                    </TableCell>
+                    <TableCell>{formatAdminDate(user.lastResponseDate)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -481,7 +555,7 @@ const UsersTab = ({ users, page, rowsPerPage, total, setPage, setRowsPerPage, ac
       {/* All Users List */}
       <Typography variant="h5" mb={2}>All Users</Typography>
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -498,18 +572,8 @@ const UsersTab = ({ users, page, rowsPerPage, total, setPage, setRowsPerPage, ac
                 <TableCell>{user.firstName} {user.lastName}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.userStatus || 'N/A'}</TableCell>
-                <TableCell>{user.sandbox ? 'Yes' : 'No'}</TableCell>
-                <TableCell>
-                  {user.registrationDate 
-                    ? new Date(user.registrationDate).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })
-                    : 'N/A'}
-                </TableCell>
+                <TableCell>{renderSandboxSwitch(user)}</TableCell>
+                <TableCell>{formatAdminDate(user.registrationDate)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -560,7 +624,7 @@ const MonitoringAndAssessmentTab = ({
         {/* Monitorings Table */}
         <Grid item xs={12}>
           <Typography variant="h5" mb={2}>Monitorings</Typography>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -603,7 +667,7 @@ const MonitoringAndAssessmentTab = ({
         {/* Assessments Table */}
         <Grid item xs={12}>
           <Typography variant="h5" mb={2} mt={4}>Assessments</Typography>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
             <Table>
               <TableHead>
                 <TableRow>

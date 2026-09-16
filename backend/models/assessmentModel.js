@@ -27,7 +27,7 @@ const questionSchema = new mongoose.Schema({
 
 // Assessment Schema
 const assessmentSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
     monitoringId: String,
     name: String,
     day: String,
@@ -35,6 +35,8 @@ const assessmentSchema = new mongoose.Schema({
     status: String,
     creationDate: { type: Date, default: Date.now() }, // should be createdAt
     lastModificationDate: Date, // should be updatedAt
+    scheduledSendAt: { type: Date, default: null },
+    scheduledSendStatus: { type: String, enum: ['pending', 'sent', null], default: null },
     position: Number,
     workshops: { type: [workshopSchema], default: [] },
     questions: [questionSchema],

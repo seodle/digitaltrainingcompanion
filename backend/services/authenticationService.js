@@ -1,16 +1,11 @@
 const bcrypt = require('bcrypt');
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
 
 const User = require("../models/userModel");
 const { validateUserCredentialsRegister } = require('../utils/passwordValidationUtils.js');
+const { sendMail, FRONTEND_URL, t } = require('./emailService');
+const { buildVerifyEmailHtml, buildResetPasswordHtml } = require('../utils/emailTemplates');
 require('dotenv').config();
-
-// TODO add all this in config
-const FRONTEND_URL = process.env.NODE_ENV === "production" ? process.env.FRONTEND_URL_PRODUCTION : process.env.FRONTEND_URL_DEVELOPMENT;
-const EMAIL_USER = process.env.EMAIL_USER;
-const EMAIL_PASS = process.env.EMAIL_PASS;
-const imageUrl = "https://digitaltrainingcompanion.ch/static/media/logo.f1c87519c7fdc5afd373433868125e44.svg";
 
 /**
  * Asynchronously authenticates a user by their email and password.
@@ -76,6 +71,7 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
         // create an save a new user
         const newUser = new User({
             ...userData,
+            language: userData.language || "en",
             password: hashPassword,
             verificationToken,
             isVerified: false,
@@ -83,24 +79,12 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
         await newUser.save();
 
         if (sendEmailForVerification) {
-            // send an email to verify the account
-            let transporter = nodemailer.createTransport({
-                host: "mail.infomaniak.com",
-                port: 465,
-                secure: true,
-                requireTLS: true,
-                auth: { user: EMAIL_USER, pass: EMAIL_PASS },
-            });
-
-            // TODO add this in localizable
-            await transporter.sendMail({
-                from: `"The Digital Training Companion" <${EMAIL_USER}>`,
+            const lang = userData.language || "en";
+            const verifyUrl = `${FRONTEND_URL}/verifyEmail?token=${verificationToken}`;
+            await sendMail({
                 to: userData.email,
-                subject: "Please verify your email",
-                html: `<p>Hello,</p><p>Please click the link below to verify your email:</p>
-                        <p><a href="${FRONTEND_URL}/verifyEmail?token=${verificationToken}" target="_blank">Verify Your Email</a></p>
-                        <p>If you did not request this, please ignore this email.</p>
-                        <p>Best regards,<br><br><img src="${imageUrl}" alt="The Digital Training Companion" width="200px" height="auto"></p>`,
+                subject: t(lang, "verify_subject"),
+                html: buildVerifyEmailHtml(verifyUrl, lang),
             });
         }
 
@@ -119,7 +103,7 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
  * @return {Promise<Object>} the status and message of the operation
  * @throws {Error} Throws an error if an unexpected condition is encountered
  */
-const initiatePasswordReset = async (email) => {
+const initiatePasswordReset = async (email, language) => {
 
 
 
@@ -144,21 +128,12 @@ const initiatePasswordReset = async (email) => {
         // Email URL for resetting password
         const resetURL = `${FRONTEND_URL}/updatePassword/${resetToken}`;
 
-        let transporter = nodemailer.createTransport({
-            host: "mail.infomaniak.com",
-            port: 465,
-            secure: true,
-            auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-        });
-
-        // send the email to reset the password
-        // TODO all the text in localizable
-        await transporter.sendMail({
-            from: `"The Digital Training Companion" <${process.env.EMAIL_USER}>`,
+        const lang = language || user.language;
+        await sendMail({
             to: email,
-            subject: "Forgot Password - Password Reset Instructions",
-            text: `To reset your password, please click the following link: ${resetURL}`,
-            html: `<p>To reset your password, please click the link below:</p><a href="${resetURL}">Reset Password</a>`,
+            subject: t(lang, "reset_subject"),
+            text: t(lang, "reset_text", { url: resetURL }),
+            html: buildResetPasswordHtml(resetURL, lang),
         });
 
         return { status: 'success', message: "An email with password reset instructions has been sent." };

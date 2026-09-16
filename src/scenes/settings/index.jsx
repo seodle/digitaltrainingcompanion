@@ -266,15 +266,27 @@ const Settings = () => {
     };
 
     return (
-        <Box display="flex" style={{ height: '100vh', overflow: 'auto' }}>
+        <Box display="flex" sx={{ height: '100%', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
             <Sidebar />
-            <Box display="flex" flex="1" flexDirection="column">
+            <Box
+                display="flex"
+                flex="1"
+                flexDirection="column"
+                sx={{
+                    minWidth: 0,
+                    minHeight: 0,
+                    height: '100%',
+                    overflow: 'auto',
+                    pb: { xs: 'calc(80px + env(safe-area-inset-bottom, 0px))', md: 3 },
+                    '& > *': { flexShrink: 0 },
+                }}
+            >
                 <Box mt="10px" ml="10px">
                     <Topbar title={getMessage("label_my_account")} />
                 </Box>
 
                 {/* User Info Section */}
-                <Box mt="20px" ml="20px" mr="20px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
+                <Box mt="20px" mx={{ xs: 3, md: "20px" }} p={{ xs: 2, md: "20px" }} border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray} sx={{ overflow: "visible", wordBreak: "break-word" }}>
                     <Typography variant="h6" fontWeight="bold" mb="10px">
                         {getMessage('label_user_info')}
                     </Typography>
@@ -286,7 +298,7 @@ const Settings = () => {
                 </Box>
 
                 {/* Platform Info Section */}
-                <Box mt="20px" ml="20px" mr="20px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
+                <Box mt="20px" mx={{ xs: 3, md: "20px" }} p={{ xs: 2, md: "20px" }} border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray} sx={{ overflow: "visible", wordBreak: "break-word" }}>
                     <Typography variant="h6" fontWeight="bold" mb="10px">
                         {getMessage('label_platform_info')}
                     </Typography>
@@ -298,10 +310,10 @@ const Settings = () => {
                     </Typography>
                 </Box>
 
-                <Box display="flex" flexWrap="wrap" gap="20px" alignItems="stretch" mt="20px" ml="20px" mr="20px">
+                <Box display="flex" flexWrap="wrap" gap="20px" alignItems="stretch" mt="20px" mx={{ xs: 3, md: "20px" }}>
                     {/* API Keys Section */}
-                    <Box flex="1 1 400px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                    <Box flex="1 1 280px" p={{ xs: 2, md: "20px" }} border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray} sx={{ minWidth: 0, overflow: "visible" }}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap" gap={1}>
                         <Typography variant="h6" fontWeight="bold">
                             {`${getMessage('api_key')}`}
                         </Typography>
@@ -331,6 +343,7 @@ const Settings = () => {
                             {`${getMessage('no_api_key_created')}`}
                         </Typography>
                     ) : (
+                        <Box sx={{ overflowX: "auto" }}>
                         <Table aria-label="API Keys table">
                             <TableHead>
                                 <TableRow>
@@ -378,12 +391,13 @@ const Settings = () => {
                                 ))}
                             </TableBody>
                         </Table>
+                        </Box>
                     )}
                 </Box>
 
                     {/* External Platforms Section */}
-                    <Box flex="1 1 400px" p="20px" border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray}>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                    <Box flex="1 1 280px" p={{ xs: 2, md: "20px" }} border="1px solid #ccc" borderRadius="8px" bgcolor={veryLightGray} sx={{ minWidth: 0, overflow: "visible" }}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap" gap={1}>
                         <Typography variant="h6" fontWeight="bold">
                             {`${getMessage('external_platforms')}`}
                         </Typography>
@@ -394,6 +408,7 @@ const Settings = () => {
                             <CircularProgress />
                         </Box>
                     ) : (
+                        <Box sx={{ overflowX: "auto" }}>
                         <Table aria-label="External platforms table">
                             <TableHead>
                                 <TableRow>
@@ -460,12 +475,13 @@ const Settings = () => {
 
                             </TableBody>
                         </Table>
+                        </Box>
                     )}
                     </Box>
                 </Box>
 
                 {/* Delete Account Section */}
-                <Box mt="10px" mr="20px" p="20px">
+                <Box mt="10px" mx={{ xs: 3, md: "20px" }} p={{ xs: 2, md: "20px" }}>
                     <Button
                         onClick={handleClickDeleteAccount}
                         disabled={isLoading}

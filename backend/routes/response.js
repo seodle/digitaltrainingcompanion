@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { requireAssessmentOwner, requireMonitoringOwner, requireMonitoringOwnerOrRedeemer, requireTeacherTrainer } = require('../middleware/authorization');
+const { requireAssessmentOwner, requireMonitoringOwner, requireMonitoringOwnerOrRedeemer, requireTeacherTrainer, requireAssessmentOwnerOrTrainerOnMonitoring } = require('../middleware/authorization');
 const Response = require('../models/responseModel');
 
 const {
@@ -118,7 +118,7 @@ router.get('/last', async (req, res) => {
 });
 
 // Delete all answers for a specific assessment and user
-router.delete("/assessment/:assessmentId", requireAssessmentOwner('assessmentId'), async (req, res) => {
+router.delete("/assessment/:assessmentId", requireAssessmentOwnerOrTrainerOnMonitoring('assessmentId'), async (req, res) => {
   try {
     const { assessmentId } = req.params;
     const userId = req.user && req.user._id;

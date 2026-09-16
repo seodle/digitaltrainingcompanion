@@ -55,7 +55,7 @@
     },
     {
         "term": "label_signup",
-        "definition": "Iscriviti, \u00e8 gratis!",
+        "definition": "Iscriviti, è gratis!",
         "context": "label to sign up",
         "term_plural": "",
         "reference": "",
@@ -82,7 +82,7 @@
     },
     {
         "term": "dtc_description",
-        "definition": "Valutare i programmi di formazione utilizzando dati basati sull'evidenza",
+        "definition": "La valutazione approfondita della formazione, semplificata.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -91,7 +91,7 @@
     },
     {
         "term": "dtc_description_2",
-        "definition": "Creare valutazioni, visualizzare i risultati, migliorare i programmi di allenamento, il tutto con pochi clic.",
+        "definition": "Organizza, crea, visualizza e migliora le tue valutazioni della formazione in pochi clic, senza perdere il contatto con i tuoi partecipanti.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -100,7 +100,7 @@
     },
     {
         "term": "dtc_description_3",
-        "definition": "La soluzione per valutazioni pi\u00f9 efficienti!",
+        "definition": "La soluzione per valutazioni più efficienti!",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -127,7 +127,7 @@
     },
     {
         "term": "dtc_description_6",
-        "definition": "Progettare valutazioni basate sull'evidenza",
+        "definition": "Progettare la valutazione giusta, facilmente e rapidamente",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -136,7 +136,7 @@
     },
     {
         "term": "dtc_description_7",
-        "definition": "La creazione della valutazione \u00e8 preconfigurata con indicatori chiave derivati dalla letteratura scientifica. Utilizzate l'intelligenza artificiale per generare domande di apprendimento e sfruttate la tecnologia RAG per collegarle senza problemi al vostro quadro di competenze preferito. Inoltre, possiamo integrare i vostri framework di competenze personalizzati su richiesta. Per ulteriori informazioni, contattateci.",
+        "definition": "La creazione della valutazione è preconfigurata con indicatori chiave derivati dalla letteratura scientifica. Utilizzate l'intelligenza artificiale per generare domande di apprendimento e sfruttate la tecnologia RAG per collegarle senza problemi al vostro quadro di competenze preferito. Inoltre, possiamo integrare i vostri framework di competenze personalizzati su richiesta. Per ulteriori informazioni, contattateci.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -154,7 +154,7 @@
     },
     {
         "term": "dtc_description_9",
-        "definition": "Visualizzate i risultati immediatamente dopo aver completato le valutazioni, con una panoramica immediata dei risultati di tutte le vostre valutazioni. Esportate facilmente rapporti dettagliati e dati completi per un'analisi approfondita e un processo decisionale pi\u00f9 informato.",
+        "definition": "Visualizzate i risultati immediatamente dopo aver completato le valutazioni, con una panoramica immediata dei risultati di tutte le vostre valutazioni. Esportate facilmente rapporti dettagliati e dati completi per un'analisi approfondita e un processo decisionale più informato.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -163,7 +163,7 @@
     },
     {
         "term": "dtc_description_10",
-        "definition": "Mantenere un registro del miglioramento continuo",
+        "definition": "Mantenere un registro del miglioramento continuo con i tuoi partecipanti",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -172,7 +172,7 @@
     },
     {
         "term": "dtc_description_11",
-        "definition": "Utilizzate il nostro diario di bordo, facile da usare, per tenere traccia delle osservazioni e dei cambiamenti vitali, migliorando continuamente la vostra formazione.",
+        "definition": "Utilizzate il nostro diario di bordo per tenere traccia di osservazioni, miglioramenti e discussioni con i vostri partecipanti, e migliorare continuamente la vostra formazione.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -199,7 +199,7 @@
     },
     {
         "term": "label_already_have_account",
-        "definition": "Ho gi\u00e0 un account",
+        "definition": "Ho già un account",
         "context": "Adressed to a user",
         "term_plural": "",
         "reference": "",
@@ -433,7 +433,7 @@
     },
     {
         "term": "label_choose_activity",
-        "definition": "Scegli un'attivit\u00e0",
+        "definition": "Scegli un'attività",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -460,7 +460,7 @@
     },
     {
         "term": "label_skill",
-        "definition": "Abilit\u00e0",
+        "definition": "Abilità",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -685,7 +685,7 @@
     },
     {
         "term": "signin_email_success",
-        "definition": "Il tuo indirizzo e-mail \u00e8 confermato, accedi al sito",
+        "definition": "Il tuo indirizzo e-mail è confermato, accedi al sito",
         "context": "message when email if confirmed",
         "term_plural": "",
         "reference": "",
@@ -694,7 +694,7 @@
     },
     {
         "term": "signin_email_sent",
-        "definition": "Ti \u00e8 stata inviata una email",
+        "definition": "Ti è stata inviata una email",
         "context": "message when forgotten password",
         "term_plural": "",
         "reference": "",
@@ -730,7 +730,7 @@
     },
     {
         "term": "label_firstname_required",
-        "definition": "Il nome \u00e8 obbligatorio",
+        "definition": "Il nome è obbligatorio",
         "context": "message for first name required",
         "term_plural": "",
         "reference": "",
@@ -739,7 +739,7 @@
     },
     {
         "term": "label_lastname_required",
-        "definition": "Il cognome \u00e8 obbligatorio",
+        "definition": "Il cognome è obbligatorio",
         "context": "message for last name required",
         "term_plural": "",
         "reference": "",
@@ -748,7 +748,7 @@
     },
     {
         "term": "signup_message_cookie_banner",
-        "definition": "Questo sito utilizza i cookie per consentire l'autenticazione. Le vostre preferenze sono memorizzate localmente nel vostro browser. Non sono condivise n\u00e9 accessibili da siti terzi.",
+        "definition": "Questo sito utilizza i cookie per consentire l'autenticazione. Le vostre preferenze sono memorizzate localmente nel vostro browser. Non sono condivise né accessibili da siti terzi.",
         "context": "message for cookie banner",
         "term_plural": "",
         "reference": "",
@@ -766,7 +766,7 @@
     },
     {
         "term": "label_email_required",
-        "definition": "L'email \u00e8 richiesta",
+        "definition": "L'email è richiesta",
         "context": "label for email required",
         "term_plural": "",
         "reference": "",
@@ -784,7 +784,7 @@
     },
     {
         "term": "label_password_required",
-        "definition": "La password \u00e8 necessaria",
+        "definition": "La password è necessaria",
         "context": "label for password required",
         "term_plural": "",
         "reference": "",
@@ -793,7 +793,7 @@
     },
     {
         "term": "label_platform_mode_required",
-        "definition": "\u00c8 richiesta la modalit\u00e0 piattaforma",
+        "definition": "È richiesta la modalità piattaforma",
         "context": "label for platform mode required",
         "term_plural": "",
         "reference": "",
@@ -802,7 +802,7 @@
     },
     {
         "term": "label_status_required",
-        "definition": "Lo stato \u00e8 richiesto",
+        "definition": "Lo stato è richiesto",
         "context": "label for status required",
         "term_plural": "",
         "reference": "",
@@ -811,7 +811,7 @@
     },
     {
         "term": "signup_error",
-        "definition": "Si \u00e8 verificato un errore imprevisto. Si prega di riprovare.",
+        "definition": "Si è verificato un errore imprevisto. Si prega di riprovare.",
         "context": "message for signup error",
         "term_plural": "",
         "reference": "",
@@ -820,7 +820,7 @@
     },
     {
         "term": "signup_welcome",
-        "definition": "Benvenuto\/a",
+        "definition": "Benvenuto/a",
         "context": "label for welcome",
         "term_plural": "",
         "reference": "",
@@ -838,7 +838,7 @@
     },
     {
         "term": "signup_platform_mode_note",
-        "definition": "Per ora \u00e8 disponibile solo la modalit\u00e0 educazione",
+        "definition": "Per ora è disponibile solo la modalità educazione",
         "context": "label for platform mode note",
         "term_plural": "",
         "reference": "",
@@ -883,7 +883,7 @@
     },
     {
         "term": "signup_platform_mode",
-        "definition": "Modalit\u00e0 piattaforma",
+        "definition": "Modalità piattaforma",
         "context": "label for platform mode",
         "term_plural": "",
         "reference": "",
@@ -901,7 +901,7 @@
     },
     {
         "term": "signup_status_note",
-        "definition": "Per ora \u00e8 disponibile solo la modalit\u00e0 insegnante-formatore",
+        "definition": "Per ora è disponibile solo la modalità insegnante-formatore",
         "context": "label for status note",
         "term_plural": "",
         "reference": "",
@@ -1072,7 +1072,7 @@
     },
     {
         "term": "label_assessment_type_sustainability_conditions",
-        "definition": "Condizioni di sostenibilit\u00e0",
+        "definition": "Condizioni di sostenibilità",
         "context": "label for sustainability conditions",
         "term_plural": "",
         "reference": "",
@@ -1216,7 +1216,7 @@
     },
     {
         "term": "new_monitoring_error_duplicate",
-        "definition": "Esiste gi\u00e0 un monitoraggio con questo nome",
+        "definition": "Esiste già un monitoraggio con questo nome",
         "context": "label for duplicate error",
         "term_plural": "",
         "reference": "",
@@ -1234,7 +1234,7 @@
     },
     {
         "term": "dashboard_share_open_assessments_together",
-        "definition": "Le valutazioni saranno presentate in quest'ordine:",
+        "definition": "Ordine delle pagine",
         "context": "message for sharing assessments",
         "term_plural": "",
         "reference": "",
@@ -1423,7 +1423,7 @@
     },
     {
         "term": "label_code_already_redeemed",
-        "definition": "Il codice era gi\u00e0 stato redatto",
+        "definition": "Il codice era già stato redatto",
         "context": "error message when the code is already redeemed",
         "term_plural": "",
         "reference": "",
@@ -1477,7 +1477,7 @@
     },
     {
         "term": "label_source_owned",
-        "definition": "Di propriet\u00e0",
+        "definition": "Di proprietà",
         "context": "if the object was created and therefore owned by the user",
         "term_plural": "",
         "reference": "",
@@ -1486,7 +1486,7 @@
     },
     {
         "term": "label_tooltip_source",
-        "definition": "Indica se il monitoraggio \u00e8 importato o di propriet\u00e0. I monitoraggi importati (con un codice di condivisione) non possono essere modificati.",
+        "definition": "Indica se il monitoraggio è importato o di proprietà. I monitoraggi importati (con un codice di condivisione) non possono essere modificati.",
         "context": "Explanation about the source of the monitoring",
         "term_plural": "",
         "reference": "",
@@ -1585,7 +1585,7 @@
     },
     {
         "term": "label_survey_no_longer_available",
-        "definition": "Questo sondaggio non \u00e8 pi\u00f9 disponibile",
+        "definition": "Questo sondaggio non è più disponibile",
         "context": "Label saying that the survey is no longer available",
         "term_plural": "",
         "reference": "",
@@ -1594,7 +1594,7 @@
     },
     {
         "term": "label_survey_not_yet_available",
-        "definition": "Questo sondaggio non \u00e8 ancora disponibile",
+        "definition": "Questo sondaggio non è ancora disponibile",
         "context": "Label saying that the survey is not yet available",
         "term_plural": "",
         "reference": "",
@@ -1620,6 +1620,96 @@
         "fuzzy": 1
     },
     {
+        "term": "label_participant",
+        "definition": "Partecipante",
+        "context": "Label for a picker to filter results by one participant",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_participant",
+        "definition": "Scegli un partecipante",
+        "context": "ask the user to choose a participant in results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_all_participants",
+        "definition": "Tutti i partecipanti",
+        "context": "Default option to show aggregated results for the whole group",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_results_for_all",
+        "definition": "Risultati per tutto il gruppo",
+        "context": "Caption on the results page when no participant is selected",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_results_for_participant",
+        "definition": "Risultati per",
+        "context": "Caption prefix on the results page when one participant is selected",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_participant_ranking",
+        "definition": "Per criterio",
+        "context": "Title of the participant ranking panel on results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_hide_ranking_names",
+        "definition": "Nascondi i nomi",
+        "context": "Toggle to hide participant names in the results ranking panel",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ranking_no_criteria",
+        "definition": "Nessun dettaglio dei partecipanti per questa valutazione",
+        "context": "Empty state when results ranking has no scored questions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_ranking_correct",
+        "definition": "Corretto",
+        "context": "Learning ranking: participant answered correctly",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ranking_incorrect",
+        "definition": "Errato",
+        "context": "Learning ranking: participant answered incorrectly",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
         "term": "label_no_account_yet",
         "definition": "Non avete un account?",
         "context": "Ask if the user has an account?",
@@ -1630,7 +1720,7 @@
     },
     {
         "term": "label_has_account_already",
-        "definition": "Avete gi\u00e0 un account?",
+        "definition": "Avete già un account?",
         "context": "Ask if the user already has an account?",
         "term_plural": "",
         "reference": "",
@@ -1640,7 +1730,7 @@
     {
         "term": "label_info_update_password",
         "definition": "Immettere l'email associata al proprio account per modificare la password.",
-        "context": "Adressed to a user to ask him info to change his\/her password",
+        "context": "Adressed to a user to ask him info to change his/her password",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -1684,7 +1774,7 @@
     },
     {
         "term": "lael_change_password_success",
-        "definition": "La password \u00e8 stata modificata con successo",
+        "definition": "La password è stata modificata con successo",
         "context": "Adressed to a user",
         "term_plural": "",
         "reference": "",
@@ -1711,7 +1801,7 @@
     },
     {
         "term": "label_ask_confirmation",
-        "definition": "Siete sicuri di voler procedere? Questa azione non pu\u00f2 essere annullata.",
+        "definition": "Siete sicuri di voler procedere? Questa azione non può essere annullata.",
         "context": "message in the alert for confirmation",
         "term_plural": "",
         "reference": "",
@@ -1765,7 +1855,7 @@
     },
     {
         "term": "label_delete_account_consequences",
-        "definition": "Tutti i dati, compreso il monitoraggio condiviso, andranno persi. Questa azione non pu\u00f2 essere annullata.",
+        "definition": "Tutti i dati, compreso il monitoraggio condiviso, andranno persi. Questa azione non può essere annullata.",
         "context": "to inform the user",
         "term_plural": "",
         "reference": "",
@@ -2035,7 +2125,7 @@
     },
     {
         "term": "label_respondents",
-        "definition": "Rispondente\/i",
+        "definition": "Rispondente/i",
         "context": "Displayed in a form",
         "term_plural": "",
         "reference": "",
@@ -2044,7 +2134,7 @@
     },
     {
         "term": "label_add_log_entry",
-        "definition": "Aggiungere una nuova voce di registro",
+        "definition": "Nuovo messaggio",
         "context": "",
         "term_plural": "",
         "reference": "",
@@ -2080,7 +2170,7 @@
     },
     {
         "term": "label_choose_log_type",
-        "definition": "Scegliere il tipo di registro",
+        "definition": "Tipo di nota",
         "context": "addressed to a user",
         "term_plural": "",
         "reference": "",
@@ -2125,7 +2215,7 @@
     },
     {
         "term": "label_my_training_activity",
-        "definition": "Le mie osservazioni e i miei miglioramenti",
+        "definition": "Le mie osservazioni, i miglioramenti e le discussioni",
         "context": "title of the entire logbook",
         "term_plural": "",
         "reference": "",
@@ -2242,7 +2332,7 @@
     },
     {
         "term": "instruction_ai_prompt",
-        "definition": "Si prega di fornire una descrizione o un contenuto dell'attivit\u00e0 (fino a 10000 caratteri).",
+        "definition": "Si prega di fornire una descrizione o un contenuto dell'attività (fino a 10000 caratteri).",
         "context": "instruction on how to use the ai",
         "term_plural": "",
         "reference": "",
@@ -2368,7 +2458,7 @@
     },
     {
         "term": "label_last_modified",
-        "definition": "Ultima modifica",
+        "definition": "Modificato",
         "context": "label last modified logbook",
         "term_plural": "",
         "reference": "",
@@ -2386,7 +2476,7 @@
     },
     {
         "term": "label_log_completed",
-        "definition": "Completato su:",
+        "definition": "Completato",
         "context": "label log completed",
         "term_plural": "",
         "reference": "",
@@ -2413,7 +2503,7 @@
     },
     {
         "term": "label_sandbox_mode",
-        "definition": "Modalit\u00e0 Sandox",
+        "definition": "Modalità Sandox",
         "context": "label sandox mode",
         "term_plural": "",
         "reference": "",
@@ -2485,7 +2575,7 @@
     },
     {
         "term": "no_api_key_created",
-        "definition": "Non \u00e8 ancora stata creata una chiave API",
+        "definition": "Non è ancora stata creata una chiave API",
         "context": "no api key created",
         "term_plural": "",
         "reference": "",
@@ -2584,7 +2674,7 @@
     },
     {
         "term": "delete_key_api_message",
-        "definition": "Siete sicuri di voler eliminare questa chiave API? Questa azione non pu\u00f2 essere annullata.",
+        "definition": "Siete sicuri di voler eliminare questa chiave API? Questa azione non può essere annullata.",
         "context": "delete key api message",
         "term_plural": "",
         "reference": "",
@@ -2692,7 +2782,7 @@
     },
     {
         "term": "table_assessment_tooltip_status2",
-        "definition": "Solo il proprietario pu\u00f2 cambiare lo stato",
+        "definition": "Solo il proprietario può cambiare lo stato",
         "context": "table assessment tooltip status2",
         "term_plural": "",
         "reference": "",
@@ -2701,7 +2791,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_draft_body",
-        "definition": "La valutazione pu\u00f2 essere modificata.\nLa valutazione non pu\u00f2 ancora essere condivisa con i partecipanti.",
+        "definition": "La valutazione può essere modificata.\nLa valutazione non può ancora essere condivisa con i partecipanti.",
         "context": "table assessment tooltip status draft body",
         "term_plural": "",
         "reference": "",
@@ -2710,7 +2800,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_draft_action",
-        "definition": "Clicca per cambiare lo stato in \u00ab Apri \u00bb e condividere la valutazione con i partecipanti.",
+        "definition": "Clicca per cambiare lo stato in « Apri » e condividere la valutazione con i partecipanti.",
         "context": "table assessment tooltip status draft action",
         "term_plural": "",
         "reference": "",
@@ -2719,7 +2809,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_open_body",
-        "definition": "La valutazione non pu\u00f2 pi\u00f9 essere modificata.*\nLa valutazione pu\u00f2 essere condivisa con i partecipanti.",
+        "definition": "La valutazione non può più essere modificata.*\nLa valutazione può essere condivisa con i partecipanti.",
         "context": "table assessment tooltip status open body",
         "term_plural": "",
         "reference": "",
@@ -2728,7 +2818,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_open_action",
-        "definition": "Clicca per cambiare lo stato in \u00ab Chiudi \u00bb se hai finito di condividere la valutazione con i partecipanti.",
+        "definition": "Clicca per cambiare lo stato in « Chiudi » se hai finito di condividere la valutazione con i partecipanti.",
         "context": "table assessment tooltip status open action",
         "term_plural": "",
         "reference": "",
@@ -2737,7 +2827,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_close_body",
-        "definition": "La valutazione non pu\u00f2 pi\u00f9 essere modificata.*\nLa valutazione non pu\u00f2 pi\u00f9 essere condivisa con i partecipanti.",
+        "definition": "La valutazione non può più essere modificata.*\nLa valutazione non può più essere condivisa con i partecipanti.",
         "context": "table assessment tooltip status close body",
         "term_plural": "",
         "reference": "",
@@ -2764,7 +2854,7 @@
     },
     {
         "term": "warning_status_open_message",
-        "definition": "Se cambi lo stato in \u00ab Apri \u00bb, non potrai pi\u00f9 modificare la valutazione.",
+        "definition": "Se cambi lo stato in « Apri », non potrai più modificare la valutazione.",
         "context": "warning status open message",
         "term_plural": "",
         "reference": "",
@@ -2782,7 +2872,7 @@
     },
     {
         "term": "warning_status_close_message",
-        "definition": "Se cambi lo stato in \u00ab Chiudi \u00bb, non potrai pi\u00f9 condividere le valutazioni con i partecipanti.",
+        "definition": "Se cambi lo stato in « Chiudi », non potrai più condividere le valutazioni con i partecipanti.",
         "context": "warning status close message",
         "term_plural": "",
         "reference": "",
@@ -2845,7 +2935,7 @@
     },
     {
         "term": "label_edit_preview",
-        "definition": "Modifica\/Anteprima",
+        "definition": "Modifica/Anteprima",
         "context": "label edit preview",
         "term_plural": "",
         "reference": "",
@@ -2854,7 +2944,7 @@
     },
     {
         "term": "table_assessments_more",
-        "definition": "Pi\u00f9",
+        "definition": "Più",
         "context": "table assessments more",
         "term_plural": "",
         "reference": "",
@@ -2863,7 +2953,7 @@
     },
     {
         "term": "warning_delete_assessment_message",
-        "definition": "Siete sicuri di voler eliminare questa valutazione? Questa azione non pu\u00f2 essere annullata e rimuover\u00e0 definitivamente tutte le risposte associate.",
+        "definition": "Siete sicuri di voler eliminare questa valutazione? Questa azione non può essere annullata e rimuoverà definitivamente tutte le risposte associate.",
         "context": "warning delete assessment message",
         "term_plural": "",
         "reference": "",
@@ -2890,7 +2980,7 @@
     },
     {
         "term": "warning_delete_answers_message",
-        "definition": "Siete sicuri di voler cancellare tutte le risposte? Questa azione non pu\u00f2 essere annullata.",
+        "definition": "Siete sicuri di voler cancellare tutte le risposte? Questa azione non può essere annullata.",
         "context": "warning delete answers message",
         "term_plural": "",
         "reference": "",
@@ -2908,7 +2998,7 @@
     },
     {
         "term": "warning_delete_monitoring_message",
-        "definition": "Siete sicuri di voler eliminare il monitoraggio? Questa azione canceller\u00e0 anche tutte le valutazioni ed \u00e8 irreversibile.",
+        "definition": "Siete sicuri di voler eliminare il monitoraggio? Questa azione cancellerà anche tutte le valutazioni ed è irreversibile.",
         "context": "warning delete monitoring message",
         "term_plural": "",
         "reference": "",
@@ -2962,7 +3052,7 @@
     },
     {
         "term": "table_assessments_owner",
-        "definition": "Di propriet\u00e0 di",
+        "definition": "Di proprietà di",
         "context": "table assessments owner",
         "term_plural": "",
         "reference": "",
@@ -2989,7 +3079,7 @@
     },
     {
         "term": "error_cannot_share_unowned_assessments",
-        "definition": "Non \u00e8 possibile condividere una valutazione che non appartiene a voi o al proprietario del monitoraggio.",
+        "definition": "Non è possibile condividere una valutazione che non appartiene a voi o al proprietario del monitoraggio.",
         "context": "error cannot share unowned assessments",
         "term_plural": "",
         "reference": "",
@@ -3043,7 +3133,7 @@
     },
     {
         "term": "info_create_questions_with_ai",
-        "definition": "La riservatezza dei vostri dati \u00e8 la nostra massima priorit\u00e0. Quando si utilizza l'IA attraverso la nostra piattaforma, i dati vengono elaborati in modo sicuro sui server svizzeri di Infomaniak e non vengono memorizzati n\u00e9 utilizzati per l'addestramento dei modelli. Per ulteriori informazioni, visitare il sito https:\/\/www.infomaniak.com\/en\/hosting\/ai-tools.",
+        "definition": "La riservatezza dei vostri dati è la nostra massima priorità. Quando si utilizza l'IA attraverso la nostra piattaforma, i dati vengono elaborati in modo sicuro sui server svizzeri di Infomaniak e non vengono memorizzati né utilizzati per l'addestramento dei modelli. Per ulteriori informazioni, visitare il sito https://www.infomaniak.com/en/hosting/ai-tools.",
         "context": "info create questions with ai",
         "term_plural": "",
         "reference": "",
@@ -3061,7 +3151,7 @@
     },
     {
         "term": "placeholder_ai_prompt_student",
-        "definition": "Esempio :\n\n\u201cCome decifrare un messaggio criptato?\u201d.\nCiclo 2 (7\u00b0-8\u00b0 anno) - Educazione digitale e crittografia di base\n\nObiettivi pedagogici\nCompetenze chiave:\nComprendere il funzionamento del cifrario di Cesare e degli attacchi a forza bruta.\nCostruire uno strumento di decrittazione (rullo di Cesare) per testare tutte le possibili chiavi.\nApplicare la crittoanalisi per decodificare messaggi senza chiave.\nCompetenze trasversali:\nLavoro di gruppo collaborativo.\nRisoluzione di problemi e pensiero critico.\nRiflessione etica sulla protezione dei dati personali online.\nLink disciplinari :\nMSN 22 - Numeri; MSN 25 - Modellazione\nFase 1: Comprendere il cifrario di Cesare\nDurata : 20 minuti\nMateriali :\n\nDisco di Cesare (Scheda 1 e 1.1).\nScheda 2: Parole da decifrare.\nScheda 2.1: Risposte alla chiave di decrittazione.\nScheda 2.2: Elenchi di parole personalizzabili.\nProcedura :\n\nSpiegazione del Cifrario di Cesare :\nDefinizione: Metodo di sostituzione monoalfabetico in cui le lettere vengono spostate di un numero fisso di posizioni (ad esempio, A \u2192 D con uno spostamento di 3).\nLimitazioni: Solo 25 chiavi possibili, vulnerabilit\u00e0 ai metodi di decrittazione di base (ad esempio, attacco di forza bruta o analisi della frequenza).\nLaboratorio pratico:\nGli studenti decodificano le parole utilizzando la tecnica del cifrario di Cesare. Tuttavia, alcune parole resistono alla decodifica e gli studenti devono scoprire come decifrarle.\nProblema posto:\nAlcune parole non possono essere decifrate correttamente (ad esempio, DQODQMFUAZ con la chiave 9 \u2192 RECREATION , ma la chiave fornita \u00e8 errata).\nDomanda chiave: perch\u00e9 alcune parole non vengono decriptate correttamente?\nFase 2: costruzione di uno strumento di decrittazione (rullo di Cesare)\nDurata: 20 minuti\nMateriali:\n\nScheda 3: strisce dell'alfabeto da ritagliare.\nCilindro (ad esempio, di latta), forbici, nastro adesivo.\nProcedura :\n\nCostruire il rullo :\nMisurare la circonferenza del cilindro.\nStampare le strisce dell'alfabeto (Foglio 3) e assemblarle intorno al cilindro.\nAllineare le lettere per visualizzare contemporaneamente tutti i possibili spostamenti.\nProva pratica:\nDecodificare parole resistenti (ad esempio, RGIVJ DZUZ con la chiave 17 \u2192 AFTERNOON ).\nFase 3: Decodifica senza chiave (sfida collettiva)\nDurata : 5 minuti\nMateriali : Rulli di Cesare costruiti dagli studenti.\n\nAttivit\u00e0 :\n\nSfida: decifrare la frase misteriosa:\nLEKI DU HUKIIYHUP ZQCQYI Q TUSXYVVHUH SU CUIIQWU\nChiave: 16 \u2192 Risposta: \"NON RIUSCIRETE MAI A DECRIPTARE QUESTO MESSAGGIO\". \nConclusione :\nGli attacchi di forza bruta consentono di testare rapidamente tutte le chiavi possibili, ma ci\u00f2 \u00e8 fattibile solo manualmente per i cifrari semplici. La crittografia complessa richiede computer potenti.\nPasso 4: Creazione di messaggi cifrati (estensione)\nDurata: 30 minuti\nMateriali : Dischi e rulli di Caesar.\n\nAttiivt\u00e0 :\n\nGli studenti creano le proprie frasi criptate utilizzando il disco Caesar e le condividono senza fornire la chiave. I compagni di classe tentano di decifrarle usando il rullo.\nApprofondimento: Protezione dei dati personali\nContesto :\n\nProblemi:\nI siti web raccolgono dati personali (et\u00e0, posizione) per indirizzare gli utenti con annunci pubblicitari.\nLa crittografia protegge i dati sensibili memorizzati su server sicuri.\nDomande guidate :\n\nPerch\u00e9 condividere la propria et\u00e0 online \u00e8 rischioso?\nCome si fa a capire se i propri dati sono criptati?\nValutazione dell'apprendimento\nDomande di conoscenza:\nQual \u00e8 la chiave massima per il cifrario di Cesare?\nChe cos'\u00e8 un attacco a forza bruta?\nEsercizi pratici:\nDecodificare UZIVTKZFE con la chiave 17 \u2192 DIREZIONE .\nSpiegare come funziona il rullo di Cesare.\nMateriali e risorse aggiuntive\nSchede fornite:\nSchede 1-4: Dischi di Cesare, strisce alfabetiche, chiavi di risposta.\nScheda 2.2: Modelli vuoti per personalizzare gli elenchi di parole.\nStrumenti online :\nSiti web per automatizzare la crittografia\/decrittografia: [Link forniti].\nValori fondamentali affrontati\nResponsabilit\u00e0 :\nProteggere i dati personali online.\nCuriosit\u00e0 scientifica :\nComprendere i limiti storici dei metodi di crittografia (ad esempio, Cesare contro Vigen\u00e8re).",
+        "definition": "Esempio :\n\n“Come decifrare un messaggio criptato?”.\nCiclo 2 (7°-8° anno) - Educazione digitale e crittografia di base\n\nObiettivi pedagogici\nCompetenze chiave:\nComprendere il funzionamento del cifrario di Cesare e degli attacchi a forza bruta.\nCostruire uno strumento di decrittazione (rullo di Cesare) per testare tutte le possibili chiavi.\nApplicare la crittoanalisi per decodificare messaggi senza chiave.\nCompetenze trasversali:\nLavoro di gruppo collaborativo.\nRisoluzione di problemi e pensiero critico.\nRiflessione etica sulla protezione dei dati personali online.\nLink disciplinari :\nMSN 22 - Numeri; MSN 25 - Modellazione\nFase 1: Comprendere il cifrario di Cesare\nDurata : 20 minuti\nMateriali :\n\nDisco di Cesare (Scheda 1 e 1.1).\nScheda 2: Parole da decifrare.\nScheda 2.1: Risposte alla chiave di decrittazione.\nScheda 2.2: Elenchi di parole personalizzabili.\nProcedura :\n\nSpiegazione del Cifrario di Cesare :\nDefinizione: Metodo di sostituzione monoalfabetico in cui le lettere vengono spostate di un numero fisso di posizioni (ad esempio, A → D con uno spostamento di 3).\nLimitazioni: Solo 25 chiavi possibili, vulnerabilità ai metodi di decrittazione di base (ad esempio, attacco di forza bruta o analisi della frequenza).\nLaboratorio pratico:\nGli studenti decodificano le parole utilizzando la tecnica del cifrario di Cesare. Tuttavia, alcune parole resistono alla decodifica e gli studenti devono scoprire come decifrarle.\nProblema posto:\nAlcune parole non possono essere decifrate correttamente (ad esempio, DQODQMFUAZ con la chiave 9 → RECREATION , ma la chiave fornita è errata).\nDomanda chiave: perché alcune parole non vengono decriptate correttamente?\nFase 2: costruzione di uno strumento di decrittazione (rullo di Cesare)\nDurata: 20 minuti\nMateriali:\n\nScheda 3: strisce dell'alfabeto da ritagliare.\nCilindro (ad esempio, di latta), forbici, nastro adesivo.\nProcedura :\n\nCostruire il rullo :\nMisurare la circonferenza del cilindro.\nStampare le strisce dell'alfabeto (Foglio 3) e assemblarle intorno al cilindro.\nAllineare le lettere per visualizzare contemporaneamente tutti i possibili spostamenti.\nProva pratica:\nDecodificare parole resistenti (ad esempio, RGIVJ DZUZ con la chiave 17 → AFTERNOON ).\nFase 3: Decodifica senza chiave (sfida collettiva)\nDurata : 5 minuti\nMateriali : Rulli di Cesare costruiti dagli studenti.\n\nAttività :\n\nSfida: decifrare la frase misteriosa:\nLEKI DU HUKIIYHUP ZQCQYI Q TUSXYVVHUH SU CUIIQWU\nChiave: 16 → Risposta: \"NON RIUSCIRETE MAI A DECRIPTARE QUESTO MESSAGGIO\". \nConclusione :\nGli attacchi di forza bruta consentono di testare rapidamente tutte le chiavi possibili, ma ciò è fattibile solo manualmente per i cifrari semplici. La crittografia complessa richiede computer potenti.\nPasso 4: Creazione di messaggi cifrati (estensione)\nDurata: 30 minuti\nMateriali : Dischi e rulli di Caesar.\n\nAttiivtà :\n\nGli studenti creano le proprie frasi criptate utilizzando il disco Caesar e le condividono senza fornire la chiave. I compagni di classe tentano di decifrarle usando il rullo.\nApprofondimento: Protezione dei dati personali\nContesto :\n\nProblemi:\nI siti web raccolgono dati personali (età, posizione) per indirizzare gli utenti con annunci pubblicitari.\nLa crittografia protegge i dati sensibili memorizzati su server sicuri.\nDomande guidate :\n\nPerché condividere la propria età online è rischioso?\nCome si fa a capire se i propri dati sono criptati?\nValutazione dell'apprendimento\nDomande di conoscenza:\nQual è la chiave massima per il cifrario di Cesare?\nChe cos'è un attacco a forza bruta?\nEsercizi pratici:\nDecodificare UZIVTKZFE con la chiave 17 → DIREZIONE .\nSpiegare come funziona il rullo di Cesare.\nMateriali e risorse aggiuntive\nSchede fornite:\nSchede 1-4: Dischi di Cesare, strisce alfabetiche, chiavi di risposta.\nScheda 2.2: Modelli vuoti per personalizzare gli elenchi di parole.\nStrumenti online :\nSiti web per automatizzare la crittografia/decrittografia: [Link forniti].\nValori fondamentali affrontati\nResponsabilità :\nProteggere i dati personali online.\nCuriosità scientifica :\nComprendere i limiti storici dei metodi di crittografia (ad esempio, Cesare contro Vigenère).",
         "context": "placeholder ai prompt student",
         "term_plural": "",
         "reference": "",
@@ -3070,7 +3160,7 @@
     },
     {
         "term": "placeholder_ai_prompt_learning",
-        "definition": "Esempio :\n\nFormazione degli insegnanti: Implementare l'apprendimento esplicito\n \n\"Padroneggiare l'apprendimento esplicito: Un metodo strutturato per massimizzare i risultati degli studenti\"\nIntroduzione:\nL'apprendimento esplicito \u00e8 un approccio pedagogico basato sull'evidenza che enfatizza la chiarezza, la struttura e la progressione logica nell'insegnamento. Questo metodo consente agli insegnanti di trasmettere efficacemente le conoscenze e di promuovere una comprensione profonda tra gli studenti.\n \nDefinizione di apprendimento esplicito\nDefinizione:\nL'apprendimento esplicito \u00e8 una strategia di istruzione diretta in cui l'insegnante guida attivamente gli studenti attraverso un processo di apprendimento strutturato. Si basa su cinque principi fondamentali:\n1.\tChiarezza degli obiettivi di apprendimento.\n2.\tModellamento da parte dell'insegnante.\n3.\tPratica guidata con feedback immediato.\n4.\tPratica indipendente progressiva.\n5.\tValutazione continua per adeguare l'insegnamento.\nEsempio concreto:\nIn matematica, per insegnare la moltiplicazione delle frazioni:\n- Obiettivo chiaro: \"Oggi impareremo a moltiplicare due frazioni\".\n- Modellazione: L'insegnante risolve un esempio passo dopo passo alla lavagna.\n- Pratica guidata: Gli studenti risolvono un problema insieme con la guida dell'insegnante.\n- Pratica indipendente: Gli studenti risolvono gli esercizi individualmente.\n- Valutazione: L'insegnante osserva gli errori pi\u00f9 comuni e, se necessario, adatta l'insegnamento.\n \nAbilit\u00e0 1 - Definire obiettivi di apprendimento chiari\nDefinizione:\nGli obiettivi di apprendimento devono essere specifici, misurabili e comprensibili per gli studenti. Servono come punto di partenza per ogni sessione di insegnamento.\nMetodologia:\n1. Formulare gli obiettivi in frasi semplici e concrete.\nEsempio: \"Alla fine di questa lezione, sarete in grado di identificare le caratteristiche principali di un triangolo isoscele\".\n2.\tSpiegare perch\u00e9 questo apprendimento \u00e8 importante.\nEsempio: \"Questo vi aiuter\u00e0 a risolvere problemi di geometria pi\u00f9 complessi\".\nApplicazione pratica:\nPrima di iniziare una lezione di grammatica (ad esempio, oggetti diretti e indiretti), scrivete alla lavagna:\n- Obiettivo: \"Imparerete a identificare e a usare correttamente gli oggetti diretti e indiretti in una frase\".\n- Perch\u00e9: \"Questo migliorer\u00e0 le vostre capacit\u00e0 di scrittura e di analisi linguistica\".\n \nAbilit\u00e0 2 - Modellamento dell'insegnante\nDefinizione:\nIl modeling consiste nel mostrare esplicitamente agli studenti come completare un compito suddividendolo in fasi e spiegando il ragionamento che sta alla base di ogni azione.\nMetodologia:\n1.\tPreparate un esempio concreto da risolvere davanti agli studenti.\n2.\tPensate ad alta voce per verbalizzare il vostro processo di pensiero (\"Mi chiedo se...\").\n3.\tEvidenziate i potenziali errori e spiegate come evitarli.\nEsempio concreto:\nIn scienze, per spiegare la classificazione degli organismi viventi:\n- L'insegnante proietta l'immagine di una pianta e di un animale.\n- Spiega passo dopo passo come classificare questi organismi in base alle loro caratteristiche (per esempio, presenza o assenza di clorofilla).\n- Verbalizzano: \"Ho notato che questa pianta ha le foglie verdi, il che significa che probabilmente contiene clorofilla\".\n \nAbilit\u00e0 3 - Pratica guidata con feedback immediato\nDefinizione:\nLa pratica guidata consente agli studenti di applicare immediatamente ci\u00f2 che hanno imparato sotto la supervisione dell'insegnante, che fornisce un feedback costruttivo.\nMetodologia:\n1.\tFornire un problema o un compito semplice.\n2.\tOsservare gli studenti mentre lavorano.\n3.\tOffrire un feedback preciso e immediato per correggere gli errori.\nEsempio concreto:\nIn lettura, per insegnare la comprensione del testo:\n- L'insegnante legge un breve brano con gli studenti.\n- Gli studenti rispondono a semplici domande sul testo.\n- L'insegnante si muove in classe, ascolta le risposte e corregge immediatamente le incomprensioni.\n \nAbilit\u00e0 4 - Pratica indipendente progressiva\nDefinizione:\nLa pratica indipendente permette agli studenti di consolidare le loro abilit\u00e0 lavorando da soli o in piccoli gruppi, con compiti di difficolt\u00e0 crescente.\nMetodologia:\n1.\tIniziare con esercizi facili per acquisire sicurezza.\n2.\tAumentare gradualmente la complessit\u00e0 dei compiti.\n3.\tIncoraggiare gli studenti a riflettere sul proprio processo di apprendimento.\nEsempio concreto:\nIn storia, insegnare le cause della Rivoluzione francese:\n- Fase 1: gli studenti leggono un testo semplificato e rispondono a domande chiuse.\n- Fase 2: analizzare un documento storico pi\u00f9 complesso.\n- Fase 3: preparazione di una presentazione orale sulle cause principali.\n \nAbilit\u00e0 5 - Valutazione e adattamento continui\nDefinizione:\nLa valutazione continua permette all'insegnante di seguire i progressi degli studenti e di adattare l'insegnamento in base alle loro esigenze specifiche.\nMetodologia:\n1.\tUtilizzare strumenti diversi (quiz, osservazioni, discussioni).\n2.\tIdentificare le aree di difficolt\u00e0 e pianificare interventi mirati.\n3.\tAdattare gli obiettivi e i metodi, se necessario.\nEsempio concreto:\nIn inglese, per insegnare i verbi irregolari:\n- L'insegnante fa un rapido quiz dopo ogni lezione.\n- Se nota che diversi studenti confondono \"go\" e \"went\", organizza un'ulteriore sessione di pratica guidata.\n- Poi modifica il programma per includere altre sessioni di ripasso.\n \nConclusioni e passi successivi\nConclusioni:\nL'apprendimento esplicito \u00e8 un metodo potente per garantire i progressi di tutti gli studenti, indipendentemente dal loro livello iniziale. Richiede una pianificazione rigorosa e una comunicazione chiara tra insegnante e studenti.\nProssimi passi:\n1.\tProvate a integrare uno o due componenti dell'apprendimento esplicito nelle vostre prossime lezioni.\n2.\tCondividete le vostre esperienze con i colleghi per arricchire le vostre pratiche.\n3.\tPartecipate a un gruppo di lavoro per approfondire le vostre competenze in materia di apprendimento esplicito.",
+        "definition": "Esempio :\n\nFormazione degli insegnanti: Implementare l'apprendimento esplicito\n \n\"Padroneggiare l'apprendimento esplicito: Un metodo strutturato per massimizzare i risultati degli studenti\"\nIntroduzione:\nL'apprendimento esplicito è un approccio pedagogico basato sull'evidenza che enfatizza la chiarezza, la struttura e la progressione logica nell'insegnamento. Questo metodo consente agli insegnanti di trasmettere efficacemente le conoscenze e di promuovere una comprensione profonda tra gli studenti.\n \nDefinizione di apprendimento esplicito\nDefinizione:\nL'apprendimento esplicito è una strategia di istruzione diretta in cui l'insegnante guida attivamente gli studenti attraverso un processo di apprendimento strutturato. Si basa su cinque principi fondamentali:\n1.\tChiarezza degli obiettivi di apprendimento.\n2.\tModellamento da parte dell'insegnante.\n3.\tPratica guidata con feedback immediato.\n4.\tPratica indipendente progressiva.\n5.\tValutazione continua per adeguare l'insegnamento.\nEsempio concreto:\nIn matematica, per insegnare la moltiplicazione delle frazioni:\n- Obiettivo chiaro: \"Oggi impareremo a moltiplicare due frazioni\".\n- Modellazione: L'insegnante risolve un esempio passo dopo passo alla lavagna.\n- Pratica guidata: Gli studenti risolvono un problema insieme con la guida dell'insegnante.\n- Pratica indipendente: Gli studenti risolvono gli esercizi individualmente.\n- Valutazione: L'insegnante osserva gli errori più comuni e, se necessario, adatta l'insegnamento.\n \nAbilità 1 - Definire obiettivi di apprendimento chiari\nDefinizione:\nGli obiettivi di apprendimento devono essere specifici, misurabili e comprensibili per gli studenti. Servono come punto di partenza per ogni sessione di insegnamento.\nMetodologia:\n1. Formulare gli obiettivi in frasi semplici e concrete.\nEsempio: \"Alla fine di questa lezione, sarete in grado di identificare le caratteristiche principali di un triangolo isoscele\".\n2.\tSpiegare perché questo apprendimento è importante.\nEsempio: \"Questo vi aiuterà a risolvere problemi di geometria più complessi\".\nApplicazione pratica:\nPrima di iniziare una lezione di grammatica (ad esempio, oggetti diretti e indiretti), scrivete alla lavagna:\n- Obiettivo: \"Imparerete a identificare e a usare correttamente gli oggetti diretti e indiretti in una frase\".\n- Perché: \"Questo migliorerà le vostre capacità di scrittura e di analisi linguistica\".\n \nAbilità 2 - Modellamento dell'insegnante\nDefinizione:\nIl modeling consiste nel mostrare esplicitamente agli studenti come completare un compito suddividendolo in fasi e spiegando il ragionamento che sta alla base di ogni azione.\nMetodologia:\n1.\tPreparate un esempio concreto da risolvere davanti agli studenti.\n2.\tPensate ad alta voce per verbalizzare il vostro processo di pensiero (\"Mi chiedo se...\").\n3.\tEvidenziate i potenziali errori e spiegate come evitarli.\nEsempio concreto:\nIn scienze, per spiegare la classificazione degli organismi viventi:\n- L'insegnante proietta l'immagine di una pianta e di un animale.\n- Spiega passo dopo passo come classificare questi organismi in base alle loro caratteristiche (per esempio, presenza o assenza di clorofilla).\n- Verbalizzano: \"Ho notato che questa pianta ha le foglie verdi, il che significa che probabilmente contiene clorofilla\".\n \nAbilità 3 - Pratica guidata con feedback immediato\nDefinizione:\nLa pratica guidata consente agli studenti di applicare immediatamente ciò che hanno imparato sotto la supervisione dell'insegnante, che fornisce un feedback costruttivo.\nMetodologia:\n1.\tFornire un problema o un compito semplice.\n2.\tOsservare gli studenti mentre lavorano.\n3.\tOffrire un feedback preciso e immediato per correggere gli errori.\nEsempio concreto:\nIn lettura, per insegnare la comprensione del testo:\n- L'insegnante legge un breve brano con gli studenti.\n- Gli studenti rispondono a semplici domande sul testo.\n- L'insegnante si muove in classe, ascolta le risposte e corregge immediatamente le incomprensioni.\n \nAbilità 4 - Pratica indipendente progressiva\nDefinizione:\nLa pratica indipendente permette agli studenti di consolidare le loro abilità lavorando da soli o in piccoli gruppi, con compiti di difficoltà crescente.\nMetodologia:\n1.\tIniziare con esercizi facili per acquisire sicurezza.\n2.\tAumentare gradualmente la complessità dei compiti.\n3.\tIncoraggiare gli studenti a riflettere sul proprio processo di apprendimento.\nEsempio concreto:\nIn storia, insegnare le cause della Rivoluzione francese:\n- Fase 1: gli studenti leggono un testo semplificato e rispondono a domande chiuse.\n- Fase 2: analizzare un documento storico più complesso.\n- Fase 3: preparazione di una presentazione orale sulle cause principali.\n \nAbilità 5 - Valutazione e adattamento continui\nDefinizione:\nLa valutazione continua permette all'insegnante di seguire i progressi degli studenti e di adattare l'insegnamento in base alle loro esigenze specifiche.\nMetodologia:\n1.\tUtilizzare strumenti diversi (quiz, osservazioni, discussioni).\n2.\tIdentificare le aree di difficoltà e pianificare interventi mirati.\n3.\tAdattare gli obiettivi e i metodi, se necessario.\nEsempio concreto:\nIn inglese, per insegnare i verbi irregolari:\n- L'insegnante fa un rapido quiz dopo ogni lezione.\n- Se nota che diversi studenti confondono \"go\" e \"went\", organizza un'ulteriore sessione di pratica guidata.\n- Poi modifica il programma per includere altre sessioni di ripasso.\n \nConclusioni e passi successivi\nConclusioni:\nL'apprendimento esplicito è un metodo potente per garantire i progressi di tutti gli studenti, indipendentemente dal loro livello iniziale. Richiede una pianificazione rigorosa e una comunicazione chiara tra insegnante e studenti.\nProssimi passi:\n1.\tProvate a integrare uno o due componenti dell'apprendimento esplicito nelle vostre prossime lezioni.\n2.\tCondividete le vostre esperienze con i colleghi per arricchire le vostre pratiche.\n3.\tPartecipate a un gruppo di lavoro per approfondire le vostre competenze in materia di apprendimento esplicito.",
         "context": "placeholder ai prompt learning",
         "term_plural": "",
         "reference": "",
@@ -3088,7 +3178,7 @@
     },
     {
         "term": "label_trial_version",
-        "definition": "La registrazione d\u00e0 accesso a una versione di prova sandbox.",
+        "definition": "La registrazione dà accesso a una versione di prova sandbox.",
         "context": "label trial version",
         "term_plural": "",
         "reference": "",
@@ -3142,7 +3232,7 @@
     },
     {
         "term": "sandbox_user_cannot_import",
-        "definition": "L'importazione del monitoraggio non \u00e8 disponibile per gli utenti sandbox",
+        "definition": "L'importazione del monitoraggio non è disponibile per gli utenti sandbox",
         "context": "sandbox_user_cannot_import",
         "term_plural": "",
         "reference": "",
@@ -3151,7 +3241,7 @@
     },
     {
         "term": "sandbox_user_cannot_copy",
-        "definition": "La copia non \u00e8 disponibile per gli utenti della sandbox",
+        "definition": "La copia non è disponibile per gli utenti della sandbox",
         "context": "sandbox_user_cannot_copy",
         "term_plural": "",
         "reference": "",
@@ -3160,7 +3250,7 @@
     },
     {
         "term": "info_shortname_graph_display",
-        "definition": "Utilizzare un nome breve univoco e significativo. Questo nome verr\u00e0 utilizzato per visualizzare i risultati nei grafici.",
+        "definition": "Utilizzare un nome breve univoco e significativo. Questo nome verrà utilizzato per visualizzare i risultati nei grafici.",
         "context": "info_shortname_graph_display",
         "term_plural": "",
         "reference": "",
@@ -3223,7 +3313,7 @@
     },
     {
         "term": "pricing_integration_title",
-        "definition": "Integrazione di funzionalit\u00e0 su misura",
+        "definition": "Integrazione di funzionalità su misura",
         "context": "pricing_integration_title",
         "term_plural": "",
         "reference": "",
@@ -3232,7 +3322,7 @@
     },
     {
         "term": "pricing_integration_description",
-        "definition": "Sviluppa in collaborazione funzionalit\u00e0 adattate alle tue esigenze specifiche",
+        "definition": "Sviluppa in collaborazione funzionalità adattate alle tue esigenze specifiche",
         "context": "pricing_integration_description",
         "term_plural": "",
         "reference": "",
@@ -3250,7 +3340,7 @@
     },
     {
         "term": "pricing_framework_feature1",
-        "definition": "Co-costruisci o migliora insieme al nostro team funzionalit\u00e0 personalizzate, su misura per le tue esigenze specifiche",
+        "definition": "Co-costruisci o migliora insieme al nostro team funzionalità personalizzate, su misura per le tue esigenze specifiche",
         "context": "pricing_integration_feature2",
         "term_plural": "",
         "reference": "",
@@ -3322,7 +3412,7 @@
     },
     {
         "term": "pricing_research_description",
-        "definition": "Integra la nostra piattaforma nella tua ricerca per monitorare in modo completo l\u2019impatto della tua formazione",
+        "definition": "Integra la nostra piattaforma nella tua ricerca per monitorare in modo completo l’impatto della tua formazione",
         "context": "pricing_research_description",
         "term_plural": "",
         "reference": "",
@@ -3448,7 +3538,7 @@
     },
     {
         "term": "signup_email_already_exists",
-        "definition": "Un account con questo indirizzo email esiste gi\u00e0. Utilizza un indirizzo email diverso o accedi se hai gi\u00e0 un account",
+        "definition": "Un account con questo indirizzo email esiste già. Utilizza un indirizzo email diverso o accedi se hai già un account",
         "context": "signup_email_already_exists",
         "term_plural": "",
         "reference": "",
@@ -3520,7 +3610,7 @@
     },
     {
         "term": "news_section_subtitle",
-        "definition": "Rimani informato sulle ultime funzionalit\u00e0, miglioramenti ed eventi",
+        "definition": "Rimani informato sulle ultime funzionalità, miglioramenti ed eventi",
         "context": "news_section_subtitle",
         "term_plural": "",
         "reference": "",
@@ -3655,8 +3745,17 @@
     },
     {
         "term": "label_generating_summary",
-        "definition": "Generazione del riepilogo\u2026",
+        "definition": "Generazione del riepilogo…",
         "context": "label_generating_summary",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_generate_summary",
+        "definition": "Genera il riassunto",
+        "context": "Button to request an AI summary of text responses",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -3679,7 +3778,7 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
-    }, 
+    },
     {
         "term": "label_display",
         "definition": "Visualizzazione",
@@ -3727,7 +3826,7 @@
     },
     {
         "term": "pricing_per_month",
-        "definition": "\/ mese",
+        "definition": "/ mese",
         "context": "Price suffix shown next to the monthly price",
         "term_plural": "",
         "reference": "",
@@ -3791,7 +3890,7 @@
     {
         "term": "pricing_badge_popular",
         "definition": "Popolare",
-        "context": "Badge shown on highlighted\/recommended plan cards",
+        "context": "Badge shown on highlighted/recommended plan cards",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -3808,7 +3907,7 @@
     },
     {
         "term": "pricing_audience_trainer_desc",
-        "definition": "Crea e condividi monitoraggi e accedi alle funzionalit\u00e0 AI.",
+        "definition": "Crea e condividi monitoraggi e accedi alle funzionalità AI.",
         "context": "Description shown under the trainer tab",
         "term_plural": "",
         "reference": "",
@@ -3862,7 +3961,7 @@
     },
     {
         "term": "pricing_audience_research_desc",
-        "definition": "Utilizzo del Digital Training Companion in un progetto di ricerca con il Center LEARN dell\u2019EPFL. Condizioni personalizzate.",
+        "definition": "Utilizzo del Digital Training Companion in un progetto di ricerca con il Center LEARN dell’EPFL. Condizioni personalizzate.",
         "context": "Description shown under the research tab",
         "term_plural": "",
         "reference": "",
@@ -3898,7 +3997,7 @@
     },
     {
         "term": "pricing_free_trainer_f4",
-        "definition": "Nessuna funzionalit\u00e0 AI",
+        "definition": "Nessuna funzionalità AI",
         "context": "Feature listed on the Free Trainer plan card (limitation)",
         "term_plural": "",
         "reference": "",
@@ -3934,7 +4033,7 @@
     },
     {
         "term": "pricing_pro_trainer_f2",
-        "definition": "Funzionalit\u00e0 complete di intelligenza artificiale",
+        "definition": "Funzionalità complete di intelligenza artificiale",
         "context": "Feature listed on Pro and above trainer plan cards",
         "term_plural": "",
         "reference": "",
@@ -4015,7 +4114,7 @@
     },
     {
         "term": "pricing_pro_teacher_f2",
-        "definition": "Funzionalit\u00e0 complete di intelligenza artificiale",
+        "definition": "Funzionalità complete di intelligenza artificiale",
         "context": "Feature listed on the Pro Teacher plan card",
         "term_plural": "",
         "reference": "",
@@ -4078,7 +4177,7 @@
     },
     {
         "term": "pricing_institution_f4",
-        "definition": "Visibilit\u00e0 delle quote in tempo reale",
+        "definition": "Visibilità delle quote in tempo reale",
         "context": "Feature listed on all Institution plan cards",
         "term_plural": "",
         "reference": "",
@@ -4105,7 +4204,7 @@
     },
     {
         "term": "pricing_research_f3",
-        "definition": "Funzionalit\u00e0 complete di intelligenza artificiale",
+        "definition": "Funzionalità complete di intelligenza artificiale",
         "context": "Feature listed on the Research plan card",
         "term_plural": "",
         "reference": "",
@@ -4258,7 +4357,7 @@
     },
     {
         "term": "settings_trial_days_remaining",
-        "definition": "giorno\/i rimanente\/i",
+        "definition": "giorno/i rimanente/i",
         "context": "Suffix shown after the number of days remaining in the trial",
         "term_plural": "",
         "reference": "",
@@ -4294,7 +4393,7 @@
     },
     {
         "term": "settings_ai_not_included",
-        "definition": "Le funzionalit\u00e0 di intelligenza artificiale non sono incluse nel tuo piano gratuito, a meno che tu non importi un monitoraggio da un allenatore con un piano a pagamento.",
+        "definition": "Le funzionalità di intelligenza artificiale non sono incluse nel tuo piano gratuito, a meno che tu non importi un monitoraggio da un allenatore con un piano a pagamento.",
         "context": "Alert shown for free plan users with no AI access",
         "term_plural": "",
         "reference": "",
@@ -4339,7 +4438,7 @@
     },
     {
         "term": "quota_dialog_trial_title",
-        "definition": "La tua prova \u00e8 terminata.",
+        "definition": "La tua prova è terminata.",
         "context": "Title of the dialog shown when the 14-day trial expires",
         "term_plural": "",
         "reference": "",
@@ -4348,7 +4447,7 @@
     },
     {
         "term": "quota_dialog_trial_body",
-        "definition": "Passa a un piano a pagamento per continuare a utilizzare le funzionalit\u00e0 AI.",
+        "definition": "Passa a un piano a pagamento per continuare a utilizzare le funzionalità AI.",
         "context": "Body text of the trial expired dialog",
         "term_plural": "",
         "reference": "",
@@ -4502,7 +4601,7 @@
     {
         "term": "settings_billing_trial_intro",
         "definition": "La fatturazione del tuo abbonamento inizia dopo la fine della tua prova il",
-        "context": "Settings \u2192 Subscription tab: info alert for paid users in Stripe billing trial (trialing). First part of the sentence; localized trial-end date and a period are appended in the UI.",
+        "context": "Settings → Subscription tab: info alert for paid users in Stripe billing trial (trialing). First part of the sentence; localized trial-end date and a period are appended in the UI.",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -4511,10 +4610,928 @@
     {
         "term": "settings_cancel_plan",
         "definition": "Annulla il mio piano",
-        "context": "Settings \u2192 Subscription tab: red outlined button next to Manage plan; opens same Stripe billing portal where user can cancel.",
+        "context": "Settings → Subscription tab: red outlined button next to Manage plan; opens same Stripe billing portal where user can cancel.",
         "term_plural": "",
         "reference": "",
         "comment": "",
         "fuzzy": 1
-    } 
+    },
+    {
+        "term": "tooltip_schedule_questionnaires",
+        "definition": "Programma l'invio dei questionari via e-mail",
+        "context": "Tooltip for the schedule icon in the sharing questionnaires panel",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dialog_schedule_title",
+        "definition": "Programma i questionari via e-mail",
+        "context": "Title of the schedule questionnaires dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_emails",
+        "definition": "Indirizzi e-mail",
+        "context": "Label for the recipient list in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_add_email",
+        "definition": "Aggiungi",
+        "context": "Button to add an email to the schedule recipient list",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_email_placeholder",
+        "definition": "Incolla un indirizzo per riga",
+        "context": "Placeholder for the email input in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_datetime",
+        "definition": "Data e ora di invio",
+        "context": "Date time picker label in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_save",
+        "definition": "Salva programmazione",
+        "context": "Save button in the schedule questionnaires dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_cancel_send",
+        "definition": "Annulla l'invio programmato",
+        "context": "Button to cancel a pending scheduled questionnaire email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_schedule_invalid_email",
+        "definition": "Inserisci un indirizzo e-mail valido",
+        "context": "Validation error for an invalid email in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_email_required",
+        "definition": "Aggiungi almeno un indirizzo e-mail",
+        "context": "Validation error when saving a schedule with no emails",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_date_required",
+        "definition": "Scegli una data e un'ora nel futuro",
+        "context": "Validation error when the scheduled datetime is missing or in the past",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_save_error",
+        "definition": "Impossibile salvare la programmazione",
+        "context": "Error when the schedule API call fails",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_scheduled_send",
+        "definition": "Invio programmato",
+        "context": "Assessment table column for when questionnaires will be emailed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_scheduled_sent",
+        "definition": "Inviato",
+        "context": "Shown in the scheduled send column after questionnaires have been emailed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_no_emails",
+        "definition": "Nessun destinatario. Incolla un indirizzo per riga.",
+        "context": "Empty state in the schedule dialog recipient list",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_type_ask_for_help",
+        "definition": "Chiedere aiuto",
+        "context": "Log type for requesting support",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility",
+        "definition": "Chi può vedere questo messaggio",
+        "context": "Visibility picker on a logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_private",
+        "definition": "Solo io",
+        "context": "Private log visibility",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_all_trainers",
+        "definition": "Tutti i formatori",
+        "context": "Observation/change visible to the monitoring owner and trainer redeemers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_private_trainer",
+        "definition": "Solo io e altri formatori",
+        "context": "Trainer private log, also visible to other trainers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_trainer",
+        "definition": "Solo formatore",
+        "context": "Teacher shares a log with the monitoring owner",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_selected",
+        "definition": "Insegnanti selezionati",
+        "context": "Trainer shares a log with chosen teachers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_followers",
+        "definition": "Tutti gli insegnanti",
+        "context": "Trainer shares a log with every teacher on the monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_followers_teacher",
+        "definition": "Formatori e insegnanti",
+        "context": "Teacher shares a log with the trainer and all teachers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_contact_teacher",
+        "definition": "Insegnante da contattare",
+        "context": "Trainer picks the teacher to contact in the logbook",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_share_with_teachers",
+        "definition": "Condividi con",
+        "context": "Multi-select of teachers for selected visibility",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_request_help",
+        "definition": "Chiedi aiuto al formatore",
+        "context": "Teacher action on a logbook message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_help_requested",
+        "definition": "Aiuto richiesto",
+        "context": "Shown after a teacher requested help",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_help_sent",
+        "definition": "Richiesta di aiuto inviata al formatore",
+        "context": "Confirmation after creating an Ask for help log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_open_discussion",
+        "definition": "Apri la discussione",
+        "context": "Opens the 1:1 chat on a log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_send_message",
+        "definition": "Invia",
+        "context": "Send a chat message on a log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_chat_placeholder",
+        "definition": "Scrivi un messaggio",
+        "context": "Chat input placeholder",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_chat_empty",
+        "definition": "Nessun messaggio",
+        "context": "Empty chat thread",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_author",
+        "definition": "Autore",
+        "context": "Author label on a shared logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_chat_title",
+        "definition": "Discussione",
+        "context": "Title of the logbook chat window",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_session",
+        "definition": "Sessione",
+        "context": "Session chip on a logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_all",
+        "definition": "Tutte le note",
+        "context": "Logbook filter showing every log type",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_empty",
+        "definition": "Nessun messaggio corrisponde a questi filtri",
+        "context": "Empty state when logbook filters match nothing",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_author_all",
+        "definition": "Tutti gli insegnanti",
+        "context": "Trainer filter showing logs from every author",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_teacher",
+        "definition": "Insegnante",
+        "context": "Trainer filter to show logs from one teacher",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_visible_to",
+        "definition": "Visibile a",
+        "context": "Logbook filter by audience, shorter than the create-form visibility label",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_visible_all",
+        "definition": "Qualsiasi destinatario",
+        "context": "Logbook visibility filter showing every audience",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_audience",
+        "definition": "Pubblico",
+        "context": "Short visibility label next to session on the trainer log form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_toggle_assessment",
+        "definition": "Questionario",
+        "context": "Toggle to add assessment fields on a trainer log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_toggle_participants",
+        "definition": "Partecipanti",
+        "context": "Toggle to add participant fields on a trainer log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_mark_resolved",
+        "definition": "Segna come risolto",
+        "context": "Button to mark an ask-for-help log as resolved",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_resolved",
+        "definition": "Risolto",
+        "context": "Shown when an ask-for-help log is resolved; click to undo",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_delete_confirm",
+        "definition": "Eliminare questa nota? L'azione non può essere annullata.",
+        "context": "Confirmation before deleting a logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_type_ask_for_help_trainer",
+        "definition": "Contattare un insegnante",
+        "context": "Log type for a trainer starting a discussion with a teacher",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_everyone",
+        "definition": "Tutti",
+        "context": "Contact-a-teacher visibility: all teachers can see the message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visible_by",
+        "definition": "Visibile a",
+        "context": "Prefix on a logbook message showing who can see it",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_contact_sent",
+        "definition": "Messaggio inviato agli insegnanti selezionati",
+        "context": "Confirmation after a trainer contacts teachers in the logbook",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "invitation",
+        "definition": "Invito",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "invite_title",
+        "definition": "Sei invitato a compilare un questionario",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "invite_body",
+        "definition": "Ti chiediamo di dedicare qualche minuto per compilare il questionario qui sotto per",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "open_questionnaire",
+        "definition": "Apri il questionario",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "copy_link",
+        "definition": "Se il pulsante non funziona, copia questo link nel browser:",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "invite_subject",
+        "definition": "Questionario per {{name}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "invite_text",
+        "definition": "Sei invitato a compilare un questionario per {{name}}: {{url}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "page",
+        "definition": "Pagina {{n}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent",
+        "definition": "Inviato",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent_title",
+        "definition": "Il questionario è stato inviato",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent_body",
+        "definition": "Il questionario programmato per",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent_body_end",
+        "definition": "è stato inviato correttamente.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pages",
+        "definition": "Pagine",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "recipients",
+        "definition": "Destinatari ({{n}})",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent_subject",
+        "definition": "Questionario inviato per {{name}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent_text",
+        "definition": "Il questionario per {{name}} è stato inviato a {{emails}}.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "questionnaire",
+        "definition": "Questionario",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "default_purpose",
+        "definition": "Questa pagina fa parte del questionario.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "logbook",
+        "definition": "Diario di bordo",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "help_title",
+        "definition": "Un insegnante ha chiesto il tuo aiuto",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "help_body",
+        "definition": "ha chiesto aiuto su un messaggio del diario di bordo per",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "open_logbook",
+        "definition": "Apri il diario di bordo",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "help_subject",
+        "definition": "Aiuto richiesto nel diario di bordo per {{name}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "help_text",
+        "definition": "{{teacher}} ha chiesto aiuto su un messaggio del diario di bordo per {{name}}: {{url}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "a_teacher",
+        "definition": "Un insegnante",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "a_trainer",
+        "definition": "Un formatore",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "contact_title",
+        "definition": "Un formatore ti ha contattato",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "contact_body",
+        "definition": "ti ha inviato un messaggio nel diario di bordo per",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "contact_subject",
+        "definition": "Un formatore ti ha contattato nel diario di bordo per {{name}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "contact_text",
+        "definition": "{{trainer}} ti ha contattato nel diario di bordo per {{name}}: {{url}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reminder_title",
+        "definition": "Un messaggio ti sta aspettando",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reminder_body_start",
+        "definition": "ti ha inviato un messaggio più di 3 giorni fa nella discussione per",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "open_discussion",
+        "definition": "Apri la discussione",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reminder_subject",
+        "definition": "Un messaggio ti aspetta nel diario di bordo per {{name}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reminder_text",
+        "definition": "{{sender}} ti ha inviato un messaggio più di 3 giorni fa nel diario di bordo per {{name}}: {{url}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "someone",
+        "definition": "Qualcuno",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "verify_subject",
+        "definition": "Verifica il tuo indirizzo e-mail",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "verify_html",
+        "definition": "<p>Ciao,</p><p>Clicca sul link qui sotto per verificare il tuo indirizzo e-mail:</p><p><a href=\"{{url}}\" target=\"_blank\">Verifica e-mail</a></p><p>Se non hai richiesto tu questa operazione, ignora questa e-mail.</p>",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reset_subject",
+        "definition": "Password dimenticata — istruzioni per il reset",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reset_text",
+        "definition": "Per reimpostare la password, clicca sul seguente link: {{url}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reset_html",
+        "definition": "<p>Per reimpostare la password, clicca sul link qui sotto:</p><a href=\"{{url}}\">Reimposta la password</a>",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Trainee characteristics",
+        "definition": "Raccoglie informazioni di contesto sui partecipanti a questa formazione.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Training characteristics",
+        "definition": "Descrive il contesto, l'organizzazione e l'impianto della formazione.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Immediate reactions",
+        "definition": "Raccoglie le prime reazioni e la soddisfazione subito dopo la formazione.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Sustainability conditions",
+        "definition": "Esamina le condizioni che favoriscono un uso duraturo di quanto appreso.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Student characteristics",
+        "definition": "Raccoglie informazioni di contesto sugli studenti.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Organizational conditions",
+        "definition": "Esamina i fattori organizzativi che influenzano la formazione.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Learning",
+        "definition": "Valuta conoscenze, competenze e atteggiamenti acquisiti durante la formazione.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Behavioral changes",
+        "definition": "Esamina come cambiano le pratiche dopo la formazione.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Student learning outcomes",
+        "definition": "Valuta i risultati di apprendimento degli studenti legati a questa formazione.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    }
 ]

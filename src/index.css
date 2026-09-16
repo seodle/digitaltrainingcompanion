@@ -10,26 +10,41 @@ body,
   font-family: "Source Sans Pro", sans-serif;
 }
 
+html,
+body,
+#root {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.rdw-editor-toolbar {
+  flex-wrap: wrap !important;
+}
+
+.rdw-editor-wrapper,
+.rdw-editor-main {
+  max-width: 100%;
+}
+
 .app {
   display: flex;
   position: relative;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
+@media (min-width: 900px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #e0e0e0;
-}
+  ::-webkit-scrollbar-track {
+    background: #e0e0e0;
+  }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }

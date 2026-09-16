@@ -9,6 +9,7 @@ import { BACKEND_URL } from "../../config";
 // components
 import DTCLogo from '../../components/DTCLogo';
 import { useMessageService } from '../../services/MessageService';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { buttonStyle, authentificationFormStyle } from '../../components/styledComponents'
 import LanguageSelector from '../../components/LanguageSelector';
 
@@ -20,6 +21,7 @@ const ResetPassword = () => {
   const { isAuthenticated } = useAuthUser();
   const location = useLocation();
   const { getMessage } = useMessageService();
+  const { languageCode } = useLanguage();
 
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const ResetPassword = () => {
   const handleForgotPassword = async () => {
 
     try {
-      await axios.post(`${BACKEND_URL}/forgot-password`, { email: data.email });
+      await axios.post(`${BACKEND_URL}/forgot-password`, { email: data.email, language: languageCode });
       setMessage({ type: "success", text: getMessage('signin_email_sent') });
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -48,9 +50,9 @@ const ResetPassword = () => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" sx={{ minHeight: "100%", height: "100%", overflowY: "auto" }}>
       <Box display="flex" flexDirection="row" alignItems="stretch" justifyContent="center" sx={authentificationFormStyle}>
-        <Box flexGrow={2} flexBasis={0} padding="60px">
+        <Box flexGrow={2} flexBasis={0} sx={{ p: { xs: 3, md: "60px" }, boxSizing: "border-box" }}>
 
           <LanguageSelector />
           <DTCLogo />
@@ -75,7 +77,7 @@ const ResetPassword = () => {
           </Box>
 
           <Box mt={5} display="flex" justifyContent="center">
-            <Button type="submit" variant="contained" sx={{ ...buttonStyle, width: '30%' }} onClick={() => handleForgotPassword()}>
+            <Button type="submit" variant="contained" sx={{ ...buttonStyle, width: { xs: '100%', sm: '40%' }, mr: { xs: 0, sm: 2 } }} onClick={() => handleForgotPassword()}>
               <Typography variant="h5">{getMessage('label_next')}</Typography>
             </Button>
           </Box>

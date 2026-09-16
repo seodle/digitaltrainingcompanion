@@ -6,9 +6,9 @@ import Topbar from "../global/Topbar";
 const Model = () => {
 
     return (
-        <Box display="flex" style={{ height: '100vh', overflow: 'auto' }}>
+        <Box display="flex" sx={{ height: '100%', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
             <Sidebar />
-            <Box display="flex" flex="1" flexDirection="column">
+            <Box display="flex" flex="1" flexDirection="column" sx={{ minWidth: 0, minHeight: 0, overflow: 'auto' }}>
                 <Box mt="10px" ml="10px">
                     <Topbar title="Model" />
                 </Box>

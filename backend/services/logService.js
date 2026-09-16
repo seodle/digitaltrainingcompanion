@@ -1,137 +1,473 @@
-const Log = require('../models/logModel');
+const Log = require("../models/logModel");
+const Monitoring = require("../models/monitoringModel");
+const User = require("../models/userModel");
+const { sendMail, FRONTEND_URL, t } = require("./emailService");
+const { buildHelpRequestHtml, buildTrainerContactHtml } = require("../utils/emailTemplates");
 
-/**
- * Create a log and add it to the database
- * @param {Object} logData - The log data to be created.
- * @return {Promise<Object>} A promise that resolves to the created log object.
- * @throws {Error} Throws an error if there is an issue saving the log to the database.
- */
-const createLog = async (logData) => {
-    try {
-        // Create new Log with all fields including arrays
-        let newLog = new Log({
-            monitoringId: logData.monitoringId,
-            userId: logData.userId,
-            description: logData.description,
-            day: logData.day,
-            assessment: logData.assessment,
-            logType: logData.logType,
-            assessmentNames: logData.assessmentNames || [],
-            displayNames: logData.displayNames || [],
-            isCompleted: logData.isCompleted || false,
-            creationDate: Date.now(),
-            lastModificationDate: null,
-        });
+const VISIBILITY = ["private", "trainer", "selected", "followers"];
+const AUTHOR_POPULATE = { path: "userId", select: "firstName lastName" };
+const CHAT_POPULATE = { path: "chat.userId", select: "firstName lastName" };
+const SHARED_POPULATE = { path: "sharedWith", select: "firstName lastName" };
 
-        // Save it to the database
-        const createdLog = await newLog.save();
-        console.log("New Log created successfully");
-        return createdLog;
+const sharedEntryId = (entry) => String(entry?._id || entry || "").trim();
 
-    } catch (error) {
-        console.error(error);
-        throw new Error("An error occurred while creating the log");
-    }
+const httpError = (status, message) => {
+    const error = new Error(message);
+    error.status = status;
+    return error;
 };
 
-/**
- * Retrieve logs from the database based on monitoringId and userId
- * @param {string} monitoringId - The unique identifier of the monitoring document.
- * @param {string} userId - The unique identifier of the user.
- * @return {Promise<Array>} A promise that resolves to an array of logs.
- * @throws {Error} Throws an error if there is an issue retrieving the logs from the database.
- */
-const getLogsByMonitoringAndUser = async (monitoringId, userId) => {
-    try {
-        // Find logs that match both monitoringId and userId
-        const logs = await Log.find({ monitoringId, userId });
-        return logs;
-    } catch (error) {
-        console.error(error);
-        throw new Error("An error occurred while retrieving the logs");
-    }
+const authorId = (log) => {
+    if (!log || !log.userId) return "";
+    return String(log.userId._id || log.userId);
 };
 
-/**
- * Update a single log by id for the given user
- * @param {string} logId - The log identifier.
- * @param {string} userId - The user identifier (ownership).
- * @param {Object} updates - Partial updates to apply.
- * @return {Promise<Object>} Updated log.
- */
-const updateLog = async (logId, userId, updates) => {
-    try {
-        const allowed = ['description', 'day', 'assessment', 'logType', 'assessmentNames', 'displayNames', 'isCompleted'];
-        const body = {};
-        for (const key of allowed) {
-            if (updates[key] !== undefined) body[key] = updates[key];
-        }
-
-        const now = new Date();
-        if (Object.keys(body).length > 0) {
-            body.lastModificationDate = now;
-        }
-        if (Object.prototype.hasOwnProperty.call(body, 'isCompleted')) {
-            body.completionDate = body.isCompleted ? now : null;
-        }
-
-        const updated = await Log.findOneAndUpdate(
-            { _id: logId, userId },
-            { $set: body },
-            { new: true }
-        );
-        if (!updated) {
-            throw new Error('Log not found or not owned by user');
-        }
-        return updated;
-    } catch (error) {
-        console.error(error);
-        throw new Error("An error occurred while updating the log");
+const getMonitoringAccess = async (monitoringId, requesterId) => {
+    const monitoring = await Monitoring.findById(monitoringId).select("userId sharingCode name");
+    if (!monitoring) {
+        throw httpError(404, "Monitoring not found");
     }
+
+    const isOwner = String(monitoring.userId) === String(requesterId);
+    const requester = await User.findById(requesterId).select("sharingCodeRedeemed userStatus");
+    let isFollower = isOwner;
+    if (!isFollower && monitoring.sharingCode) {
+        isFollower = Array.isArray(requester?.sharingCodeRedeemed)
+            && requester.sharingCodeRedeemed.includes(monitoring.sharingCode);
+    }
+    const isTrainer = isOwner || String(requester?.userStatus) === "Teacher-trainer";
+    const trainerIds = [String(monitoring.userId)];
+    if (monitoring.sharingCode) {
+        const trainers = await User.find(
+            { sharingCodeRedeemed: monitoring.sharingCode, userStatus: "Teacher-trainer" },
+            "_id"
+        ).lean();
+        trainers.forEach((user) => trainerIds.push(String(user._id)));
+    }
+
+    return { monitoring, isOwner, isFollower, isTrainer, trainerIds: [...new Set(trainerIds)] };
 };
 
-/**
- * Update completion status of a single log
- * @param {string} logId
- * @param {string} userId
- * @param {boolean} isCompleted
- * @return {Promise<Object>} Updated log.
- */
-const updateCompletion = async (logId, userId, isCompleted) => {
-    try {
-        const now = new Date();
-        const updated = await Log.findOneAndUpdate(
-            { _id: logId, userId },
-            { $set: { isCompleted, completionDate: isCompleted ? now : null, lastModificationDate: now } },
-            { new: true }
-        );
-        if (!updated) {
-            throw new Error('Log not found or not owned by user');
-        }
-        return updated;
-    } catch (error) {
-        console.error(error);
-        throw new Error("An error occurred while updating completion");
+const assertCanAccessMonitoring = async (monitoringId, requesterId) => {
+    const access = await getMonitoringAccess(monitoringId, requesterId);
+    if (!access.isFollower) {
+        throw httpError(403, "Forbidden");
     }
+    return access;
 };
 
-/**
- * Delete a single log by id for the given user
- * @param {string} logId
- * @param {string} userId
- * @return {Promise<void>}
- */
-const deleteLog = async (logId, userId) => {
-    try {
-        const result = await Log.deleteOne({ _id: logId, userId });
-        if (result.deletedCount === 0) {
-            throw new Error('Log not found or not owned by user');
+const canViewLog = (log, requesterId, { isOwner, isFollower, isTrainer, monitoring, trainerIds = [] }) => {
+    if (authorId(log) === String(requesterId)) {
+        return true;
+    }
+    const visibility = log.visibility || "private";
+    if (visibility === "private" && isTrainer && trainerIds.includes(authorId(log))) {
+        return true;
+    }
+    if (visibility === "followers" && isFollower) {
+        return true;
+    }
+    if (visibility === "trainer" && isTrainer) {
+        return true;
+    }
+    if (visibility === "selected") {
+        return (log.sharedWith || []).some((entry) => sharedEntryId(entry) === String(requesterId));
+    }
+    return false;
+};
+
+const chatPartnerId = (log, ownerId) => {
+    const shared = (log.sharedWith || []).map(sharedEntryId).filter(Boolean);
+    if (shared.length) {
+        return shared[0];
+    }
+    const author = authorId(log);
+    if (author && author !== String(ownerId)) {
+        return author;
+    }
+    if (log.helpRequestedBy && String(log.helpRequestedBy) !== String(ownerId)) {
+        return String(log.helpRequestedBy);
+    }
+    return null;
+};
+
+const isHelpThread = (log) => log.logType === "Ask for help" || Boolean(log.helpRequestedAt);
+
+const canAccessChat = (log, requesterId, access) => {
+    if (!isHelpThread(log)) {
+        return false;
+    }
+    if (access.isTrainer) {
+        return true;
+    }
+    const requester = String(requesterId);
+    if (authorId(log) === requester) {
+        return true;
+    }
+    if (log.helpRequestedBy && String(log.helpRequestedBy) === requester) {
+        return true;
+    }
+    if ((log.visibility || "private") === "followers" && access.isFollower) {
+        return true;
+    }
+    return (log.sharedWith || []).some((entry) => sharedEntryId(entry) === requester);
+};
+
+const getFollowerIds = async (monitoring) => {
+    if (!monitoring.sharingCode) {
+        return [];
+    }
+    const followers = await User.find(
+        { sharingCodeRedeemed: monitoring.sharingCode },
+        "_id"
+    ).lean();
+    return followers.map((user) => String(user._id));
+};
+
+const normalizeSharedWith = (sharedWith, followerIds) => {
+    const unique = [...new Set(
+        (sharedWith || []).map((id) => String(id || "").trim()).filter(Boolean)
+    )];
+    const allowed = new Set(followerIds);
+    const invalid = unique.filter((id) => !allowed.has(id));
+    if (invalid.length) {
+        throw httpError(400, "One or more selected teachers do not follow this monitoring");
+    }
+    return unique;
+};
+
+const resolveVisibility = async (logData, { isOwner, isTrainer, monitoring }) => {
+    const visibility = VISIBILITY.includes(logData.visibility) ? logData.visibility : "private";
+    if (isTrainer) {
+        if (visibility === "trainer") {
+            throw httpError(400, "Trainers cannot use trainer-only visibility");
         }
+        if (visibility === "selected") {
+            const followerIds = await getFollowerIds(monitoring);
+            const sharedWith = normalizeSharedWith(logData.sharedWith, followerIds);
+            if (sharedWith.length === 0) {
+                throw httpError(400, "Select at least one teacher");
+            }
+            return { visibility, sharedWith };
+        }
+        return { visibility, sharedWith: [] };
+    }
+    if (visibility === "selected") {
+        throw httpError(400, "Teachers cannot share with selected colleagues");
+    }
+    return { visibility, sharedWith: [] };
+};
+
+const populateLog = (query) => query.populate(AUTHOR_POPULATE).populate(CHAT_POPULATE).populate(SHARED_POPULATE);
+
+const notifyOwnerOfHelpRequest = async (log, monitoring, requesterId) => {
+    const owner = await User.findById(monitoring.userId).select("email firstName lastName language");
+    const teacher = await User.findById(requesterId).select("firstName lastName");
+    const lang = owner?.language;
+    const teacherName = [teacher?.firstName, teacher?.lastName].filter(Boolean).join(" ") || t(lang, "a_teacher");
+    const logUrl = `${FRONTEND_URL}/logbooks?monitoring=${log.monitoringId}&log=${log._id}`;
+
+    if (!owner?.email) {
         return;
-    } catch (error) {
-        console.error(error);
-        throw new Error("An error occurred while deleting the log");
+    }
+
+    await sendMail({
+        to: owner.email,
+        subject: t(lang, "help_subject", { name: monitoring.name }),
+        html: buildHelpRequestHtml(monitoring, teacherName, log.description, logUrl, lang),
+        text: t(lang, "help_text", { teacher: teacherName, name: monitoring.name, url: logUrl }),
+    });
+};
+
+const notifyTeachersOfTrainerContact = async (log, monitoring, requesterId, teacherIds) => {
+    const trainer = await User.findById(requesterId).select("firstName lastName");
+    const teachers = await User.find({ _id: { $in: teacherIds } }).select("email firstName lastName language");
+    const logUrl = `${FRONTEND_URL}/logbooks?monitoring=${log.monitoringId}&log=${log._id}`;
+
+    await Promise.all(teachers.map(async (teacher) => {
+        if (!teacher?.email) {
+            return;
+        }
+        const lang = teacher.language;
+        const trainerName = [trainer?.firstName, trainer?.lastName].filter(Boolean).join(" ") || t(lang, "a_trainer");
+        await sendMail({
+            to: teacher.email,
+            subject: t(lang, "contact_subject", { name: monitoring.name }),
+            html: buildTrainerContactHtml(monitoring, trainerName, log.description, logUrl, lang),
+            text: t(lang, "contact_text", { trainer: trainerName, name: monitoring.name, url: logUrl }),
+        });
+    }));
+};
+
+const createLog = async (logData, requesterId) => {
+    const { monitoring, isOwner, isTrainer } = await assertCanAccessMonitoring(logData.monitoringId, requesterId);
+    let { visibility, sharedWith } = await resolveVisibility(logData, { isOwner, isTrainer, monitoring });
+    if (logData.logType === "Ask for help") {
+        if (isTrainer) {
+            const followerIds = await getFollowerIds(monitoring);
+            sharedWith = normalizeSharedWith(logData.sharedWith, followerIds);
+            if (sharedWith.length === 0) {
+                throw httpError(400, "Select at least one teacher");
+            }
+            visibility = "selected";
+        } else if (visibility === "private") {
+            visibility = "trainer";
+            sharedWith = [];
+        }
+    }
+
+    const isHelpThreadCreate = logData.logType === "Ask for help";
+    const createdLog = await new Log({
+        monitoringId: logData.monitoringId,
+        userId: requesterId,
+        description: logData.description,
+        day: isOwner ? logData.day : "",
+        assessment: isOwner ? logData.assessment : "",
+        logType: logData.logType,
+        assessmentNames: isOwner ? (logData.assessmentNames || []) : [],
+        displayNames: isOwner ? (logData.displayNames || []) : [],
+        isCompleted: logData.isCompleted || false,
+        visibility,
+        sharedWith,
+        helpRequestedAt: isHelpThreadCreate ? new Date() : null,
+        helpRequestedBy: isHelpThreadCreate ? requesterId : null,
+        creationDate: Date.now(),
+        lastModificationDate: null,
+    }).save();
+
+    if (isHelpThreadCreate && !isTrainer) {
+        try {
+            await notifyOwnerOfHelpRequest(createdLog, monitoring, requesterId);
+        } catch (error) {
+            console.error("Error sending help-request email:", error);
+        }
+    }
+    if (isHelpThreadCreate && isTrainer) {
+        try {
+            await notifyTeachersOfTrainerContact(createdLog, monitoring, requesterId, sharedWith);
+        } catch (error) {
+            console.error("Error sending trainer-contact email:", error);
+        }
+    }
+
+    return populateLog(Log.findById(createdLog._id));
+};
+
+const getVisibleLogsForMonitoring = async (monitoringId, requesterId) => {
+    const { monitoring, isFollower, isTrainer, trainerIds } = await assertCanAccessMonitoring(monitoringId, requesterId);
+
+    const or = [{ userId: requesterId }];
+    if (isFollower) {
+        or.push({ visibility: "followers" });
+    }
+    if (isTrainer) {
+        or.push({ visibility: "trainer" });
+        or.push({
+            userId: { $in: trainerIds },
+            $or: [
+                { visibility: "private" },
+                { visibility: { $exists: false } },
+                { visibility: null },
+            ],
+        });
+    }
+    or.push({ visibility: "selected", sharedWith: requesterId });
+
+    return populateLog(Log.find({ monitoringId, $or: or })).sort({ creationDate: 1 });
+};
+
+const getMonitoringFollowersForLog = async (monitoringId, requesterId) => {
+    const { monitoring, isTrainer } = await assertCanAccessMonitoring(monitoringId, requesterId);
+    if (!isTrainer) {
+        throw httpError(403, "Forbidden");
+    }
+    if (!monitoring.sharingCode) {
+        return [];
+    }
+    return User.find(
+        { sharingCodeRedeemed: monitoring.sharingCode },
+        "firstName lastName"
+    ).lean();
+};
+
+const updateLog = async (logId, userId, updates) => {
+    const existing = await Log.findOne({ _id: logId, userId });
+    if (!existing) {
+        throw httpError(404, "Log not found or not owned by user");
+    }
+
+    const allowed = ["description", "day", "assessment", "logType", "assessmentNames", "displayNames", "isCompleted", "visibility", "sharedWith"];
+    const body = {};
+    for (const key of allowed) {
+        if (updates[key] !== undefined) body[key] = updates[key];
+    }
+
+    if (body.visibility !== undefined || body.sharedWith !== undefined) {
+        const { monitoring, isOwner, isTrainer } = await getMonitoringAccess(existing.monitoringId, userId);
+        const resolved = await resolveVisibility(
+            {
+                visibility: body.visibility !== undefined ? body.visibility : existing.visibility,
+                sharedWith: body.sharedWith !== undefined ? body.sharedWith : existing.sharedWith,
+            },
+            { isOwner, isTrainer, monitoring }
+        );
+        body.visibility = resolved.visibility;
+        body.sharedWith = resolved.sharedWith;
+    }
+
+    const nextType = body.logType !== undefined ? body.logType : existing.logType;
+    const nextVisibility = body.visibility !== undefined ? body.visibility : existing.visibility;
+    if (nextType === "Ask for help" && nextVisibility === "private") {
+        body.visibility = "trainer";
+        body.sharedWith = [];
+    }
+
+    const now = new Date();
+    if (Object.keys(body).length > 0) {
+        body.lastModificationDate = now;
+    }
+    if (Object.prototype.hasOwnProperty.call(body, "isCompleted")) {
+        body.completionDate = body.isCompleted ? now : null;
+    }
+
+    const updated = await Log.findOneAndUpdate(
+        { _id: logId, userId },
+        { $set: body },
+        { new: true }
+    );
+    if (!updated) {
+        throw httpError(404, "Log not found or not owned by user");
+    }
+    return populateLog(Log.findById(updated._id));
+};
+
+const updateCompletion = async (logId, userId, isCompleted) => {
+    const log = await Log.findById(logId);
+    if (!log) {
+        throw httpError(404, "Log not found");
+    }
+
+    const isAuthor = authorId(log) === String(userId);
+    const access = await assertCanAccessMonitoring(log.monitoringId, userId);
+
+    if (log.logType === "Ask for help") {
+        if (!isAuthor && !access.isTrainer) {
+            throw httpError(403, "Forbidden");
+        }
+        if (!canViewLog(log, userId, access)) {
+            throw httpError(403, "Forbidden");
+        }
+    } else if (!isAuthor) {
+        throw httpError(403, "Forbidden");
+    }
+
+    const now = new Date();
+    log.isCompleted = Boolean(isCompleted);
+    log.completionDate = log.isCompleted ? now : null;
+    log.lastModificationDate = now;
+    await log.save();
+    return populateLog(Log.findById(log._id));
+};
+
+const deleteLog = async (logId, userId) => {
+    const result = await Log.deleteOne({ _id: logId, userId });
+    if (result.deletedCount === 0) {
+        throw httpError(404, "Log not found or not owned by user");
     }
 };
 
-module.exports = { createLog, getLogsByMonitoringAndUser, updateLog, updateCompletion, deleteLog };
+const requestHelp = async (logId, requesterId, userStatus) => {
+    if (String(userStatus) !== "Teacher") {
+        throw httpError(403, "Only teachers can request help");
+    }
+
+    const log = await Log.findById(logId);
+    if (!log) {
+        throw httpError(404, "Log not found");
+    }
+
+    const access = await assertCanAccessMonitoring(log.monitoringId, requesterId);
+    const { monitoring, isOwner } = access;
+    if (isOwner) {
+        throw httpError(400, "You cannot request help on your own monitoring");
+    }
+    if (!canViewLog(log, requesterId, access)) {
+        throw httpError(403, "Forbidden");
+    }
+
+    if ((log.visibility || "private") === "private") {
+        log.visibility = "trainer";
+        log.sharedWith = [];
+    }
+
+    log.helpRequestedAt = new Date();
+    log.helpRequestedBy = requesterId;
+    await log.save();
+    try {
+        await notifyOwnerOfHelpRequest(log, monitoring, requesterId);
+    } catch (error) {
+        console.error("Error sending help-request email:", error);
+    }
+
+    return populateLog(Log.findById(log._id));
+};
+
+const getLogChat = async (logId, requesterId) => {
+    const log = await populateLog(Log.findById(logId));
+    if (!log) {
+        throw httpError(404, "Log not found");
+    }
+    const access = await assertCanAccessMonitoring(log.monitoringId, requesterId);
+    if (!canViewLog(log, requesterId, access)) {
+        throw httpError(403, "Forbidden");
+    }
+    if (!canAccessChat(log, requesterId, access)) {
+        throw httpError(403, "Forbidden");
+    }
+    return log.chat || [];
+};
+
+const addLogChatMessage = async (logId, requesterId, text) => {
+    const trimmed = String(text || "").trim();
+    if (!trimmed) {
+        throw httpError(400, "Message text is required");
+    }
+    if (trimmed.length > 2000) {
+        throw httpError(400, "Message is too long");
+    }
+
+    const log = await Log.findById(logId);
+    if (!log) {
+        throw httpError(404, "Log not found");
+    }
+    const access = await assertCanAccessMonitoring(log.monitoringId, requesterId);
+    if (!canViewLog(log, requesterId, access)) {
+        throw httpError(403, "Forbidden");
+    }
+    if (!canAccessChat(log, requesterId, access)) {
+        throw httpError(403, "Forbidden");
+    }
+
+    log.chat.push({
+        userId: requesterId,
+        text: trimmed,
+        createdAt: new Date(),
+    });
+    await log.save();
+
+    const updated = await populateLog(Log.findById(log._id));
+    return updated.chat;
+};
+
+module.exports = {
+    createLog,
+    getVisibleLogsForMonitoring,
+    getMonitoringFollowersForLog,
+    updateLog,
+    updateCompletion,
+    deleteLog,
+    requestHelp,
+    getLogChat,
+    addLogChatMessage,
+    chatPartnerId,
+};

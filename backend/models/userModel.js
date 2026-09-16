@@ -53,7 +53,8 @@ const userSchema = new mongoose.Schema({
     aiBeaconReadOnlyApiKeyCreatedAt: { type: Date, default: null },
     lmsConnectionId: { type: String, default: null },
     sharingCodeRedeemed: { type: [String], default: [] },
-    termsAccepted: { type: Boolean, required: true, default: false }
+    termsAccepted: { type: Boolean, required: true, default: false },
+    language: { type: String, default: "en" }
 });
 
 userSchema.pre("save", function (next) {
@@ -135,6 +136,5 @@ userSchema.methods.generateAuthToken = function () {
     return token;
 };
 
-// TODO user should be users
 const model = mongoose.model("Users", userSchema);
 module.exports = model;

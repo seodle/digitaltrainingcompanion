@@ -43,7 +43,7 @@ const VerifyEmail = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      minHeight="100vh"
+      sx={{ minHeight: "100%", height: "100%", overflowY: "auto" }}
     >
       <Box
         display="flex"
@@ -55,12 +55,12 @@ const VerifyEmail = () => {
           borderRadius: "15px",
           backgroundColor: "#fff",
           width: {
-            xs: "50vw",
+            xs: "90vw",
             md: "30vw",
           },
         }}
       >
-        <Box padding="60px">
+        <Box sx={{ p: { xs: 3, md: "60px" }, boxSizing: "border-box", width: "100%" }}>
           <Box
             mb="20px"
             display="flex"
