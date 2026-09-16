@@ -1,7 +1,7 @@
 [
     {
         "term": "signup_firstname_required",
-        "definition": "Le pr\u00e9nom est obligatoire",
+        "definition": "Le prénom est obligatoire",
         "context": "asked to the user when the first name wasn't entered during the signup",
         "term_plural": "",
         "reference": "",
@@ -10,7 +10,7 @@
     },
     {
         "term": "signup_create_account",
-        "definition": "Cr\u00e9er un compte",
+        "definition": "Créer un compte",
         "context": "title when the user creates his account",
         "term_plural": "",
         "reference": "",
@@ -19,7 +19,7 @@
     },
     {
         "term": "signup_success",
-        "definition": "Merci de vous \u00eatre inscrit ! Veuillez v\u00e9rifier votre bo\u00eete de r\u00e9ception pour terminer votre inscription. L'e-mail de confirmation peut mettre quelques minutes \u00e0 appara\u00eetre. Sinon, v\u00e9rifiez votre dossier de courrier ind\u00e9sirable.",
+        "definition": "Merci de vous être inscrit ! Veuillez vérifier votre boîte de réception pour terminer votre inscription. L'e-mail de confirmation peut mettre quelques minutes à apparaître. Sinon, vérifiez votre dossier de courrier indésirable.",
         "context": "This message is shown if he user succesfully signed up",
         "term_plural": "",
         "reference": "",
@@ -28,7 +28,7 @@
     },
     {
         "term": "label_first_name",
-        "definition": "Pr\u00e9nom",
+        "definition": "Prénom",
         "context": "required field during signup",
         "term_plural": "",
         "reference": "",
@@ -82,7 +82,7 @@
     },
     {
         "term": "dtc_description",
-        "definition": "L'\u00e9valuation approfondie des formations, simplifi\u00e9e.",
+        "definition": "L'évaluation approfondie des formations, simplifiée.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -91,7 +91,7 @@
     },
     {
         "term": "dtc_description_2",
-        "definition": "Organisez, cr\u00e9ez, visualisez et am\u00e9liorez vos \u00e9valuations de formation en quelques clics, sans perdre le contact avec vos participants.",
+        "definition": "Organisez, créez, visualisez et améliorez vos évaluations de formation en quelques clics, sans perdre le contact avec vos participants.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -100,7 +100,7 @@
     },
     {
         "term": "dtc_description_3",
-        "definition": "La solution pour des \u00e9valuations plus efficaces !",
+        "definition": "La solution pour des évaluations plus efficaces !",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -109,7 +109,7 @@
     },
     {
         "term": "dtc_description_4",
-        "definition": "Cr\u00e9er des sessions de suivi et des \u00e9valuations",
+        "definition": "Créer des sessions de suivi et des évaluations",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -118,7 +118,7 @@
     },
     {
         "term": "dtc_description_5",
-        "definition": "Organisez et partagez facilement des monitorages. Toutes vos \u00e9valuations ne sont qu'\u00e0 deux clics, organis\u00e9es et pr\u00eates \u00e0 \u00eatre modifi\u00e9es ou partag\u00e9es, avec des codes QR en haute r\u00e9solution, des liens URL et des versions papier-crayon disponibles imm\u00e9diatement.",
+        "definition": "Organisez et partagez facilement des monitorages. Toutes vos évaluations ne sont qu'à deux clics, organisées et prêtes à être modifiées ou partagées, avec des codes QR en haute résolution, des liens URL et des versions papier-crayon disponibles immédiatement.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -127,7 +127,7 @@
     },
     {
         "term": "dtc_description_6",
-        "definition": "Concevoir la bonne \u00e9valuation, facilement et rapidement",
+        "definition": "Concevoir la bonne évaluation, facilement et rapidement",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -136,7 +136,7 @@
     },
     {
         "term": "dtc_description_7",
-        "definition": "La cr\u00e9ation des \u00e9valuations est pr\u00e9configur\u00e9e avec des indicateurs cl\u00e9s issus de la litt\u00e9rature scientifique. Utilisez l'IA pour g\u00e9n\u00e9rer des questions d\u2019apprentissage et exploitez la technologie RAG pour les lier en toute transparence \u00e0 votre cadre de comp\u00e9tences pr\u00e9f\u00e9r\u00e9. De plus, nous pouvons int\u00e9grer vos propres cadres de comp\u00e9tences personnalis\u00e9s sur demande. Pour plus d\u2019informations, veuillez nous contacter.",
+        "definition": "La création des évaluations est préconfigurée avec des indicateurs clés issus de la littérature scientifique. Utilisez l'IA pour générer des questions d’apprentissage et exploitez la technologie RAG pour les lier en toute transparence à votre cadre de compétences préféré. De plus, nous pouvons intégrer vos propres cadres de compétences personnalisés sur demande. Pour plus d’informations, veuillez nous contacter.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -145,7 +145,7 @@
     },
     {
         "term": "dtc_description_8",
-        "definition": "R\u00e9sultats imm\u00e9diats et retours d'information pour des actions inform\u00e9es",
+        "definition": "Résultats immédiats et retours d'information pour des actions informées",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -154,7 +154,7 @@
     },
     {
         "term": "dtc_description_9",
-        "definition": "Visualisez les r\u00e9sultats imm\u00e9diatement apr\u00e8s la fin des \u00e9valuations et acc\u00e9dez d'un coup d'\u0153il aux r\u00e9sultats de vos diff\u00e9rentes \u00e9valuations. Vous pouvez exporter des rapports et des donn\u00e9es d\u00e9taill\u00e9es pour une analyse approfondie.",
+        "definition": "Visualisez les résultats immédiatement après la fin des évaluations et accédez d'un coup d'œil aux résultats de vos différentes évaluations. Vous pouvez exporter des rapports et des données détaillées pour une analyse approfondie.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -163,7 +163,7 @@
     },
     {
         "term": "dtc_description_10",
-        "definition": "Tenir un registre d'am\u00e9lioration continue avec vos participants",
+        "definition": "Tenir un registre d'amélioration continue avec vos participants",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -172,7 +172,7 @@
     },
     {
         "term": "dtc_description_11",
-        "definition": "Utilisez notre journal de bord pour suivre les observations, les am\u00e9liorations et les discussions avec vos participants, et am\u00e9liorer vos formations en continu.",
+        "definition": "Utilisez notre journal de bord pour suivre les observations, les améliorations et les discussions avec vos participants, et améliorer vos formations en continu.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -190,7 +190,7 @@
     },
     {
         "term": "label_contact_us_at",
-        "definition": "Contactez-nous \u00e0 l'adresse suivante: ",
+        "definition": "Contactez-nous à l'adresse suivante: ",
         "context": "Adressed to a user",
         "term_plural": "",
         "reference": "",
@@ -199,7 +199,7 @@
     },
     {
         "term": "label_already_have_account",
-        "definition": "J'ai d\u00e9j\u00e0 un compte",
+        "definition": "J'ai déjà un compte",
         "context": "Adressed to a user",
         "term_plural": "",
         "reference": "",
@@ -208,7 +208,7 @@
     },
     {
         "term": "label_survey_description",
-        "definition": "Impliqu\u00e9 dans la formation aux comp\u00e9tences num\u00e9riques ? Participez \u00e0 notre enqu\u00eate pour nous aider !",
+        "definition": "Impliqué dans la formation aux compétences numériques ? Participez à notre enquête pour nous aider !",
         "context": "Adressed to a user",
         "term_plural": "",
         "reference": "",
@@ -217,7 +217,7 @@
     },
     {
         "term": "label_survey_participate",
-        "definition": "Participer \u00e0 l'enqu\u00eate",
+        "definition": "Participer à l'enquête",
         "context": "Adressed to a user",
         "term_plural": "",
         "reference": "",
@@ -235,7 +235,7 @@
     },
     {
         "term": "label_survey_view_results",
-        "definition": "Consultez instantan\u00e9ment vos r\u00e9sultats et ceux des autres r\u00e9pondants !",
+        "definition": "Consultez instantanément vos résultats et ceux des autres répondants !",
         "context": "Adressed to a user",
         "term_plural": "",
         "reference": "",
@@ -244,7 +244,7 @@
     },
     {
         "term": "label_table_assessment",
-        "definition": "\u00c9valuations pour :  ",
+        "definition": "Évaluations pour :  ",
         "context": "title for the table assessment",
         "term_plural": "",
         "reference": "",
@@ -262,7 +262,7 @@
     },
     {
         "term": "label_qr_code_section",
-        "definition": "Partager mes \u00e9valuations",
+        "definition": "Partager mes évaluations",
         "context": "title for the section to share assessments",
         "term_plural": "",
         "reference": "",
@@ -271,7 +271,7 @@
     },
     {
         "term": "label_reset",
-        "definition": "Remise \u00e0 z\u00e9ro",
+        "definition": "Remise à zéro",
         "context": "button to reset a form",
         "term_plural": "",
         "reference": "",
@@ -379,7 +379,7 @@
     },
     {
         "term": "label_choose_correct_answer",
-        "definition": "Choisissez la bonne r\u00e9ponse",
+        "definition": "Choisissez la bonne réponse",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -397,7 +397,7 @@
     },
     {
         "term": "label_automatically_recode_competencies",
-        "definition": "Recoder automatiquement les comp\u00e9tences",
+        "definition": "Recoder automatiquement les compétences",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -406,7 +406,7 @@
     },
     {
         "term": "label_add_competencies_manually",
-        "definition": "Ajouter des comp\u00e9tences manuellement",
+        "definition": "Ajouter des compétences manuellement",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -415,7 +415,7 @@
     },
     {
         "term": "label_choose_competency_area",
-        "definition": "Choisir un domaine de comp\u00e9tence",
+        "definition": "Choisir un domaine de compétence",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -424,7 +424,7 @@
     },
     {
         "term": "label_choose_competency",
-        "definition": "Choisir une comp\u00e9tence",
+        "definition": "Choisir une compétence",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -433,7 +433,7 @@
     },
     {
         "term": "label_choose_activity",
-        "definition": "Choisir une activit\u00e9",
+        "definition": "Choisir une activité",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -460,7 +460,7 @@
     },
     {
         "term": "label_skill",
-        "definition": "Comp\u00e9tence",
+        "definition": "Compétence",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -496,7 +496,7 @@
     },
     {
         "term": "label_tooltip_move_question_up",
-        "definition": "Cliquez ici pour d\u00e9placer la question vers le haut",
+        "definition": "Cliquez ici pour déplacer la question vers le haut",
         "context": "indication to explain what a button will do",
         "term_plural": "",
         "reference": "",
@@ -505,7 +505,7 @@
     },
     {
         "term": "label_tooltip_move_question_down",
-        "definition": "Cliquez ici pour d\u00e9placer la question vers le bas",
+        "definition": "Cliquez ici pour déplacer la question vers le bas",
         "context": "indication to explain what a button will do",
         "term_plural": "",
         "reference": "",
@@ -532,7 +532,7 @@
     },
     {
         "term": "label_evaluate",
-        "definition": "\u00c9valuer",
+        "definition": "Évaluer",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -541,7 +541,7 @@
     },
     {
         "term": "label_create_sections",
-        "definition": "Cr\u00e9er des sections",
+        "definition": "Créer des sections",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -559,7 +559,7 @@
     },
     {
         "term": "label_create_new_question",
-        "definition": "Cr\u00e9er une nouvelle question",
+        "definition": "Créer une nouvelle question",
         "context": "when building a questionnaire",
         "term_plural": "",
         "reference": "",
@@ -577,7 +577,7 @@
     },
     {
         "term": "label_logout",
-        "definition": "Se d\u00e9connecter",
+        "definition": "Se déconnecter",
         "context": "Message to logout",
         "term_plural": "",
         "reference": "",
@@ -613,7 +613,7 @@
     },
     {
         "term": "label_results",
-        "definition": "R\u00e9sultats",
+        "definition": "Résultats",
         "context": "label for results",
         "term_plural": "",
         "reference": "",
@@ -622,7 +622,7 @@
     },
     {
         "term": "label_summaries",
-        "definition": "R\u00e9sum\u00e9s",
+        "definition": "Résumés",
         "context": "label for summaries",
         "term_plural": "",
         "reference": "",
@@ -649,7 +649,7 @@
     },
     {
         "term": "label_frameworks",
-        "definition": "R\u00e9f\u00e9rentiels",
+        "definition": "Référentiels",
         "context": "label for framworks",
         "term_plural": "",
         "reference": "",
@@ -676,7 +676,7 @@
     },
     {
         "term": "label_email_address_copied",
-        "definition": "Adresse \u00e9lectronique copi\u00e9e dans le presse-papiers !",
+        "definition": "Adresse électronique copiée dans le presse-papiers !",
         "context": "label for email copied",
         "term_plural": "",
         "reference": "",
@@ -685,7 +685,7 @@
     },
     {
         "term": "signin_email_success",
-        "definition": "Votre courriel est confirm\u00e9, veuillez vous connecter",
+        "definition": "Votre courriel est confirmé, veuillez vous connecter",
         "context": "message when email if confirmed",
         "term_plural": "",
         "reference": "",
@@ -694,7 +694,7 @@
     },
     {
         "term": "signin_email_sent",
-        "definition": "Un courriel vous a \u00e9t\u00e9 envoy\u00e9",
+        "definition": "Un courriel vous a été envoyé",
         "context": "message when forgotten password",
         "term_plural": "",
         "reference": "",
@@ -712,7 +712,7 @@
     },
     {
         "term": "label_forgot_password",
-        "definition": "Mot de passe oubli\u00e9 ou modifi\u00e9 ?",
+        "definition": "Mot de passe oublié ou modifié ?",
         "context": "label for forgotten or change password",
         "term_plural": "",
         "reference": "",
@@ -721,7 +721,7 @@
     },
     {
         "term": "signin_forgot_password",
-        "definition": "Mot de passe oubli\u00e9 ou modifier le mot de passe ?",
+        "definition": "Mot de passe oublié ou modifier le mot de passe ?",
         "context": "label for forgotten or change password",
         "term_plural": "",
         "reference": "",
@@ -730,7 +730,7 @@
     },
     {
         "term": "label_firstname_required",
-        "definition": "Le pr\u00e9nom est obligatoire",
+        "definition": "Le prénom est obligatoire",
         "context": "message for first name required",
         "term_plural": "",
         "reference": "",
@@ -748,7 +748,7 @@
     },
     {
         "term": "signup_message_cookie_banner",
-        "definition": "Ce site utilise des cookies pour permettre l'authentification. Vos pr\u00e9f\u00e9rences sont stock\u00e9es localement dans votre navigateur. Elles ne sont ni partag\u00e9es ni accessibles par des sites tiers.",
+        "definition": "Ce site utilise des cookies pour permettre l'authentification. Vos préférences sont stockées localement dans votre navigateur. Elles ne sont ni partagées ni accessibles par des sites tiers.",
         "context": "message for cookie banner",
         "term_plural": "",
         "reference": "",
@@ -766,7 +766,7 @@
     },
     {
         "term": "label_email_required",
-        "definition": "L'adresse \u00e9lectronique est requise",
+        "definition": "L'adresse électronique est requise",
         "context": "label for email required",
         "term_plural": "",
         "reference": "",
@@ -775,7 +775,7 @@
     },
     {
         "term": "label_minimum_password_characters_required",
-        "definition": "Le mot de passe doit comporter au moins 8 caract\u00e8res",
+        "definition": "Le mot de passe doit comporter au moins 8 caractères",
         "context": "label for minimum password characters required",
         "term_plural": "",
         "reference": "",
@@ -811,7 +811,7 @@
     },
     {
         "term": "signup_error",
-        "definition": "Une erreur inattendue s'est produite. Veuillez r\u00e9essayer.",
+        "definition": "Une erreur inattendue s'est produite. Veuillez réessayer.",
         "context": "message for signup error",
         "term_plural": "",
         "reference": "",
@@ -838,7 +838,7 @@
     },
     {
         "term": "signup_platform_mode_note",
-        "definition": "Seul le mode \u00e9ducatif est disponible pour l'instant",
+        "definition": "Seul le mode éducatif est disponible pour l'instant",
         "context": "label for platform mode note",
         "term_plural": "",
         "reference": "",
@@ -847,7 +847,7 @@
     },
     {
         "term": "signup_education",
-        "definition": "L'\u00e9ducation",
+        "definition": "L'éducation",
         "context": "label for education mode",
         "term_plural": "",
         "reference": "",
@@ -865,7 +865,7 @@
     },
     {
         "term": "signup_teacher_trainer",
-        "definition": "Formateur\u00b7rice",
+        "definition": "Formateur·rice",
         "context": "label for teacher-trainer",
         "term_plural": "",
         "reference": "",
@@ -874,7 +874,7 @@
     },
     {
         "term": "signup_teacher",
-        "definition": "Enseignant\u00b7e",
+        "definition": "Enseignant·e",
         "context": "label for teacher",
         "term_plural": "",
         "reference": "",
@@ -937,7 +937,7 @@
     },
     {
         "term": "table_assessments_creation_date",
-        "definition": "Date de cr\u00e9ation",
+        "definition": "Date de création",
         "context": "label for creation date",
         "term_plural": "",
         "reference": "",
@@ -946,7 +946,7 @@
     },
     {
         "term": "table_assessments_last_modification",
-        "definition": "Derni\u00e8re modification",
+        "definition": "Dernière modification",
         "context": "label for last modification",
         "term_plural": "",
         "reference": "",
@@ -973,7 +973,7 @@
     },
     {
         "term": "table_assessments_button_new_assessment",
-        "definition": "Nouvelle \u00e9valuation",
+        "definition": "Nouvelle évaluation",
         "context": "label for new monitoring",
         "term_plural": "",
         "reference": "",
@@ -982,7 +982,7 @@
     },
     {
         "term": "label_new_assessment",
-        "definition": "Nouvelle \u00e9valuation",
+        "definition": "Nouvelle évaluation",
         "context": "label for new assessment",
         "term_plural": "",
         "reference": "",
@@ -991,7 +991,7 @@
     },
     {
         "term": "label_create_new_assessment",
-        "definition": "Cr\u00e9er une nouvelle \u00e9valuation",
+        "definition": "Créer une nouvelle évaluation",
         "context": "label for create new assessment",
         "term_plural": "",
         "reference": "",
@@ -1000,7 +1000,7 @@
     },
     {
         "term": "new_assessment_type_assessment",
-        "definition": "S\u00e9lectionner un type d'\u00e9valuation",
+        "definition": "Sélectionner un type d'évaluation",
         "context": "label for session",
         "term_plural": "",
         "reference": "",
@@ -1009,7 +1009,7 @@
     },
     {
         "term": "new_assessment_day",
-        "definition": "Concerne la session n\u00b0",
+        "definition": "Concerne la session n°",
         "context": "label for trainee characteristics",
         "term_plural": "",
         "reference": "",
@@ -1018,7 +1018,7 @@
     },
     {
         "term": "label_assessment_type_trainee_characteristics",
-        "definition": "Caract\u00e9ristiques des participants",
+        "definition": "Caractéristiques des participants",
         "context": "label for training characteristics",
         "term_plural": "",
         "reference": "",
@@ -1027,7 +1027,7 @@
     },
     {
         "term": "label_assessment_type_training_characteristics",
-        "definition": "Caract\u00e9ristiques de la formation",
+        "definition": "Caractéristiques de la formation",
         "context": "label for immediate reactions",
         "term_plural": "",
         "reference": "",
@@ -1036,7 +1036,7 @@
     },
     {
         "term": "label_assessment_type_immediate_reactions",
-        "definition": "R\u00e9actions imm\u00e9diates",
+        "definition": "Réactions immédiates",
         "context": "label for learning",
         "term_plural": "",
         "reference": "",
@@ -1072,7 +1072,7 @@
     },
     {
         "term": "label_assessment_type_sustainability_conditions",
-        "definition": "Conditions de durabilit\u00e9",
+        "definition": "Conditions de durabilité",
         "context": "label for sustainability conditions",
         "term_plural": "",
         "reference": "",
@@ -1081,7 +1081,7 @@
     },
     {
         "term": "label_assessment_type_student_characteristics",
-        "definition": "Caract\u00e9ristiques des \u00e9l\u00e8ves",
+        "definition": "Caractéristiques des élèves",
         "context": "label for student characteristics",
         "term_plural": "",
         "reference": "",
@@ -1090,7 +1090,7 @@
     },
     {
         "term": "label_assessment_type_student_learning_outcomes",
-        "definition": "Apprentissage des \u00e9l\u00e8ves",
+        "definition": "Apprentissage des élèves",
         "context": "label for student learning outcomes",
         "term_plural": "",
         "reference": "",
@@ -1099,7 +1099,7 @@
     },
     {
         "term": "new_assessment_create",
-        "definition": "Cr\u00e9er",
+        "definition": "Créer",
         "context": "label for create",
         "term_plural": "",
         "reference": "",
@@ -1117,7 +1117,7 @@
     },
     {
         "term": "new_monitoring_create_new_monitoring",
-        "definition": "Cr\u00e9er un nouveau monitorage",
+        "definition": "Créer un nouveau monitorage",
         "context": "label for create monitoring",
         "term_plural": "",
         "reference": "",
@@ -1144,7 +1144,7 @@
     },
     {
         "term": "new_monitoring_create",
-        "definition": "Cr\u00e9er",
+        "definition": "Créer",
         "context": "label for name",
         "term_plural": "",
         "reference": "",
@@ -1162,7 +1162,7 @@
     },
     {
         "term": "table_monitorings_creation_date",
-        "definition": "Date de cr\u00e9ation",
+        "definition": "Date de création",
         "context": "label for last modification",
         "term_plural": "",
         "reference": "",
@@ -1171,7 +1171,7 @@
     },
     {
         "term": "table_monitorings_last_modification",
-        "definition": "Derni\u00e8re modification",
+        "definition": "Dernière modification",
         "context": "label for last modification",
         "term_plural": "",
         "reference": "",
@@ -1189,7 +1189,7 @@
     },
     {
         "term": "new_assessment_error_creation",
-        "definition": "Les champs obligatoires ne peuvent pas \u00eatre vides.",
+        "definition": "Les champs obligatoires ne peuvent pas être vides.",
         "context": "label for creation error",
         "term_plural": "",
         "reference": "",
@@ -1198,7 +1198,7 @@
     },
     {
         "term": "new_assessment_error_duplicate",
-        "definition": "Une \u00e9valuation portant ce nom existe d\u00e9j\u00e0 pour la session",
+        "definition": "Une évaluation portant ce nom existe déjà pour la session",
         "context": "label for duplicate error",
         "term_plural": "",
         "reference": "",
@@ -1207,7 +1207,7 @@
     },
     {
         "term": "new_monitoring_error_creation",
-        "definition": "Les champs obligatoires ne peuvent pas \u00eatre vides.",
+        "definition": "Les champs obligatoires ne peuvent pas être vides.",
         "context": "label for creation error",
         "term_plural": "",
         "reference": "",
@@ -1216,7 +1216,7 @@
     },
     {
         "term": "new_monitoring_error_duplicate",
-        "definition": "Un monitorage portant ce nom existe d\u00e9j\u00e0",
+        "definition": "Un monitorage portant ce nom existe déjà",
         "context": "label for duplicate error",
         "term_plural": "",
         "reference": "",
@@ -1270,7 +1270,7 @@
     },
     {
         "term": "label_preview",
-        "definition": "Pr\u00e9visualiser",
+        "definition": "Prévisualiser",
         "context": "label for preview",
         "term_plural": "",
         "reference": "",
@@ -1324,7 +1324,7 @@
     },
     {
         "term": "label_status_close",
-        "definition": "Ferm\u00e9",
+        "definition": "Fermé",
         "context": "label for close",
         "term_plural": "",
         "reference": "",
@@ -1414,7 +1414,7 @@
     },
     {
         "term": "label_code_dialog_enter",
-        "definition": "Entrez le code \u00e0 6 chiffres",
+        "definition": "Entrez le code à 6 chiffres",
         "context": "explanation about entering the sharing code",
         "term_plural": "",
         "reference": "",
@@ -1423,7 +1423,7 @@
     },
     {
         "term": "label_code_already_redeemed",
-        "definition": "Le code a d\u00e9j\u00e0 \u00e9t\u00e9 red\u00e9fini",
+        "definition": "Le code a déjà été redéfini",
         "context": "error message when the code is already redeemed",
         "term_plural": "",
         "reference": "",
@@ -1468,7 +1468,7 @@
     },
     {
         "term": "label_source_imported",
-        "definition": "Import\u00e9",
+        "definition": "Importé",
         "context": "if the object was imported from elsehwere",
         "term_plural": "",
         "reference": "",
@@ -1477,7 +1477,7 @@
     },
     {
         "term": "label_source_owned",
-        "definition": "Propri\u00e9taire",
+        "definition": "Propriétaire",
         "context": "if the object was created and therefore owned by the user",
         "term_plural": "",
         "reference": "",
@@ -1486,7 +1486,7 @@
     },
     {
         "term": "label_tooltip_source",
-        "definition": "Indique si le monitorage est import\u00e9 ou si il appartient \u00e0 l'utilisateur. Les sessions de suivis import\u00e9es (via un code de partage) ne peuvent pas \u00eatre modifi\u00e9es.",
+        "definition": "Indique si le monitorage est importé ou si il appartient à l'utilisateur. Les sessions de suivis importées (via un code de partage) ne peuvent pas être modifiées.",
         "context": "Explanation about the source of the monitoring",
         "term_plural": "",
         "reference": "",
@@ -1495,7 +1495,7 @@
     },
     {
         "term": "label_my_results",
-        "definition": "Mes r\u00e9sultats",
+        "definition": "Mes résultats",
         "context": "Title of the page showing the results",
         "term_plural": "",
         "reference": "",
@@ -1504,7 +1504,7 @@
     },
     {
         "term": "label_export_report_csv",
-        "definition": "Exporter les donn\u00e9es au format CSV",
+        "definition": "Exporter les données au format CSV",
         "context": "If the user click on this button, will export the report as a csv",
         "term_plural": "",
         "reference": "",
@@ -1513,7 +1513,7 @@
     },
     {
         "term": "label_generating_report",
-        "definition": "G\u00e9n\u00e9ration de rapports...",
+        "definition": "Génération de rapports...",
         "context": "showing that the report is currently being generated",
         "term_plural": "",
         "reference": "",
@@ -1522,7 +1522,7 @@
     },
     {
         "term": "label_download_report_pdf",
-        "definition": "T\u00e9l\u00e9charger le rapport au format PDF",
+        "definition": "Télécharger le rapport au format PDF",
         "context": "If the user click on this button, will export the report as a pdf",
         "term_plural": "",
         "reference": "",
@@ -1585,7 +1585,7 @@
     },
     {
         "term": "label_survey_no_longer_available",
-        "definition": "Cette enqu\u00eate n'est plus disponible",
+        "definition": "Cette enquête n'est plus disponible",
         "context": "Label saying that the survey is no longer available",
         "term_plural": "",
         "reference": "",
@@ -1594,7 +1594,7 @@
     },
     {
         "term": "label_survey_not_yet_available",
-        "definition": "Cette enqu\u00eate n'est pas encore disponible",
+        "definition": "Cette enquête n'est pas encore disponible",
         "context": "Label saying that the survey is not yet available",
         "term_plural": "",
         "reference": "",
@@ -1603,7 +1603,7 @@
     },
     {
         "term": "label_questions_required_in_survey",
-        "definition": "Certaines questions sont n\u00e9cessaires pour valider l'enqu\u00eate",
+        "definition": "Certaines questions sont nécessaires pour valider l'enquête",
         "context": "Label saying that some questions are required to validate the survey",
         "term_plural": "",
         "reference": "",
@@ -1612,7 +1612,7 @@
     },
     {
         "term": "label_choose_teacher",
-        "definition": "Donn\u00e9es de...",
+        "definition": "Données de...",
         "context": "Label for a picker to choose along a list of teachers",
         "term_plural": "",
         "reference": "",
@@ -1648,7 +1648,7 @@
     },
     {
         "term": "label_results_for_all",
-        "definition": "R\u00e9sultats pour tout le groupe",
+        "definition": "Résultats pour tout le groupe",
         "context": "Caption on the results page when no participant is selected",
         "term_plural": "",
         "reference": "",
@@ -1657,7 +1657,7 @@
     },
     {
         "term": "label_results_for_participant",
-        "definition": "R\u00e9sultats pour",
+        "definition": "Résultats pour",
         "context": "Caption prefix on the results page when one participant is selected",
         "term_plural": "",
         "reference": "",
@@ -1666,7 +1666,7 @@
     },
     {
         "term": "label_participant_ranking",
-        "definition": "Par crit\u00e8re",
+        "definition": "Par critère",
         "context": "Title of the participant ranking panel on results",
         "term_plural": "",
         "reference": "",
@@ -1684,7 +1684,7 @@
     },
     {
         "term": "label_ranking_no_criteria",
-        "definition": "Aucun d\u00e9tail de participant pour cette \u00e9valuation",
+        "definition": "Aucun détail de participant pour cette évaluation",
         "context": "Empty state when results ranking has no scored questions",
         "term_plural": "",
         "reference": "",
@@ -1720,7 +1720,7 @@
     },
     {
         "term": "label_has_account_already",
-        "definition": "Vous avez d\u00e9j\u00e0 un compte ?",
+        "definition": "Vous avez déjà un compte ?",
         "context": "Ask if the user already has an account?",
         "term_plural": "",
         "reference": "",
@@ -1729,8 +1729,8 @@
     },
     {
         "term": "label_info_update_password",
-        "definition": "Saisissez l'e-mail associ\u00e9 \u00e0 votre compte pour modifier votre mot de passe.",
-        "context": "Adressed to a user to ask him info to change his\/her password",
+        "definition": "Saisissez l'e-mail associé à votre compte pour modifier votre mot de passe.",
+        "context": "Adressed to a user to ask him info to change his/her password",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -1756,7 +1756,7 @@
     },
     {
         "term": "label_create_new_password",
-        "definition": "Cr\u00e9er un nouveau mot de passe",
+        "definition": "Créer un nouveau mot de passe",
         "context": "Title of the page to update the password",
         "term_plural": "",
         "reference": "",
@@ -1774,7 +1774,7 @@
     },
     {
         "term": "lael_change_password_success",
-        "definition": "Votre mot de passe a \u00e9t\u00e9 modifi\u00e9 avec succ\u00e8s",
+        "definition": "Votre mot de passe a été modifié avec succès",
         "context": "Adressed to a user",
         "term_plural": "",
         "reference": "",
@@ -1783,7 +1783,7 @@
     },
     {
         "term": "label_regulate",
-        "definition": "R\u00e9guler",
+        "definition": "Réguler",
         "context": "Adressed to a user",
         "term_plural": "",
         "reference": "",
@@ -1801,7 +1801,7 @@
     },
     {
         "term": "label_ask_confirmation",
-        "definition": "\u00cates-vous s\u00fbr de vouloir continuer ? Cette action ne peut \u00eatre annul\u00e9e.",
+        "definition": "Êtes-vous sûr de vouloir continuer ? Cette action ne peut être annulée.",
         "context": "message in the alert for confirmation",
         "term_plural": "",
         "reference": "",
@@ -1828,7 +1828,7 @@
     },
     {
         "term": "label_delete_all_answers",
-        "definition": "Supprimer toutes les r\u00e9ponses",
+        "definition": "Supprimer toutes les réponses",
         "context": "label for a button",
         "term_plural": "",
         "reference": "",
@@ -1846,7 +1846,7 @@
     },
     {
         "term": "label_delete_account_question",
-        "definition": "\u00cates-vous s\u00fbr de vouloir que nous supprimions votre compte ?",
+        "definition": "Êtes-vous sûr de vouloir que nous supprimions votre compte ?",
         "context": "to inform the user",
         "term_plural": "",
         "reference": "",
@@ -1855,7 +1855,7 @@
     },
     {
         "term": "label_delete_account_consequences",
-        "definition": "Toutes les donn\u00e9es, y compris la surveillance partag\u00e9e, seront perdues. Cette action ne peut \u00eatre annul\u00e9e.",
+        "definition": "Toutes les données, y compris la surveillance partagée, seront perdues. Cette action ne peut être annulée.",
         "context": "to inform the user",
         "term_plural": "",
         "reference": "",
@@ -1882,7 +1882,7 @@
     },
     {
         "term": "label_settings",
-        "definition": "Param\u00e8tres",
+        "definition": "Paramètres",
         "context": "Name of a menu",
         "term_plural": "",
         "reference": "",
@@ -1927,7 +1927,7 @@
     },
     {
         "term": "label_tooltip_download_pdf",
-        "definition": "T\u00e9l\u00e9charger le PDF pour r\u00e9pondre au questionnaire sur papier",
+        "definition": "Télécharger le PDF pour répondre au questionnaire sur papier",
         "context": "give indication to the user",
         "term_plural": "",
         "reference": "",
@@ -1936,7 +1936,7 @@
     },
     {
         "term": "label_tooltip_download_qr",
-        "definition": "T\u00e9l\u00e9charger le code QR contenant le lien vers le questionnaire",
+        "definition": "Télécharger le code QR contenant le lien vers le questionnaire",
         "context": "give indication to the user",
         "term_plural": "",
         "reference": "",
@@ -1945,7 +1945,7 @@
     },
     {
         "term": "label_tooltip_copy_link",
-        "definition": "Copiez l'URL pour acc\u00e9der au questionnaire",
+        "definition": "Copiez l'URL pour accéder au questionnaire",
         "context": "give indication to the user",
         "term_plural": "",
         "reference": "",
@@ -1954,7 +1954,7 @@
     },
     {
         "term": "label_tooltip_linked",
-        "definition": "\u00c9tablissez un lien entre les r\u00e9ponses des utilisateurs \u00e0 travers les \u00e9valuations",
+        "definition": "Établissez un lien entre les réponses des utilisateurs à travers les évaluations",
         "context": "give indication to the user",
         "term_plural": "",
         "reference": "",
@@ -1963,7 +1963,7 @@
     },
     {
         "term": "label_tooltip_linked_off",
-        "definition": "Cliquez ici pour ajouter une connexion entre l'\u00e9valuation actuellement ouverte",
+        "definition": "Cliquez ici pour ajouter une connexion entre l'évaluation actuellement ouverte",
         "context": "give indication to the user",
         "term_plural": "",
         "reference": "",
@@ -1981,7 +1981,7 @@
     },
     {
         "term": "label_question_type_radio_ordered",
-        "definition": "Choix simple (ordonn\u00e9)",
+        "definition": "Choix simple (ordonné)",
         "context": "Option type",
         "term_plural": "",
         "reference": "",
@@ -1990,7 +1990,7 @@
     },
     {
         "term": "label_question_type_radio_unordered",
-        "definition": "Choix simple (non ordonn\u00e9)",
+        "definition": "Choix simple (non ordonné)",
         "context": "Option type",
         "term_plural": "",
         "reference": "",
@@ -2035,7 +2035,7 @@
     },
     {
         "term": "label_choose_framework",
-        "definition": "Choisir un r\u00e9f\u00e9rentiel",
+        "definition": "Choisir un référentiel",
         "context": "Displayed in a form",
         "term_plural": "",
         "reference": "",
@@ -2044,7 +2044,7 @@
     },
     {
         "term": "label_choose_elementary_competency",
-        "definition": "Choisir une comp\u00e9tence \u00e9l\u00e9mentaire",
+        "definition": "Choisir une compétence élémentaire",
         "context": "Displayed in a form",
         "term_plural": "",
         "reference": "",
@@ -2053,7 +2053,7 @@
     },
     {
         "term": "label_answer_options",
-        "definition": "Options de r\u00e9ponse",
+        "definition": "Options de réponse",
         "context": "Displayed in a form",
         "term_plural": "",
         "reference": "",
@@ -2080,7 +2080,7 @@
     },
     {
         "term": "label_automatic_encoding_competencies",
-        "definition": "Encodage automatique des comp\u00e9tences",
+        "definition": "Encodage automatique des compétences",
         "context": "Displayed in a form",
         "term_plural": "",
         "reference": "",
@@ -2107,7 +2107,7 @@
     },
     {
         "term": "label_create_questions_with_ai",
-        "definition": "Cr\u00e9er des QCM avec l'IA",
+        "definition": "Créer des QCM avec l'IA",
         "context": "Displayed in a form",
         "term_plural": "",
         "reference": "",
@@ -2116,7 +2116,7 @@
     },
     {
         "term": "label_no_data_available",
-        "definition": "Pas de donn\u00e9es disponibles",
+        "definition": "Pas de données disponibles",
         "context": "Displayed in a form",
         "term_plural": "",
         "reference": "",
@@ -2125,7 +2125,7 @@
     },
     {
         "term": "label_respondents",
-        "definition": "R\u00e9pondant(s)",
+        "definition": "Répondant(s)",
         "context": "Displayed in a form",
         "term_plural": "",
         "reference": "",
@@ -2161,7 +2161,7 @@
     },
     {
         "term": "label_log_type_change",
-        "definition": "Changement \u00e0 effectuer",
+        "definition": "Changement à effectuer",
         "context": "type of log ",
         "term_plural": "",
         "reference": "",
@@ -2179,7 +2179,7 @@
     },
     {
         "term": "label_type_general",
-        "definition": "G\u00e9n\u00e9ral",
+        "definition": "Général",
         "context": "type of log ",
         "term_plural": "",
         "reference": "",
@@ -2215,7 +2215,7 @@
     },
     {
         "term": "label_my_training_activity",
-        "definition": "Mes observations, am\u00e9liorations et discussions",
+        "definition": "Mes observations, améliorations et discussions",
         "context": "title of the entire logbook",
         "term_plural": "",
         "reference": "",
@@ -2269,7 +2269,7 @@
     },
     {
         "term": "label_no_entries",
-        "definition": "Aucune entr\u00e9e",
+        "definition": "Aucune entrée",
         "context": "translations of no entries ",
         "term_plural": "",
         "reference": "",
@@ -2314,7 +2314,7 @@
     },
     {
         "term": "tooltip_anonymous",
-        "definition": "Cliquez ici pour r\u00e9pondre \u00e0 la question de mani\u00e8re anonyme.",
+        "definition": "Cliquez ici pour répondre à la question de manière anonyme.",
         "context": "explanation on the button anonymous",
         "term_plural": "",
         "reference": "",
@@ -2332,7 +2332,7 @@
     },
     {
         "term": "instruction_ai_prompt",
-        "definition": "Veuillez fournir une description ou un contenu de l'activit\u00e9 (jusqu'\u00e0 10000 caract\u00e8res)",
+        "definition": "Veuillez fournir une description ou un contenu de l'activité (jusqu'à 10000 caractères)",
         "context": "instruction on how to use the ai",
         "term_plural": "",
         "reference": "",
@@ -2341,7 +2341,7 @@
     },
     {
         "term": "tooltip_framework_selector",
-        "definition": "Vous permet de connecter vos questions aux r\u00e9f\u00e9rentiels de comp\u00e9tences. Vous souhaitez ajouter un r\u00e9f\u00e9rentiel ? Contactez-nous \u00e0 l'adresse contact@digitaltrainingcompanion.ch .",
+        "definition": "Vous permet de connecter vos questions aux référentiels de compétences. Vous souhaitez ajouter un référentiel ? Contactez-nous à l'adresse contact@digitaltrainingcompanion.ch .",
         "context": "indication about the framework selection",
         "term_plural": "",
         "reference": "",
@@ -2386,7 +2386,7 @@
     },
     {
         "term": "label_transfer_digital_skills",
-        "definition": "Transf\u00e8re de comp\u00e9tences digitales",
+        "definition": "Transfère de compétences digitales",
         "context": "addressed to an adult",
         "term_plural": "",
         "reference": "",
@@ -2431,7 +2431,7 @@
     },
     {
         "term": "complete_survey_generate_linking_code",
-        "definition": "G\u00c9N\u00c9RER UN NOUVEAU CODE",
+        "definition": "GÉNÉRER UN NOUVEAU CODE",
         "context": "generate code",
         "term_plural": "",
         "reference": "",
@@ -2458,7 +2458,7 @@
     },
     {
         "term": "label_last_modified",
-        "definition": "Modifi\u00e9",
+        "definition": "Modifié",
         "context": "label last modified logbook",
         "term_plural": "",
         "reference": "",
@@ -2467,7 +2467,7 @@
     },
     {
         "term": "label_log_isCompleted",
-        "definition": "Marquer comme r\u00e9alis\u00e9",
+        "definition": "Marquer comme réalisé",
         "context": "label log isCompleted",
         "term_plural": "",
         "reference": "",
@@ -2476,7 +2476,7 @@
     },
     {
         "term": "label_log_completed",
-        "definition": "Termin\u00e9",
+        "definition": "Terminé",
         "context": "label log completed",
         "term_plural": "",
         "reference": "",
@@ -2485,7 +2485,7 @@
     },
     {
         "term": "label_select_assessment",
-        "definition": "Choisir une \u00e9valuation",
+        "definition": "Choisir une évaluation",
         "context": "label select assessment",
         "term_plural": "",
         "reference": "",
@@ -2512,7 +2512,7 @@
     },
     {
         "term": "label_copied",
-        "definition": "Copi\u00e9",
+        "definition": "Copié",
         "context": "label copied",
         "term_plural": "",
         "reference": "",
@@ -2539,7 +2539,7 @@
     },
     {
         "term": "label_iframe_code_copied",
-        "definition": "Code copi\u00e9 ! Int\u00e9grez cette question sur votre site web.",
+        "definition": "Code copié ! Intégrez cette question sur votre site web.",
         "context": "label iframe code copied",
         "term_plural": "",
         "reference": "",
@@ -2548,7 +2548,7 @@
     },
     {
         "term": "label_iframe_no_api_key",
-        "definition": "Veuillez d'abord cr\u00e9er une cl\u00e9 API dans les param\u00e8tres",
+        "definition": "Veuillez d'abord créer une clé API dans les paramètres",
         "context": "label iframe no api key",
         "term_plural": "",
         "reference": "",
@@ -2557,7 +2557,7 @@
     },
     {
         "term": "api_key",
-        "definition": "Cl\u00e9 API",
+        "definition": "Clé API",
         "context": "api key",
         "term_plural": "",
         "reference": "",
@@ -2566,7 +2566,7 @@
     },
     {
         "term": "create_api_key",
-        "definition": "Cr\u00e9er une cl\u00e9 API",
+        "definition": "Créer une clé API",
         "context": "create api key",
         "term_plural": "",
         "reference": "",
@@ -2575,7 +2575,7 @@
     },
     {
         "term": "no_api_key_created",
-        "definition": "Pas de cl\u00e9 API cr\u00e9\u00e9e",
+        "definition": "Pas de clé API créée",
         "context": "no api key created",
         "term_plural": "",
         "reference": "",
@@ -2593,7 +2593,7 @@
     },
     {
         "term": "create_new_api_key",
-        "definition": "Cr\u00e9er une cl\u00e9 API",
+        "definition": "Créer une clé API",
         "context": "create new api key",
         "term_plural": "",
         "reference": "",
@@ -2602,7 +2602,7 @@
     },
     {
         "term": "key_name",
-        "definition": "Nom de la cl\u00e9",
+        "definition": "Nom de la clé",
         "context": "key name",
         "term_plural": "",
         "reference": "",
@@ -2620,7 +2620,7 @@
     },
     {
         "term": "key_name_create",
-        "definition": "Cr\u00e9er",
+        "definition": "Créer",
         "context": "key name create",
         "term_plural": "",
         "reference": "",
@@ -2638,7 +2638,7 @@
     },
     {
         "term": "key_api",
-        "definition": "Cl\u00e9",
+        "definition": "Clé",
         "context": "key api",
         "term_plural": "",
         "reference": "",
@@ -2647,7 +2647,7 @@
     },
     {
         "term": "created_key_api",
-        "definition": "Cr\u00e9\u00e9e",
+        "definition": "Créée",
         "context": "created key api",
         "term_plural": "",
         "reference": "",
@@ -2665,7 +2665,7 @@
     },
     {
         "term": "delete_key_api",
-        "definition": "Supprimer la cl\u00e9 API",
+        "definition": "Supprimer la clé API",
         "context": "delete api key",
         "term_plural": "",
         "reference": "",
@@ -2674,7 +2674,7 @@
     },
     {
         "term": "delete_key_api_message",
-        "definition": "\u00cates-vous s\u00fbr de vouloir supprimer cette cl\u00e9 API ? Cette action est irr\u00e9versible.",
+        "definition": "Êtes-vous sûr de vouloir supprimer cette clé API ? Cette action est irréversible.",
         "context": "delete key api message",
         "term_plural": "",
         "reference": "",
@@ -2683,7 +2683,7 @@
     },
     {
         "term": "api_key_created_successfully",
-        "definition": "Cl\u00e9 API cr\u00e9\u00e9e avec succ\u00e8s",
+        "definition": "Clé API créée avec succès",
         "context": "api key created successfully",
         "term_plural": "",
         "reference": "",
@@ -2692,7 +2692,7 @@
     },
     {
         "term": "api_key_deleted_successfully",
-        "definition": "Cl\u00e9 API supprim\u00e9e avec succ\u00e8s",
+        "definition": "Clé API supprimée avec succès",
         "context": "api key deleted successfully",
         "term_plural": "",
         "reference": "",
@@ -2710,7 +2710,7 @@
     },
     {
         "term": "codes_redeemed",
-        "definition": "Codes utilis\u00e9s",
+        "definition": "Codes utilisés",
         "context": "codes redeemed",
         "term_plural": "",
         "reference": "",
@@ -2719,7 +2719,7 @@
     },
     {
         "term": "label_go_dashboard",
-        "definition": "Acc\u00e9der \u00e0 mon tableau de bord",
+        "definition": "Accéder à mon tableau de bord",
         "context": "label go dashboard",
         "term_plural": "",
         "reference": "",
@@ -2782,7 +2782,7 @@
     },
     {
         "term": "table_assessment_tooltip_status2",
-        "definition": "Seul le cr\u00e9ateur de l'\u00e9valuation peut changer le status",
+        "definition": "Seul le créateur de l'évaluation peut changer le status",
         "context": "table assessment tooltip status2",
         "term_plural": "",
         "reference": "",
@@ -2791,7 +2791,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_draft_body",
-        "definition": "L'\u00e9valuation peut \u00eatre modifi\u00e9e.\nL'\u00e9valuation ne peut pas encore \u00eatre partag\u00e9e avec les participants.",
+        "definition": "L'évaluation peut être modifiée.\nL'évaluation ne peut pas encore être partagée avec les participants.",
         "context": "table assessment tooltip status draft body",
         "term_plural": "",
         "reference": "",
@@ -2800,7 +2800,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_draft_action",
-        "definition": "Cliquez pour passer le statut \u00e0 \u00ab Ouvert \u00bb et partager votre \u00e9valuation avec les participants.",
+        "definition": "Cliquez pour passer le statut à « Ouvert » et partager votre évaluation avec les participants.",
         "context": "table assessment tooltip status draft action",
         "term_plural": "",
         "reference": "",
@@ -2809,7 +2809,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_open_body",
-        "definition": "L'\u00e9valuation ne peut plus \u00eatre modifi\u00e9e.*\nL'\u00e9valuation peut \u00eatre partag\u00e9e avec les participants.",
+        "definition": "L'évaluation ne peut plus être modifiée.*\nL'évaluation peut être partagée avec les participants.",
         "context": "table assessment tooltip status open body",
         "term_plural": "",
         "reference": "",
@@ -2818,7 +2818,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_open_action",
-        "definition": "Cliquez pour passer le statut \u00e0 \u00ab Ferm\u00e9 \u00bb si vous avez termin\u00e9 de partager votre \u00e9valuation avec les participants.",
+        "definition": "Cliquez pour passer le statut à « Fermé » si vous avez terminé de partager votre évaluation avec les participants.",
         "context": "table assessment tooltip status open action",
         "term_plural": "",
         "reference": "",
@@ -2827,7 +2827,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_close_body",
-        "definition": "L'\u00e9valuation ne peut plus \u00eatre modifi\u00e9e.*\nL'\u00e9valuation ne peut plus \u00eatre partag\u00e9e avec les participants.",
+        "definition": "L'évaluation ne peut plus être modifiée.*\nL'évaluation ne peut plus être partagée avec les participants.",
         "context": "table assessment tooltip status close body",
         "term_plural": "",
         "reference": "",
@@ -2836,7 +2836,7 @@
     },
     {
         "term": "table_assessment_tooltip_status_copy_footnote",
-        "definition": "* vous pouvez toujours copier votre \u00e9valuation si vous avez besoin d'une version modifiable.",
+        "definition": "* vous pouvez toujours copier votre évaluation si vous avez besoin d'une version modifiable.",
         "context": "table assessment tooltip status copy footnote",
         "term_plural": "",
         "reference": "",
@@ -2845,7 +2845,7 @@
     },
     {
         "term": "warning_status_open_title",
-        "definition": "Ouvrir l'\u00e9valuation ?",
+        "definition": "Ouvrir l'évaluation ?",
         "context": "warning status open title",
         "term_plural": "",
         "reference": "",
@@ -2854,7 +2854,7 @@
     },
     {
         "term": "warning_status_open_message",
-        "definition": "Si vous passez le statut \u00e0 \u00ab Ouvert \u00bb, vous ne pourrez plus modifier l'\u00e9valuation.",
+        "definition": "Si vous passez le statut à « Ouvert », vous ne pourrez plus modifier l'évaluation.",
         "context": "warning status open message",
         "term_plural": "",
         "reference": "",
@@ -2863,7 +2863,7 @@
     },
     {
         "term": "warning_status_close_title",
-        "definition": "Fermer l'\u00e9valuation ?",
+        "definition": "Fermer l'évaluation ?",
         "context": "warning status close title",
         "term_plural": "",
         "reference": "",
@@ -2872,7 +2872,7 @@
     },
     {
         "term": "warning_status_close_message",
-        "definition": "Si vous passez le statut \u00e0 \u00ab Ferm\u00e9 \u00bb, vous ne pourrez plus partager vos \u00e9valuations avec les participants.",
+        "definition": "Si vous passez le statut à « Fermé », vous ne pourrez plus partager vos évaluations avec les participants.",
         "context": "warning status close message",
         "term_plural": "",
         "reference": "",
@@ -2935,7 +2935,7 @@
     },
     {
         "term": "label_edit_preview",
-        "definition": "Modifier\/Pr\u00e9visualiser",
+        "definition": "Modifier/Prévisualiser",
         "context": "label edit preview",
         "term_plural": "",
         "reference": "",
@@ -2953,7 +2953,7 @@
     },
     {
         "term": "warning_delete_assessment_message",
-        "definition": "\u00cates-vous s\u00fbr de vouloir supprimer cette \u00e9valuation ? Cette action est irr\u00e9versible et supprimera d\u00e9finitivement toutes les r\u00e9ponses associ\u00e9es.",
+        "definition": "Êtes-vous sûr de vouloir supprimer cette évaluation ? Cette action est irréversible et supprimera définitivement toutes les réponses associées.",
         "context": "warning delete assessment message",
         "term_plural": "",
         "reference": "",
@@ -2962,7 +2962,7 @@
     },
     {
         "term": "warning_delete_assessment",
-        "definition": "Supprimer l'\u00e9valuation",
+        "definition": "Supprimer l'évaluation",
         "context": "warning delete assessment",
         "term_plural": "",
         "reference": "",
@@ -2971,7 +2971,7 @@
     },
     {
         "term": "warning_delete_answers",
-        "definition": "Supprimer toutes les r\u00e9ponses",
+        "definition": "Supprimer toutes les réponses",
         "context": "warning delete answers",
         "term_plural": "",
         "reference": "",
@@ -2980,7 +2980,7 @@
     },
     {
         "term": "warning_delete_answers_message",
-        "definition": "\u00cates-vous s\u00fbr de vouloir supprimer toutes les r\u00e9ponses ? Cette action est irr\u00e9versible.",
+        "definition": "Êtes-vous sûr de vouloir supprimer toutes les réponses ? Cette action est irréversible.",
         "context": "warning delete answers message",
         "term_plural": "",
         "reference": "",
@@ -2998,7 +2998,7 @@
     },
     {
         "term": "warning_delete_monitoring_message",
-        "definition": "\u00cates-vous s\u00fbr de vouloir supprimer le monitorage ? Cette action supprimera \u00e9galement toutes les \u00e9valuations et est irr\u00e9versible.",
+        "definition": "Êtes-vous sûr de vouloir supprimer le monitorage ? Cette action supprimera également toutes les évaluations et est irréversible.",
         "context": "warning delete monitoring message",
         "term_plural": "",
         "reference": "",
@@ -3007,7 +3007,7 @@
     },
     {
         "term": "warning_stop_sharing",
-        "definition": "Arr\u00eater de partager le monitoring",
+        "definition": "Arrêter de partager le monitoring",
         "context": "warning stop sharing",
         "term_plural": "",
         "reference": "",
@@ -3016,7 +3016,7 @@
     },
     {
         "term": "warning_stop_sharing_message",
-        "definition": "\u00cates-vous s\u00fbr de vouloir arr\u00eater le partage du monitoring ?",
+        "definition": "Êtes-vous sûr de vouloir arrêter le partage du monitoring ?",
         "context": "warning stop sharing message",
         "term_plural": "",
         "reference": "",
@@ -3025,7 +3025,7 @@
     },
     {
         "term": "label_stop_sharing",
-        "definition": "Arr\u00eater le partage",
+        "definition": "Arrêter le partage",
         "context": "label stop sharing",
         "term_plural": "",
         "reference": "",
@@ -3034,7 +3034,7 @@
     },
     {
         "term": "label_shared",
-        "definition": "Partag\u00e9",
+        "definition": "Partagé",
         "context": "label shared",
         "term_plural": "",
         "reference": "",
@@ -3043,7 +3043,7 @@
     },
     {
         "term": "label_user_imported",
-        "definition": "Utilisateurs ayant import\u00e9s le monitorage :",
+        "definition": "Utilisateurs ayant importés le monitorage :",
         "context": "label user imported",
         "term_plural": "",
         "reference": "",
@@ -3052,7 +3052,7 @@
     },
     {
         "term": "table_assessments_owner",
-        "definition": "Appartenant \u00e0",
+        "definition": "Appartenant à",
         "context": "table assessments owner",
         "term_plural": "",
         "reference": "",
@@ -3061,7 +3061,7 @@
     },
     {
         "term": "label_no_monitorings_found",
-        "definition": "Cr\u00e9er ou importer un monitorage pour commencer.",
+        "definition": "Créer ou importer un monitorage pour commencer.",
         "context": "label no monitorings found",
         "term_plural": "",
         "reference": "",
@@ -3070,7 +3070,7 @@
     },
     {
         "term": "tooltip_link_answers",
-        "definition": "Permet de cr\u00e9er un identifiant pour lier les r\u00e9ponses d'un participant \u00e0 travers diff\u00e9rents questionnaires. L'identifiant appara\u00eet dans une colonne sp\u00e9cifique dans l'export .csv",
+        "definition": "Permet de créer un identifiant pour lier les réponses d'un participant à travers différents questionnaires. L'identifiant apparaît dans une colonne spécifique dans l'export .csv",
         "context": "tooltip link answers",
         "term_plural": "",
         "reference": "",
@@ -3079,7 +3079,7 @@
     },
     {
         "term": "error_cannot_share_unowned_assessments",
-        "definition": "Vous ne pouvez pas partager une \u00e9valuation qui ne vous appartient pas ou qui n'appartient pas au propri\u00e9taire du monitorage",
+        "definition": "Vous ne pouvez pas partager une évaluation qui ne vous appartient pas ou qui n'appartient pas au propriétaire du monitorage",
         "context": "error cannot share unowned assessments",
         "term_plural": "",
         "reference": "",
@@ -3106,7 +3106,7 @@
     },
     {
         "term": "label_legal_terms",
-        "definition": "Mentions l\u00e9gales et conditions g\u00e9n\u00e9rales d'utilisation",
+        "definition": "Mentions légales et conditions générales d'utilisation",
         "context": "label legal terms",
         "term_plural": "",
         "reference": "",
@@ -3133,7 +3133,7 @@
     },
     {
         "term": "info_create_questions_with_ai",
-        "definition": "La confidentialit\u00e9 de vos donn\u00e9es est notre priorit\u00e9. Lorsque vous utilisez l'IA via notre plateforme, vos donn\u00e9es sont trait\u00e9es de mani\u00e8re s\u00e9curis\u00e9e sur des serveurs suisses d'Infomaniak et ne sont jamais stock\u00e9es ou utilis\u00e9es pour l\u2019entra\u00eenement de mod\u00e8les. Pour plus d'informations, visitez https:\/\/www.infomaniak.com\/fr\/hebergement\/ai-tools .",
+        "definition": "La confidentialité de vos données est notre priorité. Lorsque vous utilisez l'IA via notre plateforme, vos données sont traitées de manière sécurisée sur des serveurs suisses d'Infomaniak et ne sont jamais stockées ou utilisées pour l’entraînement de modèles. Pour plus d'informations, visitez https://www.infomaniak.com/fr/hebergement/ai-tools .",
         "context": "info create questions with ai",
         "term_plural": "",
         "reference": "",
@@ -3142,7 +3142,7 @@
     },
     {
         "term": "tooltip_unlink_answers",
-        "definition": "D\u00e9sactiver l'identifiant de suivi des participants",
+        "definition": "Désactiver l'identifiant de suivi des participants",
         "context": "tooltip unlink answers",
         "term_plural": "",
         "reference": "",
@@ -3151,7 +3151,7 @@
     },
     {
         "term": "placeholder_ai_prompt_student",
-        "definition": "Exemple :\n\"Comment d\u00e9crypter un message chiffr\u00e9 ?\"\nCycle 2 (7\u1d49-8\u1d49 ann\u00e9e) - \u00c9ducation num\u00e9rique et cryptographie de base\n\nObjectifs p\u00e9dagogiques\nComp\u00e9tences cl\u00e9s :\nComprendre le fonctionnement du chiffrement de C\u00e9sar et des attaques par force brute .\nConstruire un outil de d\u00e9cryptage (rouleau de C\u00e9sar) pour tester toutes les cl\u00e9s possibles.\nAppliquer la cryptanalyse pour d\u00e9coder des messages sans cl\u00e9.\nComp\u00e9tences transversales :\nTravail collaboratif en groupes.\nR\u00e9solution de probl\u00e8mes et esprit critique.\nR\u00e9flexion \u00e9thique sur la protection des donn\u00e9es personnelles en ligne.\nLiens disciplinaires :\nMath\u00e9matiques : Utilisation des nombres et mod\u00e9lisation.\n\u00c9ducation num\u00e9rique : Concepts de cryptage, donn\u00e9es sensibles.\n\u00c9tape 1 : Comprendre le chiffrement de C\u00e9sar\nDur\u00e9e : 20 minutes\nMat\u00e9riel :\n\nDisques de C\u00e9sar (Fiche 1 et 1.1).\nFiches 2 (mots \u00e0 d\u00e9coder), 2.1 (corrig\u00e9), 2.2 (listes personnalisables).\nD\u00e9roulement :\n\nExplication du chiffrement de C\u00e9sar :\nD\u00e9finition : Substitution mono-alphab\u00e9tique avec d\u00e9calage fixe (ex. : A \u2192 D avec un d\u00e9calage de 3).\nLimites : 25 cl\u00e9s possibles, vuln\u00e9rable \u00e0 l'attaque par force brute .\nAtelier pratique :\nLes \u00e9l\u00e8ves d\u00e9cident des mots avec des cl\u00e9s fournies (ex. : LMWXSMVI avec cl\u00e9 4 \u2192 HISTOIRE ).\nR\u00f4les :\nUn \u00e9l\u00e8ve lit les lettres \u00e0 d\u00e9coder.\nUn \u00e9l\u00e8ve param\u00e8tre le disque.\nUn \u00e9l\u00e8ve note les lettres d\u00e9cod\u00e9es.\nProbl\u00e8me pos\u00e9 :\nCertains mots r\u00e9sistent (ex. : DQODQMFUAZ avec cl\u00e9 9 \u2192 RECREATION , mais cl\u00e9 incorrecte fournie).\nQuestion cl\u00e9 : Pourquoi certains mots ne se d\u00e9cryptent-ils pas correctement ?\n\u00c9tape 2 : Construire un outil de d\u00e9cryptage (rouleau de C\u00e9sar)\nDur\u00e9e : 20 minutes\nMat\u00e9riel :\n\nFiche 3 (bandes alphab\u00e9tiques \u00e0 d\u00e9couper).\nCylindre (ex. : bo\u00eete de conserve), ciseaux, scotch.\nD\u00e9roulement :\n\nFabrication du rouleau :\nMesurer la circonf\u00e9rence du cylindre.\nImprimer les bandes alphab\u00e9tiques et les assembler autour du cylindre.\nAligner les lettres pour tester tous les d\u00e9calages simultan\u00e9ment.\nTest pratique :\nD\u00e9coder les mots r\u00e9siduels (ex. : RGIVJ DZUZ avec cl\u00e9 17 \u2192 APRESMIDI ).\nEnseignement : L'attaque par force brute permet de tester toutes les cl\u00e9s en un seul essai.\n\u00c9tape 3 : D\u00e9cryptage sans cl\u00e9 (d\u00e9fi collectif)\nDur\u00e9e : 5 minutes\nMat\u00e9riel : Rouleaux de C\u00e9sar construits.\n\nActivit\u00e9 :\n\nD\u00e9fi : D\u00e9coder la phrase myst\u00e8re :\nLEKI DU HUKIIYHUP ZQCQYI Q TUSXYVVHUH SU CUIIQWU\nCl\u00e9 : 16 \u2192 R\u00e9ponse : \"VOUS NE REUSSIREZ JAMAIS A DECHIFFRER CE MESSAGE\". \nConclusion p\u00e9dagogique :\nL'attaque par force brute est faisable \u00e0 la main pour des m\u00e9thodes simples, mais n\u00e9cessite des ordinateurs puissants pour des chiffrements complexes.\n\u00c9tape 4 : Cr\u00e9ation de messages chiffr\u00e9s (prolongement)\nDur\u00e9e : 30 minutes\nMat\u00e9riel : Disques et rouleaux de C\u00e9sar.\n\nActivit\u00e9 :\n\nLes \u00e9l\u00e8ves cr\u00e9ent leurs propres phrases chiffr\u00e9es (ex. : XCITGSXGT avec cl\u00e9 15 \u2192 INTERDIRE ).\nEchange des messages entre groupes pour les d\u00e9coder avec le rouleau.\nApprofondissement : Protection des donn\u00e9es personnelles\nContexte :\n\nEnjeux :\nLes donn\u00e9es personnelles (\u00e2ge, g\u00e9olocalisation) sont collect\u00e9es par les sites web.\nLe chiffrement (ex. : AES) prot\u00e8ge ces donn\u00e9es sur les serveurs.\nQuestions guid\u00e9es :\n\nPourquoi partager son \u00e2ge sur un site peut-il \u00eatre risqu\u00e9 ?\nComment savoir si vos donn\u00e9es sont crypt\u00e9es ?\n\u00c9valuation des apprentissages\nQuestions de connaissances :\nQuelle est la cl\u00e9 maximale pour le chiffrement de C\u00e9sar ?\nQu'est-ce qu'une attaque par force brute ?\nExercices pratiques :\nD\u00e9coder UZIVTKZFE avec la cl\u00e9 17 \u2192 DIRECTION .\nConstruire un rouleau de C\u00e9sar et expliquer son fonctionnement.\nMat\u00e9riels et ressources annexes\nFiches fournies :\nFiche 1-4 : Disques, bandes alphab\u00e9tiques, corrig\u00e9s.\nFiche 2.2 : Listes personnalisables de mots \u00e0 d\u00e9coder.\nOutils en ligne :\nSites pour automatiser le chiffrement\/d\u00e9cryptage : 78-E4-02, 78-E4-03, 78-E4-04.\nValeurs cl\u00e9s abord\u00e9es\nResponsabilit\u00e9 :\nProtection des donn\u00e9es personnelles en ligne.\nCuriosit\u00e9 scientifique :\nComprendre les limites historiques des m\u00e9thodes de chiffrement (ex. : C\u00e9sar vs. Vigen\u00e8re).\nCette structure permet un enseignement progressif, alliant th\u00e9orie, pratique manuelle, et r\u00e9flexion critique sur l'utilisation des donn\u00e9es num\u00e9riques.",
+        "definition": "Exemple :\n\"Comment décrypter un message chiffré ?\"\nCycle 2 (7ᵉ-8ᵉ année) - Éducation numérique et cryptographie de base\n\nObjectifs pédagogiques\nCompétences clés :\nComprendre le fonctionnement du chiffrement de César et des attaques par force brute .\nConstruire un outil de décryptage (rouleau de César) pour tester toutes les clés possibles.\nAppliquer la cryptanalyse pour décoder des messages sans clé.\nCompétences transversales :\nTravail collaboratif en groupes.\nRésolution de problèmes et esprit critique.\nRéflexion éthique sur la protection des données personnelles en ligne.\nLiens disciplinaires :\nMathématiques : Utilisation des nombres et modélisation.\nÉducation numérique : Concepts de cryptage, données sensibles.\nÉtape 1 : Comprendre le chiffrement de César\nDurée : 20 minutes\nMatériel :\n\nDisques de César (Fiche 1 et 1.1).\nFiches 2 (mots à décoder), 2.1 (corrigé), 2.2 (listes personnalisables).\nDéroulement :\n\nExplication du chiffrement de César :\nDéfinition : Substitution mono-alphabétique avec décalage fixe (ex. : A → D avec un décalage de 3).\nLimites : 25 clés possibles, vulnérable à l'attaque par force brute .\nAtelier pratique :\nLes élèves décident des mots avec des clés fournies (ex. : LMWXSMVI avec clé 4 → HISTOIRE ).\nRôles :\nUn élève lit les lettres à décoder.\nUn élève paramètre le disque.\nUn élève note les lettres décodées.\nProblème posé :\nCertains mots résistent (ex. : DQODQMFUAZ avec clé 9 → RECREATION , mais clé incorrecte fournie).\nQuestion clé : Pourquoi certains mots ne se décryptent-ils pas correctement ?\nÉtape 2 : Construire un outil de décryptage (rouleau de César)\nDurée : 20 minutes\nMatériel :\n\nFiche 3 (bandes alphabétiques à découper).\nCylindre (ex. : boîte de conserve), ciseaux, scotch.\nDéroulement :\n\nFabrication du rouleau :\nMesurer la circonférence du cylindre.\nImprimer les bandes alphabétiques et les assembler autour du cylindre.\nAligner les lettres pour tester tous les décalages simultanément.\nTest pratique :\nDécoder les mots résiduels (ex. : RGIVJ DZUZ avec clé 17 → APRESMIDI ).\nEnseignement : L'attaque par force brute permet de tester toutes les clés en un seul essai.\nÉtape 3 : Décryptage sans clé (défi collectif)\nDurée : 5 minutes\nMatériel : Rouleaux de César construits.\n\nActivité :\n\nDéfi : Décoder la phrase mystère :\nLEKI DU HUKIIYHUP ZQCQYI Q TUSXYVVHUH SU CUIIQWU\nClé : 16 → Réponse : \"VOUS NE REUSSIREZ JAMAIS A DECHIFFRER CE MESSAGE\". \nConclusion pédagogique :\nL'attaque par force brute est faisable à la main pour des méthodes simples, mais nécessite des ordinateurs puissants pour des chiffrements complexes.\nÉtape 4 : Création de messages chiffrés (prolongement)\nDurée : 30 minutes\nMatériel : Disques et rouleaux de César.\n\nActivité :\n\nLes élèves créent leurs propres phrases chiffrées (ex. : XCITGSXGT avec clé 15 → INTERDIRE ).\nEchange des messages entre groupes pour les décoder avec le rouleau.\nApprofondissement : Protection des données personnelles\nContexte :\n\nEnjeux :\nLes données personnelles (âge, géolocalisation) sont collectées par les sites web.\nLe chiffrement (ex. : AES) protège ces données sur les serveurs.\nQuestions guidées :\n\nPourquoi partager son âge sur un site peut-il être risqué ?\nComment savoir si vos données sont cryptées ?\nÉvaluation des apprentissages\nQuestions de connaissances :\nQuelle est la clé maximale pour le chiffrement de César ?\nQu'est-ce qu'une attaque par force brute ?\nExercices pratiques :\nDécoder UZIVTKZFE avec la clé 17 → DIRECTION .\nConstruire un rouleau de César et expliquer son fonctionnement.\nMatériels et ressources annexes\nFiches fournies :\nFiche 1-4 : Disques, bandes alphabétiques, corrigés.\nFiche 2.2 : Listes personnalisables de mots à décoder.\nOutils en ligne :\nSites pour automatiser le chiffrement/décryptage : 78-E4-02, 78-E4-03, 78-E4-04.\nValeurs clés abordées\nResponsabilité :\nProtection des données personnelles en ligne.\nCuriosité scientifique :\nComprendre les limites historiques des méthodes de chiffrement (ex. : César vs. Vigenère).\nCette structure permet un enseignement progressif, alliant théorie, pratique manuelle, et réflexion critique sur l'utilisation des données numériques.",
         "context": "placeholder ai prompt student",
         "term_plural": "",
         "reference": "",
@@ -3160,7 +3160,7 @@
     },
     {
         "term": "placeholder_ai_prompt_learning",
-        "definition": "Exemple :\n\nFormation pour Enseignants : Mise en \u0152uvre de l'Apprentissage Explicite\n \nTitre et Introduction\n\"Ma\u00eetriser l'Apprentissage Explicite : Une M\u00e9thode Structur\u00e9e pour Maximiser les R\u00e9sultats des \u00c9l\u00e8ves\"\nIntroduction :\nL'apprentissage explicite est une approche p\u00e9dagogique bas\u00e9e sur des recherches scientifiques qui met l'accent sur la clart\u00e9, la structure et la progression logique dans l'enseignement. Cette m\u00e9thode permet aux enseignants de transmettre des connaissances de mani\u00e8re efficace tout en favorisant une compr\u00e9hension profonde chez les \u00e9l\u00e8ves.\n \nD\u00e9finition de l'Apprentissage Explicite\nD\u00e9finition :\nL'apprentissage explicite est une strat\u00e9gie d'enseignement directe o\u00f9 l'enseignant guide activement les \u00e9l\u00e8ves \u00e0 travers un processus structur\u00e9 d'apprentissage. Il repose sur cinq principes fondamentaux :\n1.\tClart\u00e9 des objectifs d'apprentissage.\n2.\tMod\u00e9lisation par l'enseignant.\n3.\tPratique guid\u00e9e avec feedback imm\u00e9diat.\n4.\tPratique autonome progressive.\n5.\t\u00c9valuation continue pour ajuster l'enseignement.\nExemple Concret :\nEn math\u00e9matiques, pour enseigner la multiplication des fractions :\n\u2022\tObjectif clair : \"Aujourd'hui, nous allons apprendre \u00e0 multiplier deux fractions.\"\n\u2022\tMod\u00e9lisation : L'enseignant r\u00e9sout un exemple au tableau \u00e9tape par \u00e9tape.\n\u2022\tPratique guid\u00e9e : Les \u00e9l\u00e8ves r\u00e9solvent ensemble un probl\u00e8me avec l'aide de l'enseignant.\n\u2022\tPratique autonome : Les \u00e9l\u00e8ves r\u00e9solvent des exercices individuellement.\n\u2022\t\u00c9valuation : L'enseignant observe les erreurs courantes et ajuste son enseignement si n\u00e9cessaire.\n \nComp\u00e9tence 1 - Fixer des Objectifs d'Apprentissage Clairs\nD\u00e9finition :\nLes objectifs d'apprentissage doivent \u00eatre pr\u00e9cis, mesurables et compr\u00e9hensibles pour les \u00e9l\u00e8ves. Ils servent de point de d\u00e9part pour toute s\u00e9ance d'enseignement.\nM\u00e9thodologie :\n1.\tFormulez les objectifs sous forme de phrases simples et concr\u00e8tes.\nExemple : \"\u00c0 la fin de cette le\u00e7on, vous serez capable d'identifier les principales caract\u00e9ristiques d'un triangle isoc\u00e8le.\"\n2.\tExpliquez pourquoi cet apprentissage est important.\nExemple : \"Cela vous aidera \u00e0 r\u00e9soudre des probl\u00e8mes g\u00e9om\u00e9triques plus complexes.\"\nApplication Pratique :\nAvant de commencer une le\u00e7on sur la grammaire (par exemple, les compl\u00e9ments d'objet), \u00e9crivez au tableau :\n\u2022\tObjectif : \"Vous apprendrez \u00e0 identifier et utiliser correctement les COD et COI dans une phrase.\"\n\u2022\tPourquoi : \"Cela am\u00e9liorera vos comp\u00e9tences en r\u00e9daction et en analyse linguistique.\"\n \nComp\u00e9tence 2 - Mod\u00e9lisation par l'Enseignant\nD\u00e9finition :\nLa mod\u00e9lisation consiste \u00e0 montrer explicitement aux \u00e9l\u00e8ves comment r\u00e9aliser une t\u00e2che en d\u00e9composant chaque \u00e9tape et en expliquant le raisonnement derri\u00e8re chaque action.\nM\u00e9thodologie :\n1.\tPr\u00e9parez un exemple concret \u00e0 r\u00e9soudre devant les \u00e9l\u00e8ves.\n2.\tParlez \u00e0 haute voix pour verbaliser votre pens\u00e9e (\"Je me demande si...\").\n3.\tSoulignez les erreurs potentielles et expliquez comment les \u00e9viter.\nExemple Concret :\nEn sciences, pour expliquer la classification des \u00eatres vivants :\n\u2022\tL'enseignant projette une image d'une plante et d'un animal.\n\u2022\tIl explique \u00e9tape par \u00e9tape comment classer ces organismes selon leurs caract\u00e9ristiques (exemple : pr\u00e9sence ou absence de chlorophylle).\n\u2022\tIl verbalise : \"Je remarque que cette plante a des feuilles vertes, ce qui signifie qu'elle contient probablement de la chlorophylle.\"\n \nComp\u00e9tence 3 - Pratique Guid\u00e9e avec Feedback Imm\u00e9diat\nD\u00e9finition :\nLa pratique guid\u00e9e permet aux \u00e9l\u00e8ves d'appliquer imm\u00e9diatement ce qu'ils ont appris sous la supervision de l'enseignant, qui fournit un feedback constructif.\nM\u00e9thodologie :\n1.\tDonnez un probl\u00e8me ou une t\u00e2che simple.\n2.\tObservez les \u00e9l\u00e8ves pendant qu'ils travaillent.\n3.\tFournissez un feedback pr\u00e9cis et imm\u00e9diat pour corriger les erreurs.\nExemple Concret :\nEn lecture, pour enseigner la compr\u00e9hension de texte :\n\u2022\tL'enseignant lit un court extrait avec les \u00e9l\u00e8ves.\n\u2022\tLes \u00e9l\u00e8ves r\u00e9pondent \u00e0 des questions simples sur le texte.\n\u2022\tL'enseignant circule dans la classe, \u00e9coute les r\u00e9ponses et corrige imm\u00e9diatement les incompr\u00e9hensions.\n \nComp\u00e9tence 4 - Pratique Autonome Progressive\nD\u00e9finition :\nLa pratique autonome permet aux \u00e9l\u00e8ves de consolider leurs comp\u00e9tences en travaillant seuls ou en petits groupes, avec des t\u00e2ches de difficult\u00e9 croissante.\nM\u00e9thodologie :\n1.\tCommencez par des exercices faciles pour renforcer la confiance.\n2.\tAugmentez progressivement la complexit\u00e9 des t\u00e2ches.\n3.\tEncouragez les \u00e9l\u00e8ves \u00e0 r\u00e9fl\u00e9chir \u00e0 leur propre processus d'apprentissage.\nExemple Concret :\nEn histoire, pour enseigner les causes de la R\u00e9volution fran\u00e7aise :\n\u2022\tPremi\u00e8re \u00e9tape : Les \u00e9l\u00e8ves lisent un texte simplifi\u00e9 et r\u00e9pondent \u00e0 des questions ferm\u00e9es.\n\u2022\tDeuxi\u00e8me \u00e9tape : Ils analysent un document historique plus complexe.\n\u2022\tTroisi\u00e8me \u00e9tape : Ils pr\u00e9parent une pr\u00e9sentation orale sur les causes majeures.\n \nComp\u00e9tence 5 - \u00c9valuation Continue et Adaptation\nD\u00e9finition :\nL'\u00e9valuation continue permet \u00e0 l'enseignant de suivre les progr\u00e8s des \u00e9l\u00e8ves et d'ajuster son enseignement en fonction de leurs besoins sp\u00e9cifiques.\nM\u00e9thodologie :\n1.\tUtilisez des outils vari\u00e9s (quiz, observations, discussions).\n2.\tIdentifiez les zones de difficult\u00e9 et planifiez des interventions cibl\u00e9es.\n3.\tAdaptez les objectifs et les m\u00e9thodes si n\u00e9cessaire.\nExemple Concret :\nEn anglais, pour enseigner les verbes irr\u00e9guliers :\n\u2022\tL'enseignant donne un quiz rapide apr\u00e8s chaque le\u00e7on.\n\u2022\tS'il constate que plusieurs \u00e9l\u00e8ves confondent \"go\" et \"went\", il organise une s\u00e9ance suppl\u00e9mentaire de pratique guid\u00e9e.\n\u2022\tIl ajuste ensuite son planning pour inclure davantage de r\u00e9visions.\n \nConclusion et Prochaines \u00c9tapes\nConclusion :\nL'apprentissage explicite est une m\u00e9thode puissante pour garantir que tous les \u00e9l\u00e8ves progressent, quel que soit leur niveau initial. Elle n\u00e9cessite une planification rigoureuse et une communication claire entre l'enseignant et les \u00e9l\u00e8ves.\nProchaines \u00c9tapes :\n1.\tEssayez d'int\u00e9grer une ou deux composantes de l'apprentissage explicite dans vos prochaines le\u00e7ons.\n2.\tPartagez vos exp\u00e9riences avec vos coll\u00e8gues pour enrichir vos pratiques.\n3.\tRejoignez un groupe de travail pour approfondir vos comp\u00e9tences en apprentissage explicite.\n \n",
+        "definition": "Exemple :\n\nFormation pour Enseignants : Mise en Œuvre de l'Apprentissage Explicite\n \nTitre et Introduction\n\"Maîtriser l'Apprentissage Explicite : Une Méthode Structurée pour Maximiser les Résultats des Élèves\"\nIntroduction :\nL'apprentissage explicite est une approche pédagogique basée sur des recherches scientifiques qui met l'accent sur la clarté, la structure et la progression logique dans l'enseignement. Cette méthode permet aux enseignants de transmettre des connaissances de manière efficace tout en favorisant une compréhension profonde chez les élèves.\n \nDéfinition de l'Apprentissage Explicite\nDéfinition :\nL'apprentissage explicite est une stratégie d'enseignement directe où l'enseignant guide activement les élèves à travers un processus structuré d'apprentissage. Il repose sur cinq principes fondamentaux :\n1.\tClarté des objectifs d'apprentissage.\n2.\tModélisation par l'enseignant.\n3.\tPratique guidée avec feedback immédiat.\n4.\tPratique autonome progressive.\n5.\tÉvaluation continue pour ajuster l'enseignement.\nExemple Concret :\nEn mathématiques, pour enseigner la multiplication des fractions :\n•\tObjectif clair : \"Aujourd'hui, nous allons apprendre à multiplier deux fractions.\"\n•\tModélisation : L'enseignant résout un exemple au tableau étape par étape.\n•\tPratique guidée : Les élèves résolvent ensemble un problème avec l'aide de l'enseignant.\n•\tPratique autonome : Les élèves résolvent des exercices individuellement.\n•\tÉvaluation : L'enseignant observe les erreurs courantes et ajuste son enseignement si nécessaire.\n \nCompétence 1 - Fixer des Objectifs d'Apprentissage Clairs\nDéfinition :\nLes objectifs d'apprentissage doivent être précis, mesurables et compréhensibles pour les élèves. Ils servent de point de départ pour toute séance d'enseignement.\nMéthodologie :\n1.\tFormulez les objectifs sous forme de phrases simples et concrètes.\nExemple : \"À la fin de cette leçon, vous serez capable d'identifier les principales caractéristiques d'un triangle isocèle.\"\n2.\tExpliquez pourquoi cet apprentissage est important.\nExemple : \"Cela vous aidera à résoudre des problèmes géométriques plus complexes.\"\nApplication Pratique :\nAvant de commencer une leçon sur la grammaire (par exemple, les compléments d'objet), écrivez au tableau :\n•\tObjectif : \"Vous apprendrez à identifier et utiliser correctement les COD et COI dans une phrase.\"\n•\tPourquoi : \"Cela améliorera vos compétences en rédaction et en analyse linguistique.\"\n \nCompétence 2 - Modélisation par l'Enseignant\nDéfinition :\nLa modélisation consiste à montrer explicitement aux élèves comment réaliser une tâche en décomposant chaque étape et en expliquant le raisonnement derrière chaque action.\nMéthodologie :\n1.\tPréparez un exemple concret à résoudre devant les élèves.\n2.\tParlez à haute voix pour verbaliser votre pensée (\"Je me demande si...\").\n3.\tSoulignez les erreurs potentielles et expliquez comment les éviter.\nExemple Concret :\nEn sciences, pour expliquer la classification des êtres vivants :\n•\tL'enseignant projette une image d'une plante et d'un animal.\n•\tIl explique étape par étape comment classer ces organismes selon leurs caractéristiques (exemple : présence ou absence de chlorophylle).\n•\tIl verbalise : \"Je remarque que cette plante a des feuilles vertes, ce qui signifie qu'elle contient probablement de la chlorophylle.\"\n \nCompétence 3 - Pratique Guidée avec Feedback Immédiat\nDéfinition :\nLa pratique guidée permet aux élèves d'appliquer immédiatement ce qu'ils ont appris sous la supervision de l'enseignant, qui fournit un feedback constructif.\nMéthodologie :\n1.\tDonnez un problème ou une tâche simple.\n2.\tObservez les élèves pendant qu'ils travaillent.\n3.\tFournissez un feedback précis et immédiat pour corriger les erreurs.\nExemple Concret :\nEn lecture, pour enseigner la compréhension de texte :\n•\tL'enseignant lit un court extrait avec les élèves.\n•\tLes élèves répondent à des questions simples sur le texte.\n•\tL'enseignant circule dans la classe, écoute les réponses et corrige immédiatement les incompréhensions.\n \nCompétence 4 - Pratique Autonome Progressive\nDéfinition :\nLa pratique autonome permet aux élèves de consolider leurs compétences en travaillant seuls ou en petits groupes, avec des tâches de difficulté croissante.\nMéthodologie :\n1.\tCommencez par des exercices faciles pour renforcer la confiance.\n2.\tAugmentez progressivement la complexité des tâches.\n3.\tEncouragez les élèves à réfléchir à leur propre processus d'apprentissage.\nExemple Concret :\nEn histoire, pour enseigner les causes de la Révolution française :\n•\tPremière étape : Les élèves lisent un texte simplifié et répondent à des questions fermées.\n•\tDeuxième étape : Ils analysent un document historique plus complexe.\n•\tTroisième étape : Ils préparent une présentation orale sur les causes majeures.\n \nCompétence 5 - Évaluation Continue et Adaptation\nDéfinition :\nL'évaluation continue permet à l'enseignant de suivre les progrès des élèves et d'ajuster son enseignement en fonction de leurs besoins spécifiques.\nMéthodologie :\n1.\tUtilisez des outils variés (quiz, observations, discussions).\n2.\tIdentifiez les zones de difficulté et planifiez des interventions ciblées.\n3.\tAdaptez les objectifs et les méthodes si nécessaire.\nExemple Concret :\nEn anglais, pour enseigner les verbes irréguliers :\n•\tL'enseignant donne un quiz rapide après chaque leçon.\n•\tS'il constate que plusieurs élèves confondent \"go\" et \"went\", il organise une séance supplémentaire de pratique guidée.\n•\tIl ajuste ensuite son planning pour inclure davantage de révisions.\n \nConclusion et Prochaines Étapes\nConclusion :\nL'apprentissage explicite est une méthode puissante pour garantir que tous les élèves progressent, quel que soit leur niveau initial. Elle nécessite une planification rigoureuse et une communication claire entre l'enseignant et les élèves.\nProchaines Étapes :\n1.\tEssayez d'intégrer une ou deux composantes de l'apprentissage explicite dans vos prochaines leçons.\n2.\tPartagez vos expériences avec vos collègues pour enrichir vos pratiques.\n3.\tRejoignez un groupe de travail pour approfondir vos compétences en apprentissage explicite.\n \n",
         "context": "placeholder ai prompt learning",
         "term_plural": "",
         "reference": "",
@@ -3178,7 +3178,7 @@
     },
     {
         "term": "label_trial_version",
-        "definition": "L'inscription vous fait b\u00e9n\u00e9ficier d'une version d'essai sandbox.",
+        "definition": "L'inscription vous fait bénéficier d'une version d'essai sandbox.",
         "context": "label trial version",
         "term_plural": "",
         "reference": "",
@@ -3187,7 +3187,7 @@
     },
     {
         "term": "label_deleted_data",
-        "definition": "Les donn\u00e9es des comptes sandbox peuvent \u00eatre supprim\u00e9s \u00e0 tout moment.",
+        "definition": "Les données des comptes sandbox peuvent être supprimés à tout moment.",
         "context": "label deleted data",
         "term_plural": "",
         "reference": "",
@@ -3196,7 +3196,7 @@
     },
     {
         "term": "label_contact",
-        "definition": "Pour b\u00e9n\u00e9ficier d'un acc\u00e8s complet, contactez-nous \u00e0",
+        "definition": "Pour bénéficier d'un accès complet, contactez-nous à",
         "context": "label contact",
         "term_plural": "",
         "reference": "",
@@ -3214,7 +3214,7 @@
     },
     {
         "term": "sandbox_user_monitoring_limit",
-        "definition": "Les utilisateurs sandbox ne peuvent cr\u00e9er qu'un seul monitorage",
+        "definition": "Les utilisateurs sandbox ne peuvent créer qu'un seul monitorage",
         "context": "Monitoring restrictions",
         "term_plural": "",
         "reference": "",
@@ -3223,7 +3223,7 @@
     },
     {
         "term": "sandbox_user_assessment_type_limit",
-        "definition": "Les utilisateurs sandbox ne peuvent cr\u00e9er qu'une seule \u00e9valuation de chaque type",
+        "definition": "Les utilisateurs sandbox ne peuvent créer qu'une seule évaluation de chaque type",
         "context": " Assessment restrictions",
         "term_plural": "",
         "reference": "",
@@ -3250,7 +3250,7 @@
     },
     {
         "term": "info_shortname_graph_display",
-        "definition": "Veuillez utiliser un nom court significatif unique. Ce nom sera utilis\u00e9 pour afficher les r\u00e9sultats dans les graphiques.",
+        "definition": "Veuillez utiliser un nom court significatif unique. Ce nom sera utilisé pour afficher les résultats dans les graphiques.",
         "context": "info_shortname_graph_display",
         "term_plural": "",
         "reference": "",
@@ -3259,7 +3259,7 @@
     },
     {
         "term": "label_move_to_workshop",
-        "definition": "D\u00e9placer dans",
+        "definition": "Déplacer dans",
         "context": "label_move_to_workshop",
         "term_plural": "",
         "reference": "",
@@ -3286,7 +3286,7 @@
     },
     {
         "term": "label_generating_options",
-        "definition": "Options en cours de g\u00e9n\u00e9ration",
+        "definition": "Options en cours de génération",
         "context": "label_generating_options",
         "term_plural": "",
         "reference": "",
@@ -3313,7 +3313,7 @@
     },
     {
         "term": "pricing_integration_title",
-        "definition": "Int\u00e9gration de fonctionnalit\u00e9s sur mesure",
+        "definition": "Intégration de fonctionnalités sur mesure",
         "context": "pricing_integration_title",
         "term_plural": "",
         "reference": "",
@@ -3322,7 +3322,7 @@
     },
     {
         "term": "pricing_integration_description",
-        "definition": "Co-construction collaborative de fonctionnalit\u00e9s adapt\u00e9es \u00e0 vos besoins sp\u00e9cifiques",
+        "definition": "Co-construction collaborative de fonctionnalités adaptées à vos besoins spécifiques",
         "context": "pricing_integration_description",
         "term_plural": "",
         "reference": "",
@@ -3331,7 +3331,7 @@
     },
     {
         "term": "pricing_integration_feature1",
-        "definition": "Les r\u00e9f\u00e9rentiels m\u00e9tiers de votre choix dans la plateforme sont int\u00e9gr\u00e9s dans la plateforme",
+        "definition": "Les référentiels métiers de votre choix dans la plateforme sont intégrés dans la plateforme",
         "context": "pricing_integration_feature1",
         "term_plural": "",
         "reference": "",
@@ -3340,7 +3340,7 @@
     },
     {
         "term": "pricing_framework_feature1",
-        "definition": "Co-construisez ou am\u00e9liorez, ensemble avec notre \u00e9quipe, des fonctionnalit\u00e9s sur mesure, adapt\u00e9es \u00e0 vos besoins uniques",
+        "definition": "Co-construisez ou améliorez, ensemble avec notre équipe, des fonctionnalités sur mesure, adaptées à vos besoins uniques",
         "context": "pricing_integration_feature2",
         "term_plural": "",
         "reference": "",
@@ -3367,7 +3367,7 @@
     },
     {
         "term": "pricing_training_description",
-        "definition": "B\u00e9n\u00e9ficiez d'un accompagnement personnalis\u00e9 pour maximiser l'impact de votre formation",
+        "definition": "Bénéficiez d'un accompagnement personnalisé pour maximiser l'impact de votre formation",
         "context": "pricing_training_description",
         "term_plural": "",
         "reference": "",
@@ -3376,7 +3376,7 @@
     },
     {
         "term": "pricing_training_feature1",
-        "definition": "Formation compl\u00e8te \u00e0 l'utilisation de la plateforme",
+        "definition": "Formation complète à l'utilisation de la plateforme",
         "context": "pricing_training_feature1",
         "term_plural": "",
         "reference": "",
@@ -3385,7 +3385,7 @@
     },
     {
         "term": "pricing_training_feature2",
-        "definition": "Accompagnement personnalis\u00e9 pour l'impl\u00e9mentation",
+        "definition": "Accompagnement personnalisé pour l'implémentation",
         "context": "pricing_training_feature2",
         "term_plural": "",
         "reference": "",
@@ -3412,7 +3412,7 @@
     },
     {
         "term": "pricing_research_description",
-        "definition": "Int\u00e9grez notre plateforme \u00e0 vos recherches pour un suivi complet de l\u2019impact de vos formations",
+        "definition": "Intégrez notre plateforme à vos recherches pour un suivi complet de l’impact de vos formations",
         "context": "pricing_research_description",
         "term_plural": "",
         "reference": "",
@@ -3421,7 +3421,7 @@
     },
     {
         "term": "pricing_research_feature1",
-        "definition": "Solution cl\u00e9 en main pour le suivi et l'\u00e9valuation de vos formations",
+        "definition": "Solution clé en main pour le suivi et l'évaluation de vos formations",
         "context": "pricing_research_feature1",
         "term_plural": "",
         "reference": "",
@@ -3430,7 +3430,7 @@
     },
     {
         "term": "pricing_research_feature2",
-        "definition": "Outils de collecte et d'analyse de donn\u00e9es d'impact en temps r\u00e9el",
+        "definition": "Outils de collecte et d'analyse de données d'impact en temps réel",
         "context": "pricing_research_feature2",
         "term_plural": "",
         "reference": "",
@@ -3439,7 +3439,7 @@
     },
     {
         "term": "pricing_research_feature3",
-        "definition": "Support d\u00e9di\u00e9 pour la mise en place et l'exploitation des donn\u00e9es",
+        "definition": "Support dédié pour la mise en place et l'exploitation des données",
         "context": "pricing_research_feature3",
         "term_plural": "",
         "reference": "",
@@ -3448,7 +3448,7 @@
     },
     {
         "term": "pricing_framework_title",
-        "definition": "Int\u00e9gration des r\u00e9f\u00e9rentiels de comp\u00e9tences",
+        "definition": "Intégration des référentiels de compétences",
         "context": "pricing_framework_title",
         "term_plural": "",
         "reference": "",
@@ -3457,7 +3457,7 @@
     },
     {
         "term": "pricing_framework_description",
-        "definition": "Enrichissez vos \u00e9valuations gr\u00e2ce \u00e0 l\u2019int\u00e9gration des r\u00e9f\u00e9rentiels de comp\u00e9tences",
+        "definition": "Enrichissez vos évaluations grâce à l’intégration des référentiels de compétences",
         "context": "pricing_framework_description",
         "term_plural": "",
         "reference": "",
@@ -3466,7 +3466,7 @@
     },
     {
         "term": "pricing_contact_copied",
-        "definition": "E-mail copi\u00e9 dans le presse-papiers",
+        "definition": "E-mail copié dans le presse-papiers",
         "context": "pricing_contact_copied",
         "term_plural": "",
         "reference": "",
@@ -3475,7 +3475,7 @@
     },
     {
         "term": "label_refresh_answers",
-        "definition": "Rafra\u00eechir",
+        "definition": "Rafraîchir",
         "context": "label_refresh_answers",
         "term_plural": "",
         "reference": "",
@@ -3484,7 +3484,7 @@
     },
     {
         "term": "label_maximum_password_characters_exceeded",
-        "definition": "Le mot de passe ne doit pas d\u00e9passer 255 caract\u00e8res",
+        "definition": "Le mot de passe ne doit pas dépasser 255 caractères",
         "context": "label_maximum_password_characters_exceeded",
         "term_plural": "",
         "reference": "",
@@ -3520,7 +3520,7 @@
     },
     {
         "term": "label_password_symbol_required",
-        "definition": "Le mot de passe doit contenir au moins un caract\u00e8re sp\u00e9cial",
+        "definition": "Le mot de passe doit contenir au moins un caractère spécial",
         "context": "label_password_symbol_required",
         "term_plural": "",
         "reference": "",
@@ -3538,7 +3538,7 @@
     },
     {
         "term": "signup_email_already_exists",
-        "definition": "Un compte avec cette adresse email existe d\u00e9j\u00e0. Veuillez utiliser une autre adresse email ou vous connecter si vous avez d\u00e9j\u00e0 un compte",
+        "definition": "Un compte avec cette adresse email existe déjà. Veuillez utiliser une autre adresse email ou vous connecter si vous avez déjà un compte",
         "context": "signup_email_already_exists",
         "term_plural": "",
         "reference": "",
@@ -3547,7 +3547,7 @@
     },
     {
         "term": "label_terms_required",
-        "definition": "Vous devez accepter les Mentions L\u00e9gales et les Conditions G\u00e9n\u00e9rales d'Utilisation pour continuer",
+        "definition": "Vous devez accepter les Mentions Légales et les Conditions Générales d'Utilisation pour continuer",
         "context": "label_terms_required",
         "term_plural": "",
         "reference": "",
@@ -3592,7 +3592,7 @@
     },
     {
         "term": "label_news",
-        "definition": "Actualit\u00e9s",
+        "definition": "Actualités",
         "context": "label_news",
         "term_plural": "",
         "reference": "",
@@ -3601,7 +3601,7 @@
     },
     {
         "term": "news_section_title",
-        "definition": "Derni\u00e8res Actualit\u00e9s",
+        "definition": "Dernières Actualités",
         "context": "news_section_title",
         "term_plural": "",
         "reference": "",
@@ -3610,7 +3610,7 @@
     },
     {
         "term": "news_section_subtitle",
-        "definition": "Restez inform\u00e9 des derni\u00e8res fonctionnalit\u00e9s, am\u00e9liorations et \u00e9v\u00e9nements",
+        "definition": "Restez informé des dernières fonctionnalités, améliorations et événements",
         "context": "news_section_subtitle",
         "term_plural": "",
         "reference": "",
@@ -3628,7 +3628,7 @@
     },
     {
         "term": "tooltip_validate_before_submit",
-        "definition": "Veuillez valider toutes les r\u00e9ponses avant de soumettre",
+        "definition": "Veuillez valider toutes les réponses avant de soumettre",
         "context": "tooltip shown when submit button is disabled due to missing validation",
         "term_plural": "",
         "reference": "",
@@ -3709,7 +3709,7 @@
     },
     {
         "term": "label_questions_validated",
-        "definition": "questions valid\u00e9es",
+        "definition": "questions validées",
         "context": "progress indicator showing how many questions have been validated",
         "term_plural": "",
         "reference": "",
@@ -3718,7 +3718,7 @@
     },
     {
         "term": "label_ai_summary",
-        "definition": "R\u00e9sum\u00e9 des r\u00e9ponses",
+        "definition": "Résumé des réponses",
         "context": "label_ai_summary",
         "term_plural": "",
         "reference": "",
@@ -3727,7 +3727,7 @@
     },
     {
         "term": "label_all_responses",
-        "definition": "D\u00e9tail des r\u00e9ponses",
+        "definition": "Détail des réponses",
         "context": " label_all_responses:",
         "term_plural": "",
         "reference": "",
@@ -3736,7 +3736,7 @@
     },
     {
         "term": "label_no_summary_available",
-        "definition": "Aucun r\u00e9sum\u00e9 disponible",
+        "definition": "Aucun résumé disponible",
         "context": "label_no_summary_available",
         "term_plural": "",
         "reference": "",
@@ -3745,7 +3745,7 @@
     },
     {
         "term": "label_generating_summary",
-        "definition": "G\u00e9n\u00e9ration du r\u00e9sum\u00e9\u2026",
+        "definition": "Génération du résumé…",
         "context": "label_generating_summary",
         "term_plural": "",
         "reference": "",
@@ -3754,7 +3754,7 @@
     },
     {
         "term": "label_generate_summary",
-        "definition": "G\u00e9n\u00e9rer le r\u00e9sum\u00e9",
+        "definition": "Générer le résumé",
         "context": "Button to request an AI summary of text responses",
         "term_plural": "",
         "reference": "",
@@ -3763,7 +3763,7 @@
     },
     {
         "term": "tooltip_enable_reorder",
-        "definition": "Vue par d\u00e9faut : activer le r\u00e9ordonnancement des \u00e9valuations",
+        "definition": "Vue par défaut : activer le réordonnancement des évaluations",
         "context": "tooltip_enable_reorder",
         "term_plural": "",
         "reference": "",
@@ -3826,7 +3826,7 @@
     },
     {
         "term": "pricing_per_month",
-        "definition": "\/ mois",
+        "definition": "/ mois",
         "context": "Price suffix shown next to the monthly price",
         "term_plural": "",
         "reference": "",
@@ -3890,7 +3890,7 @@
     {
         "term": "pricing_badge_popular",
         "definition": "Populaire",
-        "context": "Badge shown on highlighted\/recommended plan cards",
+        "context": "Badge shown on highlighted/recommended plan cards",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -3898,7 +3898,7 @@
     },
     {
         "term": "pricing_audience_trainer_label",
-        "definition": "Vous \u00eates un formateur",
+        "definition": "Vous êtes un formateur",
         "context": "Tab label for the trainer audience section",
         "term_plural": "",
         "reference": "",
@@ -3907,7 +3907,7 @@
     },
     {
         "term": "pricing_audience_trainer_desc",
-        "definition": "Cr\u00e9ez et partagez des suivis et acc\u00e9dez aux fonctionnalit\u00e9s d'IA.",
+        "definition": "Créez et partagez des suivis et accédez aux fonctionnalités d'IA.",
         "context": "Description shown under the trainer tab",
         "term_plural": "",
         "reference": "",
@@ -3916,7 +3916,7 @@
     },
     {
         "term": "pricing_audience_teacher_label",
-        "definition": "Vous \u00eates un enseignant",
+        "definition": "Vous êtes un enseignant",
         "context": "Tab label for the teacher audience section",
         "term_plural": "",
         "reference": "",
@@ -3934,7 +3934,7 @@
     },
     {
         "term": "pricing_audience_institution_label",
-        "definition": "Vous \u00eates une institution",
+        "definition": "Vous êtes une institution",
         "context": "Tab label for the institution audience section",
         "term_plural": "",
         "reference": "",
@@ -3943,7 +3943,7 @@
     },
     {
         "term": "pricing_audience_institution_desc",
-        "definition": "Fournissez Digital Training Companion \u00e0 votre personnel. Utilisateurs illimit\u00e9s.",
+        "definition": "Fournissez Digital Training Companion à votre personnel. Utilisateurs illimités.",
         "context": "Description shown under the institution tab",
         "term_plural": "",
         "reference": "",
@@ -3952,7 +3952,7 @@
     },
     {
         "term": "pricing_audience_research_label",
-        "definition": "Vous \u00eates une institution de recherche",
+        "definition": "Vous êtes une institution de recherche",
         "context": "Tab label for the research audience section",
         "term_plural": "",
         "reference": "",
@@ -3961,7 +3961,7 @@
     },
     {
         "term": "pricing_audience_research_desc",
-        "definition": "Utilisation du Digital Training Companion dans un projet de recherche avec le Center LEARN de l\u2019EPFL. Conditions personnalis\u00e9es.",
+        "definition": "Utilisation du Digital Training Companion dans un projet de recherche avec le Center LEARN de l’EPFL. Conditions personnalisées.",
         "context": "Description shown under the research tab",
         "term_plural": "",
         "reference": "",
@@ -3970,7 +3970,7 @@
     },
     {
         "term": "pricing_free_trainer_f1",
-        "definition": "Cr\u00e9er des suivis et des \u00e9valuations",
+        "definition": "Créer des suivis et des évaluations",
         "context": "Feature listed on the Free Trainer plan card",
         "term_plural": "",
         "reference": "",
@@ -3979,7 +3979,7 @@
     },
     {
         "term": "pricing_free_trainer_f2",
-        "definition": "Collecter des r\u00e9ponses",
+        "definition": "Collecter des réponses",
         "context": "Feature listed on the Free Trainer plan card",
         "term_plural": "",
         "reference": "",
@@ -3988,7 +3988,7 @@
     },
     {
         "term": "pricing_free_trainer_f3",
-        "definition": "Visualiser les r\u00e9sultats",
+        "definition": "Visualiser les résultats",
         "context": "Feature listed on the Free Trainer plan card",
         "term_plural": "",
         "reference": "",
@@ -3997,7 +3997,7 @@
     },
     {
         "term": "pricing_free_trainer_f4",
-        "definition": "Pas de fonctionnalit\u00e9s d'IA",
+        "definition": "Pas de fonctionnalités d'IA",
         "context": "Feature listed on the Free Trainer plan card (limitation)",
         "term_plural": "",
         "reference": "",
@@ -4015,7 +4015,7 @@
     },
     {
         "term": "pricing_free_trainer_f6",
-        "definition": "Pas d'exportation de donn\u00e9es brutes",
+        "definition": "Pas d'exportation de données brutes",
         "context": "Feature listed on the Free Trainer plan card (limitation)",
         "term_plural": "",
         "reference": "",
@@ -4033,7 +4033,7 @@
     },
     {
         "term": "pricing_pro_trainer_f2",
-        "definition": "Fonctionnalit\u00e9s compl\u00e8tes d'IA",
+        "definition": "Fonctionnalités complètes d'IA",
         "context": "Feature listed on Pro and above trainer plan cards",
         "term_plural": "",
         "reference": "",
@@ -4051,7 +4051,7 @@
     },
     {
         "term": "pricing_pro_trainer_f4",
-        "definition": "Exportation de donn\u00e9es brutes",
+        "definition": "Exportation de données brutes",
         "context": "Feature listed on Pro and above trainer plan cards",
         "term_plural": "",
         "reference": "",
@@ -4078,7 +4078,7 @@
     },
     {
         "term": "pricing_free_teacher_f1",
-        "definition": "Acc\u00e8s aux \u00e9valuations partag\u00e9es",
+        "definition": "Accès aux évaluations partagées",
         "context": "Feature listed on the Free Teacher plan card",
         "term_plural": "",
         "reference": "",
@@ -4096,7 +4096,7 @@
     },
     {
         "term": "pricing_free_teacher_f3",
-        "definition": "Pas d'exportation de donn\u00e9es brutes",
+        "definition": "Pas d'exportation de données brutes",
         "context": "Feature listed on the Free Teacher plan card (limitation)",
         "term_plural": "",
         "reference": "",
@@ -4114,7 +4114,7 @@
     },
     {
         "term": "pricing_pro_teacher_f2",
-        "definition": "Fonctionnalit\u00e9s compl\u00e8tes d'IA",
+        "definition": "Fonctionnalités complètes d'IA",
         "context": "Feature listed on the Pro Teacher plan card",
         "term_plural": "",
         "reference": "",
@@ -4123,7 +4123,7 @@
     },
     {
         "term": "pricing_pro_teacher_f3",
-        "definition": "Exportation de donn\u00e9es brutes",
+        "definition": "Exportation de données brutes",
         "context": "Feature listed on the Pro Teacher plan card",
         "term_plural": "",
         "reference": "",
@@ -4159,7 +4159,7 @@
     },
     {
         "term": "pricing_institution_f2",
-        "definition": "Utilisateurs illimit\u00e9s",
+        "definition": "Utilisateurs illimités",
         "context": "Feature listed on all Institution plan cards",
         "term_plural": "",
         "reference": "",
@@ -4177,7 +4177,7 @@
     },
     {
         "term": "pricing_institution_f4",
-        "definition": "Visibilit\u00e9 des quotas en temps r\u00e9el",
+        "definition": "Visibilité des quotas en temps réel",
         "context": "Feature listed on all Institution plan cards",
         "term_plural": "",
         "reference": "",
@@ -4186,7 +4186,7 @@
     },
     {
         "term": "pricing_research_f1",
-        "definition": "Pool de calls IA personnalis\u00e9",
+        "definition": "Pool de calls IA personnalisé",
         "context": "Feature listed on the Research plan card",
         "term_plural": "",
         "reference": "",
@@ -4195,7 +4195,7 @@
     },
     {
         "term": "pricing_research_f2",
-        "definition": "Utilisateurs illimit\u00e9s",
+        "definition": "Utilisateurs illimités",
         "context": "Feature listed on the Research plan card",
         "term_plural": "",
         "reference": "",
@@ -4204,7 +4204,7 @@
     },
     {
         "term": "pricing_research_f3",
-        "definition": "Fonctionnalit\u00e9s compl\u00e8tes d'IA",
+        "definition": "Fonctionnalités complètes d'IA",
         "context": "Feature listed on the Research plan card",
         "term_plural": "",
         "reference": "",
@@ -4213,7 +4213,7 @@
     },
     {
         "term": "pricing_research_f4",
-        "definition": "Exportation de donn\u00e9es brutes",
+        "definition": "Exportation de données brutes",
         "context": "Feature listed on the Research plan card",
         "term_plural": "",
         "reference": "",
@@ -4222,7 +4222,7 @@
     },
     {
         "term": "pricing_research_f5",
-        "definition": "Contrat personnalis\u00e9",
+        "definition": "Contrat personnalisé",
         "context": "Feature listed on the Research plan card",
         "term_plural": "",
         "reference": "",
@@ -4348,7 +4348,7 @@
     },
     {
         "term": "settings_trial_active",
-        "definition": "P\u00e9riode d'essai :",
+        "definition": "Période d'essai :",
         "context": "Label shown before the number of days remaining in the trial",
         "term_plural": "",
         "reference": "",
@@ -4366,7 +4366,7 @@
     },
     {
         "term": "settings_trial_expired",
-        "definition": "P\u00e9riode d'essai termin\u00e9e",
+        "definition": "Période d'essai terminée",
         "context": "Shown when the trial period has expired",
         "term_plural": "",
         "reference": "",
@@ -4393,7 +4393,7 @@
     },
     {
         "term": "settings_ai_not_included",
-        "definition": "Les fonctionnalit\u00e9s d\u2019IA ne sont pas incluses dans votre offre gratuite, sauf si vous importez un suivi provenant d\u2019un entra\u00eeneur disposant d\u2019un abonnement payant.",
+        "definition": "Les fonctionnalités d’IA ne sont pas incluses dans votre offre gratuite, sauf si vous importez un suivi provenant d’un entraîneur disposant d’un abonnement payant.",
         "context": "Alert shown for free plan users with no AI access",
         "term_plural": "",
         "reference": "",
@@ -4402,7 +4402,7 @@
     },
     {
         "term": "settings_ai_no_calls",
-        "definition": "Aucun call d'IA effectu\u00e9 ce mois-ci.",
+        "definition": "Aucun call d'IA effectué ce mois-ci.",
         "context": "Alert shown when a paid user has made zero calls",
         "term_plural": "",
         "reference": "",
@@ -4420,7 +4420,7 @@
     },
     {
         "term": "settings_usage_fetch_error",
-        "definition": "Erreur de r\u00e9cup\u00e9ration de l'utilisation",
+        "definition": "Erreur de récupération de l'utilisation",
         "context": "Error message when the AI usage API call fails",
         "term_plural": "",
         "reference": "",
@@ -4429,7 +4429,7 @@
     },
     {
         "term": "settings_manage_plan",
-        "definition": "G\u00e9rer mon plan",
+        "definition": "Gérer mon plan",
         "context": "CTA button shown to paid plan users to upgrade or downgrade their plan",
         "term_plural": "",
         "reference": "",
@@ -4438,7 +4438,7 @@
     },
     {
         "term": "quota_dialog_trial_title",
-        "definition": "Votre essai est termin\u00e9.",
+        "definition": "Votre essai est terminé.",
         "context": "Title of the dialog shown when the 14-day trial expires",
         "term_plural": "",
         "reference": "",
@@ -4447,7 +4447,7 @@
     },
     {
         "term": "quota_dialog_trial_body",
-        "definition": "Passez \u00e0 un plan payant pour continuer \u00e0 utiliser les fonctionnalit\u00e9s d'IA.",
+        "definition": "Passez à un plan payant pour continuer à utiliser les fonctionnalités d'IA.",
         "context": "Body text of the trial expired dialog",
         "term_plural": "",
         "reference": "",
@@ -4465,7 +4465,7 @@
     },
     {
         "term": "quota_dialog_quota_body",
-        "definition": "Vous avez utilis\u00e9 tous vos appels d'IA pour ce mois-ci. Mettez \u00e0 niveau ou attendez le mois prochain.",
+        "definition": "Vous avez utilisé tous vos appels d'IA pour ce mois-ci. Mettez à niveau ou attendez le mois prochain.",
         "context": "Body text of the quota exceeded dialog",
         "term_plural": "",
         "reference": "",
@@ -4591,7 +4591,7 @@
     },
     {
         "term": "settings_subscription_canceled_intro",
-        "definition": "Vous avez annul\u00e9 votre abonnement. Les avantages de votre plan payant se terminent le",
+        "definition": "Vous avez annulé votre abonnement. Les avantages de votre plan payant se terminent le",
         "context": "Settings subscription tab: first part of warning before localized end date (date appended in UI)",
         "term_plural": "",
         "reference": "",
@@ -4600,8 +4600,8 @@
     },
     {
         "term": "settings_billing_trial_intro",
-        "definition": "La facturation de votre abonnement commence apr\u00e8s la fin de votre essai le",
-        "context": "Settings \u2192 Subscription tab: info alert for paid users in Stripe billing trial (trialing). First part of the sentence; localized trial-end date and a period are appended in the UI.",
+        "definition": "La facturation de votre abonnement commence après la fin de votre essai le",
+        "context": "Settings → Subscription tab: info alert for paid users in Stripe billing trial (trialing). First part of the sentence; localized trial-end date and a period are appended in the UI.",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -4610,7 +4610,7 @@
     {
         "term": "settings_cancel_plan",
         "definition": "Annuler mon plan",
-        "context": "Settings \u2192 Subscription tab: red outlined button next to Manage plan; opens same Stripe billing portal where user can cancel.",
+        "context": "Settings → Subscription tab: red outlined button next to Manage plan; opens same Stripe billing portal where user can cancel.",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -4834,7 +4834,7 @@
     },
     {
         "term": "label_log_contact_teacher",
-        "definition": "Enseignant \u00e0 contacter",
+        "definition": "Enseignant à contacter",
         "context": "Trainer picks the teacher to contact in the logbook",
         "term_plural": "",
         "reference": "",
@@ -5023,7 +5023,7 @@
     },
     {
         "term": "label_log_mark_resolved",
-        "definition": "Marquer comme r\u00e9solu",
+        "definition": "Marquer comme résolu",
         "context": "Button to mark an ask-for-help log as resolved",
         "term_plural": "",
         "reference": "",
@@ -5032,7 +5032,7 @@
     },
     {
         "term": "label_log_resolved",
-        "definition": "R\u00e9solu",
+        "definition": "Résolu",
         "context": "Shown when an ask-for-help log is resolved; click to undo",
         "term_plural": "",
         "reference": "",
@@ -5041,7 +5041,7 @@
     },
     {
         "term": "label_log_delete_confirm",
-        "definition": "Supprimer cette note ? Cette action est irr\u00e9versible.",
+        "definition": "Supprimer cette note ? Cette action est irréversible.",
         "context": "Confirmation before deleting a logbook entry",
         "term_plural": "",
         "reference": "",
@@ -5077,8 +5077,458 @@
     },
     {
         "term": "label_log_contact_sent",
-        "definition": "Message envoy\u00e9 aux enseignants s\u00e9lectionn\u00e9s",
+        "definition": "Message envoyé aux enseignants sélectionnés",
         "context": "Confirmation after a trainer contacts teachers in the logbook",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "invitation",
+        "definition": "Invitation",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "invite_title",
+        "definition": "Vous êtes invité à remplir un questionnaire",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "invite_body",
+        "definition": "Merci de prendre quelques minutes pour remplir le questionnaire ci-dessous pour",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "open_questionnaire",
+        "definition": "Ouvrir le questionnaire",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "copy_link",
+        "definition": "Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "invite_subject",
+        "definition": "Questionnaire pour {{name}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "invite_text",
+        "definition": "Vous êtes invité à remplir un questionnaire pour {{name}} : {{url}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "page",
+        "definition": "Page {{n}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent",
+        "definition": "Envoyé",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent_title",
+        "definition": "Le questionnaire a été envoyé",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent_body",
+        "definition": "Le questionnaire programmé pour",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent_body_end",
+        "definition": "a bien été envoyé.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "pages",
+        "definition": "Pages",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "recipients",
+        "definition": "Destinataires ({{n}})",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent_subject",
+        "definition": "Questionnaire envoyé pour {{name}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "sent_text",
+        "definition": "Le questionnaire pour {{name}} a été envoyé à {{emails}}.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "questionnaire",
+        "definition": "Questionnaire",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "default_purpose",
+        "definition": "Cette page fait partie du questionnaire.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "logbook",
+        "definition": "Journal de bord",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "help_title",
+        "definition": "Un enseignant a demandé votre aide",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "help_body",
+        "definition": "a demandé de l'aide sur un message du journal de bord pour",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "open_logbook",
+        "definition": "Ouvrir le journal de bord",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "help_subject",
+        "definition": "Aide demandée dans le journal de bord pour {{name}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "help_text",
+        "definition": "{{teacher}} a demandé de l'aide sur un message du journal de bord pour {{name}} : {{url}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "a_teacher",
+        "definition": "Un enseignant",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "a_trainer",
+        "definition": "Un formateur",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "contact_title",
+        "definition": "Un formateur vous a contacté",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "contact_body",
+        "definition": "vous a envoyé un message dans le journal de bord pour",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "contact_subject",
+        "definition": "Un formateur vous a contacté dans le journal de bord pour {{name}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "contact_text",
+        "definition": "{{trainer}} vous a contacté dans le journal de bord pour {{name}} : {{url}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reminder_title",
+        "definition": "Un message vous attend",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reminder_body_start",
+        "definition": "vous a envoyé un message il y a plus de 3 jours dans la discussion pour",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "open_discussion",
+        "definition": "Ouvrir la discussion",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reminder_subject",
+        "definition": "Un message vous attend dans le journal de bord pour {{name}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reminder_text",
+        "definition": "{{sender}} vous a envoyé un message il y a plus de 3 jours dans le journal de bord pour {{name}} : {{url}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "someone",
+        "definition": "Quelqu'un",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "verify_subject",
+        "definition": "Veuillez vérifier votre adresse e-mail",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "verify_html",
+        "definition": "<p>Bonjour,</p><p>Veuillez cliquer sur le lien ci-dessous pour vérifier votre adresse e-mail :</p><p><a href=\"{{url}}\" target=\"_blank\">Vérifier mon e-mail</a></p><p>Si vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail.</p>",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reset_subject",
+        "definition": "Mot de passe oublié — instructions de réinitialisation",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reset_text",
+        "definition": "Pour réinitialiser votre mot de passe, cliquez sur le lien suivant : {{url}}",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "reset_html",
+        "definition": "<p>Pour réinitialiser votre mot de passe, cliquez sur le lien ci-dessous :</p><a href=\"{{url}}\">Réinitialiser le mot de passe</a>",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Trainee characteristics",
+        "definition": "Recueille des informations de contexte sur les participants à cette formation.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Training characteristics",
+        "definition": "Décrit le contexte, l'organisation et le dispositif de la formation.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Immediate reactions",
+        "definition": "Recueille les premières réactions et la satisfaction juste après la formation.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Sustainability conditions",
+        "definition": "Examine les conditions qui favorisent un usage durable de ce qui a été appris.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Student characteristics",
+        "definition": "Recueille des informations de contexte sur les élèves.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Organizational conditions",
+        "definition": "Examine les facteurs organisationnels qui influencent la formation.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Learning",
+        "definition": "Évalue les connaissances, compétences et attitudes acquises pendant la formation.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Behavioral changes",
+        "definition": "Examine comment les pratiques changent après la formation.",
+        "context": "Transactional email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "purpose_Student learning outcomes",
+        "definition": "Évalue les apprentissages des élèves liés à cette formation.",
+        "context": "Transactional email",
         "term_plural": "",
         "reference": "",
         "comment": "",

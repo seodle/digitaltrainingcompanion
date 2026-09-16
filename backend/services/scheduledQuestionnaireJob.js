@@ -2,8 +2,7 @@ const cron = require("node-cron");
 const Assessment = require("../models/assessmentModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
-const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL } = require("./emailService");
-const { normalizeLang, t } = require("../utils/emailI18n");
+const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL, t } = require("./emailService");
 
 const sendingLocks = new Set();
 
@@ -153,7 +152,7 @@ const processDueScheduledEmails = async () => {
                 continue;
             }
 
-            const lang = normalizeLang(monitoring.scheduledEmailLanguage || owner.language);
+            const lang = monitoring.scheduledEmailLanguage || owner.language;
             const surveyUrl = buildSurveyUrl(owner, monitoringId, openAssessments, lang);
             const participantHtml = buildParticipantHtml(monitoring, openAssessments, surveyUrl, lang);
             const participantText = t(lang, "invite_text", { name: monitoring.name, url: surveyUrl });

@@ -2,8 +2,7 @@ const cron = require("node-cron");
 const Log = require("../models/logModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
-const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL } = require("./emailService");
-const { normalizeLang, t } = require("../utils/emailI18n");
+const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL, t } = require("./emailService");
 const { chatPartnerId } = require("./logService");
 
 const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
@@ -30,7 +29,7 @@ const personName = (user, fallback) => {
 };
 
 const sendPendingChatReminder = async (log, monitoring, lastMessage, recipient, sender) => {
-    const lang = normalizeLang(recipient.language);
+    const lang = recipient.language;
     const logUrl = `${FRONTEND_URL}/logbooks?monitoring=${log.monitoringId}&log=${log._id}`;
     const senderName = personName(sender, t(lang, "someone"));
     const snippet = String(lastMessage.text || "").trim();

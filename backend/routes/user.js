@@ -53,8 +53,10 @@ router.patch("/me/language", async (req, res) => {
     if (!userId) {
       return res.status(401).json({ error: "Authentication required" });
     }
-    const { normalizeLang } = require("../utils/emailI18n");
-    const language = normalizeLang(req.body?.language);
+    const language = String(req.body?.language || "").toLowerCase().slice(0, 2);
+    if (!["en", "fr", "de", "it", "es"].includes(language)) {
+      return res.status(400).json({ error: "language must be one of: en, fr, de, it, es" });
+    }
     const user = await Users.findByIdAndUpdate(userId, { language }, { new: true });
     if (!user) {
       return res.status(404).json({ error: "User not found" });

@@ -1,5 +1,47 @@
+const path = require("path");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+
+const SUPPORTED_LANGS = ["en", "fr", "de", "it", "es"];
+const TYPE_LABEL_TERMS = {
+    "type_Trainee characteristics": "label_assessment_type_trainee_characteristics",
+    "type_Training characteristics": "label_assessment_type_training_characteristics",
+    "type_Immediate reactions": "label_assessment_type_immediate_reactions",
+    "type_Sustainability conditions": "label_assessment_type_sustainability_conditions",
+    "type_Student characteristics": "label_assessment_type_student_characteristics",
+    "type_Organizational conditions": "label_assessment_type_organizational_conditions",
+    "type_Learning": "label_assessment_type_learning",
+    "type_Behavioral changes": "label_assessment_type_behavioral_changes",
+    "type_Student learning outcomes": "label_assessment_type_student_learning_outcomes",
+};
+
+const loadCatalog = (lang) => {
+    const entries = require(path.join(__dirname, `../../src/assets/localizables/Localizable_${lang}.json`));
+    const map = new Map();
+    (Array.isArray(entries) ? entries : []).forEach((item) => {
+        if (item && item.term) {
+            map.set(item.term, item.definition ?? "");
+        }
+    });
+    return map;
+};
+
+const catalogs = Object.fromEntries(SUPPORTED_LANGS.map((lang) => [lang, loadCatalog(lang)]));
+
+const langCode = (value) => {
+    const code = String(value || "").toLowerCase().slice(0, 2);
+    return SUPPORTED_LANGS.includes(code) ? code : "en";
+};
+
+const t = (lang, key, vars = {}) => {
+    const code = langCode(lang);
+    const term = TYPE_LABEL_TERMS[key] || key;
+    let text = catalogs[code].get(term) || catalogs.en.get(term) || key;
+    Object.entries(vars).forEach(([name, value]) => {
+        text = text.replace(new RegExp(`{{${name}}}`, "g"), String(value ?? ""));
+    });
+    return text;
+};
 
 const EMAIL_USER = process.env.EMAIL_USER;
 const EMAIL_PASS = process.env.EMAIL_PASS;
@@ -35,7 +77,7 @@ const escapeHtml = (value) => String(value || "")
 
 const wrapEmail = (innerHtml, lang = "en") => `
 <!DOCTYPE html>
-<html lang="${lang}">
+<html lang="${langCode(lang)}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,6 +133,7 @@ module.exports = {
     wrapEmail,
     ctaButton,
     escapeHtml,
+    t,
     FRONTEND_URL,
     LOGO_URL,
     EMAIL_USER,

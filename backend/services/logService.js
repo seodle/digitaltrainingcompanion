@@ -1,8 +1,7 @@
 const Log = require("../models/logModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
-const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL } = require("./emailService");
-const { normalizeLang, t } = require("../utils/emailI18n");
+const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL, t } = require("./emailService");
 
 const VISIBILITY = ["private", "trainer", "selected", "followers"];
 const AUTHOR_POPULATE = { path: "userId", select: "firstName lastName" };
@@ -163,7 +162,7 @@ const populateLog = (query) => query.populate(AUTHOR_POPULATE).populate(CHAT_POP
 const notifyOwnerOfHelpRequest = async (log, monitoring, requesterId) => {
     const owner = await User.findById(monitoring.userId).select("email firstName lastName language");
     const teacher = await User.findById(requesterId).select("firstName lastName");
-    const lang = normalizeLang(owner?.language);
+    const lang = owner?.language;
     const teacherName = [teacher?.firstName, teacher?.lastName].filter(Boolean).join(" ") || t(lang, "a_teacher");
     const logUrl = `${FRONTEND_URL}/logbooks?monitoring=${log.monitoringId}&log=${log._id}`;
 
@@ -199,7 +198,7 @@ const notifyTeachersOfTrainerContact = async (log, monitoring, requesterId, teac
         if (!teacher?.email) {
             return;
         }
-        const lang = normalizeLang(teacher.language);
+        const lang = teacher.language;
         const trainerName = [trainer?.firstName, trainer?.lastName].filter(Boolean).join(" ") || t(lang, "a_trainer");
         const inner = `
             <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">${escapeHtml(t(lang, "logbook"))}</p>

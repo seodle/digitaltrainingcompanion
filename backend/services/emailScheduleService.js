@@ -1,6 +1,6 @@
 const Monitoring = require("../models/monitoringModel");
 const Assessment = require("../models/assessmentModel");
-const { normalizeLang } = require("../utils/emailI18n");
+const EMAIL_LANGS = ["en", "fr", "de", "it", "es"];
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -85,8 +85,15 @@ const updateEmailSchedule = async (monitoringId, { emails, assessmentIds, schedu
         throw error;
     }
 
+    const scheduledLanguage = String(language || "en").toLowerCase().slice(0, 2);
+    if (!EMAIL_LANGS.includes(scheduledLanguage)) {
+        const error = new Error("language must be one of: en, fr, de, it, es");
+        error.status = 400;
+        throw error;
+    }
+
     monitoring.scheduledEmailRecipients = normalizedEmails;
-    monitoring.scheduledEmailLanguage = normalizeLang(language);
+    monitoring.scheduledEmailLanguage = scheduledLanguage;
     await monitoring.save();
 
     await Assessment.updateMany(

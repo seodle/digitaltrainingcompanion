@@ -3,8 +3,7 @@ const crypto = require("crypto");
 
 const User = require("../models/userModel");
 const { validateUserCredentialsRegister } = require('../utils/passwordValidationUtils.js');
-const { sendMail, FRONTEND_URL, LOGO_URL } = require('./emailService');
-const { normalizeLang, t } = require('../utils/emailI18n');
+const { sendMail, FRONTEND_URL, LOGO_URL, t } = require('./emailService');
 require('dotenv').config();
 
 /**
@@ -71,7 +70,7 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
         // create an save a new user
         const newUser = new User({
             ...userData,
-            language: normalizeLang(userData.language),
+            language: userData.language || "en",
             password: hashPassword,
             verificationToken,
             isVerified: false,
@@ -79,7 +78,7 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
         await newUser.save();
 
         if (sendEmailForVerification) {
-            const lang = normalizeLang(userData.language);
+            const lang = userData.language || "en";
             const verifyUrl = `${FRONTEND_URL}/verifyEmail?token=${verificationToken}`;
             await sendMail({
                 to: userData.email,
@@ -129,7 +128,7 @@ const initiatePasswordReset = async (email, language) => {
         // Email URL for resetting password
         const resetURL = `${FRONTEND_URL}/updatePassword/${resetToken}`;
 
-        const lang = normalizeLang(language || user.language);
+        const lang = language || user.language;
         await sendMail({
             to: email,
             subject: t(lang, "reset_subject"),
