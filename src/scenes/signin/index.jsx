@@ -61,9 +61,9 @@ const handleMouseDownPassword = (event) => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" sx={{ minHeight: "100%", height: "100%", overflowY: "auto" }}>
       <Box display="flex" flexDirection="row" alignItems="stretch" justifyContent="center" sx={authentificationFormStyle} component="form" onSubmit={handleSubmit}>
-        <Box flexGrow={2} flexBasis={0} padding="60px">
+        <Box flexGrow={2} flexBasis={0} sx={{ p: { xs: 3, md: "60px" }, boxSizing: "border-box" }}>
           
           <LanguageSelector/>
           <DTCLogo/>
@@ -125,7 +125,7 @@ const handleMouseDownPassword = (event) => {
           </Typography>
 
           <Box mt={5} display="flex" justifyContent="center">
-            <Button type="submit" variant="contained" sx={{...buttonStyle, width: '30%'}}>
+            <Button type="submit" variant="contained" sx={{...buttonStyle, width: { xs: '100%', sm: '40%' }, mr: { xs: 0, sm: 2 }}}>
               <Typography variant="h5">{getMessage('label_next')}</Typography>
             </Button>
           </Box>

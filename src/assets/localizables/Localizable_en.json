@@ -82,7 +82,7 @@
     },
     {
         "term": "dtc_description",
-        "definition": "Evaluate training programs using evidence-based data",
+        "definition": "In-depth training evaluation, simplified.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -91,7 +91,7 @@
     },
     {
         "term": "dtc_description_2",
-        "definition": "Create assessments, visualize results, improve your training programs, all with just a few clicks",
+        "definition": "Organize, create, visualize and improve your training evaluations in a few clicks, without losing contact with your participants.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -127,7 +127,7 @@
     },
     {
         "term": "dtc_description_6",
-        "definition": "Design evidence-based assessments",
+        "definition": "Design the right assessment, easily and rapidly",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -163,7 +163,7 @@
     },
     {
         "term": "dtc_description_10",
-        "definition": "Maintain a Continuous Improvement Log",
+        "definition": "Maintain a Continuous Improvement Log with your participants",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -172,7 +172,7 @@
     },
     {
         "term": "dtc_description_11",
-        "definition": "Utilize our user-friendly logbook to track vital observations and changes, enhancing your training continuously.",
+        "definition": "Use our simple logbook to track observations, improvements and discussions with your participants, and keep improving your training together.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -1234,7 +1234,7 @@
     },
     {
         "term": "dashboard_share_open_assessments_together",
-        "definition": "The assessments will be presented in this order:",
+        "definition": "Page order",
         "context": "message for sharing assessments",
         "term_plural": "",
         "reference": "",
@@ -1614,6 +1614,96 @@
         "term": "label_choose_teacher",
         "definition": "Data from...",
         "context": "Label for a picker to choose along a list of teachers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_participant",
+        "definition": "Participant",
+        "context": "Label for a picker to filter results by one participant",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_participant",
+        "definition": "Choose a participant",
+        "context": "ask the user to choose a participant in results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_all_participants",
+        "definition": "All participants",
+        "context": "Default option to show aggregated results for the whole group",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_results_for_all",
+        "definition": "Showing results for the whole group",
+        "context": "Caption on the results page when no participant is selected",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_results_for_participant",
+        "definition": "Showing results for",
+        "context": "Caption prefix on the results page when one participant is selected",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_participant_ranking",
+        "definition": "By criterion",
+        "context": "Title of the participant ranking panel on results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_hide_ranking_names",
+        "definition": "Hide names",
+        "context": "Toggle to hide participant names in the results ranking panel",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ranking_no_criteria",
+        "definition": "No participant details for this assessment",
+        "context": "Empty state when results ranking has no scored questions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_ranking_correct",
+        "definition": "Correct",
+        "context": "Learning ranking: participant answered correctly",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ranking_incorrect",
+        "definition": "Incorrect",
+        "context": "Learning ranking: participant answered incorrectly",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -2044,7 +2134,7 @@
     },
     {
         "term": "label_add_log_entry",
-        "definition": "Add a new log entry",
+        "definition": "New message",
         "context": "",
         "term_plural": "",
         "reference": "",
@@ -2080,7 +2170,7 @@
     },
     {
         "term": "label_choose_log_type",
-        "definition": "Choose the type of log",
+        "definition": "Type of note",
         "context": "addressed to a user",
         "term_plural": "",
         "reference": "",
@@ -2125,7 +2215,7 @@
     },
     {
         "term": "label_my_training_activity",
-        "definition": "My observations and improvements",
+        "definition": "My observations, improvements and discussions",
         "context": "title of the entire logbook",
         "term_plural": "",
         "reference": "",
@@ -2368,7 +2458,7 @@
     },
     {
         "term": "label_last_modified",
-        "definition": "Last modification",
+        "definition": "Edited",
         "context": "label last modified logbook",
         "term_plural": "",
         "reference": "",
@@ -2386,7 +2476,7 @@
     },
     {
         "term": "label_log_completed",
-        "definition": "Completed on:",
+        "definition": "Completed",
         "context": "label log completed",
         "term_plural": "",
         "reference": "",
@@ -3663,6 +3753,15 @@
         "fuzzy": 0
     },
     {
+        "term": "label_generate_summary",
+        "definition": "Generate summary",
+        "context": "Button to request an AI summary of text responses",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "tooltip_enable_reorder",
         "definition": "Default view: enable assessment reordering",
         "context": "tooltip_enable_reorder",
@@ -4512,6 +4611,474 @@
         "term": "settings_cancel_plan",
         "definition": "Cancel my plan",
         "context": "Settings \u2192 Subscription tab: red outlined button next to Manage plan; opens same Stripe billing portal where user can cancel.",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "tooltip_schedule_questionnaires",
+        "definition": "Schedule sending questionnaires by email",
+        "context": "Tooltip for the schedule icon in the sharing questionnaires panel",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dialog_schedule_title",
+        "definition": "Schedule questionnaires by email",
+        "context": "Title of the schedule questionnaires dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_emails",
+        "definition": "Email addresses",
+        "context": "Label for the recipient list in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_add_email",
+        "definition": "Add",
+        "context": "Button to add an email to the schedule recipient list",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_email_placeholder",
+        "definition": "Paste one email per line",
+        "context": "Placeholder for the email input in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_datetime",
+        "definition": "Send date and time",
+        "context": "Date time picker label in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_save",
+        "definition": "Save schedule",
+        "context": "Save button in the schedule questionnaires dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_cancel_send",
+        "definition": "Cancel scheduled send",
+        "context": "Button to cancel a pending scheduled questionnaire email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_schedule_invalid_email",
+        "definition": "Please enter a valid email address",
+        "context": "Validation error for an invalid email in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_email_required",
+        "definition": "Add at least one email address",
+        "context": "Validation error when saving a schedule with no emails",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_date_required",
+        "definition": "Choose a date and time in the future",
+        "context": "Validation error when the scheduled datetime is missing or in the past",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_save_error",
+        "definition": "Could not save the schedule",
+        "context": "Error when the schedule API call fails",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_scheduled_send",
+        "definition": "Scheduled send",
+        "context": "Assessment table column for when questionnaires will be emailed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_scheduled_sent",
+        "definition": "Sent",
+        "context": "Shown in the scheduled send column after questionnaires have been emailed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_no_emails",
+        "definition": "No recipients yet. Paste one email per line.",
+        "context": "Empty state in the schedule dialog recipient list",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_type_ask_for_help",
+        "definition": "Ask for help",
+        "context": "Log type for requesting support",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility",
+        "definition": "Who can see this message",
+        "context": "Visibility picker on a logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_private",
+        "definition": "Only me",
+        "context": "Private log visibility",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_all_trainers",
+        "definition": "All trainers",
+        "context": "Observation/change visible to the monitoring owner and trainer redeemers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_private_trainer",
+        "definition": "Only me and other trainers",
+        "context": "Trainer private log, also visible to other trainers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_trainer",
+        "definition": "Trainer only",
+        "context": "Teacher shares a log with the monitoring owner",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_selected",
+        "definition": "Selected teachers",
+        "context": "Trainer shares a log with chosen teachers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_followers",
+        "definition": "All teachers",
+        "context": "Trainer shares a log with every teacher on the monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_followers_teacher",
+        "definition": "Trainers and teachers",
+        "context": "Teacher shares a log with the trainer and all teachers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_contact_teacher",
+        "definition": "Teacher to contact",
+        "context": "Trainer picks the teacher to contact in the logbook",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_share_with_teachers",
+        "definition": "Share with",
+        "context": "Multi-select of teachers for selected visibility",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_request_help",
+        "definition": "Request help from the trainer",
+        "context": "Teacher action on a logbook message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_help_requested",
+        "definition": "Help requested",
+        "context": "Shown after a teacher requested help",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_help_sent",
+        "definition": "Help request sent to the trainer",
+        "context": "Confirmation after creating an Ask for help log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_open_discussion",
+        "definition": "Open discussion",
+        "context": "Opens the 1:1 chat on a log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_send_message",
+        "definition": "Send",
+        "context": "Send a chat message on a log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_chat_placeholder",
+        "definition": "Write a message",
+        "context": "Chat input placeholder",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_chat_empty",
+        "definition": "No messages yet",
+        "context": "Empty chat thread",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_author",
+        "definition": "Author",
+        "context": "Author label on a shared logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_chat_title",
+        "definition": "Discussion",
+        "context": "Title of the logbook chat window",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_session",
+        "definition": "Session",
+        "context": "Session chip on a logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_all",
+        "definition": "All notes",
+        "context": "Logbook filter showing every log type",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_empty",
+        "definition": "No messages match these filters",
+        "context": "Empty state when logbook filters match nothing",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_author_all",
+        "definition": "All teachers",
+        "context": "Trainer filter showing logs from every author",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_teacher",
+        "definition": "Teacher",
+        "context": "Trainer filter to show logs from one teacher",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_visible_to",
+        "definition": "Visible to",
+        "context": "Logbook filter by audience, shorter than the create-form visibility label",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_visible_all",
+        "definition": "Any audience",
+        "context": "Logbook visibility filter showing every audience",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_audience",
+        "definition": "Audience",
+        "context": "Short visibility label next to session on the trainer log form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_toggle_assessment",
+        "definition": "Assessment",
+        "context": "Toggle to add assessment fields on a trainer log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_toggle_participants",
+        "definition": "Participants",
+        "context": "Toggle to add participant fields on a trainer log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_mark_resolved",
+        "definition": "Mark as resolved",
+        "context": "Button to mark an ask-for-help log as resolved",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_resolved",
+        "definition": "Resolved",
+        "context": "Shown when an ask-for-help log is resolved; click to undo",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_delete_confirm",
+        "definition": "Delete this note? This cannot be undone.",
+        "context": "Confirmation before deleting a logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_type_ask_for_help_trainer",
+        "definition": "Contact a teacher",
+        "context": "Log type for a trainer starting a discussion with a teacher",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_everyone",
+        "definition": "Everyone",
+        "context": "Contact-a-teacher visibility: all teachers can see the message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visible_by",
+        "definition": "Visible by",
+        "context": "Prefix on a logbook message showing who can see it",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_contact_sent",
+        "definition": "Message sent to the selected teacher(s)",
+        "context": "Confirmation after a trainer contacts teachers in the logbook",
         "term_plural": "",
         "reference": "",
         "comment": "",

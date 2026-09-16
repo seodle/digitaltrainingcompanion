@@ -150,13 +150,21 @@ const Tutorial = () => {
                 '& blockquote': {
                     borderLeft: '4px solid #F7941E',
                     pl: 2.5,
+                    pr: { xs: 2.5, md: 3 },
                     ml: 0,
+                    mr: 0,
+                    width: '100%',
+                    boxSizing: 'border-box',
                     backgroundColor: '#FFF3E0',
                     py: 1.5,
                     borderRadius: '4px',
                     mb: 2,
                     fontSize: isMobile ? '1rem' : '1.1rem',
                     fontStyle: 'italic'
+                },
+                '& blockquote p': {
+                    pr: 0,
+                    mb: 0,
                 },
                 '& strong': {
                     fontWeight: '600',
@@ -224,7 +232,8 @@ const Tutorial = () => {
                                     alt={alt} 
                                     {...props}
                         style={{
-                                        maxWidth: maxWidth,
+                                        maxWidth: isMobile ? '100%' : maxWidth,
+                                        width: isMobile ? '100%' : undefined,
                                         height: 'auto',
                                         borderRadius: '8px',
                                         margin: '16px 0',
@@ -245,9 +254,9 @@ const Tutorial = () => {
 
     if (!tutorialConfig) {
         return (
-            <Box display="flex" height="100vh">
-                {!isMobile && <Sidebar />}
-                <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden">
+            <Box display="flex" sx={{ height: '100%', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
+                <Sidebar />
+                <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden" sx={{ minWidth: 0, minHeight: 0 }}>
                     <Box mt="10px" ml="10px">
                         <Topbar title="Tutorial" />
                     </Box>
@@ -260,9 +269,9 @@ const Tutorial = () => {
     }
 
     return (
-        <Box display="flex" height="100vh">
-            {!isMobile && <Sidebar />}
-            <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden">
+        <Box display="flex" sx={{ height: '100%', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
+            <Sidebar />
+            <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden" sx={{ minWidth: 0, minHeight: 0 }}>
                 <Box mt="10px" ml="10px">
                     <Topbar title="Tutorial" />
                 </Box>
@@ -290,13 +299,26 @@ const Tutorial = () => {
                     <Paper 
                         elevation={2} 
                         sx={{ 
-                            padding: isMobile ? '10px' : '20px', 
+                            padding: isMobile ? '16px 20px 30px' : '20px', 
                             paddingBottom: isMobile ? '30px' : '40px',  
                             borderRadius: '10px',
                             marginBottom: '20px' 
                         }}
                     >
-                        <Stepper activeStep={activeStep} alternativeLabel orientation={isMobile ? 'vertical' : 'horizontal'}>
+                        <Stepper
+                            activeStep={activeStep}
+                            alternativeLabel={!isMobile}
+                            orientation="horizontal"
+                            sx={{
+                                overflowX: 'auto',
+                                '& .MuiStepLabel-label, & .MuiStepLabel-labelContainer': {
+                                    display: { xs: 'none', sm: 'block' },
+                                },
+                                '& .MuiStepConnector-root': {
+                                    minWidth: { xs: 12, sm: 24 },
+                                },
+                            }}
+                        >
                             {tutorialConfig.steps.map((step, index) => (
                                 <Step key={index} active={activeStep === index} onClick={() => handleStepClick(index)}>
                                     <StepLabel
@@ -307,7 +329,7 @@ const Tutorial = () => {
                                             }
                                         }}
                                     >
-                                        {isMobile ? <Typography variant="caption">{step.title}</Typography> : step.title}
+                                        {step.title}
                                     </StepLabel>
                                 </Step>
                             ))}

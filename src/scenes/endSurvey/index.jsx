@@ -20,8 +20,8 @@ const EndSurvey = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="flex-start"
-      minHeight="100vh"
       padding="40px 20px"
+      sx={{ minHeight: "100%", height: "100%", overflowY: "auto" }}
     >
       {/* The DTCLogo component handles all logo-related styling and behavior */}
       <DTCLogo />

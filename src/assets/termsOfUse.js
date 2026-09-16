@@ -7,11 +7,12 @@ export const termsOfUse = {
 
                 mentionLegalEditorTitle: "Éditeur du site",
                 mentionLegalEditorText: `Le site "The Digital Training Companion" est édité par :
-École Polytechnique Fédérale de Lausanne (EPFL)
-Centre LEARN
-Route Cantonale, 1015 Lausanne, Suisse
-Téléphone : +41 (0)21 693 11 11
-Email : contact@digitaltrainingcompanion.ch`,
+Association Evalution
+Avenue de Florimont 30
+1006 Lausanne, Suisse
+Téléphone : +41 78 217 36 25
+Email : contact@evalution-asso.ch
+Site : https://www.evalution-asso.ch`,
 
                 mentionLegalHostingTitle: "Hébergement",
                 mentionLegalHostingText: `Le site est hébergé par :
@@ -21,16 +22,15 @@ Rue Eugène-Marziano 25
 Suisse`,
 
                 mentionLegalDirectorTitle: "Responsable de la publication",
-                mentionLegalDirectorText:
-                        `Dr. Sunny Avry
-            École Polytechnique Fédérale de Lausanne (EPFL)`,
+                mentionLegalDirectorText: `Dr. Sunny Avry
+Président d'evalution`,
 
                 // ----- CGU -----
                 cguTitle: "Conditions Générales d'Utilisation (CGU)",
 
                 article1Title: "Article 1 : Objet",
                 article1Text: `Les présentes CGU régissent l'utilisation du site "The Digital Training Companion",
-plateforme d'évaluation des formations développée par le Centre LEARN de l'EPFL.`,
+plateforme d'évaluation des formations développée par l'association Evalution.`,
 
                 article2Title: "Article 2 : Accès au site",
                 article2Text: `2.1 L'accès au site est libre et gratuit pour tous les utilisateurs.
@@ -40,13 +40,13 @@ plateforme d'évaluation des formations développée par le Centre LEARN de l'EP
 caractère temporaire et la possible suppression de leurs données.`,
 
                 article3Title: "Article 3 : Services proposés",
-                article3Text: `Le site propose des fonctionnalités d'évaluation des formations. L'EPFL se réserve
+                article3Text: `Le site propose des fonctionnalités d'évaluation des formations. L'association Evalution se réserve
 le droit de modifier temporairement les services en cas de maintenance nécessaire, avec
 notification préalable des utilisateurs.`,
 
                 article4Title: "Article 4 : Propriété intellectuelle",
                 article4Text: `4.1 Tous les contenus présents sur le site (textes, images, vidéos, etc.) sont la
-propriété exclusive de l'EPFL ou de leurs auteurs respectifs.`,
+propriété exclusive de l'association Evalution ou de leurs auteurs respectifs.`,
 
                 article5Title: "Article 5 : Protection des données personnelles",
                 article5Text: `5.1 Collecte des données personnelles
@@ -71,7 +71,7 @@ disposent des droits suivants :
 - Droit à la portabilité des données
 - Droit d'opposition au traitement
 
-Pour exercer ces droits, contactez-nous à : contact@digitaltrainingcompanion.ch
+Pour exercer ces droits, contactez-nous à : contact@evalution-asso.ch
 
 5.5 Stockage local
 Le site n'utilise pas de cookies classiques mais fait usage du stockage local du navigateur
@@ -101,19 +101,19 @@ Pour les comptes sandbox, les données peuvent être supprimées à tout moment 
 - Ne pas diffuser de contenu illégal ou préjudiciable`,
 
                 article7Title: "Article 7 : Responsabilité",
-                article7Text: `7.1 L'EPFL ne peut être tenue responsable des dommages directs ou indirects résultant de
+                article7Text: `7.1 L'association Evalution ne peut être tenue responsable des dommages directs ou indirects résultant de
 l'utilisation du site.
-7.2 L'EPFL s'efforce d'assurer la disponibilité du site mais ne peut garantir un accès
+7.2 L'association Evalution s'efforce d'assurer la disponibilité du site mais ne peut garantir un accès
 ininterrompu.
-7.3 L'EPFL n'est pas responsable de la perte de données des comptes sandbox qui peuvent être
+7.3 L'association Evalution n'est pas responsable de la perte de données des comptes sandbox qui peuvent être
 supprimés à tout moment.`,
 
                 article8Title: "Article 8 : Modification des CGU",
-                article8Text: `L'EPFL se réserve le droit de modifier les présentes CGU à tout moment. Les utilisateurs
+                article8Text: `L'association Evalution se réserve le droit de modifier les présentes CGU à tout moment. Les utilisateurs
 seront informés des modifications substantielles.`,
 
                 article9Title: "Article 9 : Interruption du service",
-                article9Text: `9.1 En cas d'arrêt définitif du service, l'EPFL s'engage à :
+                article9Text: `9.1 En cas d'arrêt définitif du service, l'association Evalution s'engage à :
 - Informer les utilisateurs au minimum 30 jours avant la date d'arrêt
 - Permettre aux utilisateurs d'accéder à leurs données pendant cette période
 - Préciser les modalités de conservation et de suppression des données
@@ -127,7 +127,7 @@ affichage sur le site.`,
 10.2 Tout litige relatif à l'interprétation ou l'exécution des présentes CGU relève de la
 compétence exclusive des tribunaux de Lausanne, Suisse.`,
 
-                lastUpdate: "Date de dernière mise à jour : 23 novembre 2024"
+                lastUpdate: "Date de dernière mise à jour : 29 août 2026"
         },
 
         // --------------------------------------------------------------------
@@ -137,11 +137,12 @@ compétence exclusive des tribunaux de Lausanne, Suisse.`,
 
                 mentionLegalEditorTitle: "Publisher of the site",
                 mentionLegalEditorText: `The website "The Digital Training Companion" is published by:
-- École Polytechnique Fédérale de Lausanne (EPFL)
-- LEARN Center
-- Route Cantonale, 1015 Lausanne, Switzerland
-- Phone: +41 (0)21 693 11 11
-- Email: contact@digitaltrainingcompanion.ch`,
+Association Evalution
+Avenue de Florimont 30
+1006 Lausanne, Switzerland
+Phone: +41 78 217 36 25
+Email: contact@evalution-asso.ch
+Website: https://www.evalution-asso.ch`,
 
                 mentionLegalHostingTitle: "Hosting",
                 mentionLegalHostingText: `The site is hosted by:
@@ -152,13 +153,13 @@ Switzerland`,
 
                 mentionLegalDirectorTitle: "Publication Director",
                 mentionLegalDirectorText: `Dr. Sunny Avry
-École Polytechnique Fédérale de Lausanne (EPFL)`,
+President of evalution`,
 
                 cguTitle: "General Terms of Use (GTU)",
 
                 article1Title: "Article 1: Purpose",
                 article1Text: `These GTU govern the use of "The Digital Training Companion," a training-evaluation
-platform developed by EPFL's LEARN Center.`,
+platform developed by the Evalution association.`,
 
                 article2Title: "Article 2: Site Access",
                 article2Text: `2.1 Access to the site is free for all users.
@@ -167,13 +168,13 @@ platform developed by EPFL's LEARN Center.`,
 Users of these accounts acknowledge their temporary nature and the possible deletion of their data.`,
 
                 article3Title: "Article 3: Services Offered",
-                article3Text: `The site provides functionalities to evaluate training programs. EPFL reserves the
+                article3Text: `The site provides functionalities to evaluate training programs. The Evalution association reserves the
 right to modify these services temporarily for necessary maintenance, with prior notification
 to users.`,
 
                 article4Title: "Article 4: Intellectual Property",
                 article4Text: `4.1 All content on the site (texts, images, videos, etc.) is the exclusive property
-of EPFL or their respective authors.`,
+of the Evalution association or their respective authors.`,
 
                 article5Title: "Article 5: Protection of Personal Data",
                 article5Text: `5.1 Collection of personal data
@@ -196,7 +197,7 @@ In accordance with Swiss data protection legislation and the GDPR, users have th
 - Right to data portability
 - Right to object to processing
 
-To exercise these rights, contact: contact@digitaltrainingcompanion.ch
+To exercise these rights, contact: contact@evalution-asso.ch
 
 5.5 Local storage
 The site does not use traditional cookies but uses the browser's local storage to save an
@@ -225,18 +226,18 @@ For sandbox accounts, data may be deleted at any time without notice.`,
 - Not distribute illegal or harmful content`,
 
                 article7Title: "Article 7: Liability",
-                article7Text: `7.1 EPFL cannot be held responsible for direct or indirect damages resulting from
+                article7Text: `7.1 The Evalution association cannot be held responsible for direct or indirect damages resulting from
 the use of the site.
-7.2 EPFL strives to ensure site availability but cannot guarantee uninterrupted access.
-7.3 EPFL is not responsible for the loss of data in sandbox accounts, which may be deleted
+7.2 The Evalution association strives to ensure site availability but cannot guarantee uninterrupted access.
+7.3 The Evalution association is not responsible for the loss of data in sandbox accounts, which may be deleted
 at any time.`,
 
                 article8Title: "Article 8: Modification of the GTU",
-                article8Text: `EPFL reserves the right to modify these GTU at any time. Users will be informed
+                article8Text: `The Evalution association reserves the right to modify these GTU at any time. Users will be informed
 of substantial changes.`,
 
                 article9Title: "Article 9: Service Interruption",
-                article9Text: `9.1 In the event of permanent service discontinuation, EPFL commits to:
+                article9Text: `9.1 In the event of permanent service discontinuation, the Evalution association commits to:
 - Inform users at least 30 days before the discontinuation date
 - Allow users to access their data during that period
 - Specify the conditions for data retention and deletion
@@ -250,7 +251,7 @@ on the site.`,
 10.2 Any dispute regarding the interpretation or execution of these GTU falls under the
 exclusive jurisdiction of the courts of Lausanne, Switzerland.`,
 
-                lastUpdate: "Last updated: November 23, 2024"
+                lastUpdate: "Last updated: August 29, 2026"
         },
 
         // --------------------------------------------------------------------
@@ -260,11 +261,12 @@ exclusive jurisdiction of the courts of Lausanne, Switzerland.`,
 
                 mentionLegalEditorTitle: "Herausgeber der Website",
                 mentionLegalEditorText: `Die Website "The Digital Training Companion" wird herausgegeben von:
-- École Polytechnique Fédérale de Lausanne (EPFL)
-- LEARN-Zentrum
-- Route Cantonale, 1015 Lausanne, Schweiz
-- Telefon: +41 (0)21 693 11 11
-- E-Mail: contact@digitaltrainingcompanion.ch`,
+Verein Evalution
+Avenue de Florimont 30
+1006 Lausanne, Schweiz
+Telefon: +41 78 217 36 25
+E-Mail: contact@evalution-asso.ch
+Website: https://www.evalution-asso.ch`,
 
                 mentionLegalHostingTitle: "Hosting",
                 mentionLegalHostingText: `Die Website wird gehostet von:
@@ -275,13 +277,13 @@ Schweiz`,
 
                 mentionLegalDirectorTitle: "Verantwortlicher für die Veröffentlichung",
                 mentionLegalDirectorText: `Dr. Sunny Avry
-École Polytechnique Fédérale de Lausanne (EPFL)`,
+Präsident von evalution`,
 
                 cguTitle: "Allgemeine Nutzungsbedingungen (ANB)",
 
                 article1Title: "Artikel 1: Zweck",
                 article1Text: `Diese ANB regeln die Nutzung von "The Digital Training Companion", einer Plattform
-zur Bewertung von Schulungen, die vom LEARN-Zentrum der EPFL entwickelt wurde.`,
+zur Bewertung von Schulungen, die vom Verein Evalution entwickelt wurde.`,
 
                 article2Title: "Artikel 2: Zugriff auf die Website",
                 article2Text: `2.1 Der Zugriff auf die Website ist für alle Benutzer kostenlos.
@@ -291,13 +293,13 @@ werden können. Benutzer dieser Konten akzeptieren deren vorübergehenden Charak
 mögliche Löschung ihrer Daten.`,
 
                 article3Title: "Artikel 3: Angebotene Dienste",
-                article3Text: `Die Website bietet Funktionen zur Bewertung von Schulungen. Die EPFL behält sich
+                article3Text: `Die Website bietet Funktionen zur Bewertung von Schulungen. Der Verein Evalution behält sich
 das Recht vor, diese Dienste bei Bedarf vorübergehend zu ändern (z.B. für Wartungsarbeiten), 
 und informiert die Benutzer im Voraus.`,
 
                 article4Title: "Artikel 4: Geistiges Eigentum",
                 article4Text: `4.1 Sämtliche Inhalte auf der Website (Texte, Bilder, Videos usw.) sind Eigentum 
-der EPFL oder ihrer jeweiligen Autoren.`,
+des Vereins Evalution oder ihrer jeweiligen Autoren.`,
 
                 article5Title: "Artikel 5: Schutz personenbezogener Daten",
                 article5Text: `5.1 Erhebung personenbezogener Daten
@@ -320,7 +322,7 @@ Gemäß schweizerischem Datenschutzrecht und der DSGVO haben Benutzer folgende R
 - Recht auf Datenübertragbarkeit
 - Widerspruchsrecht
 
-Zur Ausübung dieser Rechte wenden Sie sich bitte an: contact@digitaltrainingcompanion.ch
+Zur Ausübung dieser Rechte wenden Sie sich bitte an: contact@evalution-asso.ch
 
 5.5 Lokaler Speicher
 Die Website verwendet keine herkömmlichen Cookies, sondern den lokalen Speicher des Browsers,
@@ -350,19 +352,19 @@ Bei Sandbox-Konten können Daten jederzeit ohne Vorankündigung gelöscht werden
 - Keine illegalen oder schädlichen Inhalte zu verbreiten`,
 
                 article7Title: "Artikel 7: Haftung",
-                article7Text: `7.1 Die EPFL haftet nicht für direkte oder indirekte Schäden, die durch die Nutzung
+                article7Text: `7.1 Der Verein Evalution haftet nicht für direkte oder indirekte Schäden, die durch die Nutzung
 der Website entstehen.
-7.2 Die EPFL bemüht sich um die Verfügbarkeit der Website, kann jedoch keinen
+7.2 Der Verein Evalution bemüht sich um die Verfügbarkeit der Website, kann jedoch keinen
 ununterbrochenen Zugriff garantieren.
-7.3 Die EPFL ist nicht verantwortlich für den Verlust von Daten in Sandbox-Konten, die
+7.3 Der Verein Evalution ist nicht verantwortlich für den Verlust von Daten in Sandbox-Konten, die
 jederzeit gelöscht werden können.`,
 
                 article8Title: "Artikel 8: Änderung der ANB",
-                article8Text: `Die EPFL behält sich das Recht vor, diese ANB jederzeit zu ändern. Die Benutzer
+                article8Text: `Der Verein Evalution behält sich das Recht vor, diese ANB jederzeit zu ändern. Die Benutzer
 werden über wesentliche Änderungen informiert.`,
 
                 article9Title: "Artikel 9: Unterbrechung des Dienstes",
-                article9Text: `9.1 Im Falle einer endgültigen Einstellung des Dienstes verpflichtet sich die EPFL:
+                article9Text: `9.1 Im Falle einer endgültigen Einstellung des Dienstes verpflichtet sich der Verein Evalution:
 - Die Benutzer mindestens 30 Tage vor dem Enddatum zu informieren
 - Den Benutzern während dieses Zeitraums den Zugriff auf ihre Daten zu ermöglichen
 - Die Bedingungen für die Aufbewahrung und Löschung von Daten anzugeben
@@ -376,7 +378,7 @@ durch einen Hinweis auf der Website.`,
 10.2 Alle Streitigkeiten im Zusammenhang mit der Auslegung oder Ausführung dieser ANB unterliegen
 der ausschließlichen Zuständigkeit der Gerichte von Lausanne, Schweiz.`,
 
-                lastUpdate: "Letzte Aktualisierung: 23. November 2024"
+                lastUpdate: "Letzte Aktualisierung: 29. August 2026"
         },
 
         // --------------------------------------------------------------------
@@ -386,11 +388,12 @@ der ausschließlichen Zuständigkeit der Gerichte von Lausanne, Schweiz.`,
 
                 mentionLegalEditorTitle: "Editore del sito",
                 mentionLegalEditorText: `Il sito "The Digital Training Companion" è pubblicato da:
-- École Polytechnique Fédérale de Lausanne (EPFL)
-- Centro LEARN
-- Route Cantonale, 1015 Losanna, Svizzera
-- Telefono: +41 (0)21 693 11 11
-- Email: contact@digitaltrainingcompanion.ch`,
+Associazione Evalution
+Avenue de Florimont 30
+1006 Losanna, Svizzera
+Telefono: +41 78 217 36 25
+Email: contact@evalution-asso.ch
+Sito: https://www.evalution-asso.ch`,
 
                 mentionLegalHostingTitle: "Hosting",
                 mentionLegalHostingText: `Il sito è ospitato da:
@@ -401,13 +404,13 @@ Svizzera`,
 
                 mentionLegalDirectorTitle: "Direttore della pubblicazione",
                 mentionLegalDirectorText: `Dr. Sunny Avry
-École Polytechnique Fédérale de Lausanne (EPFL)`,
+Presidente di evalution`,
 
                 cguTitle: "Termini Generali di Utilizzo (TGU)",
 
                 article1Title: "Articolo 1: Oggetto",
                 article1Text: `I presenti TGU regolano l'uso di "The Digital Training Companion", una piattaforma 
-di valutazione della formazione sviluppata dal Centro LEARN dell'EPFL.`,
+di valutazione della formazione sviluppata dall'associazione Evalution.`,
 
                 article2Title: "Articolo 2: Accesso al sito",
                 article2Text: `2.1 L'accesso al sito è gratuito per tutti gli utenti.
@@ -417,13 +420,13 @@ in qualsiasi momento senza preavviso. Gli utenti di questi account accettano il 
 temporaneo e la possibile cancellazione dei loro dati.`,
 
                 article3Title: "Articolo 3: Servizi offerti",
-                article3Text: `Il sito offre funzionalità per valutare i programmi di formazione. L'EPFL si riserva 
+                article3Text: `Il sito offre funzionalità per valutare i programmi di formazione. L'associazione Evalution si riserva 
 il diritto di modificare temporaneamente i servizi per necessità di manutenzione, con preavviso 
 agli utenti.`,
 
                 article4Title: "Articolo 4: Proprietà intellettuale",
                 article4Text: `4.1 Tutti i contenuti presenti sul sito (testi, immagini, video, ecc.) sono di 
-proprietà esclusiva dell'EPFL o dei rispettivi autori.`,
+proprietà esclusiva dell'associazione Evalution o dei rispettivi autori.`,
 
                 article5Title: "Articolo 5: Protezione dei dati personali",
                 article5Text: `5.1 Raccolta dei dati personali
@@ -448,7 +451,7 @@ hanno i seguenti diritti:
 - Diritto alla portabilità dei dati
 - Diritto di opposizione al trattamento
 
-Per esercitare questi diritti, contattare: contact@digitaltrainingcompanion.ch
+Per esercitare questi diritti, contattare: contact@evalution-asso.ch
 
 5.5 Archiviazione locale
 Il sito non utilizza cookie tradizionali ma utilizza l'archiviazione locale del browser per 
@@ -478,19 +481,19 @@ Per gli account sandbox, i dati possono essere eliminati in qualsiasi momento se
 - Non diffondere contenuti illegali o dannosi`,
 
                 article7Title: "Articolo 7: Responsabilità",
-                article7Text: `7.1 L'EPFL non può essere ritenuta responsabile per danni diretti o indiretti 
+                article7Text: `7.1 L'associazione Evalution non può essere ritenuta responsabile per danni diretti o indiretti 
 derivanti dall'uso del sito.
-7.2 L'EPFL si sforza di garantire la disponibilità del sito ma non può assicurare 
+7.2 L'associazione Evalution si sforza di garantire la disponibilità del sito ma non può assicurare 
 un accesso ininterrotto.
-7.3 L'EPFL non è responsabile della perdita di dati negli account sandbox che possono 
+7.3 L'associazione Evalution non è responsabile della perdita di dati negli account sandbox che possono 
 essere eliminati in qualsiasi momento.`,
 
                 article8Title: "Articolo 8: Modifica dei TGU",
-                article8Text: `L'EPFL si riserva il diritto di modificare i presenti TGU in qualsiasi momento. 
+                article8Text: `L'associazione Evalution si riserva il diritto di modificare i presenti TGU in qualsiasi momento. 
 Gli utenti saranno informati di modifiche sostanziali.`,
 
                 article9Title: "Articolo 9: Interruzione del servizio",
-                article9Text: `9.1 In caso di interruzione definitiva del servizio, l'EPFL si impegna a:
+                article9Text: `9.1 In caso di interruzione definitiva del servizio, l'associazione Evalution si impegna a:
 - Informare gli utenti almeno 30 giorni prima della data di interruzione
 - Consentire agli utenti di accedere ai propri dati durante questo periodo
 - Specificare le modalità di conservazione e cancellazione dei dati
@@ -504,7 +507,7 @@ mediante avviso sul sito.`,
 10.2 Qualsiasi controversia relativa all'interpretazione o all'esecuzione dei presenti 
 TGU rientra nella giurisdizione esclusiva dei tribunali di Losanna, Svizzera.`,
 
-                lastUpdate: "Ultimo aggiornamento: 23 novembre 2024"
+                lastUpdate: "Ultimo aggiornamento: 29 agosto 2026"
         },
 
         // --------------------------------------------------------------------
@@ -514,11 +517,12 @@ TGU rientra nella giurisdizione esclusiva dei tribunali di Losanna, Svizzera.`,
 
                 mentionLegalEditorTitle: "Editor del sitio",
                 mentionLegalEditorText: `El sitio web "The Digital Training Companion" es publicado por:
-- École Polytechnique Fédérale de Lausanne (EPFL)
-- Centro LEARN
-- Route Cantonale, 1015 Lausana, Suiza
-- Teléfono: +41 (0)21 693 11 11
-- Email: contact@digitaltrainingcompanion.ch`,
+Asociación Evalution
+Avenue de Florimont 30
+1006 Lausana, Suiza
+Teléfono: +41 78 217 36 25
+Email: contact@evalution-asso.ch
+Sitio: https://www.evalution-asso.ch`,
 
                 mentionLegalHostingTitle: "Alojamiento",
                 mentionLegalHostingText: `El sitio está alojado por:
@@ -529,13 +533,13 @@ Suiza`,
 
                 mentionLegalDirectorTitle: "Director de publicación",
                 mentionLegalDirectorText: `Dr. Sunny Avry
-École Polytechnique Fédérale de Lausanne (EPFL)`,
+Presidente de evalution`,
 
                 cguTitle: "Términos Generales de Uso (TGU)",
 
                 article1Title: "Artículo 1: Objeto",
                 article1Text: `Los presentes TGU regulan el uso de "The Digital Training Companion", una plataforma 
-de evaluación de formaciones desarrollada por el Centro LEARN de la EPFL.`,
+de evaluación de formaciones desarrollada por la asociación Evalution.`,
 
                 article2Title: "Artículo 2: Acceso al sitio",
                 article2Text: `2.1 El acceso al sitio es gratuito para todos los usuarios.
@@ -545,13 +549,13 @@ cualquier momento sin previo aviso. Los usuarios de estas cuentas aceptan su car
 temporal y la posible eliminación de sus datos.`,
 
                 article3Title: "Artículo 3: Servicios ofrecidos",
-                article3Text: `El sitio ofrece funcionalidades para evaluar programas de formación. La EPFL se 
+                article3Text: `El sitio ofrece funcionalidades para evaluar programas de formación. La asociación Evalution se 
 reserva el derecho de modificar temporalmente los servicios por necesidades de mantenimiento, 
 con previo aviso a los usuarios.`,
 
                 article4Title: "Artículo 4: Propiedad intelectual",
                 article4Text: `4.1 Todo el contenido del sitio (textos, imágenes, videos, etc.) es propiedad 
-exclusiva de la EPFL o de sus respectivos autores.`,
+exclusiva de la asociación Evalution o de sus respectivos autores.`,
 
                 article5Title: "Artículo 5: Protección de datos personales",
                 article5Text: `5.1 Recogida de datos personales
@@ -576,7 +580,7 @@ tienen los siguientes derechos:
 - Derecho a la portabilidad de los datos
 - Derecho de oposición al tratamiento
 
-Para ejercer estos derechos, contactar con: contact@digitaltrainingcompanion.ch
+Para ejercer estos derechos, contactar con: contact@evalution-asso.ch
 
 5.5 Almacenamiento local
 El sitio no utiliza cookies tradicionales pero sí el almacenamiento local del navegador 
@@ -606,19 +610,19 @@ Para las cuentas sandbox, los datos pueden ser eliminados en cualquier momento s
 - No difundir contenido ilegal o perjudicial`,
 
                 article7Title: "Artículo 7: Responsabilidad",
-                article7Text: `7.1 La EPFL no puede ser responsable de daños directos o indirectos resultantes 
+                article7Text: `7.1 La asociación Evalution no puede ser responsable de daños directos o indirectos resultantes 
 del uso del sitio.
-7.2 La EPFL se esfuerza por garantizar la disponibilidad del sitio pero no puede 
+7.2 La asociación Evalution se esfuerza por garantizar la disponibilidad del sitio pero no puede 
 asegurar un acceso ininterrumpido.
-7.3 La EPFL no es responsable de la pérdida de datos en cuentas sandbox que pueden 
+7.3 La asociación Evalution no es responsable de la pérdida de datos en cuentas sandbox que pueden 
 ser eliminadas en cualquier momento.`,
 
                 article8Title: "Artículo 8: Modificación de los TGU",
-                article8Text: `La EPFL se reserva el derecho de modificar los presentes TGU en cualquier momento. 
+                article8Text: `La asociación Evalution se reserva el derecho de modificar los presentes TGU en cualquier momento. 
 Los usuarios serán informados de cambios sustanciales.`,
 
                 article9Title: "Artículo 9: Interrupción del servicio",
-                article9Text: `9.1 En caso de interrupción definitiva del servicio, la EPFL se compromete a:
+                article9Text: `9.1 En caso de interrupción definitiva del servicio, la asociación Evalution se compromete a:
 - Informar a los usuarios al menos 30 días antes de la fecha de interrupción
 - Permitir a los usuarios acceder a sus datos durante este período
 - Especificar las condiciones de conservación y eliminación de datos
@@ -632,6 +636,6 @@ registrados y mediante aviso en el sitio.`,
 10.2 Cualquier disputa relativa a la interpretación o ejecución de los presentes TGU 
 corresponde a la jurisdicción exclusiva de los tribunales de Lausana, Suiza.`,
 
-                lastUpdate: "Última actualización: 23 de noviembre de 2024"
+                lastUpdate: "Última actualización: 29 de agosto de 2026"
         }
 };

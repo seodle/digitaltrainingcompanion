@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { InputLabel, Box, Divider, MenuItem, FormControl, Button, Typography, Tooltip, IconButton, ToggleButtonGroup, ToggleButton } from "@mui/material";
+import { InputLabel, Box, Divider, MenuItem, FormControl, FormControlLabel, Switch, Button, Typography, Tooltip, IconButton, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { CircularProgress } from '@mui/material';
 import Select from '@mui/material/Select';
 import jwt_decode from "jwt-decode";
@@ -12,17 +12,31 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 
 import Sidebar from "../../scenes/global/Sidebar";
 import Topbar from "../../scenes/global/Topbar";
-import AssessmentTabResult from '../../components/AssessmentTabResult';
-import AssessmentTabResultWithFilter from '../../components/AssessmentTabResultWithFilter';
+import { AssessmentResultStack } from '../../components/AssessmentTabResultsComponents';
 import { buttonStyle } from '../../components/styledComponents'
 import { useMessageService } from '../../services/MessageService';
 import { useAuthUser } from '../../contexts/AuthUserContext';
-import { transformAssessments, formatLatestDate } from "../../utils/ObjectsUtils";
+import { transformAssessments, formatLatestDate, localizeAssessmentType } from "../../utils/ObjectsUtils";
 import { prepareChartData, prepareCommentData } from "../../utils/ChartDataUtils";
 import { AssessmentType, UserType } from "../../utils/enums";
 import { BACKEND_URL } from "../../config";
 import { useLanguage } from '../../contexts/LanguageContext';
 import { groupQuestionsByWorkshop, getWorkshopDetailsById } from "../../utils/SurveyUtils";
+import { getAssessmentTypeConfig } from "../../utils/assessmentTypeConfig";
+
+const ANONYMOUS_PARTICIPANT = '__anonymous__';
+
+const CATEGORY_ORDER = [
+    AssessmentType.TRAINEE_CHARACTERISTICS,
+    AssessmentType.TRAINING_CHARACTERISTICS,
+    AssessmentType.IMMEDIATE_REACTIONS,
+    AssessmentType.LEARNING,
+    AssessmentType.ORGANIZATIONAL_CONDITIONS,
+    AssessmentType.BEHAVIORAL_CHANGES,
+    AssessmentType.SUSTAINABILITY_CONDITIONS,
+    AssessmentType.STUDENT_CHARACTERISTICS,
+    AssessmentType.STUDENT_LEARNING_OUTCOMES,
+];
 
 const Reports = () => {
 
@@ -34,19 +48,19 @@ const Reports = () => {
     const { languageCode } = useLanguage();
 
     const [selectedUser, setSelectedUser] = useState('');
-    const [allUsers, setAllUsers] = useState('');
+    const [allUsers, setAllUsers] = useState([]);
+    const [selectedTeacher, setSelectedTeacher] = useState('');
+    const [teachers, setTeachers] = useState([]);
 
     const [days, setDays] = useState([]);
     const [selectedDay, setSelectedDay] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedDayAssessments, setSelectedDayAssessments] = useState([]);
+    const [hideRankingNames, setHideRankingNames] = useState(false);
 
     const [totalAssessments, setTotalAssessments] = useState(0)
     const [latestResponseDate, setLatestResponseDate] = useState('');
 
-    const [valuesTabOne, setValuesTabOne] = useState(0);
-    const [valuesTabTwo, setValuesTabTwo] = useState(0);
-    const [valuesTabThree, setValuesTabThree] = useState(0);
-    const [valuesTabFour, setValuesTabFour] = useState(0);
     const [chartData, setChartData] = useState([]);
     const [commentData, setCommentData] = useState([]);
     const [isExportingPDF, setIsExportingPDF] = useState(false);
@@ -124,11 +138,16 @@ const Reports = () => {
 
 
     useEffect(() => {
+        let cancelled = false;
 
         if (selectedDay && selectedMonitoring){
-            filterAssessmentsByDay();
+            filterAssessmentsByDay(() => cancelled);
         }
-    }, [selectedDay]);
+
+        return () => {
+            cancelled = true;
+        };
+    }, [selectedDay, selectedMonitoring, assessments]);
 
     // fetch all the monitorings of the current user when the page loads
     useEffect(() => {
@@ -205,30 +224,138 @@ const Reports = () => {
         }
     }, [currentUser, monitorings]);
 
-    const handleChangeTabsOne = (event, newValue) => {
-        setValuesTabOne(newValue);
+    const isStudentType = (type) =>
+        type === AssessmentType.STUDENT_CHARACTERISTICS ||
+        type === AssessmentType.STUDENT_LEARNING_OUTCOMES;
+
+    const applyResultFilters = (assessmentsWithResponses, participantId, teacherId) => {
+        return assessmentsWithResponses.map((item) => {
+            let responses = item.responses || [];
+
+            if (isStudentType(item.type) && teacherId) {
+                responses = responses.filter((response) => {
+                    const user = response.userId;
+                    const userId = user && typeof user === 'object'
+                        ? String(user._id || user.id || '')
+                        : String(user || '');
+                    return userId === String(teacherId);
+                });
+            }
+
+            if (participantId) {
+                if (isStudentType(item.type) && currentUser?.userStatus === UserType.TEACHER_TRAINER) {
+                    responses = [];
+                } else if (!isStudentType(item.type) || currentUser?.userStatus === UserType.TEACHER) {
+                    responses = responses.filter((response) => {
+                        const displayName = (response.displayName || '').trim();
+                        if (participantId === ANONYMOUS_PARTICIPANT) {
+                            return !displayName;
+                        }
+                        return displayName.toLowerCase() === participantId.toLowerCase();
+                    });
+                }
+            }
+
+            return { ...item, responses };
+        });
     };
 
-    const handleChangeTabsTwo = (event, newValue) => {
-        setValuesTabTwo(newValue);
+    const updateChartsFromAssessments = (assessmentsWithResponses, participantId, teacherId) => {
+        const filteredAssessments = applyResultFilters(
+            assessmentsWithResponses,
+            participantId,
+            teacherId
+        );
+        setChartData(handlePrepareChartData(filteredAssessments));
+        setCommentData(handlePrepareCommentData(filteredAssessments));
+
+        const allResponses = filteredAssessments.flatMap((assessment) => assessment.responses);
+        const latestDate = getLatestResponseDate(allResponses);
+        setLatestResponseDate(latestDate ? formatLatestDate(latestDate) : null);
     };
 
-    const handleChangeTabsThree = (event, newValue) => {
-        setValuesTabThree(newValue);
+    const buildParticipants = (assessmentsWithResponses) => {
+        const participantsByName = new Map();
+        const studentTypes = [
+            AssessmentType.STUDENT_CHARACTERISTICS,
+            AssessmentType.STUDENT_LEARNING_OUTCOMES,
+        ];
+
+        assessmentsWithResponses.forEach((assessment) => {
+            (assessment.responses || []).forEach((response) => {
+                const displayName = (response.displayName || '').trim();
+                if (displayName) {
+                    const key = displayName.toLowerCase();
+                    if (!participantsByName.has(key)) {
+                        participantsByName.set(key, { id: displayName, label: displayName });
+                    }
+                    return;
+                }
+
+                if (!studentTypes.includes(assessment.type)) {
+                    participantsByName.set(ANONYMOUS_PARTICIPANT, {
+                        id: ANONYMOUS_PARTICIPANT,
+                        label: getMessage('label_anonymous'),
+                    });
+                }
+            });
+        });
+
+        return Array.from(participantsByName.values()).sort((a, b) => a.label.localeCompare(b.label));
     };
 
-    const handleChangeTabsFour = (event, newValue) => {
-        setValuesTabFour(newValue);
+    const buildTeachers = (assessmentsWithResponses) => {
+        const teachersById = new Map();
+
+        assessmentsWithResponses.forEach((assessment) => {
+            if (!isStudentType(assessment.type)) {
+                return;
+            }
+            (assessment.responses || []).forEach((response) => {
+                const user = response.userId;
+                if (!user || typeof user !== 'object') {
+                    return;
+                }
+                const userId = String(user._id || user.id || '');
+                const label = `${user.firstName || ''} ${user.lastName || ''}`.trim();
+                if (
+                    userId &&
+                    label &&
+                    user.userStatus !== UserType.TEACHER_TRAINER &&
+                    !teachersById.has(userId)
+                ) {
+                    teachersById.set(userId, { id: userId, label });
+                }
+            });
+        });
+
+        return Array.from(teachersById.values()).sort((a, b) => a.label.localeCompare(b.label));
     };
 
-    const filterAssessmentsByDay = async () => {
+    const getVisibleCategories = () => {
+        if (currentUser?.userStatus === UserType.TEACHER) {
+            return CATEGORY_ORDER.filter(isStudentType);
+        }
+        return CATEGORY_ORDER;
+    };
 
-        if (!assessments) return;
+    const getAvailableCategories = (assessmentsWithResponses) => {
+        const typesWithData = new Set(
+            (assessmentsWithResponses || [])
+                .filter((assessment) => (assessment.responses || []).length > 0)
+                .map((assessment) => assessment.type)
+        );
+        return getVisibleCategories().filter((type) => typesWithData.has(type));
+    };
+
+    const filterAssessmentsByDay = async (isCancelled) => {
+
+        if (!assessments?.length) return;
 
        let filteredAssessments = assessments;
 
         // If the current user is a Teacher, filter assessments by type and user
-        if (currentUser.userStatus === 'Teacher') {
+        if (currentUser?.userStatus === 'Teacher') {
             filteredAssessments = filteredAssessments.filter(assessment =>
                 assessment.type === 'Student characteristics' || assessment.type === 'Student learning outcomes'
             );
@@ -263,47 +390,39 @@ const Reports = () => {
             })
         );
 
-        // get all user full names
-        let userMap = new Map();
+        if (typeof isCancelled === 'function' && isCancelled()) {
+            return;
+        }
 
-        assessmentsWithResponses.forEach(assessment => {
-            assessment.responses.forEach(response => {
-                const user = response.userId;
-                if (user && user._id && !userMap.has(user._id)) {
-                    userMap.set(user._id, user);
-                }
-            });
-        });
+        const participants = buildParticipants(assessmentsWithResponses);
+        const nextSelectedUser = selectedUser && participants.some((participant) => participant.id === selectedUser)
+            ? selectedUser
+            : '';
+        const teacherOptions = buildTeachers(assessmentsWithResponses);
+        const nextSelectedTeacher = selectedTeacher && teacherOptions.some((teacher) => teacher.id === selectedTeacher)
+            ? selectedTeacher
+            : '';
 
-        const uniqueUsers = Array.from(userMap.values());
-        setAllUsers(uniqueUsers);
+        setAllUsers(participants);
+        setTeachers(teacherOptions);
+        if (nextSelectedUser !== selectedUser) {
+            setSelectedUser(nextSelectedUser);
+        }
+        if (nextSelectedTeacher !== selectedTeacher) {
+            setSelectedTeacher(nextSelectedTeacher);
+        }
+
+        const categories = getAvailableCategories(assessmentsWithResponses);
+        if (categories.length > 0 && !categories.includes(selectedCategory)) {
+            setSelectedCategory(categories[0]);
+        } else if (categories.length === 0) {
+            setSelectedCategory('');
+        }
 
         setSelectedDayAssessments(assessmentsWithResponses);
         setTotalAssessments(assessmentsWithResponses.length);
-
-        // Prepare and set chart and comment data
-        const chartDataByType = handlePrepareChartData(assessmentsWithResponses);
-        const commentDataByType = handlePrepareCommentData(assessmentsWithResponses);
-        setChartData(chartDataByType);
-        setCommentData(commentDataByType);
-
-        // Calculate and set the latest response date with formatting
-        const allResponses = assessmentsWithResponses.flatMap(assessment => assessment.responses);
-        const latestDate = getLatestResponseDate(allResponses);
-
-        if (latestDate) {
-            setLatestResponseDate(formatLatestDate(latestDate));
-        } else {
-            setLatestResponseDate(null);
-        }
+        updateChartsFromAssessments(assessmentsWithResponses, nextSelectedUser, nextSelectedTeacher);
     }
-
-    // Generate AI summaries when comment data changes
-    useEffect(() => {
-        if (commentData && Object.keys(commentData).length > 0) {
-            generateAllAiSummaries(commentData);
-        }
-    }, [commentData]);
 
     // Reset AI summaries when monitoring or day changes
     useEffect(() => {
@@ -311,57 +430,14 @@ const Reports = () => {
         setLoadingSummaries({});
     }, [selectedMonitoring, selectedDay]);
 
-    /**
-     * Handles the change of the selected user.
-     * @param {Event} event - The event object from the user selection input.
-    */
-    const handleChangeUser = (event) => {
+    const handleChangeParticipant = (participantId) => {
+        setSelectedUser(participantId || '');
+        updateChartsFromAssessments(selectedDayAssessments, participantId || '', selectedTeacher);
+    };
 
-        let selectedUser = event.target.value;
-        setSelectedUser(selectedUser);
-
-        
-        // Filter the response by removing the userId not selected
-        const filteredSelectedDayAssessments = (selectedDayAssessments, userId) => {
-            return selectedDayAssessments.map(item => {
-
-                if (item.type === AssessmentType.STUDENT_CHARACTERISTICS || item.type === AssessmentType.STUDENT_LEARNING_OUTCOMES) {
-
-                    // If no user is selected (userId is empty), include all responses
-                    const filteredResponses = userId ? 
-                        item.responses.filter(response => response.userId._id === userId) :
-                        item.responses;
-                    
-                    // Create a new object with the same properties as the original item
-                    // but with filtered responses
-                    return {
-                        ...item,
-                        responses: filteredResponses
-                    };
-                }
-                
-                return item;
-            });
-        };
-    
-        // Call the function with selectedDayAssessments and the selected userId
-        const filteredAssessments = filteredSelectedDayAssessments(selectedDayAssessments, event.target.value);
-    
-        // Prepare and set chart and comment data
-        const chartDataByType = handlePrepareChartData(filteredAssessments);
-        const commentDataByType = handlePrepareCommentData(filteredAssessments);
-        setChartData(chartDataByType);
-        setCommentData(commentDataByType);
-    
-        // Calculate and set the latest response date with formatting
-        const allResponses = filteredAssessments.flatMap(assessment => assessment.responses);
-        const latestDate = getLatestResponseDate(allResponses);
-    
-        if (latestDate) {
-            setLatestResponseDate(formatLatestDate(latestDate));
-        } else {
-            setLatestResponseDate(null);
-        }
+    const handleChangeTeacher = (teacherId) => {
+        setSelectedTeacher(teacherId || '');
+        updateChartsFromAssessments(selectedDayAssessments, selectedUser, teacherId || '');
     };
 
     /**
@@ -380,11 +456,8 @@ const Reports = () => {
         setSelectedMonitoringId(event.target.value);
 
         // Reset the form and assessments related state
-        setValuesTabOne(0);
-        setValuesTabTwo(0);
-        setValuesTabThree(0);
-        setValuesTabFour(0);
         setAssessments([]);
+        setSelectedCategory('');
         setDays([]);
         setSelectedDay('');
         setSelectedDayAssessments([]);
@@ -392,6 +465,10 @@ const Reports = () => {
         setLatestResponseDate('');
         setChartData([]);
         setCommentData([]);
+        setSelectedUser('');
+        setAllUsers([]);
+        setSelectedTeacher('');
+        setTeachers([]);
     };
 
     /**
@@ -509,7 +586,9 @@ const Reports = () => {
 
         try {
             // Convert the data to long format
-            const longFormatData = convertToLongFormat(selectedDayAssessments);
+            const longFormatData = convertToLongFormat(
+                applyResultFilters(selectedDayAssessments, selectedUser, selectedTeacher)
+            );
 
             if (longFormatData.length === 0) {
                 console.error('No data to export after conversion to long format');
@@ -661,7 +740,7 @@ const Reports = () => {
             // Send a POST request to your backend endpoint
             const response = await axios.post(`${BACKEND_URL}/export/pdf`, 
                 { 
-                    assessments: selectedDayAssessments,
+                    assessments: applyResultFilters(selectedDayAssessments, selectedUser, selectedTeacher),
                     monitoring: selectedMonitoring, 
                     selectedDay: selectedDay,
                     status: currentUser.userStatus,
@@ -708,7 +787,7 @@ const Reports = () => {
             // Send a POST request to your backend endpoint
             const response = await axios.post(`${BACKEND_URL}/export/docx`, 
                 { 
-                    assessments: selectedDayAssessments,
+                    assessments: applyResultFilters(selectedDayAssessments, selectedUser, selectedTeacher),
                     monitoring: selectedMonitoring, 
                     selectedDay: selectedDay,
                     status: currentUser.userStatus,
@@ -957,84 +1036,76 @@ const Reports = () => {
         }
     };
 
-    /**
-     * Generate AI summaries for all text questions in the comment data
-     */
-    const generateAllAiSummaries = async (commentDataByType) => {
-        const summaryPromises = [];
-
-        // Parcourir tous les types d'assessment
-        Object.keys(commentDataByType).forEach(assessmentType => {
-            // Parcourir tous les workshops
-            Object.keys(commentDataByType[assessmentType]).forEach(workshopKey => {
-                // Parcourir toutes les questions
-                commentDataByType[assessmentType][workshopKey].forEach(item => {
-                    const questionKey = item.uniqueQuestionKey;
-                    const questionText = item.question;
-                    const responses = item.responses || [];
-                    
-                    // Ne générer le résumé que si on ne l'a pas déjà
-                    if (!aiSummaries[questionKey] && !loadingSummaries[questionKey]) {
-                        summaryPromises.push(
-                            generateAiSummary(responses, questionText, questionKey)
-                        );
-                    }
-                });
-            });
-        });
-
-        // Attendre que tous les résumés soient générés
-        if (summaryPromises.length > 0) {
-            await Promise.all(summaryPromises);
-        }
+    const selectedParticipantLabel = allUsers.find((participant) => participant.id === selectedUser)?.label || '';
+    const showTeacherFilter = currentUser?.userStatus === UserType.TEACHER_TRAINER && isStudentType(selectedCategory);
+    const filteredDayAssessments = applyResultFilters(selectedDayAssessments, selectedUser, selectedTeacher);
+    const availableCategories = getVisibleCategories().filter((type) =>
+        (selectedDayAssessments || []).some((assessment) => assessment.type === type)
+    );
+    const assessmentsForCategory = (filteredDayAssessments || []).filter(
+        (assessment) => assessment.type === selectedCategory && (assessment.responses || []).length > 0
+    );
+    const rankingAssessments = assessmentsForCategory;
+    const exportButtonSx = {
+        ...buttonStyle,
+        mr: 0,
+        minWidth: 'unset',
+        width: 40,
+        height: 40,
+        padding: '6px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        boxShadow: 'none',
+        border: '1px solid #e6e6e6',
+        '&:hover': { backgroundColor: '#f7f7f7' },
     };
 
     return (
-    <Box display="flex" backgroundColor="white" style={{ height: '100vh', overflow: 'auto' }}>
+    <Box display="flex" sx={{ height: '100%', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
         <Sidebar/>
 
-        <Box flex={1}>
+        <Box flex={1} sx={{ minWidth: 0, minHeight: 0, height: '100%', overflow: 'auto', bgcolor: '#f9f9f9' }}>
 
-            { /* Title */}
-            <Box mt="10px" ml="10px">
-                <Topbar title = {getMessage("label_my_results")} />
+            <Box sx={{ mt: { xs: 1, md: '10px' } }}>
+                <Topbar title={getMessage("label_my_results")} />
             </Box>
 
+            <Box sx={{ mx: { xs: 2, md: 3 }, mb: 3, pb: { xs: 'calc(16px + env(safe-area-inset-bottom, 0px))', md: 0 }, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        gap: 1.5,
+                    }}
+                >
+                    <FormControl variant="outlined" size="small" sx={{ minWidth: { xs: '100%', sm: 220 }, flex: { xs: '1 1 100%', md: '0 1 260px' } }}>
+                        <InputLabel id="monitoring">{getMessage("label_choose_monitoring")}</InputLabel>
+                        <Select
+                            labelId="monitoring"
+                            id="monitoring"
+                            value={selectedMonitoringId}
+                            onChange={handleChangeMonitoring}
+                            label={getMessage("label_choose_monitoring")}
+                        >
+                            {monitorings && monitorings.map((monitoring) => (
+                                <MenuItem key={monitoring._id} value={monitoring._id}>
+                                    {monitoring.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
 
-            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridTemplateRows={`4vh ${currentUser.userStatus === UserType.TEACHER_TRAINER ? "39vh 39vh" : "78vh"}`} gap="20px" ml="20px" mr="20px">   
-
-                { /* Block choose monitoring and session */}
-                <Box gridColumn="span 12" gridRow="1" display="flex" justifyContent="space-between" alignItems="center">
-                    <Box display="flex" alignItems="center">
-                        <FormControl variant="outlined" size="small" sx={{ minWidth: 220, marginRight: '20px'}}>
-                            <InputLabel id="monitoring">{getMessage("label_choose_monitoring")}</InputLabel>
-
-                            <Select
-                                labelId="monitoring"
-                                id="monitoring"
-                                value={selectedMonitoringId}
-                                onChange={handleChangeMonitoring}
-                                autoWidth
-                                label={getMessage("label_choose_monitoring")}
-                            >
-
-                                {monitorings && monitorings.map((monitoring) => (
-                                    <MenuItem key={monitoring._id} value={monitoring._id}>
-                                        {monitoring.name} 
-                                    </MenuItem>
-                                ))}
-                            </Select>   
-                        </FormControl>
-
-                        <FormControl variant="outlined" size="small" sx={{ minWidth: 220, marginRight: '10px' }}>
+                    <Box display="flex" alignItems="center" gap={1} sx={{ width: { xs: '100%', md: 'auto' }, minWidth: 0, flex: { md: '0 1 260px' } }}>
+                        <FormControl variant="outlined" size="small" sx={{ flex: 1, minWidth: 0 }}>
                             <InputLabel id="day">{getMessage("label_choose_session")}</InputLabel>
-                
                             <Select
                                 labelId="day"
                                 id="day"
                                 value={(days.length === 0 && selectedDay !== '') ? '' : selectedDay}
                                 onChange={handleChangeDay}
-                                autoWidth
                                 label={getMessage("label_choose_session")}
                             >
                                 {days.length > 0 ? (
@@ -1050,199 +1121,181 @@ const Reports = () => {
                                 )}
                             </Select>
                         </FormControl>
-
                         <Tooltip title={getMessage("label_refresh_answers")}>
                             <span>
-                                <IconButton 
+                                <IconButton
                                     onClick={handleRefresh}
                                     disabled={!selectedDay || isRefreshing}
-                                    sx={{
-                                        backgroundColor: 'white',
-                                        '&:hover': {
-                                            backgroundColor: '#f5f5f5'
-                                        }
-                                    }}
+                                    sx={{ flexShrink: 0 }}
                                 >
-                                    {isRefreshing ? (
-                                        <CircularProgress size={24} />
-                                    ) : (
-                                        <RefreshIcon />
-                                    )}
+                                    {isRefreshing ? <CircularProgress size={22} /> : <RefreshIcon />}
                                 </IconButton>
                             </span>
                         </Tooltip>
                     </Box>
-                <Box>
 
-                { /* Block buttons export pdf, docx and csv */}
-                <Box display="flex" alignItems="center" gap={1.5}>
+                    <FormControl variant="outlined" size="small" sx={{ minWidth: { xs: '100%', sm: 220 }, flex: { xs: '1 1 100%', md: '1 1 240px' }, maxWidth: { md: 320 } }}>
+                        <InputLabel id="participant" shrink>{getMessage("label_choose_participant")}</InputLabel>
+                        <Select
+                            labelId="participant"
+                            id="participant"
+                            value={selectedUser}
+                            onChange={(event) => handleChangeParticipant(event.target.value)}
+                            label={getMessage("label_choose_participant")}
+                            displayEmpty
+                            notched
+                            disabled={!selectedDay}
+                        >
+                            <MenuItem value="">{getMessage("label_all_participants")}</MenuItem>
+                            {allUsers.map((participant) => (
+                                <MenuItem key={participant.id} value={participant.id}>
+                                    {participant.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
 
-                {/* Display toggle */}
-                <Box display="flex" alignItems="center" gap={1}>
-                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'nowrap' }}>
-                        {getMessage("label_display")}
+                    <Box sx={{ ml: { xs: 0, md: 'auto' }, display: 'flex', alignItems: 'center', flexWrap: 'nowrap', gap: 1, width: { xs: '100%', md: 'auto' }, justifyContent: 'flex-end' }}>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    size="small"
+                                    checked={hideRankingNames}
+                                    onChange={(event) => setHideRankingNames(event.target.checked)}
+                                />
+                            }
+                            label={getMessage("label_hide_ranking_names")}
+                            sx={{
+                                mr: 0,
+                                flexShrink: 0,
+                                '& .MuiFormControlLabel-label': { fontSize: '0.8125rem', whiteSpace: 'nowrap' },
+                            }}
+                        />
+                        <Divider orientation="vertical" flexItem />
+                        <ToggleButtonGroup
+                            value={showPercentage ? 'pct' : 'count'}
+                            exclusive
+                            size="small"
+                            onChange={(_, val) => { if (val !== null) setShowPercentage(val === 'pct'); }}
+                            sx={{ flexShrink: 0 }}
+                        >
+                            <ToggleButton value="count">#</ToggleButton>
+                            <ToggleButton value="pct">%</ToggleButton>
+                        </ToggleButtonGroup>
+                        <Divider orientation="vertical" flexItem />
+                        <Box display="flex" alignItems="center" gap={0.75} sx={{ flexShrink: 0 }}>
+                            <Tooltip title="DOCX">
+                                <span>
+                                    <Button onClick={handleExportDocxReport} variant="contained" sx={exportButtonSx} disabled={!selectedDayAssessments || selectedDayAssessments.length === 0}>
+                                        {isExportingDOCX ? <CircularProgress size={20} /> : <img src={DOClogo} alt="DOCX" style={{ width: 22, height: 22 }} />}
+                                    </Button>
+                                </span>
+                            </Tooltip>
+                            <Tooltip title="PDF">
+                                <span>
+                                    <Button onClick={handleExportPdfReport} variant="contained" sx={exportButtonSx} disabled={!selectedDayAssessments || selectedDayAssessments.length === 0}>
+                                        {isExportingPDF ? <CircularProgress size={20} /> : <img src={PDFlogo} alt="PDF" style={{ width: 22, height: 22 }} />}
+                                    </Button>
+                                </span>
+                            </Tooltip>
+                            <Tooltip title="CSV">
+                                <span>
+                                    <Button onClick={handleExportData} variant="contained" sx={exportButtonSx} disabled={!selectedDayAssessments || selectedDayAssessments.length === 0}>
+                                        <img src={CSVlogo} alt="CSV" style={{ width: 22, height: 22 }} />
+                                    </Button>
+                                </span>
+                            </Tooltip>
+                        </Box>
+                    </Box>
+                </Box>
+
+                {selectedDay && (
+                    <Typography variant="body2" color="text.secondary">
+                        {selectedUser
+                            ? `${getMessage("label_results_for_participant")} ${hideRankingNames ? getMessage("label_anonymous") : selectedParticipantLabel}`
+                            : getMessage("label_results_for_all")}
                     </Typography>
-                    <ToggleButtonGroup
-                        value={showPercentage ? 'pct' : 'count'}
-                        exclusive
-                        size="small"
-                        onChange={(_, val) => { if (val !== null) setShowPercentage(val === 'pct'); }}
-                    >
-                        <ToggleButton value="count">#</ToggleButton>
-                        <ToggleButton value="pct">%</ToggleButton>
-                    </ToggleButtonGroup>
-                </Box>
-
-                <Divider orientation="vertical" flexItem />
-
-                {/* Export buttons */}
-                <Box display="flex" alignItems="center" gap={0.5}>
-                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'nowrap', mr: 1 }}>
-                        {getMessage("label_export")}
-                    </Typography>
-                    <Button
-                        onClick={handleExportDocxReport}
-                        variant="contained"
-                        sx={{
-                            ...buttonStyle,
-                            minWidth: 'unset',
-                            width: '48px',
-                            height: '48px',
-                            padding: '8px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: 'white',
-                            '&:hover': { backgroundColor: '#f5f5f5' }
-                        }}
-                        disabled={!selectedDayAssessments || selectedDayAssessments.length === 0}
-                    >
-                        {isExportingDOCX ? (
-                            <CircularProgress size={28} />
-                        ) : (
-                            <img src={DOClogo} alt="DOCX" style={{ width: '28px', height: '28px' }} />
-                        )}
-                    </Button>
-
-                    <Button
-                        onClick={handleExportPdfReport}
-                        variant="contained"
-                        sx={{
-                            ...buttonStyle,
-                            minWidth: 'unset',
-                            width: '48px',
-                            height: '48px',
-                            padding: '8px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: 'white',
-                            '&:hover': { backgroundColor: '#f5f5f5' }
-                        }}
-                        disabled={!selectedDayAssessments || selectedDayAssessments.length === 0}
-                    >
-                        {isExportingPDF ? (
-                            <CircularProgress size={28} />
-                        ) : (
-                            <img src={PDFlogo} alt="PDF" style={{ width: '28px', height: '28px' }} />
-                        )}
-                    </Button>
-
-                    <Button
-                        onClick={handleExportData}
-                        variant="contained"
-                        sx={{
-                            ...buttonStyle,
-                            minWidth: 'unset',
-                            width: '48px',
-                            height: '48px',
-                            padding: '8px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: 'white',
-                            '&:hover': { backgroundColor: '#f5f5f5' }
-                        }}
-                        disabled={!selectedDayAssessments || selectedDayAssessments.length === 0}
-                    >
-                        <img src={CSVlogo} alt="CSV" style={{ width: '28px', height: '28px' }} />
-                    </Button>
-                </Box>
-                </Box>
-
-            {/* The 4 blocks of assessment */}
-            </Box>
-            </Box>
-                
-                {currentUser && currentUser.userStatus === UserType.TEACHER_TRAINER && (
-                    <>
-                        <AssessmentTabResult
-                            categories={[AssessmentType.TRAINEE_CHARACTERISTICS, AssessmentType.TRAINING_CHARACTERISTICS]}
-                            gridRow="2"
-                            data={valuesTabOne}
-                            onChange={handleChangeTabsOne}
-                            groupChartData={groupChartData}
-                            groupCommentData={groupCommentData}
-                            aiSummaries={aiSummaries}
-                            loadingSummaries={loadingSummaries}
-                            showPercentage={showPercentage}
-                        />
-
-                    <AssessmentTabResult
-                            categories={[AssessmentType.IMMEDIATE_REACTIONS, AssessmentType.LEARNING]}
-                            gridRow="2"
-                            data={valuesTabTwo}
-                            onChange={handleChangeTabsTwo}
-                            groupChartData={groupChartData}
-                            groupCommentData={groupCommentData}
-                            aiSummaries={aiSummaries}
-                            loadingSummaries={loadingSummaries}
-                            showPercentage={showPercentage}
-                        />
-                        
-                        <AssessmentTabResult
-                            categories={[AssessmentType.ORGANIZATIONAL_CONDITIONS ,AssessmentType.BEHAVIORAL_CHANGES, AssessmentType.SUSTAINABILITY_CONDITIONS]}
-                            gridRow="3"
-                            data={valuesTabThree}
-                            onChange={handleChangeTabsThree}
-                            groupChartData={groupChartData}
-                            groupCommentData={groupCommentData}
-                            aiSummaries={aiSummaries}
-                            loadingSummaries={loadingSummaries}
-                            showPercentage={showPercentage}
-                        />
-
-                        <AssessmentTabResultWithFilter
-                            categories={[AssessmentType.STUDENT_CHARACTERISTICS, AssessmentType.STUDENT_LEARNING_OUTCOMES]}
-                            gridRow="3"
-                            data={valuesTabFour}
-                            onChange={handleChangeTabsFour}
-                            groupChartData={groupChartData}
-                            groupCommentData={groupCommentData}
-                            allUsers={allUsers}
-                            selectedUser={selectedUser}
-                            handleChangeUser={handleChangeUser}
-                            aiSummaries={aiSummaries}
-                            loadingSummaries={loadingSummaries}
-                            showPercentage={showPercentage}
-                        />
-                    </>
                 )}
 
-                {currentUser && currentUser.userStatus === UserType.TEACHER && (
-                    <>
-                        <AssessmentTabResult
-                            categories={[AssessmentType.STUDENT_CHARACTERISTICS, AssessmentType.STUDENT_LEARNING_OUTCOMES]}
-                            data={valuesTabFour}
-                            onChange={handleChangeTabsFour}
-                            groupChartData={groupChartData}
-                            groupCommentData={groupCommentData}
-                            fullScreen={true}
-                            aiSummaries={aiSummaries}
-                            loadingSummaries={loadingSummaries}
-                            showPercentage={showPercentage}
-                        />
-                    </>
+                {selectedDay && (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: 1,
+                        }}
+                    >
+                        {availableCategories.map((type) => {
+                            const selected = selectedCategory === type;
+                            const config = getAssessmentTypeConfig(type);
+                            return (
+                                <Box
+                                    key={type}
+                                    component="button"
+                                    type="button"
+                                    onClick={() => setSelectedCategory(type)}
+                                    sx={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        padding: '6px 12px',
+                                        borderRadius: '8px',
+                                        border: '1px solid',
+                                        borderColor: config.color,
+                                        backgroundColor: selected ? `${config.color}28` : `${config.color}10`,
+                                        boxShadow: selected ? `inset 0 0 0 1px ${config.color}` : 'none',
+                                        color: config.color,
+                                        cursor: 'pointer',
+                                        font: 'inherit',
+                                        transition: 'all 0.2s ease',
+                                        '&:hover': {
+                                            backgroundColor: `${config.color}20`,
+                                        },
+                                    }}
+                                >
+                                    <Typography component="span" sx={{ fontSize: '16px', lineHeight: 1 }}>
+                                        {config.icon}
+                                    </Typography>
+                                    <Typography
+                                        sx={{
+                                            fontSize: '13px',
+                                            fontWeight: selected ? 700 : 500,
+                                            lineHeight: 1.2,
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                    >
+                                        {getMessage(config.name) || localizeAssessmentType(type, getMessage)}
+                                    </Typography>
+                                </Box>
+                            );
+                        })}
+                    </Box>
+                )}
+
+                {selectedDay && selectedCategory ? (
+                    <AssessmentResultStack
+                        assessments={assessmentsForCategory}
+                        rankingAssessments={rankingAssessments}
+                        groupChartData={groupChartData}
+                        groupCommentData={groupCommentData}
+                        hide_students_name={currentUser?.userStatus === UserType.TEACHER_TRAINER}
+                        showTeacherFilter={showTeacherFilter}
+                        teachers={teachers}
+                        selectedTeacher={selectedTeacher}
+                        handleChangeTeacher={handleChangeTeacher}
+                        aiSummaries={aiSummaries}
+                        loadingSummaries={loadingSummaries}
+                        showPercentage={showPercentage}
+                        hideValueLabels={false}
+                        showChoiceLabels={Boolean(selectedUser)}
+                        highlightedParticipant={hideRankingNames ? '' : selectedParticipantLabel}
+                        anonymizeRanking={hideRankingNames}
+                        onGenerateSummary={generateAiSummary}
+                    />
+                ) : (
+                    <Typography variant="body1" color="text.secondary" sx={{ py: 6, textAlign: 'center' }}>
+                        {getMessage("label_choose_monitoring")}
+                    </Typography>
                 )}
             </Box>
         </Box>

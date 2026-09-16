@@ -78,7 +78,7 @@ const Embedder = () => {
     };
 
     return (
-        <Box display="flex" style={{ height: '100vh', overflow: 'auto' }}>
+        <Box display="flex" sx={{ minHeight: '100vh', overflow: 'auto', maxWidth: '100vw' }}>
             <Sidebar />
             <Box display="flex" flex="1" flexDirection="column">
                 <Box mt="10px" ml="10px">
@@ -87,13 +87,13 @@ const Embedder = () => {
 
                 <Box display="flex" justifyContent="center" style={{ height: '100vh', overflow: 'auto' }}>
                     <Box display="flex" flexDirection="column" width="calc(100% - 40px)" m="20px" style={{ overflowY: 'auto' }}>
-                        <Box style={{ padding: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <Box sx={{ padding: { xs: 2, md: 3 }, display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
                         <TextField
                             variant="outlined"
                             value={collectionName}
                             onChange={e => setCollectionName(e.target.value)}
                             placeholder="Enter collection name..."
-                            style={{  width: '200px' }} // Allow the input to grow
+                            sx={{ width: { xs: '100%', sm: 200 } }}
                         />
                         <Typography>Index starting from : </Typography>
                         <TextField

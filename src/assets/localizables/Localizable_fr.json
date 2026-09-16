@@ -82,7 +82,7 @@
     },
     {
         "term": "dtc_description",
-        "definition": "L'\u00e9valuation des formations bas\u00e9es sur des donn\u00e9es probantes",
+        "definition": "L'\u00e9valuation approfondie des formations, simplifi\u00e9e.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -91,7 +91,7 @@
     },
     {
         "term": "dtc_description_2",
-        "definition": "Cr\u00e9er des \u00e9valuations, visualiser les r\u00e9sultats, am\u00e9liorer vos formations, en quelques clics",
+        "definition": "Organisez, cr\u00e9ez, visualisez et am\u00e9liorez vos \u00e9valuations de formation en quelques clics, sans perdre le contact avec vos participants.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -127,7 +127,7 @@
     },
     {
         "term": "dtc_description_6",
-        "definition": "Concevoir des \u00e9valuations bas\u00e9es sur des preuves",
+        "definition": "Concevoir la bonne \u00e9valuation, facilement et rapidement",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -163,7 +163,7 @@
     },
     {
         "term": "dtc_description_10",
-        "definition": "Tenir un registre d'am\u00e9lioration continue",
+        "definition": "Tenir un registre d'am\u00e9lioration continue avec vos participants",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -172,7 +172,7 @@
     },
     {
         "term": "dtc_description_11",
-        "definition": "Utilisez notre journal de bord convivial pour suivre les observations et les changements essentiels, afin d'am\u00e9liorer continuellement votre formation.",
+        "definition": "Utilisez notre journal de bord pour suivre les observations, les am\u00e9liorations et les discussions avec vos participants, et am\u00e9liorer vos formations en continu.",
         "context": "Adressed to a potential new user",
         "term_plural": "",
         "reference": "",
@@ -1234,7 +1234,7 @@
     },
     {
         "term": "dashboard_share_open_assessments_together",
-        "definition": "Les \u00e9valuations seront pr\u00e9sent\u00e9es dans cet ordre :",
+        "definition": "Ordre des pages",
         "context": "message for sharing assessments",
         "term_plural": "",
         "reference": "",
@@ -1614,6 +1614,96 @@
         "term": "label_choose_teacher",
         "definition": "Donn\u00e9es de...",
         "context": "Label for a picker to choose along a list of teachers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_participant",
+        "definition": "Participant",
+        "context": "Label for a picker to filter results by one participant",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_choose_participant",
+        "definition": "Choisir un participant",
+        "context": "ask the user to choose a participant in results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_all_participants",
+        "definition": "Tous les participants",
+        "context": "Default option to show aggregated results for the whole group",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_results_for_all",
+        "definition": "R\u00e9sultats pour tout le groupe",
+        "context": "Caption on the results page when no participant is selected",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_results_for_participant",
+        "definition": "R\u00e9sultats pour",
+        "context": "Caption prefix on the results page when one participant is selected",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_participant_ranking",
+        "definition": "Par crit\u00e8re",
+        "context": "Title of the participant ranking panel on results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_hide_ranking_names",
+        "definition": "Masquer les noms",
+        "context": "Toggle to hide participant names in the results ranking panel",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ranking_no_criteria",
+        "definition": "Aucun d\u00e9tail de participant pour cette \u00e9valuation",
+        "context": "Empty state when results ranking has no scored questions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_ranking_correct",
+        "definition": "Juste",
+        "context": "Learning ranking: participant answered correctly",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_ranking_incorrect",
+        "definition": "Faux",
+        "context": "Learning ranking: participant answered incorrectly",
         "term_plural": "",
         "reference": "",
         "comment": "",
@@ -2044,7 +2134,7 @@
     },
     {
         "term": "label_add_log_entry",
-        "definition": "Ajouter une nouvelle entr\u00e9e dans le journal",
+        "definition": "Nouveau message",
         "context": "",
         "term_plural": "",
         "reference": "",
@@ -2080,7 +2170,7 @@
     },
     {
         "term": "label_choose_log_type",
-        "definition": "Choisir le type de remarque",
+        "definition": "Type de note",
         "context": "addressed to a user",
         "term_plural": "",
         "reference": "",
@@ -2125,7 +2215,7 @@
     },
     {
         "term": "label_my_training_activity",
-        "definition": "Mes observations et am\u00e9liorations",
+        "definition": "Mes observations, am\u00e9liorations et discussions",
         "context": "title of the entire logbook",
         "term_plural": "",
         "reference": "",
@@ -2368,7 +2458,7 @@
     },
     {
         "term": "label_last_modified",
-        "definition": "Derni\u00e8re modification",
+        "definition": "Modifi\u00e9",
         "context": "label last modified logbook",
         "term_plural": "",
         "reference": "",
@@ -2386,7 +2476,7 @@
     },
     {
         "term": "label_log_completed",
-        "definition": "Termin\u00e9 le :",
+        "definition": "Termin\u00e9",
         "context": "label log completed",
         "term_plural": "",
         "reference": "",
@@ -3663,6 +3753,15 @@
         "fuzzy": 0
     },
     {
+        "term": "label_generate_summary",
+        "definition": "G\u00e9n\u00e9rer le r\u00e9sum\u00e9",
+        "context": "Button to request an AI summary of text responses",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "tooltip_enable_reorder",
         "definition": "Vue par d\u00e9faut : activer le r\u00e9ordonnancement des \u00e9valuations",
         "context": "tooltip_enable_reorder",
@@ -4516,5 +4615,473 @@
         "reference": "",
         "comment": "",
         "fuzzy": 1
-    } 
+    },
+    {
+        "term": "tooltip_schedule_questionnaires",
+        "definition": "Planifier l'envoi des questionnaires par e-mail",
+        "context": "Tooltip for the schedule icon in the sharing questionnaires panel",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "dialog_schedule_title",
+        "definition": "Planifier les questionnaires par e-mail",
+        "context": "Title of the schedule questionnaires dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_emails",
+        "definition": "Adresses e-mail",
+        "context": "Label for the recipient list in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_add_email",
+        "definition": "Ajouter",
+        "context": "Button to add an email to the schedule recipient list",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_email_placeholder",
+        "definition": "Collez une adresse par ligne",
+        "context": "Placeholder for the email input in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_datetime",
+        "definition": "Date et heure d'envoi",
+        "context": "Date time picker label in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_save",
+        "definition": "Enregistrer la planification",
+        "context": "Save button in the schedule questionnaires dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_cancel_send",
+        "definition": "Annuler l'envoi programmé",
+        "context": "Button to cancel a pending scheduled questionnaire email",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_schedule_invalid_email",
+        "definition": "Veuillez saisir une adresse e-mail valide",
+        "context": "Validation error for an invalid email in the schedule dialog",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_email_required",
+        "definition": "Ajoutez au moins une adresse e-mail",
+        "context": "Validation error when saving a schedule with no emails",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_date_required",
+        "definition": "Choisissez une date et une heure dans le futur",
+        "context": "Validation error when the scheduled datetime is missing or in the past",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_save_error",
+        "definition": "Impossible d'enregistrer la planification",
+        "context": "Error when the schedule API call fails",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "table_assessments_scheduled_send",
+        "definition": "Envoi planifié",
+        "context": "Assessment table column for when questionnaires will be emailed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_scheduled_sent",
+        "definition": "Envoyé",
+        "context": "Shown in the scheduled send column after questionnaires have been emailed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_schedule_no_emails",
+        "definition": "Aucun destinataire pour le moment. Collez une adresse par ligne.",
+        "context": "Empty state in the schedule dialog recipient list",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_type_ask_for_help",
+        "definition": "Demander de l'aide",
+        "context": "Log type for requesting support",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility",
+        "definition": "Qui peut voir ce message",
+        "context": "Visibility picker on a logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_private",
+        "definition": "Moi uniquement",
+        "context": "Private log visibility",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_all_trainers",
+        "definition": "Tous les formateurs",
+        "context": "Observation/change visible to the monitoring owner and trainer redeemers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_private_trainer",
+        "definition": "Moi et les autres formateurs",
+        "context": "Trainer private log, also visible to other trainers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_trainer",
+        "definition": "Formateur uniquement",
+        "context": "Teacher shares a log with the monitoring owner",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_selected",
+        "definition": "Enseignants sélectionnés",
+        "context": "Trainer shares a log with chosen teachers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_followers",
+        "definition": "Tous les enseignants",
+        "context": "Trainer shares a log with every teacher on the monitoring",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_followers_teacher",
+        "definition": "Formateurs et enseignants",
+        "context": "Teacher shares a log with the trainer and all teachers",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_contact_teacher",
+        "definition": "Enseignant \u00e0 contacter",
+        "context": "Trainer picks the teacher to contact in the logbook",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_share_with_teachers",
+        "definition": "Partager avec",
+        "context": "Multi-select of teachers for selected visibility",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_request_help",
+        "definition": "Demander l'aide du formateur",
+        "context": "Teacher action on a logbook message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_help_requested",
+        "definition": "Aide demandée",
+        "context": "Shown after a teacher requested help",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_help_sent",
+        "definition": "Demande d'aide envoyée au formateur",
+        "context": "Confirmation after creating an Ask for help log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_open_discussion",
+        "definition": "Ouvrir la discussion",
+        "context": "Opens the 1:1 chat on a log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_send_message",
+        "definition": "Envoyer",
+        "context": "Send a chat message on a log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_chat_placeholder",
+        "definition": "Écrire un message",
+        "context": "Chat input placeholder",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_chat_empty",
+        "definition": "Aucun message pour le moment",
+        "context": "Empty chat thread",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_author",
+        "definition": "Auteur",
+        "context": "Author label on a shared logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_chat_title",
+        "definition": "Discussion",
+        "context": "Title of the logbook chat window",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_session",
+        "definition": "Séance",
+        "context": "Session chip on a logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_all",
+        "definition": "Toutes les notes",
+        "context": "Logbook filter showing every log type",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_empty",
+        "definition": "Aucun message ne correspond à ces filtres",
+        "context": "Empty state when logbook filters match nothing",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_author_all",
+        "definition": "Tous les enseignants",
+        "context": "Trainer filter showing logs from every author",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_teacher",
+        "definition": "Enseignant",
+        "context": "Trainer filter to show logs from one teacher",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_visible_to",
+        "definition": "Visible par",
+        "context": "Logbook filter by audience, shorter than the create-form visibility label",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_filter_visible_all",
+        "definition": "Tous les destinataires",
+        "context": "Logbook visibility filter showing every audience",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_audience",
+        "definition": "Audience",
+        "context": "Short visibility label next to session on the trainer log form",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_toggle_assessment",
+        "definition": "Questionnaire",
+        "context": "Toggle to add assessment fields on a trainer log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_toggle_participants",
+        "definition": "Participants",
+        "context": "Toggle to add participant fields on a trainer log",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_mark_resolved",
+        "definition": "Marquer comme r\u00e9solu",
+        "context": "Button to mark an ask-for-help log as resolved",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_resolved",
+        "definition": "R\u00e9solu",
+        "context": "Shown when an ask-for-help log is resolved; click to undo",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_delete_confirm",
+        "definition": "Supprimer cette note ? Cette action est irr\u00e9versible.",
+        "context": "Confirmation before deleting a logbook entry",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_type_ask_for_help_trainer",
+        "definition": "Contacter un enseignant",
+        "context": "Log type for a trainer starting a discussion with a teacher",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visibility_everyone",
+        "definition": "Tout le monde",
+        "context": "Contact-a-teacher visibility: all teachers can see the message",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_visible_by",
+        "definition": "Visible par",
+        "context": "Prefix on a logbook message showing who can see it",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
+        "term": "label_log_contact_sent",
+        "definition": "Message envoy\u00e9 aux enseignants s\u00e9lectionn\u00e9s",
+        "context": "Confirmation after a trainer contacts teachers in the logbook",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    }
 ]

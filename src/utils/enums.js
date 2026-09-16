@@ -37,6 +37,7 @@ const QuestionType = {
 const LogType = {
     OBSERVATION: "Observation",
     CHANGE: "Change",
+    ASK_FOR_HELP: "Ask for help",
 }
 
 const AdoptionType = {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
@@ -13,11 +13,11 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import logo from "../../assets/medias/logo.svg"; 
-import logo_epfl from "../../assets/medias/logo-epfl.svg";
+import logo_evalution from "../../assets/medias/logo-evalution.png";
 import { useMessageService } from '../../services/MessageService';
 
 
-const Item = ({ title, to, icon, selected, setSelected, disabled }) => {
+const Item = ({ title, to, icon, selected, setSelected, disabled, onNavigate }) => {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -25,6 +25,7 @@ const Item = ({ title, to, icon, selected, setSelected, disabled }) => {
   const handleClick = () => {
     if (!disabled) {
       setSelected(title);
+      onNavigate?.();
     }
   };
 
@@ -56,29 +57,89 @@ const Item = ({ title, to, icon, selected, setSelected, disabled }) => {
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [isCollapsed, setIsCollapsed] = useState(() =>
+    typeof window !== "undefined" && window.innerWidth < theme.breakpoints.values.md
+  );
   const [selected, setSelected] = useState("Dashboard");
   const { getMessage } = useMessageService();
 
-  // Create a state to hold the window height
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-
-  // Update the window height on resize
   useEffect(() => {
-    const handleResize = () => setWindowHeight(window.innerHeight);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Determine if the logo should be displayed
-  const showLogo = windowHeight >= 875;
-
+    if (isMobile) {
+      setIsCollapsed(true);
+    }
+  }, [isMobile]);
 
   return (
+    <>
+      {isMobile && isCollapsed && (
+        <IconButton
+          onClick={() => setIsCollapsed(false)}
+          aria-label="Open menu"
+          sx={{
+            position: "fixed",
+            top: 12,
+            left: 12,
+            zIndex: 1400,
+            bgcolor: "white",
+            boxShadow: 2,
+            "&:hover": { bgcolor: "white" },
+          }}
+        >
+          <MenuOutlinedIcon />
+        </IconButton>
+      )}
+      {isMobile && !isCollapsed && (
+        <Box
+          onClick={() => setIsCollapsed(true)}
+          sx={{
+            position: "fixed",
+            inset: 0,
+            bgcolor: "rgba(0,0,0,0.35)",
+            zIndex: 1299,
+          }}
+        />
+      )}
+    {!isMobile && (
+      <Box
+        aria-hidden
+        sx={{
+          width: isCollapsed ? 80 : 270,
+          flexShrink: 0,
+          alignSelf: "stretch",
+        }}
+      />
+    )}
     <Box
       sx={{
+        ...(isMobile
+          ? {
+              position: "fixed",
+              left: 0,
+              top: 0,
+              zIndex: 1300,
+              height: "100%",
+              transform: isCollapsed ? "translateX(-110%)" : "translateX(0)",
+              transition: "transform 0.2s ease",
+            }
+          : {
+              position: "fixed",
+              left: 0,
+              top: 0,
+              height: "100%",
+              zIndex: 1200,
+            }),
         "& .pro-sidebar-inner": {
           background: `${"white"} !important`,
+          overflowY: "auto",
+          overflowX: "hidden",
+        },
+        "& .pro-sidebar-inner > .pro-sidebar-layout": {
+          height: "auto !important",
+          minHeight: "100%",
+          overflow: "visible !important",
+          display: "flex",
+          flexDirection: "column",
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
@@ -96,8 +157,8 @@ const Sidebar = () => {
       }}
     >
       <ProSidebar
-        collapsed={isCollapsed}
-        style={{height: "100vh", position: "relative"}}
+        collapsed={isMobile ? false : isCollapsed}
+        style={{height: "100%", position: "relative"}}
 
       >
         
@@ -113,7 +174,7 @@ const Sidebar = () => {
               color: "colors.grey[100]",
             }}
           >
-            {!isCollapsed && (
+            {(isMobile || !isCollapsed) && (
               <Box
                 display="flex"
                 justifyContent="space-between"
@@ -127,7 +188,7 @@ const Sidebar = () => {
             )}
           </MenuItem>
 
-          {!isCollapsed && (
+          {(isMobile || !isCollapsed) && (
             <Box
               mb="0px"
               ml="10px"
@@ -150,16 +211,17 @@ const Sidebar = () => {
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box paddingLeft={isMobile || !isCollapsed ? "10%" : undefined}>
             <Item
               title={getMessage('label_home')}
               to="/"
               icon={<HomeIcon />}
               selected={selected}
               setSelected={setSelected}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
-            {!isCollapsed && (
+            {(isMobile || !isCollapsed) && (
               <Typography
                 variant="h5"
                 color={colors.grey[300]}
@@ -175,9 +237,10 @@ const Sidebar = () => {
               icon={< MonitorHeartIcon/>}
               selected={selected}
               setSelected={setSelected}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
-            {!isCollapsed && (
+            {(isMobile || !isCollapsed) && (
               <Typography
                 variant="h5"
                 color={colors.grey[300]}
@@ -193,9 +256,10 @@ const Sidebar = () => {
               icon={<PollIcon />}
               selected={selected}
               setSelected={setSelected}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
-            {!isCollapsed && (
+            {(isMobile || !isCollapsed) && (
               <Typography
                 variant="h5"
                 color={colors.grey[300]}
@@ -211,9 +275,10 @@ const Sidebar = () => {
               icon={<MenuBookIcon />}
               selected={selected}
               setSelected={setSelected}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
-             {!isCollapsed && (
+             {(isMobile || !isCollapsed) && (
               <Typography
                 variant="h5"
                 color={colors.grey[300]}
@@ -230,9 +295,10 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
               disabled={false}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
-            {!isCollapsed && (
+            {(isMobile || !isCollapsed) && (
               <Typography
                 variant="h5"
                 color={colors.grey[300]}
@@ -248,21 +314,34 @@ const Sidebar = () => {
               icon={<AccountCircleIcon />}
               selected={selected}
               setSelected={setSelected}
+              onNavigate={() => isMobile && setIsCollapsed(true)}
             />
 
           </Box>
         </Menu>
-        {!isCollapsed && showLogo && (
-            <Box mt={20} position="absolute" bottom={0} width="100%" display="flex" justifyContent="center" alignItems="center">
+        {!isCollapsed && (
+            <Box
+              sx={{
+                mt: "auto",
+                flexShrink: 0,
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                pt: 2,
+                pb: 4,
+              }}
+            >
               <img
-                alt=""
-                src={logo_epfl}
-                style={{ cursor: "pointer", borderRadius: "0%", width: "150px", height: "150px" }}
+                alt="evalution"
+                src={logo_evalution}
+                style={{ cursor: "pointer", borderRadius: "0%", width: "170px", height: "auto" }}
               />
             </Box>
         )}
       </ProSidebar>
     </Box>
+    </>
   );
 };
 

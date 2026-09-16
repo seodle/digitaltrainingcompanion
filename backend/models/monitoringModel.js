@@ -16,8 +16,18 @@ const monitoringSchema = new mongoose.Schema({
     courseContentIds: { type: [Number], default: [] },
     creationDate: { type: Date, default: Date.now }, // should be createdAt
     lastModificationDate: { type: Date, default: Date.now }, // should be updatedAt
-    sharingCode: { type: String, default: null }
+    sharingCode: { type: String, default: null },
+    scheduledEmailRecipients: { type: [String], default: [] },
+    scheduledEmailLanguage: { type: String, default: "en" }
 });
+
+const omitScheduledRecipients = (_doc, ret) => {
+    delete ret.scheduledEmailRecipients;
+    return ret;
+};
+
+monitoringSchema.set("toJSON", { transform: omitScheduledRecipients });
+monitoringSchema.set("toObject", { transform: omitScheduledRecipients });
 
 const model = mongoose.model("Monitoring", monitoringSchema);
 // const monitoringSandbox = mongoose.model("MonitoringSandbox", monitoringSchema, "monitoring-sandbox");

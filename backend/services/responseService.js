@@ -5,7 +5,7 @@ const Assessment = require('../models/assessmentModel');
 
 /**
  * Get answers from a given assessmentId, filtered by requester role if needed.
- * - Teacher-trainer: all responses for the assessment (with displayName removed)
+ * - Teacher-trainer: all responses for the assessment (displayName hidden on student types)
  * - Teacher: only their own responses (displayName visible)
  * 
  * @param {string} assessmentId - The unique identifier of the assessment.
@@ -24,14 +24,13 @@ const getAnswersFromAssessmentId = async (assessmentId, requesterId) => {
     if (status === 'Teacher-trainer') {
       const assessment = await Assessment.findById(assessmentId).select('type');
       if (!assessment) throw new Error('Assessment not found');
-    
+
       const isStudentType =
         assessment.type === 'Student characteristics' ||
         assessment.type === 'Student learning outcomes';
-    
+
       const query = Response.find({ assessmentId });
       if (isStudentType) {
-        // Hide respondent names only for student categories
         query.select('-displayName');
       }
       const responses = await query.populate('userId');

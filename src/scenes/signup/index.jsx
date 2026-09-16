@@ -199,6 +199,7 @@ const Signup = () => {
 
   const isSandboxMode = location.state?.isSandboxMode || false;
   const { getMessage } = useMessageService();
+  const { languageCode } = useLanguage();
 
   const [data, setData] = useState({
     firstName: "",
@@ -286,7 +287,7 @@ const Signup = () => {
       await signupSchema.validate(data, { abortEarly: false });
 
       // API call
-      const res = await axios.post(`${BACKEND_URL}/register`, data);
+      const res = await axios.post(`${BACKEND_URL}/register`, { ...data, language: languageCode });
       
       // Show success
       setError("");
@@ -314,6 +315,7 @@ const Signup = () => {
         top={0}
         left={0}
         height="100vh"
+        width="100%"
         bgcolor="rgba(0,0,0,0.5)"
       />
 
@@ -322,7 +324,8 @@ const Signup = () => {
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
-        minHeight="100vh"
+        minHeight="100%"
+        sx={{ position: "relative", zIndex: 1, height: "100%", overflowY: "auto" }}
       >
         <Box
           display="flex"
@@ -340,7 +343,7 @@ const Signup = () => {
             component="form"
             onSubmit={handleSubmit}
           >
-            <Box flexGrow={2} flexBasis={0} padding="60px">
+            <Box flexGrow={2} flexBasis={0} sx={{ p: { xs: 3, md: "60px" }, boxSizing: "border-box" }}>
               <LanguageSelector/>
               <DTCLogo/>
               
@@ -443,10 +446,16 @@ const Signup = () => {
                   control={
                     <Checkbox
                       checked={termsAccepted}
-                      onChange={handleChange}
+                      onChange={(event) => {
+                        if (!termsAccepted) {
+                          event.preventDefault();
+                          handleOpenTermsDialog();
+                          return;
+                        }
+                        handleChange(event);
+                      }}
                       name="termsAccepted"
                       color="primary"
-                      disabled={!termsAccepted} 
                     />
                   }
                   label={
@@ -459,13 +468,18 @@ const Signup = () => {
                       </Typography>
                       <Typography
                         component="span"
-                        onClick={handleOpenTermsDialog}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          event.stopPropagation();
+                          handleOpenTermsDialog();
+                        }}
                         sx={{ 
                           ml: 0.5,
                           color: 'primary.main',
                           textDecoration: 'underline',
                           cursor: 'pointer',
-                          fontWeight: 'bold'
+                          fontWeight: 'bold',
+                          pointerEvents: 'auto',
                         }}
                       >
                         {getMessage('label_legal_terms')}
@@ -502,7 +516,7 @@ const Signup = () => {
                     onClick={handleAcceptTerms}
                     disabled={!acceptEnabled}
                     variant="contained" 
-                    sx={{ ...buttonStyle, width: '20%' }}>
+                    sx={{ ...buttonStyle, width: { xs: '100%', sm: '40%' }, mr: { xs: 0, sm: 2 } }}>
                     <Typography variant="h5">{getMessage('label_accept')}</Typography>
                 </Button>
 
@@ -518,7 +532,7 @@ const Signup = () => {
               </Box>
 
               <Box mt={5} display="flex" justifyContent="center">
-                <Button type="submit" variant="contained" sx={{ ...buttonStyle, width: '20%' }}>
+                <Button type="submit" variant="contained" sx={{ ...buttonStyle, width: { xs: '100%', sm: '40%' }, mr: { xs: 0, sm: 2 } }}>
                   <Typography variant="h5">{getMessage('label_next')}</Typography>
                 </Button>
               </Box>

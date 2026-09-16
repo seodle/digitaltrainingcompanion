@@ -33,6 +33,8 @@ const createAssessment = async (assessmentData, { requesterId } = {}) => {
             status: assessmentData.status,
             creationDate: Date.now(),
             lastModificationDate: Date.now(),
+            scheduledSendAt: null,
+            scheduledSendStatus: null,
             questions: assessmentData.questions || [],
             workshops: assessmentData.workshops || [], 
         });
@@ -268,6 +270,8 @@ const copyAssessmentsByMonitoringId = async (monitoringId, newMonitoringId, requ
                 monitoringId: newMonitoringId, // Associate the new assessments with the new monitoring
                 creationDate: new Date(), // Set a new creation date
                 lastModificationDate: new Date(), // Set a new last modification date
+                scheduledSendAt: null,
+                scheduledSendStatus: null,
             });
 
             return copiedAssessment.save(); // Save each copied assessment
@@ -296,6 +300,8 @@ const updateAssessment = async (assessmentId, updatedAssessmentData) => {
     try {
         // Remove the non-ObjectId id from updatedAssessmentData if it exists
         delete updatedAssessmentData.id;
+        delete updatedAssessmentData.scheduledSendAt;
+        delete updatedAssessmentData.scheduledSendStatus;
 
         const existingAssessment = await Assessment.findById(assessmentId);
         if (!existingAssessment) {

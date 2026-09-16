@@ -32,9 +32,9 @@ const CreateSurvey = () => {
     console.log("assessmentId", assessmentId)
 
     return (
-        <Box display="flex" backgroundColor="white" style={{ height: '100vh' }}>
+        <Box display="flex" sx={{ height: '100%', overflow: 'hidden', maxWidth: '100vw', bgcolor: '#f9f9f9' }}>
             <Sidebar />
-            <Box flex={1}>
+            <Box flex={1} sx={{ minWidth: 0, minHeight: 0, overflow: 'auto' }}>
 
                 <Box ml="10px">
                     <Topbar />

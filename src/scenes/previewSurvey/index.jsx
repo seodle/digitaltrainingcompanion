@@ -167,7 +167,14 @@ const PreviewSurvey = () => {
   }, [surveyData]);
 
   return (
-    <>
+    <Box
+      sx={{
+        position: "absolute",
+        inset: 0,
+        overflow: "auto",
+        WebkitOverflowScrolling: "touch",
+      }}
+    >
       {/* Alert notification system */}
       {showAlert && (
         <Alert 
@@ -273,7 +280,7 @@ const PreviewSurvey = () => {
           </Formik>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 
