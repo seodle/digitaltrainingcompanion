@@ -182,7 +182,13 @@ const AddLog = ({logs, setLogs, currentMonitoringId, uniqueDays, isMonitoringOwn
       );
 
       if(response.status === 200) {
-        setLogs((prev) => [...prev, response.data]);
+        setLogs((prev) => {
+          const id = String(response.data._id);
+          if (prev.some((log) => String(log._id) === id)) {
+            return prev;
+          }
+          return [...prev, response.data];
+        });
         if (values.logType === LogType.ASK_FOR_HELP) {
           setHelpSentOpen(isTrainer ? "contact" : "help");
         }

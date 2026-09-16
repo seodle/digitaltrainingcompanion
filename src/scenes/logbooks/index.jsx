@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from "../global/Sidebar";
 import Topbar from "../global/Topbar";
 import axios from 'axios';
@@ -11,6 +11,14 @@ import { useAuthUser } from '../../contexts/AuthUserContext';
 import { loadMonitoringAndAssessments } from "../../utils/ObjectsUtils";
 import { BACKEND_URL } from "../../config";
 import { UserType } from "../../utils/enums";
+
+const mergeLogsFromServer = (prev, next) => {
+  const prevById = new Map(prev.map((log) => [String(log._id), log]));
+  return next.map((fresh) => {
+    const old = prevById.get(String(fresh._id));
+    return old ? { ...old, ...fresh } : fresh;
+  });
+};
 
 const Logbooks = () => {
 
@@ -26,6 +34,12 @@ const Logbooks = () => {
 
   const { getMessage } = useMessageService();
   const { currentUser } = useAuthUser();
+  const logFetchGeneration = useRef(0);
+
+  const setLogsFromLocal = (updater) => {
+    logFetchGeneration.current += 1;
+    setLogs(updater);
+  };
 
   useEffect(() => {
       const fetchMonitoringsAndAssessments = async () => {
@@ -49,8 +63,11 @@ const Logbooks = () => {
   }, [monitorings, queryMonitoringId, currentMonitoringId]);
 
   useEffect(() => {
+    let cancelled = false;
+
     const fetchLogs = async () => {
       if (!currentMonitoring?._id) return;
+      const generation = ++logFetchGeneration.current;
 
       try {
           const token = localStorage.getItem("token");
@@ -61,9 +78,16 @@ const Logbooks = () => {
               }
             }
           );
-          setLogs(Array.isArray(response.data) ? response.data : []);
+          if (cancelled || generation !== logFetchGeneration.current) {
+            return;
+          }
+          const next = Array.isArray(response.data) ? response.data : [];
+          setLogs((prev) => mergeLogsFromServer(prev, next));
       } catch (error) {
           console.log(error);
+          if (cancelled || generation !== logFetchGeneration.current) {
+            return;
+          }
           setLogs([]);
       }
     };
@@ -78,40 +102,27 @@ const Logbooks = () => {
       if (!currentMonitoring?._id || document.hidden) {
         return;
       }
+      const generation = ++logFetchGeneration.current;
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(`${BACKEND_URL}/logs/monitoring/${currentMonitoring._id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        if (cancelled || generation !== logFetchGeneration.current) {
+          return;
+        }
         const next = Array.isArray(response.data) ? response.data : [];
-        setLogs((prev) => {
-          if (prev.length !== next.length) {
-            return next;
-          }
-          return prev.map((old) => {
-            const fresh = next.find((item) => item._id === old._id);
-            if (!fresh) {
-              return old;
-            }
-            return {
-              ...old,
-              description: fresh.description,
-              chat: fresh.chat,
-              helpRequestedAt: fresh.helpRequestedAt,
-              helpRequestedBy: fresh.helpRequestedBy,
-              isCompleted: fresh.isCompleted,
-              completionDate: fresh.completionDate,
-              lastModificationDate: fresh.lastModificationDate,
-            };
-          });
-        });
+        setLogs((prev) => mergeLogsFromServer(prev, next));
       } catch (error) {
         console.log(error);
       }
     };
 
     const intervalId = setInterval(pollLogs, 8000);
-    return () => clearInterval(intervalId);
+    return () => {
+      cancelled = true;
+      clearInterval(intervalId);
+    };
   }, [currentMonitoring, assessments]);
 
   useEffect(() => {
@@ -209,7 +220,7 @@ const Logbooks = () => {
             <AddLog
               key={currentMonitoring._id}
               logs={logs}
-              setLogs={setLogs}
+              setLogs={setLogsFromLocal}
               currentMonitoringId={currentMonitoring._id}
               uniqueDays={uniqueDays}
               isMonitoringOwner={isMonitoringOwner}
@@ -229,7 +240,7 @@ const Logbooks = () => {
           >
             <CustomTimeline
               logs={logs}
-              setLogs={setLogs}
+              setLogs={setLogsFromLocal}
               isMonitoringOwner={isMonitoringOwner}
               isTrainer={isTrainer}
               currentMonitoringId={currentMonitoring?._id}
