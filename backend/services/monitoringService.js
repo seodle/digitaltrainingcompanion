@@ -179,7 +179,6 @@ const getMonitoringById = async (monitoringId) => {
       .populate({
         path: "userId",
         select: "firstName lastName",
-        model: "Users",
       });
     if (!monitoring) {
       throw new Error("Monitoring not found");

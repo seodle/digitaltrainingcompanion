@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 // Monitoring Schema
 const monitoringSchema = new mongoose.Schema({
     orderId: Number,
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
     name: String,
     description: String,
     /** AI Beacon internal course id (from sync response). */

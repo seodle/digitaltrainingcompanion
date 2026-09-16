@@ -27,7 +27,7 @@ const questionSchema = new mongoose.Schema({
 
 // Assessment Schema
 const assessmentSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
     monitoringId: String,
     name: String,
     day: String,

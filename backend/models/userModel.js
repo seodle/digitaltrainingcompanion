@@ -136,6 +136,5 @@ userSchema.methods.generateAuthToken = function () {
     return token;
 };
 
-// TODO user should be users
 const model = mongoose.model("Users", userSchema);
 module.exports = model;

@@ -236,7 +236,7 @@ const getAssessmentsByMonitoringId = async (monitoringId, assessmentType) => {
         }
         // Populate owner minimal identity to avoid an extra roundtrip on the client
         return await Assessment.find(filter)
-            .populate({ path: 'userId', select: 'firstName lastName', model: 'Users' });
+            .populate({ path: 'userId', select: 'firstName lastName' });
     } catch (error) {
         console.error(error);
         throw new Error("An error occurred while getting the assessments");
