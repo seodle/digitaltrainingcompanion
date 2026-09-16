@@ -2,7 +2,8 @@ const cron = require("node-cron");
 const Log = require("../models/logModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
-const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL, t } = require("./emailService");
+const { sendMail, FRONTEND_URL, t } = require("./emailService");
+const { buildChatReminderHtml } = require("../utils/emailTemplates");
 const { chatPartnerId } = require("./logService");
 
 const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
@@ -35,22 +36,10 @@ const sendPendingChatReminder = async (log, monitoring, lastMessage, recipient, 
     const snippet = String(lastMessage.text || "").trim();
     const preview = snippet.length > 220 ? `${snippet.slice(0, 217)}…` : snippet;
 
-    const inner = `
-            <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">${escapeHtml(t(lang, "logbook"))}</p>
-            <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">${escapeHtml(t(lang, "reminder_title"))}</h1>
-            <p style="margin:0 0 16px;font-size:18px;line-height:28px;color:#525252;">
-                <strong style="color:#141b2d;">${escapeHtml(senderName)}</strong>
-                ${escapeHtml(t(lang, "reminder_body_start"))}
-                <strong style="color:#141b2d;">${escapeHtml(monitoring.name)}</strong>.
-            </p>
-            ${preview ? `<p style="margin:0 0 24px;font-size:16px;line-height:24px;color:#525252;">${escapeHtml(preview)}</p>` : ""}
-            <div style="text-align:center;">${ctaButton(logUrl, t(lang, "open_discussion"))}</div>
-        `;
-
     await sendMail({
         to: recipient.email,
         subject: t(lang, "reminder_subject", { name: monitoring.name }),
-        html: wrapEmail(inner, lang),
+        html: buildChatReminderHtml(monitoring, senderName, preview, logUrl, lang),
         text: t(lang, "reminder_text", { sender: senderName, name: monitoring.name, url: logUrl }),
     });
 };

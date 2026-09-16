@@ -1,7 +1,8 @@
 const Log = require("../models/logModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
-const { sendMail, wrapEmail, ctaButton, escapeHtml, FRONTEND_URL, t } = require("./emailService");
+const { sendMail, FRONTEND_URL, t } = require("./emailService");
+const { buildHelpRequestHtml, buildTrainerContactHtml } = require("../utils/emailTemplates");
 
 const VISIBILITY = ["private", "trainer", "selected", "followers"];
 const AUTHOR_POPULATE = { path: "userId", select: "firstName lastName" };
@@ -170,21 +171,10 @@ const notifyOwnerOfHelpRequest = async (log, monitoring, requesterId) => {
         return;
     }
 
-    const inner = `
-            <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">${escapeHtml(t(lang, "logbook"))}</p>
-            <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">${escapeHtml(t(lang, "help_title"))}</h1>
-            <p style="margin:0 0 16px;font-size:18px;line-height:28px;color:#525252;">
-                <strong style="color:#141b2d;">${escapeHtml(teacherName)}</strong>
-                ${escapeHtml(t(lang, "help_body"))}
-                <strong style="color:#141b2d;">${escapeHtml(monitoring.name)}</strong>.
-            </p>
-            <p style="margin:0 0 24px;font-size:16px;line-height:24px;color:#525252;">${escapeHtml(log.description || "")}</p>
-            <div style="text-align:center;">${ctaButton(logUrl, t(lang, "open_logbook"))}</div>
-        `;
     await sendMail({
         to: owner.email,
         subject: t(lang, "help_subject", { name: monitoring.name }),
-        html: wrapEmail(inner, lang),
+        html: buildHelpRequestHtml(monitoring, teacherName, log.description, logUrl, lang),
         text: t(lang, "help_text", { teacher: teacherName, name: monitoring.name, url: logUrl }),
     });
 };
@@ -200,21 +190,10 @@ const notifyTeachersOfTrainerContact = async (log, monitoring, requesterId, teac
         }
         const lang = teacher.language;
         const trainerName = [trainer?.firstName, trainer?.lastName].filter(Boolean).join(" ") || t(lang, "a_trainer");
-        const inner = `
-            <p style="margin:0 0 10px;font-size:15px;letter-spacing:0.5px;text-transform:uppercase;color:#6870fa;font-weight:bold;">${escapeHtml(t(lang, "logbook"))}</p>
-            <h1 style="margin:0 0 20px;font-size:28px;line-height:38px;font-weight:bold;color:#141b2d;">${escapeHtml(t(lang, "contact_title"))}</h1>
-            <p style="margin:0 0 16px;font-size:18px;line-height:28px;color:#525252;">
-                <strong style="color:#141b2d;">${escapeHtml(trainerName)}</strong>
-                ${escapeHtml(t(lang, "contact_body"))}
-                <strong style="color:#141b2d;">${escapeHtml(monitoring.name)}</strong>.
-            </p>
-            <p style="margin:0 0 24px;font-size:16px;line-height:24px;color:#525252;">${escapeHtml(log.description || "")}</p>
-            <div style="text-align:center;">${ctaButton(logUrl, t(lang, "open_logbook"))}</div>
-        `;
         await sendMail({
             to: teacher.email,
             subject: t(lang, "contact_subject", { name: monitoring.name }),
-            html: wrapEmail(inner, lang),
+            html: buildTrainerContactHtml(monitoring, trainerName, log.description, logUrl, lang),
             text: t(lang, "contact_text", { trainer: trainerName, name: monitoring.name, url: logUrl }),
         });
     }));

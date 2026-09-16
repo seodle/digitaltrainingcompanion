@@ -3,7 +3,8 @@ const crypto = require("crypto");
 
 const User = require("../models/userModel");
 const { validateUserCredentialsRegister } = require('../utils/passwordValidationUtils.js');
-const { sendMail, FRONTEND_URL, LOGO_URL, t } = require('./emailService');
+const { sendMail, FRONTEND_URL, t } = require('./emailService');
+const { buildVerifyEmailHtml, buildResetPasswordHtml } = require('../utils/emailTemplates');
 require('dotenv').config();
 
 /**
@@ -83,8 +84,7 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
             await sendMail({
                 to: userData.email,
                 subject: t(lang, "verify_subject"),
-                html: `${t(lang, "verify_html", { url: verifyUrl })}
-                        <p><img src="${LOGO_URL}" alt="The Digital Training Companion" width="200px" height="auto"></p>`,
+                html: buildVerifyEmailHtml(verifyUrl, lang),
             });
         }
 
@@ -133,7 +133,7 @@ const initiatePasswordReset = async (email, language) => {
             to: email,
             subject: t(lang, "reset_subject"),
             text: t(lang, "reset_text", { url: resetURL }),
-            html: t(lang, "reset_html", { url: resetURL }),
+            html: buildResetPasswordHtml(resetURL, lang),
         });
 
         return { status: 'success', message: "An email with password reset instructions has been sent." };
