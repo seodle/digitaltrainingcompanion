@@ -27,8 +27,8 @@ const aiBeaconRoutes = require("./routes/aiBeacon");
 const aiBeaconPublicRoutes = require("./routes/aiBeaconPublic");
 const questionWidgetRoutes = require('./routes/questionWidget');
 const adminRoutes = require('./routes/admin');
-const { startScheduledQuestionnaireJob } = require('./services/scheduledQuestionnaireJob');
-const { startChatReminderJob } = require('./services/chatReminderJob');
+const { startScheduledQuestionnaireJob } = require('./jobs/scheduledQuestionnaireJob');
+const { startChatReminderJob } = require('./jobs/chatReminderJob');
 
 const app = express();
 

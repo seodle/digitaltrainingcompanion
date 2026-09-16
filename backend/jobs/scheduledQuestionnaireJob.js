@@ -2,7 +2,7 @@ const cron = require("node-cron");
 const Assessment = require("../models/assessmentModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
-const { sendMail, FRONTEND_URL, t } = require("./emailService");
+const { sendMail, FRONTEND_URL, t } = require("../services/emailService");
 const { buildParticipantHtml, buildOwnerHtml } = require("../utils/emailTemplates");
 
 const sendingLocks = new Set();

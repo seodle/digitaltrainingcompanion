@@ -2,9 +2,9 @@ const cron = require("node-cron");
 const Log = require("../models/logModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
-const { sendMail, FRONTEND_URL, t } = require("./emailService");
+const { sendMail, FRONTEND_URL, t } = require("../services/emailService");
 const { buildChatReminderHtml } = require("../utils/emailTemplates");
-const { chatPartnerId } = require("./logService");
+const { chatPartnerId } = require("../services/logService");
 
 const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
 const sendingLocks = new Set();
