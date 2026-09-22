@@ -27,13 +27,13 @@ const sampleNewsData = [
   {
     id: 1,
     type: 'event',
-    title: 'Formation hybride pour les enseignant·e·s de l\'école obligatoire',
-    excerpt: 'Le Digital Training Companion : votre allié pour évaluer et accompagner vos élèves. Formation gratuite du 27 octobre au 19 décembre 2025.',
-    date: '2025-10-27',
+    title: 'FORMATION D\'UNE DEMI-JOURNÉE SUR UNE SOLUTION NUMÉRIQUE POUR MESURER L’IMPACT RÉEL DE VOTRE FORMATION OU DE VOTRE ENSEIGNEMENT',
+    excerpt: 'Le Digital Training Companion : votre allié pour évaluer et accompagner vos élèves',
+    date: 'Septembre-Novembre 2026: CHAQUE 3ÈME MERCREDI DU MOIS AU CHOIX',
     isNew: true,
     category: 'Formation',
     languages: ['FR'],
-    link: 'https://www.roteco.ch/fr/courses/post/innover-dans-levaluation-avec-le-digital-training-companion/'
+    link: 'https://www.evalution-asso.ch/events'
   }
 ];
 
@@ -68,6 +68,10 @@ const NewsCard = ({ newsItem, getMessage }) => {
   
   const formatDate = (dateString) => {
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) {
+      // Not a parseable date (e.g. a free-text schedule) – show it as-is
+      return dateString;
+    }
     return date.toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'short', 
