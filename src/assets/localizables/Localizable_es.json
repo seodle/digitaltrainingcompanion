@@ -3483,6 +3483,231 @@
         "fuzzy": 0
     },
     {
+        "term": "label_ai_course_improvements",
+        "definition": "Sugerencias de IA para mejorar el curso",
+        "context": "label_ai_course_improvements",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_reports_view_results",
+        "definition": "Resultados",
+        "context": "label_reports_view_results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_reports_view_suggestions",
+        "definition": "Sugerencias",
+        "context": "label_reports_view_suggestions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_empty",
+        "definition": "Aún no hay sugerencias. Genere un informe a partir de las respuestas de este monitoreo.",
+        "context": "label_course_improvements_empty",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_generate",
+        "definition": "Generar sugerencias",
+        "context": "label_course_improvements_generate",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_refresh",
+        "definition": "Actualizar sugerencias",
+        "context": "label_course_improvements_refresh",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_last_generated",
+        "definition": "Última generación",
+        "context": "label_course_improvements_last_generated",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_summary",
+        "definition": "Resumen",
+        "context": "label_course_improvements_summary",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_themes",
+        "definition": "Temas",
+        "context": "label_course_improvements_themes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_comprehension",
+        "definition": "Comprensión",
+        "context": "label_course_improvements_comprehension",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_scales",
+        "definition": "Escalas",
+        "context": "label_course_improvements_scales",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_prevalence",
+        "definition": "Menciones",
+        "context": "label_course_improvements_prevalence",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_correct",
+        "definition": "Correctas",
+        "context": "label_course_improvements_correct",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_generate_error",
+        "definition": "No se pudieron generar las sugerencias. Inténtelo de nuevo.",
+        "context": "label_course_improvements_generate_error",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_generating",
+        "definition": "Generando sugerencias. Esto puede tardar hasta 15 minutos. Puede salir de esta página: el resultado aparecerá aquí cuando esté listo.",
+        "context": "label_course_improvements_generating",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_error_timeout",
+        "definition": "El análisis tardó demasiado y se interrumpió. Inténtelo de nuevo.",
+        "context": "label_course_improvements_error_timeout",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_recommendations",
+        "definition": "Recomendaciones",
+        "context": "label_course_improvements_recommendations",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_common_errors",
+        "definition": "Errores frecuentes",
+        "context": "label_course_improvements_common_errors",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_common_shortfalls",
+        "definition": "Carencias frecuentes",
+        "context": "label_course_improvements_common_shortfalls",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_frequently_correct",
+        "definition": "Frecuentemente correcto",
+        "context": "label_course_improvements_frequently_correct",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_most_chosen",
+        "definition": "Más elegida",
+        "context": "label_course_improvements_most_chosen",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_responses",
+        "definition": "Respuestas",
+        "context": "label_course_improvements_responses",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_unmatched",
+        "definition": "Respuestas no reconocidas",
+        "context": "label_course_improvements_unmatched",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_answers_analyzed",
+        "definition": "Respuestas analizadas",
+        "context": "label_course_improvements_answers_analyzed",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_quotes_hidden",
+        "definition": "Las citas solo se muestran para preguntas con al menos 5 respuestas.",
+        "context": "label_course_improvements_quotes_hidden",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "label_maximum_password_characters_exceeded",
         "definition": "La contraseña no debe exceder los 255 caracteres",
         "context": "label_maximum_password_characters_exceeded",

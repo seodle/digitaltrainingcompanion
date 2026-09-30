@@ -3,6 +3,13 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 require('dotenv').config();
 
+// Mirrors the frontend `src/utils/enums.js`: keep them in sync. Not enforced with `enum:` on
+// `userStatus`: existing documents may hold other values.
+const UserType = {
+    TEACHER: "Teacher",
+    TEACHER_TRAINER: "Teacher-trainer",
+};
+
 const algorithm = "aes-256-cbc";
 const key = crypto.createHash("sha256")
     .update(process.env.ENCRYPTION_KEY || "")
@@ -137,4 +144,4 @@ userSchema.methods.generateAuthToken = function () {
 };
 
 const model = mongoose.model("Users", userSchema);
-module.exports = model;
+module.exports = Object.assign(model, { UserType });

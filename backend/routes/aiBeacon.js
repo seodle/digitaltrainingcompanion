@@ -11,9 +11,14 @@ const {
   resolveLmsConnectionId,
   waitForCourseProcessingCompletion,
   generateQuestionsFromAiBeacon,
+  startCourseImprovementGeneration,
+  getCourseImprovementState,
 } = require("../services/aiBeacon.service");
 const { AiBeaconApiError } = require("../clients/aiBeacon.client");
-const { requireAssessmentOwner } = require("../middleware/authorization");
+const {
+  requireAssessmentOwner,
+  requireMonitoringOwnerOrRedeemer,
+} = require("../middleware/authorization");
 
 const AI_BEACON_OUTPUT_LANGUAGES = new Set(["de", "fr", "it", "en", "auto"]);
 const AI_BEACON_QUESTION_CATEGORY_BY_LEARNING_TYPE = {
@@ -73,6 +78,63 @@ router.post(
       }
       return res.status(500).json({
         error: error.message || "Failed to generate questions",
+      });
+    }
+  }
+);
+
+/**
+ * Starts the generation of course improvement suggestions from all responses of a monitoring.
+ * Returns 202 immediately with the pending job; the report is generated in the background and
+ * fetched with the GET route below. If a job is already pending, it is returned instead of
+ * starting a new one.
+ */
+router.post(
+  "/monitorings/:monitoringId/course-improvements",
+  requireMonitoringOwnerOrRedeemer("monitoringId"),
+  async (req, res) => {
+    const requesterId = req.user && req.user._id;
+    const { monitoringId } = req.params;
+
+    try {
+      const { currentJob } = await startCourseImprovementGeneration({
+        userId: requesterId,
+        monitoringId,
+      });
+
+      return res.status(202).json({ currentJob });
+    } catch (error) {
+      const isClientError =
+        error.message === "Monitoring is not linked to a synced course" ||
+        error.message === "Monitoring has no responses to analyze";
+      return res.status(isClientError ? 400 : 500).json({
+        error: error.message || "Failed to start course improvements generation",
+      });
+    }
+  }
+);
+
+/**
+ * Returns the latest completed course improvement for this monitoring and requester
+ * (`courseImprovement`, null when none exists yet) and the state of the most recent attempt
+ * when it is pending, failed or timed out (`currentJob`, null otherwise).
+ */
+router.get(
+  "/monitorings/:monitoringId/course-improvements",
+  requireMonitoringOwnerOrRedeemer("monitoringId"),
+  async (req, res) => {
+    const requesterId = req.user && req.user._id;
+    const { monitoringId } = req.params;
+
+    try {
+      const { courseImprovement, currentJob } = await getCourseImprovementState({
+        monitoringId,
+        requesterId,
+      });
+      return res.json({ courseImprovement, currentJob });
+    } catch (error) {
+      return res.status(500).json({
+        error: error.message || "Failed to fetch course improvements",
       });
     }
   }

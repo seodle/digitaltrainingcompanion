@@ -26,6 +26,19 @@ const UserType = {
     TEACHER_TRAINER: "Teacher-trainer",
 }
 
+const CourseImprovementStatus = {
+    PENDING: "pending",
+    COMPLETED: "completed",
+    FAILED: "failed",
+    TIMEOUT: "timeout",
+}
+
+/** `kind` of a `comprehension` entry in the AI Beacon improvement report. */
+const ComprehensionKind = {
+    GRADED_CHOICE: "graded_choice",
+    GRADED_TEXT: "graded_text",
+}
+
 const QuestionType = {
     TEXT: "text",
     RADIO_ORDERED: "radio-ordered",
@@ -51,4 +64,4 @@ const LearningType = {
     ATTITUDE: "Attitude"
 }
 
-module.exports = {OptionTypes, AssessmentType, UserType, QuestionType, LogType, LearningType, AdoptionType};
+module.exports = {OptionTypes, AssessmentType, UserType, CourseImprovementStatus, ComprehensionKind, QuestionType, LogType, LearningType, AdoptionType};
