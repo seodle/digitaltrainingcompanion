@@ -45,6 +45,7 @@ function buildUrl({ baseUrl, path, query }) {
 function createAiBeaconApiClient(apiKey, options = {}) {
   const baseUrl = options.baseUrl || DEFAULT_BASE_URL;
   const requestTimeoutMs = options.requestTimeoutMs || 30000;
+  const logResponses = Boolean(options.logResponses);
 
   const defaultHeaders = {
     Accept: "application/json",
@@ -75,6 +76,13 @@ function createAiBeaconApiClient(apiKey, options = {}) {
       const contentType = res.headers.get("content-type") || "";
       const isJson = contentType.includes("application/json");
       const responseBody = isJson ? await res.json() : await res.text();
+
+      if (logResponses) {
+        console.log(
+          `[aiBeacon] ${method} ${url.pathname} status=${res.status} response=`,
+          responseBody
+        );
+      }
 
       if (!res.ok) {
         throw new AiBeaconApiError({

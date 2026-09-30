@@ -1,6 +1,7 @@
 const Response = require('../models/responseModel');
 const User = require('../models/userModel');
 const Assessment = require('../models/assessmentModel');
+const { UserType, STUDENT_ASSESSMENT_TYPES } = require('../constants/enums');
 
 
 /**
@@ -21,13 +22,11 @@ const getAnswersFromAssessmentId = async (assessmentId, requesterId) => {
     const requester = await User.findById(requesterId).select('userStatus');
     const status = String(requester?.userStatus || '');
 
-    if (status === 'Teacher-trainer') {
+    if (status === UserType.TEACHER_TRAINER) {
       const assessment = await Assessment.findById(assessmentId).select('type');
       if (!assessment) throw new Error('Assessment not found');
 
-      const isStudentType =
-        assessment.type === 'Student characteristics' ||
-        assessment.type === 'Student learning outcomes';
+      const isStudentType = STUDENT_ASSESSMENT_TYPES.includes(assessment.type);
 
       const query = Response.find({ assessmentId });
       if (isStudentType) {
@@ -37,7 +36,7 @@ const getAnswersFromAssessmentId = async (assessmentId, requesterId) => {
       return responses;
     }
     
-    if (status === 'Teacher') {
+    if (status === UserType.TEACHER) {
       const ownResponses = await Response.find({ assessmentId, userId: requesterId })
       return ownResponses;
     }

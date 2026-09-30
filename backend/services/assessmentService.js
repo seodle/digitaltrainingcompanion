@@ -1,6 +1,7 @@
 const Assessment = require('../models/assessmentModel');
 const Monitoring = require('../models/monitoringModel');
 const mongoose = require('mongoose');
+const { LEARNING_ASSESSMENT_TYPES } = require('../constants/enums');
 
 /** Allowed one-way status transitions: Draft → Open → Close */
 const ALLOWED_STATUS_TRANSITIONS = {
@@ -421,8 +422,7 @@ const fetchSurveyData = async (currentAssessmentServerId, sandbox) => {
 
         const coachFeedbackEnabled =
             !!courseAiBeaconId &&
-            assessment.type !== 'Learning' &&
-            assessment.type !== 'Student learning outcomes';
+            !LEARNING_ASSESSMENT_TYPES.includes(assessment.type);
 
         // If assessment is found, return the survey and additional details
         return {

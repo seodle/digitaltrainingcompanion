@@ -3483,6 +3483,141 @@
         "fuzzy": 0
     },
     {
+        "term": "label_ai_course_improvements",
+        "definition": "Sugerencias de IA para mejorar el curso",
+        "context": "label_ai_course_improvements",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_reports_view_results",
+        "definition": "Resultados",
+        "context": "label_reports_view_results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_reports_view_suggestions",
+        "definition": "Sugerencias",
+        "context": "label_reports_view_suggestions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_empty",
+        "definition": "Aún no hay sugerencias. Genere un informe a partir de las respuestas de este monitoreo.",
+        "context": "label_course_improvements_empty",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_generate",
+        "definition": "Generar sugerencias",
+        "context": "label_course_improvements_generate",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_refresh",
+        "definition": "Actualizar sugerencias",
+        "context": "label_course_improvements_refresh",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_last_generated",
+        "definition": "Última generación",
+        "context": "label_course_improvements_last_generated",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_summary",
+        "definition": "Resumen",
+        "context": "label_course_improvements_summary",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_themes",
+        "definition": "Temas",
+        "context": "label_course_improvements_themes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_comprehension",
+        "definition": "Comprensión",
+        "context": "label_course_improvements_comprehension",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_graded_responses",
+        "definition": "Respuestas escritas",
+        "context": "label_course_improvements_graded_responses",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_scales",
+        "definition": "Escalas",
+        "context": "label_course_improvements_scales",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_prevalence",
+        "definition": "Prevalencia",
+        "context": "label_course_improvements_prevalence",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_correct",
+        "definition": "Correctas",
+        "context": "label_course_improvements_correct",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_generate_error",
+        "definition": "No se pudieron generar las sugerencias. Inténtelo de nuevo.",
+        "context": "label_course_improvements_generate_error",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "label_maximum_password_characters_exceeded",
         "definition": "La contraseña no debe exceder los 255 caracteres",
         "context": "label_maximum_password_characters_exceeded",

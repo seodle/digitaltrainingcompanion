@@ -5,6 +5,7 @@ const Assessment = require('../models/assessmentModel');
 const Log = require('../models/logModel');
 const ApiKey = require('../models/apiKeysModel');
 const Response = require('../models/responseModel');
+const { LEARNING_ASSESSMENT_TYPES } = require('../constants/enums');
 
 // Get user token
 const getUser = (req, res, next) => {
@@ -393,10 +394,7 @@ const requirePublicCoachFeedbackContext = async (req, res, next) => {
         if (String(assessment.monitoringId || '') !== monitoringId) {
             return res.status(403).json({ error: 'Forbidden' });
         }
-        if (
-            assessment.type === 'Learning' ||
-            assessment.type === 'Student learning outcomes'
-        ) {
+        if (LEARNING_ASSESSMENT_TYPES.includes(assessment.type)) {
             return res.status(403).json({
                 error: 'Coach feedback is not available for this assessment type',
             });

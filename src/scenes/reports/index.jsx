@@ -13,6 +13,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import Sidebar from "../../scenes/global/Sidebar";
 import Topbar from "../../scenes/global/Topbar";
 import { AssessmentResultStack } from '../../components/AssessmentTabResultsComponents';
+import CourseImprovementsPanel from '../../components/CourseImprovementsPanel';
 import { buttonStyle } from '../../components/styledComponents'
 import { useMessageService } from '../../services/MessageService';
 import { useAuthUser } from '../../contexts/AuthUserContext';
@@ -67,6 +68,11 @@ const Reports = () => {
     const [isExportingDOCX, setIsExportingDOCX] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [showPercentage, setShowPercentage] = useState(false);
+    const [isRequestingCourseImprovements, setIsRequestingCourseImprovements] = useState(false);
+    const [reportsView, setReportsView] = useState('results');
+    const [courseImprovement, setCourseImprovement] = useState(null);
+    const [isLoadingCourseImprovement, setIsLoadingCourseImprovement] = useState(false);
+    const [courseImprovementsError, setCourseImprovementsError] = useState(false);
 
     //AI summary states
     const [aiSummaries, setAiSummaries] = useState({});
@@ -94,6 +100,42 @@ const Reports = () => {
         console.log("Setting selectedDay to first day:", days[0]);
     }
 }, [days, selectedDay]);
+
+    useEffect(() => {
+        const hasAiBeaconAccess = Boolean(currentUser?.aiBeaconApiKeyCreatedAt);
+        const isSyncedMonitoring = Boolean(selectedMonitoring?.courseAiBeaconId);
+        if (!hasAiBeaconAccess || !isSyncedMonitoring || !selectedMonitoring?._id) {
+            setCourseImprovement(null);
+            setIsLoadingCourseImprovement(false);
+            setReportsView('results');
+            return;
+        }
+
+        let cancelled = false;
+        const fetchLatest = async () => {
+            setIsLoadingCourseImprovement(true);
+            setCourseImprovementsError(false);
+            try {
+                const response = await axios.get(
+                    `${BACKEND_URL}/aiBeacon/monitorings/${selectedMonitoring._id}/course-improvements`,
+                    { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+                );
+                if (!cancelled) {
+                    setCourseImprovement(response.data?.courseImprovement || null);
+                }
+            } catch (error) {
+                console.error('Error fetching course improvements:', error);
+                if (!cancelled) setCourseImprovement(null);
+            } finally {
+                if (!cancelled) setIsLoadingCourseImprovement(false);
+            }
+        };
+
+        fetchLatest();
+        return () => {
+            cancelled = true;
+        };
+    }, [currentUser?.aiBeaconApiKeyCreatedAt, selectedMonitoring?._id, selectedMonitoring?.courseAiBeaconId]);
 
 
     // fetch the assessments for a the selected monitoring
@@ -469,6 +511,9 @@ const Reports = () => {
         setAllUsers([]);
         setSelectedTeacher('');
         setTeachers([]);
+        setReportsView('results');
+        setCourseImprovement(null);
+        setCourseImprovementsError(false);
     };
 
     /**
@@ -982,6 +1027,30 @@ const Reports = () => {
     };
 
     /**
+     * Sends all responses of the selected monitoring to the backend, which builds the payload
+     * for AI Beacon course improvement suggestions.
+     */
+    const handleRequestCourseImprovements = async () => {
+        if (!selectedMonitoring?._id) return;
+
+        setIsRequestingCourseImprovements(true);
+        setCourseImprovementsError(false);
+        try {
+            const response = await axios.post(
+                `${BACKEND_URL}/aiBeacon/monitorings/${selectedMonitoring._id}/course-improvements`,
+                {},
+                { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+            );
+            setCourseImprovement(response.data?.courseImprovement || null);
+        } catch (error) {
+            console.error('Error requesting course improvements:', error);
+            setCourseImprovementsError(true);
+        } finally {
+            setIsRequestingCourseImprovements(false);
+        }
+    };
+
+    /**
      * Generates AI summary for text question responses via backend endpoint
      * @param {Array} responses - Array of response strings
      * @param {string} questionText - The question text
@@ -1038,6 +1107,10 @@ const Reports = () => {
 
     const selectedParticipantLabel = allUsers.find((participant) => participant.id === selectedUser)?.label || '';
     const showTeacherFilter = currentUser?.userStatus === UserType.TEACHER_TRAINER && isStudentType(selectedCategory);
+    const canShowSuggestions = Boolean(
+        currentUser?.aiBeaconApiKeyCreatedAt && selectedMonitoring?.courseAiBeaconId
+    );
+    const showResultsView = !canShowSuggestions || reportsView === 'results';
     const filteredDayAssessments = applyResultFilters(selectedDayAssessments, selectedUser, selectedTeacher);
     const availableCategories = getVisibleCategories().filter((type) =>
         (selectedDayAssessments || []).some((assessment) => assessment.type === type)
@@ -1098,6 +1171,25 @@ const Reports = () => {
                         </Select>
                     </FormControl>
 
+                    {canShowSuggestions && (
+                        <ToggleButtonGroup
+                            value={reportsView}
+                            exclusive
+                            size="small"
+                            onChange={(_, val) => { if (val !== null) setReportsView(val); }}
+                            sx={{ flexShrink: 0 }}
+                        >
+                            <ToggleButton value="results" sx={{ textTransform: 'none' }}>
+                                {getMessage("label_reports_view_results")}
+                            </ToggleButton>
+                            <ToggleButton value="suggestions" sx={{ textTransform: 'none' }}>
+                                {getMessage("label_reports_view_suggestions")}
+                            </ToggleButton>
+                        </ToggleButtonGroup>
+                    )}
+
+                    {showResultsView && (
+                    <>
                     <Box display="flex" alignItems="center" gap={1} sx={{ width: { xs: '100%', md: 'auto' }, minWidth: 0, flex: { md: '0 1 260px' } }}>
                         <FormControl variant="outlined" size="small" sx={{ flex: 1, minWidth: 0 }}>
                             <InputLabel id="day">{getMessage("label_choose_session")}</InputLabel>
@@ -1207,8 +1299,22 @@ const Reports = () => {
                             </Tooltip>
                         </Box>
                     </Box>
+                    </>
+                    )}
                 </Box>
 
+                {canShowSuggestions && reportsView === 'suggestions' ? (
+                    <CourseImprovementsPanel
+                        courseImprovement={courseImprovement}
+                        isLoading={isLoadingCourseImprovement}
+                        isGenerating={isRequestingCourseImprovements}
+                        canGenerate={Boolean(assessments && assessments.length > 0)}
+                        generateError={courseImprovementsError}
+                        getMessage={getMessage}
+                        onGenerate={handleRequestCourseImprovements}
+                    />
+                ) : (
+                    <>
                 {selectedDay && (
                     <Typography variant="body2" color="text.secondary">
                         {selectedUser
@@ -1296,6 +1402,8 @@ const Reports = () => {
                     <Typography variant="body1" color="text.secondary" sx={{ py: 6, textAlign: 'center' }}>
                         {getMessage("label_choose_monitoring")}
                     </Typography>
+                )}
+                    </>
                 )}
             </Box>
         </Box>

@@ -3483,6 +3483,141 @@
         "fuzzy": 0
     },
     {
+        "term": "label_ai_course_improvements",
+        "definition": "KI-Vorschläge zur Kursverbesserung",
+        "context": "label_ai_course_improvements",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_reports_view_results",
+        "definition": "Ergebnisse",
+        "context": "label_reports_view_results",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_reports_view_suggestions",
+        "definition": "Vorschläge",
+        "context": "label_reports_view_suggestions",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_empty",
+        "definition": "Noch keine Vorschläge. Erstellen Sie einen Bericht aus den Antworten dieses Monitorings.",
+        "context": "label_course_improvements_empty",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_generate",
+        "definition": "Vorschläge erstellen",
+        "context": "label_course_improvements_generate",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_refresh",
+        "definition": "Vorschläge aktualisieren",
+        "context": "label_course_improvements_refresh",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_last_generated",
+        "definition": "Zuletzt erstellt",
+        "context": "label_course_improvements_last_generated",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_summary",
+        "definition": "Zusammenfassung",
+        "context": "label_course_improvements_summary",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_themes",
+        "definition": "Themen",
+        "context": "label_course_improvements_themes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_comprehension",
+        "definition": "Verständnis",
+        "context": "label_course_improvements_comprehension",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_graded_responses",
+        "definition": "Schriftliche Antworten",
+        "context": "label_course_improvements_graded_responses",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_scales",
+        "definition": "Skalen",
+        "context": "label_course_improvements_scales",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_prevalence",
+        "definition": "Häufigkeit",
+        "context": "label_course_improvements_prevalence",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_correct",
+        "definition": "Richtig",
+        "context": "label_course_improvements_correct",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_course_improvements_generate_error",
+        "definition": "Vorschläge konnten nicht erstellt werden. Bitte versuchen Sie es erneut.",
+        "context": "label_course_improvements_generate_error",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "label_maximum_password_characters_exceeded",
         "definition": "Das Passwort darf nicht länger als 255 Zeichen sein",
         "context": "label_maximum_password_characters_exceeded",

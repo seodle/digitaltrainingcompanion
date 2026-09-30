@@ -11,9 +11,14 @@ const {
   resolveLmsConnectionId,
   waitForCourseProcessingCompletion,
   generateQuestionsFromAiBeacon,
+  generateCourseImprovementsFromAiBeacon,
+  getLatestCourseImprovement,
 } = require("../services/aiBeacon.service");
 const { AiBeaconApiError } = require("../clients/aiBeacon.client");
-const { requireAssessmentOwner } = require("../middleware/authorization");
+const {
+  requireAssessmentOwner,
+  requireMonitoringOwnerOrRedeemer,
+} = require("../middleware/authorization");
 
 const AI_BEACON_OUTPUT_LANGUAGES = new Set(["de", "fr", "it", "en", "auto"]);
 const AI_BEACON_QUESTION_CATEGORY_BY_LEARNING_TYPE = {
@@ -73,6 +78,70 @@ router.post(
       }
       return res.status(500).json({
         error: error.message || "Failed to generate questions",
+      });
+    }
+  }
+);
+
+/**
+ * Sends all responses of a monitoring to AI Beacon, stores the mapped course improvement
+ * result, and returns the saved document.
+ */
+router.post(
+  "/monitorings/:monitoringId/course-improvements",
+  requireMonitoringOwnerOrRedeemer("monitoringId"),
+  async (req, res) => {
+    const requesterId = req.user && req.user._id;
+    const { monitoringId } = req.params;
+
+    try {
+      const courseImprovement = await generateCourseImprovementsFromAiBeacon({
+        userId: requesterId,
+        monitoringId,
+      });
+
+      return res.json({ courseImprovement });
+    } catch (error) {
+      if (error instanceof AiBeaconApiError) {
+        return res.status(
+          error.status >= 400 && error.status < 600 ? error.status : 500
+        ).json({
+          error: error.message || "AI Beacon request failed",
+          details: error.responseBody,
+        });
+      }
+      const isClientError =
+        error.message === "Monitoring is not linked to a synced course" ||
+        error.message === "Monitoring has no responses to analyze";
+      const isUpstreamError =
+        error.message === "AI Beacon did not return a course improvement analysis";
+      return res.status(isClientError ? 400 : isUpstreamError ? 502 : 500).json({
+        error: error.message || "Failed to generate course improvements",
+      });
+    }
+  }
+);
+
+/**
+ * Returns the latest stored course improvement for this monitoring and requester.
+ * `courseImprovement` is null when none exists yet.
+ */
+router.get(
+  "/monitorings/:monitoringId/course-improvements",
+  requireMonitoringOwnerOrRedeemer("monitoringId"),
+  async (req, res) => {
+    const requesterId = req.user && req.user._id;
+    const { monitoringId } = req.params;
+
+    try {
+      const courseImprovement = await getLatestCourseImprovement({
+        monitoringId,
+        requesterId,
+      });
+      return res.json({ courseImprovement });
+    } catch (error) {
+      return res.status(500).json({
+        error: error.message || "Failed to fetch course improvements",
       });
     }
   }
