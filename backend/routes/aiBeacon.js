@@ -14,8 +14,13 @@ const {
 } = require("../services/aiBeacon.service");
 const { AiBeaconApiError } = require("../clients/aiBeacon.client");
 const { requireAssessmentOwner } = require("../middleware/authorization");
+const Assessment = require("../models/assessmentModel");
 
 const AI_BEACON_OUTPUT_LANGUAGES = new Set(["de", "fr", "it", "en", "auto"]);
+const AI_BEACON_QUESTION_GENERATION_TYPES = new Set([
+  "Learning",
+  "Student learning outcomes",
+]);
 const AI_BEACON_QUESTION_CATEGORY_BY_LEARNING_TYPE = {
   knowledge: "knowledge",
   skill: "skill",
@@ -54,6 +59,19 @@ router.post(
     }
 
     try {
+      const assessment = await Assessment.findById(req.params.assessmentId).select(
+        "type"
+      );
+      if (!assessment) {
+        return res.status(404).json({ error: "Assessment not found" });
+      }
+      if (!AI_BEACON_QUESTION_GENERATION_TYPES.has(assessment.type)) {
+        return res.status(403).json({
+          error:
+            "Question generation is only available for Learning and Student learning outcomes assessments",
+        });
+      }
+
       const questions = await generateQuestionsFromAiBeacon({
         userId: requesterId,
         courseId,

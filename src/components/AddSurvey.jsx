@@ -61,7 +61,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
 
     const applyAiBeaconContext = ({ courseAiBeaconId: apiCourseAiBeaconId, courseSyncedAt }) => {
         const eligible =
-            assessmentType === AssessmentType.LEARNING &&
+            learningTypes.includes(assessmentType) &&
             !!currentUser?.aiBeaconApiKeyCreatedAt &&
             !!apiCourseAiBeaconId &&
             !!courseSyncedAt;
