@@ -1009,7 +1009,7 @@
     },
     {
         "term": "new_assessment_day",
-        "definition": "Sessione di preoccupazione n.",
+        "definition": "Riguarda la sessione n.",
         "context": "label for trainee characteristics",
         "term_plural": "",
         "reference": "",
