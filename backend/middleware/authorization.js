@@ -5,6 +5,8 @@ const Assessment = require('../models/assessmentModel');
 const Log = require('../models/logModel');
 const ApiKey = require('../models/apiKeysModel');
 const Response = require('../models/responseModel');
+const { LEARNING_ASSESSMENT_TYPES } = Assessment;
+const { UserType } = User;
 
 // Get user token
 const getUser = (req, res, next) => {
@@ -43,7 +45,7 @@ const requireTeacherTrainer = (req, res, next) => {
         if (!requester || !requester._id) {
             return res.status(401).json({ error: 'Authentication required' });
         }
-        if (String(requester.userStatus) !== 'Teacher-trainer') {
+        if (String(requester.userStatus) !== UserType.TEACHER_TRAINER) {
             return res.status(403).json({ error: 'Forbidden' });
         }
         return next();
@@ -237,7 +239,7 @@ const requireAssessmentOwnerOrTrainerOnMonitoring = (paramName = 'assessmentId')
             if (String(assessment.userId) === String(requesterId)) {
                 return next();
             }
-            if (String(req.user.userStatus) !== 'Teacher-trainer') {
+            if (String(req.user.userStatus) !== UserType.TEACHER_TRAINER) {
                 return res.status(403).json({ error: 'Forbidden' });
             }
 
@@ -393,10 +395,7 @@ const requirePublicCoachFeedbackContext = async (req, res, next) => {
         if (String(assessment.monitoringId || '') !== monitoringId) {
             return res.status(403).json({ error: 'Forbidden' });
         }
-        if (
-            assessment.type === 'Learning' ||
-            assessment.type === 'Student learning outcomes'
-        ) {
+        if (LEARNING_ASSESSMENT_TYPES.includes(assessment.type)) {
             return res.status(403).json({
                 error: 'Coach feedback is not available for this assessment type',
             });

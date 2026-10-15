@@ -7,19 +7,8 @@ const axios = require('axios');
 const { BACKEND_URL } = require('../config');
 const { getUserWithId } = require('../services/userService');
 const groupByWorkshop = require('./groupByWorkshop');
+const { ASSESSMENT_TYPE_ORDER } = require('../models/assessmentModel');
 
-// Assessment type order mapping
-const ASSESSMENT_TYPE_ORDER = {
-    'Trainee characteristics': 1,
-    'Training characteristics': 2,
-    'Immediate reactions': 3,
-    'Learning': 4,
-    'Organizational conditions': 5,
-    'Behavioral changes': 6,
-    'Sustainability conditions': 7,
-    'Student characteristics': 8,
-    'Student learning outcomes': 9
-};
 
 async function createPdfReport(assessments, filePath, monitoringName, selectedDay, language, status, userId, sandbox, authHeader) {
     const doc = new PDFDocument();

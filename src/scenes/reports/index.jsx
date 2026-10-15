@@ -18,7 +18,7 @@ import { useMessageService } from '../../services/MessageService';
 import { useAuthUser } from '../../contexts/AuthUserContext';
 import { transformAssessments, formatLatestDate, localizeAssessmentType } from "../../utils/ObjectsUtils";
 import { prepareChartData, prepareCommentData } from "../../utils/ChartDataUtils";
-import { AssessmentType, UserType } from "../../utils/enums";
+import { ASSESSMENT_TYPES_BY_USER, TEACHER_ASSESSMENT_TYPES, UserType } from "../../utils/enums";
 import { BACKEND_URL } from "../../config";
 import { useLanguage } from '../../contexts/LanguageContext';
 import { groupQuestionsByWorkshop, getWorkshopDetailsById } from "../../utils/SurveyUtils";
@@ -26,17 +26,7 @@ import { getAssessmentTypeConfig } from "../../utils/assessmentTypeConfig";
 
 const ANONYMOUS_PARTICIPANT = '__anonymous__';
 
-const CATEGORY_ORDER = [
-    AssessmentType.TRAINEE_CHARACTERISTICS,
-    AssessmentType.TRAINING_CHARACTERISTICS,
-    AssessmentType.IMMEDIATE_REACTIONS,
-    AssessmentType.LEARNING,
-    AssessmentType.ORGANIZATIONAL_CONDITIONS,
-    AssessmentType.BEHAVIORAL_CHANGES,
-    AssessmentType.SUSTAINABILITY_CONDITIONS,
-    AssessmentType.STUDENT_CHARACTERISTICS,
-    AssessmentType.STUDENT_LEARNING_OUTCOMES,
-];
+const CATEGORY_ORDER = ASSESSMENT_TYPES_BY_USER[UserType.TEACHER_TRAINER];
 
 const Reports = () => {
 
@@ -224,9 +214,7 @@ const Reports = () => {
         }
     }, [currentUser, monitorings]);
 
-    const isStudentType = (type) =>
-        type === AssessmentType.STUDENT_CHARACTERISTICS ||
-        type === AssessmentType.STUDENT_LEARNING_OUTCOMES;
+    const isStudentType = (type) => TEACHER_ASSESSMENT_TYPES.includes(type);
 
     const applyResultFilters = (assessmentsWithResponses, participantId, teacherId) => {
         return assessmentsWithResponses.map((item) => {
@@ -276,10 +264,6 @@ const Reports = () => {
 
     const buildParticipants = (assessmentsWithResponses) => {
         const participantsByName = new Map();
-        const studentTypes = [
-            AssessmentType.STUDENT_CHARACTERISTICS,
-            AssessmentType.STUDENT_LEARNING_OUTCOMES,
-        ];
 
         assessmentsWithResponses.forEach((assessment) => {
             (assessment.responses || []).forEach((response) => {
@@ -292,7 +276,7 @@ const Reports = () => {
                     return;
                 }
 
-                if (!studentTypes.includes(assessment.type)) {
+                if (!isStudentType(assessment.type)) {
                     participantsByName.set(ANONYMOUS_PARTICIPANT, {
                         id: ANONYMOUS_PARTICIPANT,
                         label: getMessage('label_anonymous'),
@@ -355,9 +339,9 @@ const Reports = () => {
        let filteredAssessments = assessments;
 
         // If the current user is a Teacher, filter assessments by type and user
-        if (currentUser?.userStatus === 'Teacher') {
+        if (currentUser?.userStatus === UserType.TEACHER) {
             filteredAssessments = filteredAssessments.filter(assessment =>
-                assessment.type === 'Student characteristics' || assessment.type === 'Student learning outcomes'
+                TEACHER_ASSESSMENT_TYPES.includes(assessment.type)
             );
         }
 

@@ -5,6 +5,8 @@ const MonitoringService = require('../services/monitoringService');
 const Assessment = require('../models/assessmentModel');
 const Monitoring = require('../models/monitoringModel');
 const User = require('../models/userModel');
+const { AssessmentType } = Assessment;
+const { UserType } = User;
 
 const userId = "67dd633041a25940eabca458"; // UPDATE this with yours
 const possibleResponses = ["Very Weak", "Weak", "Neutral", "Strong", "Very Strong"];
@@ -25,7 +27,7 @@ beforeAll(async () => {
             email: 'test.user@example.com',
             password: 'secret',
             termsAccepted: true,
-            userStatus: 'Teacher',
+            userStatus: UserType.TEACHER,
             isVerified: true
         },
         { upsert: true, new: true, setDefaultsOnInsert: true }
@@ -58,7 +60,7 @@ beforeAll(async () => {
         monitoringId: monitoring._id,
         name: 'Test Assessment',
         day: 1,
-        type: 'Type1',
+        type: AssessmentType.TRAINEE_CHARACTERISTICS,
         status: 'Draft',
         questions: [questionnaire]
     };
@@ -81,14 +83,36 @@ describe('Assessment Service', () => {
             monitoringId: monitoring._id,
             name: 'Test Assessment 2',
             day: 1,
-            type: 'Type1',
+            type: AssessmentType.TRAINEE_CHARACTERISTICS,
             status: 'Draft',
         };
 
-        const createdAssessment = await AssessmentService.createAssessment(assessmentData);
+        const createdAssessment = await AssessmentService.createAssessment(assessmentData, { userStatus: UserType.TEACHER_TRAINER });
 
         expect(createdAssessment).toBeDefined();
         expect(createdAssessment.name).toEqual(assessmentData.name);
+    });
+
+    test('createAssessment rejects assessment types not allowed for the user status', async () => {
+        const assessmentData = {
+            monitoringId: monitoring._id,
+            name: 'Forbidden Assessment',
+            day: 1,
+            type: AssessmentType.TRAINEE_CHARACTERISTICS,
+            status: 'Draft',
+        };
+
+        await expect(
+            AssessmentService.createAssessment(assessmentData, { userStatus: UserType.TEACHER })
+        ).rejects.toBeInstanceOf(AssessmentService.ForbiddenAssessmentTypeError);
+    });
+
+    test('createAssessment allows Immediate reactions for Teachers', async () => {
+        const created = await AssessmentService.createAssessment(
+            { monitoringId: monitoring._id, name: 'Teacher IR', day: 1, type: AssessmentType.IMMEDIATE_REACTIONS, status: 'Draft' },
+            { userStatus: UserType.TEACHER }
+        );
+        expect(created.type).toEqual(AssessmentType.IMMEDIATE_REACTIONS);
     });
 
     // Test for fetching an assessment by ID

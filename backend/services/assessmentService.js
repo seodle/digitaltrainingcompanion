@@ -1,6 +1,19 @@
 const Assessment = require('../models/assessmentModel');
 const Monitoring = require('../models/monitoringModel');
 const mongoose = require('mongoose');
+const { ASSESSMENT_TYPES_BY_USER_TYPE, LEARNING_ASSESSMENT_TYPES } = Assessment;
+const { UserType } = require('../models/userModel');
+
+/** Whether a user with the given role may create/access assessments of the given type */
+const isAssessmentTypeAllowed = (type, userStatus) =>
+    (ASSESSMENT_TYPES_BY_USER_TYPE[String(userStatus)] || []).includes(type);
+
+class ForbiddenAssessmentTypeError extends Error {
+    constructor(type, userStatus) {
+        super(`Assessment type "${type}" is not allowed for user status "${userStatus}"`);
+        this.name = 'ForbiddenAssessmentTypeError';
+    }
+}
 
 /** Allowed one-way status transitions: Draft → Open → Close */
 const ALLOWED_STATUS_TRANSITIONS = {
@@ -17,7 +30,12 @@ const ALLOWED_STATUS_TRANSITIONS = {
  * @return {Promise<Object>} A promise that resolves to an object containing the ID of the newly created assessment.
  * @throws {Error} Throws an error if the monitoring document is not found or if there is an error saving the updates to the database.
  */
-const createAssessment = async (assessmentData, { requesterId } = {}) => {
+const createAssessment = async (assessmentData, { requesterId, userStatus } = {}) => {
+
+    // The requester's role must be allowed to create this assessment type
+    if (!isAssessmentTypeAllowed(assessmentData.type, userStatus)) {
+        throw new ForbiddenAssessmentTypeError(assessmentData.type, userStatus);
+    }
 
     try {
         // Compute next position on the server to avoid relying on client-side counts
@@ -252,10 +270,10 @@ const getAssessmentsByMonitoringId = async (monitoringId, assessmentType) => {
  */
 const copyAssessmentsByMonitoringId = async (monitoringId, newMonitoringId, requesterId, userStatus) => {
     try {
-        // Build filter: if requester is a Teacher, restrict to student-related assessment types
+        // Build filter: if requester is a Teacher, restrict to the assessment types Teachers have access to
         const filter = { monitoringId: monitoringId };
-        if (String(userStatus) === 'Teacher') {
-            filter.type = { $in: ['Student characteristics', 'Student learning outcomes'] };
+        if (String(userStatus) === UserType.TEACHER) {
+            filter.type = { $in: ASSESSMENT_TYPES_BY_USER_TYPE[UserType.TEACHER] };
         }
 
         // Retrieve all assessments associated with the original monitoringId (optionally filtered)
@@ -421,8 +439,7 @@ const fetchSurveyData = async (currentAssessmentServerId, sandbox) => {
 
         const coachFeedbackEnabled =
             !!courseAiBeaconId &&
-            assessment.type !== 'Learning' &&
-            assessment.type !== 'Student learning outcomes';
+            !LEARNING_ASSESSMENT_TYPES.includes(assessment.type);
 
         // If assessment is found, return the survey and additional details
         return {
@@ -448,6 +465,7 @@ const fetchSurveyData = async (currentAssessmentServerId, sandbox) => {
 
 module.exports = {
     createAssessment,
+    ForbiddenAssessmentTypeError,
     deleteAssessment,
     updateAssessmentSurvey,
     updateAssessment,

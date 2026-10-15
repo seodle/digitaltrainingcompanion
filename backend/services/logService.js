@@ -1,6 +1,7 @@
 const Log = require("../models/logModel");
 const Monitoring = require("../models/monitoringModel");
 const User = require("../models/userModel");
+const { UserType } = User;
 const { sendMail, FRONTEND_URL, t } = require("./emailService");
 const { buildHelpRequestHtml, buildTrainerContactHtml } = require("../utils/emailTemplates");
 
@@ -35,11 +36,11 @@ const getMonitoringAccess = async (monitoringId, requesterId) => {
         isFollower = Array.isArray(requester?.sharingCodeRedeemed)
             && requester.sharingCodeRedeemed.includes(monitoring.sharingCode);
     }
-    const isTrainer = isOwner || String(requester?.userStatus) === "Teacher-trainer";
+    const isTrainer = isOwner || String(requester?.userStatus) === UserType.TEACHER_TRAINER;
     const trainerIds = [String(monitoring.userId)];
     if (monitoring.sharingCode) {
         const trainers = await User.find(
-            { sharingCodeRedeemed: monitoring.sharingCode, userStatus: "Teacher-trainer" },
+            { sharingCodeRedeemed: monitoring.sharingCode, userStatus: UserType.TEACHER_TRAINER },
             "_id"
         ).lean();
         trainers.forEach((user) => trainerIds.push(String(user._id)));
@@ -377,7 +378,7 @@ const deleteLog = async (logId, userId) => {
 };
 
 const requestHelp = async (logId, requesterId, userStatus) => {
-    if (String(userStatus) !== "Teacher") {
+    if (String(userStatus) !== UserType.TEACHER) {
         throw httpError(403, "Only teachers can request help");
     }
 

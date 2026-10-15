@@ -9,6 +9,8 @@ const Monitoring = require('../models/monitoringModel');
 const Assessment = require('../models/assessmentModel');
 const Response = require("../models/responseModel");
 const User = require('../models/userModel');
+const { UserType } = User;
+const { STUDENT_ASSESSMENT_TYPES } = Assessment;
 
 // parameters
 const userId = "67dd633041a25940eabca458"; // UPDATE this with yours
@@ -51,10 +53,10 @@ const createAssessmentAndReponsesForType = async (assessmentType, monitoringId) 
         name: 'Test Assessment',
         day: 1,
         type: assessmentType,
-        status: 'Open',
+        status: 'Draft',
         position: 1,
     };
-    const assessment = await AssessmentService.createAssessment(assessmentData);
+    const assessment = await AssessmentService.createAssessment(assessmentData, { userStatus: UserType.TEACHER_TRAINER });
 
     assessments.push(assessment);
 
@@ -71,7 +73,9 @@ const createAssessmentAndReponsesForType = async (assessmentType, monitoringId) 
         response: [],
     };
 
+    // questions can only be edited in Draft status, so open the assessment afterwards
     await updateAssessmentSurvey(assessment._id, [questionnaire]);
+    await AssessmentService.updateAssessment(assessment._id, { status: 'Open' });
 
 
     // add different answers
@@ -108,7 +112,7 @@ beforeAll(async () => {
         email: 'trainer@example.com',
         password: 'secret',
         termsAccepted: true,
-        userStatus: 'Teacher-trainer',
+        userStatus: UserType.TEACHER_TRAINER,
         isVerified: true
     });
 
@@ -165,9 +169,7 @@ describe('Create Reponses', () => {
                 expect(assessment.type).toBe(response.assessmentType);
                 expect(possibleResponses).toContain(responseChoice0[0]);
 
-                const isTeacherAssessmentType =
-                    assessment.type === 'Student characteristics' ||
-                    assessment.type === 'Student learning outcomes';
+                const isTeacherAssessmentType = STUDENT_ASSESSMENT_TYPES.includes(assessment.type);
                 if (isTeacherAssessmentType) {
                     expect(response.displayName).toBeUndefined();
                 } else {
