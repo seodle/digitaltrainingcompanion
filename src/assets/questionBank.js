@@ -142,7 +142,7 @@ const questionBank = {
       question: "Comment trouvez-vous la progression de vos élèves avec les nouveaux matériaux ?",
       shortName: "Progression des Élèves",
       questionType: "radio-ordered",
-      options: ["Significativement diminuée", "Légèrement diminuée", "Restée la même", "Légèrement augmentée", "Modérément augmentée", "Significativement augmentée"]
+      options: ["Significativement diminuée", "Modérément diminuée", "Légèrement diminuée", "Restée la même", "Légèrement augmentée", "Modérément augmentée", "Significativement augmentée"]
     },
     '24': {
       question: "Comment évalueriez-vous votre sentiment d'auto-efficacité à utiliser les nouvelles ressources ?",
@@ -421,13 +421,13 @@ const questionBank = {
       question: "How much did you enjoy the training session?",
       shortName: "Perceived Enjoyment",
       questionType: "radio-ordered",
-      options: ["Did not enjoy at all", "Slightly enjoyed", "Quite enjoyed", "Neutral", "Very enjoyed", "Extremely enjoyed"]
+      options: ["Did not enjoy at all", "Slightly enjoyed", "Moderately enjoyed", "Neutral", "Quite enjoyed", "Very enjoyed", "Extremely enjoyed"]
     },
     '12': {
       question: "How useful did you find the training session?",
       shortName: "Perceived Usefulness",
       questionType: "radio-ordered",
-      options: ["Not useful at all", "Slightly useful", "Moderately useful", "Neutral", "Very useful", "Extremely useful"]
+      options: ["Not useful at all", "Slightly useful", "Moderately useful", "Neutral", "Quite useful", "Very useful", "Extremely useful"]
     },
     '13': {
       question: "How easy do you find integrating what you've seen into a classroom activity?",
@@ -439,7 +439,7 @@ const questionBank = {
       question: "How confident do you feel about integrating what you've seen into a classroom activity?",
       shortName: "Self-Efficacy",
       questionType: "radio-ordered",
-      options: ["Not confident at all", "Slightly confident", "Moderately confident", "Neutral", "Very confident", "Extremely confident"]
+      options: ["Not confident at all", "Slightly confident", "Moderately confident", "Neutral", "Quite confident", "Very confident", "Extremely confident"]
     },
     '15': {
       question: "To what extent do you intend to use what you've seen to conduct a classroom activity?",
@@ -496,7 +496,7 @@ const questionBank = {
       question: "How do you find your students progress with the new materials?",
       shortName: "Student Progress",
       questionType: "radio-ordered",
-      options: ["Decreased significantly", "Decreased slightly", "Remained the same", "Increased slightly", "Moderately increased", "Increased significantly"]
+      options: ["Decreased significantly", "Decreased moderately", "Decreased slightly", "Remained the same", "Increased slightly", "Increased moderately", "Increased significantly"]
     },
     '24': {
       question: "How would you rate your sense of self-efficacy in using the new resources?",
@@ -710,37 +710,37 @@ const questionBank = {
       question: "Wie motiviert sind Sie, an dieser Schulung teilzunehmen?",
       shortName: "Motivation",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht motiviert", "Nicht motiviert", "Eher nicht motiviert", "Weder motiviert noch unmotiviert", "Eher motiviert", " Motiviert", "Sehr motiviert"]
+      options: ["Überhaupt nicht motiviert", "Nicht motiviert", "Eher nicht motiviert", "Weder motiviert noch unmotiviert", "Eher motiviert", "Motiviert", "Sehr motiviert"]
     },
     '1': {
       question: "Wie vorteilhaft halten Sie Technologie für Ihre Arbeit?",
       shortName: "Vorteile der Technologie",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht vorteilhaft", "Nicht vorteilhaft", "Eher nicht vorteilhaft", "Weder vorteilhaft noch nachteilig", "Eher vorteilhaft", " Vorteilhaft", "Völlig vorteilhaft"]
+      options: ["Überhaupt nicht vorteilhaft", "Nicht vorteilhaft", "Eher nicht vorteilhaft", "Weder vorteilhaft noch nachteilig", "Eher vorteilhaft", "Vorteilhaft", "Völlig vorteilhaft"]
     },
     '2': {
       question: "Wie beeinflussen die Meinungen anderer Ihre Entscheidung, an dieser Schulung teilzunehmen?",
       shortName: "Einfluss von Kollegen",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht beeinflusst", "Nicht beeinflusst", "Eher nicht beeinflusst", "Weder beeinflusst noch nicht beeinflusst", "Eher beeinflusst", " Beeinflusst", "Völlig beeinflusst"]
+      options: ["Überhaupt nicht beeinflusst", "Nicht beeinflusst", "Eher nicht beeinflusst", "Weder beeinflusst noch nicht beeinflusst", "Eher beeinflusst", "Beeinflusst", "Völlig beeinflusst"]
     },
     '3': {
       question: "Inwieweit war Ihre Anmeldung zu dieser Schulung eine persönliche Wahl?",
       shortName: "Persönliche Wahl",
       questionType: "radio-ordered",
-      options: ["Vollständig? eine Verpflichtung", "Hauptsächlich/Vorwiegend? eine Verpflichtung", "Eher eine Verpflichtung", "Weder eine persönliche Wahl noch eine Verpflichtung", "Eher eine persönliche Wahl", "Hauptsächlich/Vorwiegend eine persönliche Wahl", "Vollständig eine persönliche Wahl"]
+      options: ["Vollständig eine Verpflichtung", "Hauptsächlich eine Verpflichtung", "Eher eine Verpflichtung", "Weder eine persönliche Wahl noch eine Verpflichtung", "Eher eine persönliche Wahl", "Hauptsächlich eine persönliche Wahl", "Vollständig eine persönliche Wahl"]
     },
     '4': {
       question: "Inwieweit fühlen Sie sich in der Lage, IT-Technologien zu nutzen, um Ihre Aufgaben zu erledigen?",
       shortName: "Technologievertrauen",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht in der Lage", "Nicht in der Lage", "Eher nicht in der Lage", "Weder in der Lage noch unfähig", "Eher in der Lage", " In der Lage", "Vollkommen in der Lage"]
+      options: ["Überhaupt nicht in der Lage", "Nicht in der Lage", "Eher nicht in der Lage", "Weder in der Lage noch unfähig", "Eher in der Lage", "In der Lage", "Vollkommen in der Lage"]
     },
     '5': {
       question: "Wie bewerten Sie die Fähigkeit des Trainers, die Teilnehmer zu engagieren?",
       shortName: "Engagement",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht engagierend", "Nicht engagierend", "Eher nicht engagierend", "Neutral", "Ziemlich engagierend", " Engagierend", "Immer engagierend"]
+      options: ["Überhaupt nicht engagierend", "Nicht engagierend", "Eher nicht engagierend", "Neutral", "Ziemlich engagierend", "Engagierend", "Immer engagierend"]
     },
     '6': {
       question: "Wie bewerten Sie das Zeitmanagement des Trainers?",
@@ -752,19 +752,19 @@ const questionBank = {
       question: "Wie relevant sind die Lehrmethoden des Trainers?",
       shortName: "Lehrmethoden",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht relevant", "Nicht relevant", "Eher nicht relevant", "Neutral", "Eher relevant", " Relevant", "Vollkommen relevant"]
+      options: ["Überhaupt nicht relevant", "Nicht relevant", "Eher nicht relevant", "Neutral", "Eher relevant", "Relevant", "Vollkommen relevant"]
     },
     '8': {
       question: "Wie bewerten Sie die Relevanz  der Lernumgebung? «Wie angemessen ist die Lernumgebung?»",
       shortName: "Umgebung",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht relevant", "Nicht relevant", "Eher nicht relevant", "Neutral", "Ziemlich relevant", " Relevant", "Äußerst relevant"]
+      options: ["Überhaupt nicht relevant", "Nicht relevant", "Eher nicht relevant", "Neutral", "Ziemlich relevant", "Relevant", "Äußerst relevant"]
     },
     '9': {
       question: "Wie bewerten Sie die Relevanz der verwendeten Lehrmittel?",
       shortName: "Werkzeugtauglichkeit",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht relevant", "Nicht relevant", "Eher nicht relevant", "Neutral", "Ziemlich relevant", " Relevant", "Äußerst relevant"]
+      options: ["Überhaupt nicht relevant", "Nicht relevant", "Eher nicht relevant", "Neutral", "Ziemlich relevant", "Relevant", "Äußerst relevant"]
     },
     '10': {
       question: "Wie bewerten Sie die Fähigkeit des Trainers, seine Lehrmethoden an das Publikum anzupassen?",
@@ -779,16 +779,16 @@ const questionBank = {
       options: ["Überhaupt nicht gefallen", "Nicht gefallen", "Eher nicht gefallen", "Neutral", "Eher gefallen", "Gefallen", "Äußerst gefallen"]
     },
     '12': {
-      question: "Wie /hilfreich fanden Sie die Schulungssitzung?",
+      question: "Wie hilfreich fanden Sie die Schulungssitzung?",
       shortName: "Nützlichkeit",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht hilfreich", "Nicht hilfreich", "Eher nicht hilfreich", "Neutral", " Eher hilfreich", "Hilfreich", "Äußerst hilfreich"]
+      options: ["Überhaupt nicht hilfreich", "Nicht hilfreich", "Eher nicht hilfreich", "Neutral", "Eher hilfreich", "Hilfreich", "Äußerst hilfreich"]
     },
     '13': {
       question: "Wie einfach fällt es Ihnen, das Gesehene in eine Aktivität im Unterricht einzubauen?",
       shortName: "Benutzerfreundlichkeit",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht einfach", "Nicht einfach ", "Eher nicht einfach", "Neutral", "Eher einfach", " Einfach", "Sehr einfach"]
+      options: ["Überhaupt nicht einfach", "Nicht einfach", "Eher nicht einfach", "Neutral", "Eher einfach", "Einfach", "Sehr einfach"]
     },
     '14': {
       question: "Wie zuversichtlich fühlen Sie sich, das Gesehene in eine Klassenaktivität zu integrieren?",
@@ -842,19 +842,19 @@ const questionBank = {
       question: "Wie sark ist das eingeführte Material mit Ihrer bisherigen Unterrichtspraxis kompatibel?",
       shortName: "Kompatibilität",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht kompatibel", "Nicht kompatibel", "Eher kompatibel", "Neutral", "Eher kompatibel", " Kompatibel", "Vollkommen kompatibel"]
+      options: ["Überhaupt nicht kompatibel", "Nicht kompatibel", "Eher nicht kompatibel", "Neutral", "Eher kompatibel", "Kompatibel", "Vollkommen kompatibel"]
     },
     '23': {
       question: "Wie beurteilen Sie den Fortschritt Ihrer Schüler mit den neuen Materialien?",
       shortName: "Schülerfortschritt",
       questionType: "radio-ordered",
-      options: ["Deutlich abgenommen", "Leicht abgenommen", "Gleich geblieben", "Leicht zugenommen", "Mäßig/moderat zugenommen", "Deutlich zugenommen"]
+      options: ["Deutlich abgenommen", "Mäßig abgenommen", "Leicht abgenommen", "Gleich geblieben", "Leicht zugenommen", "Mäßig zugenommen", "Deutlich zugenommen"]
     },
     '24': {
       question: "Wie würden Sie Ihr Selbstwirksamkeitserleben bei der Nutzung der neuen Ressourcen bewerten?",
       shortName: "Selbstwirksamkeit",
       questionType: "radio-ordered",
-      options: ["Überhaupt nicht zuversichtlich", "Nicht zuversichtlich", "Eher nicht zuversichtlich", "Neutral", "Eher zuversichtlich", " Zuversichtlich", "Äußerst zuversichtlich"]
+      options: ["Überhaupt nicht zuversichtlich", "Nicht zuversichtlich", "Eher nicht zuversichtlich", "Neutral", "Eher zuversichtlich", "Zuversichtlich", "Äußerst zuversichtlich"]
     },
     '25': {
       question: "Wie geistig anspruchsvoll finden Sie die Umsetzung der neuen Ressourcen?",
@@ -908,7 +908,7 @@ const questionBank = {
       question: "In welcher/n Schulstufe(n) unterrichten Sie derzeit?",
       shortName: "Unterrichtsstufen",
       questionType: "checkbox",
-      options: ["Kindergarten", "Grundschule (1.-3. Klasse)", "Grundschule (4.-5. Klasse)", "Mittelstufe ", "Gymnasium", "Universität"]
+      options: ["Kindergarten", "Grundschule (1.-3. Klasse)", "Grundschule (4.-5. Klasse)", "Mittelstufe", "Gymnasium", "Universität"]
     },
     '34': {
       question: "Inwieweit hatten Sie die Möglichkeit, die Fortbildungsinhalte umzusetzen?",
@@ -1084,7 +1084,7 @@ const questionBank = {
       question: "¿Hasta qué punto te sientes capaz de utilizar tecnologías digitales para realizar tus tareas?",
       shortName: "Confianza Tecnológica",
       questionType: "radio-ordered",
-      options: ["Nada capaz", "Muy poco capaz", "Poco incapaz", "Ni capaz ni incapaz", "Bastante capaz", "Capaz", "Totalmente capaz"]
+      options: ["Nada capaz", "Muy poco capaz", "Poco capaz", "Ni capaz ni incapaz", "Bastante capaz", "Capaz", "Totalmente capaz"]
     },
 
     '5': {
@@ -1103,19 +1103,19 @@ const questionBank = {
       question: "¿Cómo evaluarías la pertinencia de los métodos de enseñanza de la persona formadora/docente?",
       shortName: "Métodos de enseñanza",
       questionType: "radio-ordered",
-      options: ["Nada pertinente", "Muy pertinente", "Poco pertinente", "Medianamente pertinente", "Más bien pertinente", "Pertinente", "Totalmente pertinente"]
+      options: ["Nada pertinente", "Muy poco pertinente", "Poco pertinente", "Medianamente pertinente", "Más bien pertinente", "Pertinente", "Totalmente pertinente"]
     },
     '8': {
       question: "¿Cómo evaluarías la pertinencia del entorno de aprendizaje? ​",
       shortName: "Entorno",
       questionType: "radio-ordered",
-      options: ["Nada pertinente", "Muy pertinente", "Poco pertinente", "Medianamente pertinente", "Más bien pertinente", "Pertinente", "Totalmente pertinente"]
+      options: ["Nada pertinente", "Muy poco pertinente", "Poco pertinente", "Medianamente pertinente", "Más bien pertinente", "Pertinente", "Totalmente pertinente"]
     },
     '9': {
       question: "¿Cómo evaluarías la pertinencia de las herramientas pedagógicas utilizadas?",
       shortName: "Pertinencia de las herramientas",
       questionType: "radio-ordered",
-      options: ["Nada pertinente", "Muy pertinente", "Poco pertinente", "Medianamente pertinente", "Más bien pertinente", "Pertinente", "Totalmente pertinente"]
+      options: ["Nada pertinente", "Muy poco pertinente", "Poco pertinente", "Medianamente pertinente", "Más bien pertinente", "Pertinente", "Totalmente pertinente"]
     },
     '10': {
       question: "¿Cómo evaluaría la capacidad la persona formadora/docente para adaptar sus métodos de enseñanza al público?",
@@ -1199,7 +1199,7 @@ const questionBank = {
       question: "¿Cómo percibes la progresión de tu alumnado con los nuevos materiales?",
       shortName: "Progresión del Alumnado",
       questionType: "radio-ordered",
-      options: ["Disminución significativa", "Disminución ligera", "Se mantiene igual", "Ligero aumento", "Aumento moderado", "Aumento significativo"]
+      options: ["Disminución significativa", "Disminución moderada", "Disminución ligera", "Se mantiene igual", "Ligero aumento", "Aumento moderado", "Aumento significativo"]
     },
     '24': {
       question: "¿Cómo evaluarías tu sensación de autoeficacia al utilizar los nuevos recursos?",
@@ -1479,13 +1479,13 @@ const questionBank = {
       question: "Quanto ti è piaciuta la sessione di formazione?",
       shortName: "Grado di Godimento",
       questionType: "radio-ordered",
-      options: ["Per niente piacevole", "Leggermente piacevole", "Abbastanza piacevole", "Neutrale", "Molto piacevole", "Estremamente piacevole"]
+      options: ["Per niente piacevole", "Leggermente piacevole", "Moderatamente piacevole", "Neutrale", "Abbastanza piacevole", "Molto piacevole", "Estremamente piacevole"]
     },
     '12': {
       question: "Quanto hai trovato utile la sessione di formazione?",
       shortName: "Utilità Percepita",
       questionType: "radio-ordered",
-      options: ["Per niente utile", "Leggermente utile", "Moderatamente utile", "Neutrale", "Molto utile", "Estremamente utile"]
+      options: ["Per niente utile", "Leggermente utile", "Moderatamente utile", "Neutrale", "Abbastanza utile", "Molto utile", "Estremamente utile"]
     },
     '13': {
       question: "Quanto trovi facile integrare ciò che hai visto in un'attività in classe?",
@@ -1497,7 +1497,7 @@ const questionBank = {
       question: "Quanto ti senti sicuro/a nell'integrare ciò che hai visto in un'attività in classe?",
       shortName: "Autoefficacia",
       questionType: "radio-ordered",
-      options: ["Per niente sicuro/a", "Leggermente sicuro/a", "Moderatamente sicuro/a", "Neutrale", "Molto sicuro/a", "Estremamente sicuro/a"]
+      options: ["Per niente sicuro/a", "Leggermente sicuro/a", "Moderatamente sicuro/a", "Neutrale", "Abbastanza sicuro/a", "Molto sicuro/a", "Estremamente sicuro/a"]
     },
     '15': {
       question: "In che misura intendi utilizzare ciò che hai visto per condurre un'attività in classe?",
@@ -1551,7 +1551,7 @@ const questionBank = {
       question: "Come trovi i progressi dei tuoi studenti con i nuovi materiali?",
       shortName: "Progresso degli Studenti",
       questionType: "radio-ordered",
-      options: ["Diminuito significativamente", "Diminuito leggermente", "Rimasto uguale", "Aumentato leggermente", "Moderatamente aumentato", "Aumentato significativamente"]
+      options: ["Diminuito significativamente", "Diminuito moderatamente", "Diminuito leggermente", "Rimasto uguale", "Aumentato leggermente", "Aumentato moderatamente", "Aumentato significativamente"]
     },
     '24': {
       question: "Come valuteresti il tuo senso di autoefficacia nell'utilizzare le nuove risorse?",
