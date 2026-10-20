@@ -40,7 +40,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
     const [activity, setActivity] = useState(''); 
 
     const { getMessage } = useMessageService();
-    const { languageCode } = useLanguage();
+    const { languageCode, languageChangeGuardRef } = useLanguage();
     const { currentUser } = useAuthUser();
 
     const [aiBeaconEligible, setAiBeaconEligible] = useState(false);
@@ -74,6 +74,14 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => window.removeEventListener('beforeunload', handleBeforeUnload);
     }, [hasUnsavedChanges]);
+
+    // Let the language selector ask for confirmation, since a language change reloads the questions
+    const hasUnsavedChangesRef = useRef(hasUnsavedChanges);
+    hasUnsavedChangesRef.current = hasUnsavedChanges;
+    useEffect(() => {
+        languageChangeGuardRef.current = () => hasUnsavedChangesRef.current;
+        return () => { languageChangeGuardRef.current = null; };
+    }, [languageChangeGuardRef]);
 
     // Block in-app navigation (sidebar, back, URL change) when there are unsaved changes
     const blocker = useBlocker(

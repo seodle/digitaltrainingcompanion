@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import { useAuthUser } from './AuthUserContext';
@@ -15,6 +15,8 @@ const readStoredLanguage = () => {
 export const LanguageProvider = ({ children }) => {
     const [languageCode, setLanguageCodeState] = useState(readStoredLanguage);
     const { currentUser, isAuthenticated } = useAuthUser();
+    // Pages with unsaved work register a function returning true while a language change would lose it
+    const languageChangeGuardRef = useRef(null);
 
     useEffect(() => {
         if (currentUser?.language && SUPPORTED.includes(currentUser.language) && !localStorage.getItem(STORAGE_KEY)) {
@@ -41,7 +43,7 @@ export const LanguageProvider = ({ children }) => {
     };
 
     return (
-        <LanguageContext.Provider value={{ languageCode, setLanguageCode }}>
+        <LanguageContext.Provider value={{ languageCode, setLanguageCode, languageChangeGuardRef }}>
             {children}
         </LanguageContext.Provider>
     );
