@@ -280,7 +280,7 @@
     },
     {
         "term": "label_validate",
-        "definition": "Validare",
+        "definition": "Verifica",
         "context": "button to validate a form",
         "term_plural": "",
         "reference": "",
