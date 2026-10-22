@@ -8,6 +8,8 @@ import Topbar from "../global/Topbar";
 import YouTubeEmbed from "../../components/YouTubeEmbed";
 
 const TUTORIAL_VIDEO_ID = "rztaBmrzUzQ";
+// Written step-by-step tutorial is kept in the code but hidden; only the video is shown.
+const SHOW_TUTORIAL_TEXT = false;
 
 const Tutorial = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -301,81 +303,83 @@ const Tutorial = () => {
                 >
                     <YouTubeEmbed videoId={TUTORIAL_VIDEO_ID} title="Tutorial" />
 
-                    <Paper 
-                        elevation={2} 
-                        sx={{ 
-                            padding: isMobile ? '16px 20px 30px' : '20px', 
-                            paddingBottom: isMobile ? '30px' : '40px',  
-                            borderRadius: '10px',
-                            marginBottom: '20px' 
-                        }}
-                    >
-                        <Stepper
-                            activeStep={activeStep}
-                            alternativeLabel={!isMobile}
-                            orientation="horizontal"
-                            sx={{
-                                overflowX: 'auto',
-                                '& .MuiStepLabel-label, & .MuiStepLabel-labelContainer': {
-                                    display: { xs: 'none', sm: 'block' },
-                                },
-                                '& .MuiStepConnector-root': {
-                                    minWidth: { xs: 12, sm: 24 },
-                                },
+                    {SHOW_TUTORIAL_TEXT && (
+                        <Paper 
+                            elevation={2} 
+                            sx={{ 
+                                padding: isMobile ? '16px 20px 30px' : '20px', 
+                                paddingBottom: isMobile ? '30px' : '40px',  
+                                borderRadius: '10px',
+                                marginBottom: '20px' 
                             }}
                         >
-                            {tutorialConfig.steps.map((step, index) => (
-                                <Step key={index} active={activeStep === index} onClick={() => handleStepClick(index)}>
-                                    <StepLabel
-                                        sx={{
-                                            cursor: 'pointer',
-                                            '& .MuiStepIcon-root': {
-                                                color: activeStep === index ? '#F7941D' : '#D3D3D3',
-                                            }
-                                        }}
-                                    >
-                                        {step.title}
-                                    </StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
-
-                        <Box mt="20px">
-                            {renderStepContent(activeStep)}
-                        </Box>
-
-                        <Box mt="20px" display="flex" flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between">
-                            <Button
-                                disabled={activeStep === 0}
-                                onClick={handleBack}
-                                variant="contained"
-                                fullWidth={isMobile}
-                                sx={{ 
-                                    backgroundColor: '#F7941E',
-                                    borderRadius: '50px',
-                                    color: 'black',
-                                    '&:hover': { backgroundColor: '#D17A1D' },
-                                    mb: isMobile ? 2 : 0
+                            <Stepper
+                                activeStep={activeStep}
+                                alternativeLabel={!isMobile}
+                                orientation="horizontal"
+                                sx={{
+                                    overflowX: 'auto',
+                                    '& .MuiStepLabel-label, & .MuiStepLabel-labelContainer': {
+                                        display: { xs: 'none', sm: 'block' },
+                                    },
+                                    '& .MuiStepConnector-root': {
+                                        minWidth: { xs: 12, sm: 24 },
+                                    },
                                 }}
                             >
-                                {tutorialConfig.buttons.back}
-                            </Button>
+                                {tutorialConfig.steps.map((step, index) => (
+                                    <Step key={index} active={activeStep === index} onClick={() => handleStepClick(index)}>
+                                        <StepLabel
+                                            sx={{
+                                                cursor: 'pointer',
+                                                '& .MuiStepIcon-root': {
+                                                    color: activeStep === index ? '#F7941D' : '#D3D3D3',
+                                                }
+                                            }}
+                                        >
+                                            {step.title}
+                                        </StepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
 
-                            <Button
-                                onClick={activeStep === tutorialConfig.steps.length - 1 ? handleBack : handleNext}
-                                variant="contained"
-                                fullWidth={isMobile}
-                                sx={{ 
-                                    backgroundColor: '#F7941E',
-                                    borderRadius: '50px',
-                                    color: 'black',
-                                    '&:hover': { backgroundColor: '#D17A1D' }
-                                }}
-                            >
-                                {activeStep === tutorialConfig.steps.length - 1 ? tutorialConfig.buttons.startAgain : tutorialConfig.buttons.next}
-                            </Button>
-                        </Box>
-                    </Paper>
+                            <Box mt="20px">
+                                {renderStepContent(activeStep)}
+                            </Box>
+
+                            <Box mt="20px" display="flex" flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between">
+                                <Button
+                                    disabled={activeStep === 0}
+                                    onClick={handleBack}
+                                    variant="contained"
+                                    fullWidth={isMobile}
+                                    sx={{ 
+                                        backgroundColor: '#F7941E',
+                                        borderRadius: '50px',
+                                        color: 'black',
+                                        '&:hover': { backgroundColor: '#D17A1D' },
+                                        mb: isMobile ? 2 : 0
+                                    }}
+                                >
+                                    {tutorialConfig.buttons.back}
+                                </Button>
+
+                                <Button
+                                    onClick={activeStep === tutorialConfig.steps.length - 1 ? handleBack : handleNext}
+                                    variant="contained"
+                                    fullWidth={isMobile}
+                                    sx={{ 
+                                        backgroundColor: '#F7941E',
+                                        borderRadius: '50px',
+                                        color: 'black',
+                                        '&:hover': { backgroundColor: '#D17A1D' }
+                                    }}
+                                >
+                                    {activeStep === tutorialConfig.steps.length - 1 ? tutorialConfig.buttons.startAgain : tutorialConfig.buttons.next}
+                                </Button>
+                            </Box>
+                        </Paper>
+                    )}
                 </Box>
             </Box>
         </Box>
