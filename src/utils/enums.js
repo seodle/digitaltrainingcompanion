@@ -26,6 +26,39 @@ const UserType = {
     TEACHER_TRAINER: "Teacher-trainer",
 }
 
+// Assessment types each kind of user can create / access, in display order
+const ASSESSMENT_TYPES_BY_USER = {
+    [UserType.TEACHER_TRAINER]: [
+        AssessmentType.TRAINEE_CHARACTERISTICS,
+        AssessmentType.TRAINING_CHARACTERISTICS,
+        AssessmentType.IMMEDIATE_REACTIONS,
+        AssessmentType.LEARNING,
+        AssessmentType.ORGANIZATIONAL_CONDITIONS,
+        AssessmentType.BEHAVIORAL_CHANGES,
+        AssessmentType.SUSTAINABILITY_CONDITIONS,
+        AssessmentType.STUDENT_CHARACTERISTICS,
+        AssessmentType.STUDENT_LEARNING_OUTCOMES,
+    ],
+    [UserType.TEACHER]: [
+        AssessmentType.STUDENT_CHARACTERISTICS,
+        AssessmentType.IMMEDIATE_REACTIONS,
+        AssessmentType.STUDENT_LEARNING_OUTCOMES,
+    ],
+};
+
+const TEACHER_ASSESSMENT_TYPES = ASSESSMENT_TYPES_BY_USER[UserType.TEACHER];
+
+// Canonical display order of all assessment types (1-based)
+const ASSESSMENT_TYPE_ORDER = Object.fromEntries(
+    ASSESSMENT_TYPES_BY_USER[UserType.TEACHER_TRAINER].map((type, index) => [type, index + 1])
+);
+
+// Assessment types that evaluate learning (knowledge / skills / attitudes)
+const LEARNING_ASSESSMENT_TYPES = [
+    AssessmentType.LEARNING,
+    AssessmentType.STUDENT_LEARNING_OUTCOMES,
+];
+
 const CourseImprovementStatus = {
     PENDING: "pending",
     COMPLETED: "completed",
@@ -64,4 +97,4 @@ const LearningType = {
     ATTITUDE: "Attitude"
 }
 
-module.exports = {OptionTypes, AssessmentType, UserType, CourseImprovementStatus, ComprehensionKind, QuestionType, LogType, LearningType, AdoptionType};
+module.exports = {OptionTypes, AssessmentType, ASSESSMENT_TYPES_BY_USER, TEACHER_ASSESSMENT_TYPES, ASSESSMENT_TYPE_ORDER, LEARNING_ASSESSMENT_TYPES, UserType, CourseImprovementStatus, ComprehensionKind, QuestionType, LogType, LearningType, AdoptionType};

@@ -5,6 +5,9 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import Sidebar from "../global/Sidebar";
 import Topbar from "../global/Topbar";
+import YouTubeEmbed from "../../components/YouTubeEmbed";
+
+const TUTORIAL_VIDEO_ID = "rztaBmrzUzQ";
 
 const Tutorial = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -296,6 +299,8 @@ const Tutorial = () => {
                         }
                     }}
                 >
+                    <YouTubeEmbed videoId={TUTORIAL_VIDEO_ID} title="Tutorial" />
+
                     <Paper 
                         elevation={2} 
                         sx={{ 

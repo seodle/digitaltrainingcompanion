@@ -324,6 +324,24 @@
         "fuzzy": 0
     },
     {
+        "term": "message_unsaved_survey_language_warning",
+        "definition": "You have unsaved changes. If you change the language, your work will be lost.",
+        "context": "warning when changing language in create survey with unsaved changes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_change_language",
+        "definition": "Change language",
+        "context": "button to change language despite unsaved changes",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "label_cancel",
         "definition": "Cancel",
         "context": "button to cancel an action",
@@ -3864,6 +3882,15 @@
         "term": "label_enrich_feedback",
         "definition": "Enrich feedback",
         "context": "button to enrich open feedback with AI on complete survey",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
+        "term": "label_enrich_feedback_waiting",
+        "definition": "Enriching your feedback, this may take a few seconds…",
+        "context": "waiting message shown while AI Beacon enriches open feedback on complete survey",
         "term_plural": "",
         "reference": "",
         "comment": "",

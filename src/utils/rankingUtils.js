@@ -1,9 +1,7 @@
-import { AssessmentType, QuestionType } from './enums';
+import { QuestionType, TEACHER_ASSESSMENT_TYPES } from './enums';
 import { getChartChoiceColor } from '../components/styledComponents';
 
-const isStudentAssessmentType = (type) => (
-  type === AssessmentType.STUDENT_CHARACTERISTICS || type === AssessmentType.STUDENT_LEARNING_OUTCOMES
-);
+const isStudentAssessmentType = (type) => TEACHER_ASSESSMENT_TYPES.includes(type);
 
 const scoreAnswer = (item) => {
   const { questionType, choices, response, correctAnswer } = item;

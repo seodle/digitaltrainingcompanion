@@ -22,7 +22,7 @@ import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 
 // dependencies
-import { loadMonitoringAndAssessments } from "../../utils/ObjectsUtils";
+import { loadMonitoringAndAssessments, localizeAssessmentType } from "../../utils/ObjectsUtils";
 import Sidebar from "../../scenes/global/Sidebar";
 import Topbar from "../../scenes/global/Topbar";
 import Footer from "../../scenes/global/Footer";
@@ -37,7 +37,7 @@ import { FRONTEND_URL, BACKEND_URL } from "../../config";
 import { useMessageService } from '../../services/MessageService';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useAuthUser } from '../../contexts/AuthUserContext';
-import { AssessmentType, OptionTypes, UserType } from '../../utils/enums';
+import { ASSESSMENT_TYPES_BY_USER, OptionTypes, UserType } from '../../utils/enums';
 
 const MonitoringActionCard = ({ onCreate, onImport, getMessage }) => (
   <Card
@@ -934,90 +934,11 @@ const Dashboard = () => {
                 fullWidth
                 onChange={e => setNewAssessmentType(e.target.value)}
               >
-                {currentUser.userStatus === UserType.TEACHER_TRAINER
-                  ? [
-                      <MenuItem
-                        key="trainee"
-                        value={AssessmentType.TRAINEE_CHARACTERISTICS}
-                      >
-                        {getMessage(
-                          "label_assessment_type_trainee_characteristics"
-                        )}
-                      </MenuItem>,
-                      <MenuItem
-                        key="training"
-                        value={AssessmentType.TRAINING_CHARACTERISTICS}
-                      >
-                        {getMessage(
-                          "label_assessment_type_training_characteristics"
-                        )}
-                      </MenuItem>,
-                      <MenuItem
-                        key="immediate"
-                        value={AssessmentType.IMMEDIATE_REACTIONS}
-                      >
-                        {getMessage("label_assessment_type_immediate_reactions")}
-                      </MenuItem>,
-                      <MenuItem key="learning" value={AssessmentType.LEARNING}>
-                        {getMessage("label_assessment_type_learning")}
-                      </MenuItem>,
-                      <MenuItem
-                        key="organizational"
-                        value={AssessmentType.ORGANIZATIONAL_CONDITIONS}
-                      >
-                        {getMessage(
-                          "label_assessment_type_organizational_conditions"
-                        )}
-                      </MenuItem>,
-                      <MenuItem
-                        key="behavioral"
-                        value={AssessmentType.BEHAVIORAL_CHANGES}
-                      >
-                        {getMessage("label_assessment_type_behavioral_changes")}
-                      </MenuItem>,
-                      <MenuItem
-                        key="sustainability"
-                        value={AssessmentType.SUSTAINABILITY_CONDITIONS}
-                      >
-                        {getMessage(
-                          "label_assessment_type_sustainability_conditions"
-                        )}
-                      </MenuItem>,
-                      <MenuItem
-                        key="studentCharacteristics"
-                        value={AssessmentType.STUDENT_CHARACTERISTICS}
-                      >
-                        {getMessage(
-                          "label_assessment_type_student_characteristics"
-                        )}
-                      </MenuItem>,
-                      <MenuItem
-                        key="studentOutcomes"
-                        value={AssessmentType.STUDENT_LEARNING_OUTCOMES}
-                      >
-                        {getMessage(
-                          "label_assessment_type_student_learning_outcomes"
-                        )}
-                      </MenuItem>
-                    ]
-                  : [
-                      <MenuItem
-                        key="studentCharacteristics"
-                        value={AssessmentType.STUDENT_CHARACTERISTICS}
-                      >
-                        {getMessage(
-                          "label_assessment_type_student_characteristics"
-                        )}
-                      </MenuItem>,
-                      <MenuItem
-                        key="studentOutcomes"
-                        value={AssessmentType.STUDENT_LEARNING_OUTCOMES}
-                      >
-                        {getMessage(
-                          "label_assessment_type_student_learning_outcomes"
-                        )}
-                      </MenuItem>
-                    ]}
+                {(ASSESSMENT_TYPES_BY_USER[currentUser.userStatus] || ASSESSMENT_TYPES_BY_USER[UserType.TEACHER]).map((type) => (
+                  <MenuItem key={type} value={type}>
+                    {localizeAssessmentType(type, getMessage)}
+                  </MenuItem>
+                ))}
               </Select>
 
                <Box mb="20px" mt="20px">

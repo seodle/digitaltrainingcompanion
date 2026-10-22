@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useBlocker } from "react-router-dom";
 import { Formik, Form } from 'formik';
 import React, { useState, useEffect, useRef } from "react";
 
-import { AssessmentType, QuestionType } from '../utils/enums';
+import { QuestionType, LEARNING_ASSESSMENT_TYPES } from '../utils/enums';
 import AddLearningQuestions from "./AddLearningQuestions";
 import AddQuestion from "./AddQuestion";
 import AddWorkshop from "./AddWorkshop";
@@ -19,11 +19,6 @@ import { useAuthUser } from '../contexts/AuthUserContext';
 // for i18n
 import { useMessageService } from '../services/MessageService';
 
-// the assessment types of type "learning"
-const learningTypes = [
-    AssessmentType.LEARNING,
-    AssessmentType.STUDENT_LEARNING_OUTCOMES,
-];
 
 const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
     
@@ -45,7 +40,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
     const [activity, setActivity] = useState(''); 
 
     const { getMessage } = useMessageService();
-    const { languageCode } = useLanguage();
+    const { languageCode, languageChangeGuardRef } = useLanguage();
     const { currentUser } = useAuthUser();
 
     const [aiBeaconEligible, setAiBeaconEligible] = useState(false);
@@ -61,7 +56,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
 
     const applyAiBeaconContext = ({ courseAiBeaconId: apiCourseAiBeaconId, courseSyncedAt }) => {
         const eligible =
-            assessmentType === AssessmentType.LEARNING &&
+            LEARNING_ASSESSMENT_TYPES.includes(assessmentType) &&
             !!currentUser?.aiBeaconApiKeyCreatedAt &&
             !!apiCourseAiBeaconId &&
             !!courseSyncedAt;
@@ -79,6 +74,14 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => window.removeEventListener('beforeunload', handleBeforeUnload);
     }, [hasUnsavedChanges]);
+
+    // Let the language selector ask for confirmation, since a language change reloads the questions
+    const hasUnsavedChangesRef = useRef(hasUnsavedChanges);
+    hasUnsavedChangesRef.current = hasUnsavedChanges;
+    useEffect(() => {
+        languageChangeGuardRef.current = () => hasUnsavedChangesRef.current;
+        return () => { languageChangeGuardRef.current = null; };
+    }, [languageChangeGuardRef]);
 
     // Block in-app navigation (sidebar, back, URL change) when there are unsaved changes
     const blocker = useBlocker(
@@ -262,7 +265,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                 ...sectionDisplayProps 
             };
     
-            if (learningTypes.includes(assessmentType)) {
+            if (LEARNING_ASSESSMENT_TYPES.includes(assessmentType)) {
                 return (
                     <QuestionsListSectionLearning
                         key={workshopFromData ? workshopFromData._id : "default"}
@@ -315,7 +318,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                     matrixPosition: question.matrixId ? question.matrixPosition : undefined
                 };
 
-                if (learningTypes.includes(assessmentType)) {
+                if (LEARNING_ASSESSMENT_TYPES.includes(assessmentType)) {
                     return {
                         ...baseQuestionData,
                         correctAnswer: question.correctAnswer,
@@ -374,7 +377,7 @@ const AddSurvey = ({ currentAssessmentServerId, predifinedQuestionIds }) => {
                             {getMessage("label_create_new_question")}
                         </Typography>
 
-                        {(learningTypes.includes(assessmentType)) ? (
+                        {(LEARNING_ASSESSMENT_TYPES.includes(assessmentType)) ? (
                             <AddLearningQuestions
                                 setQuestions={setQuestions}
                                 questions={questions}

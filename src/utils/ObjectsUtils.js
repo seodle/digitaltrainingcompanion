@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-import { OptionTypes, AssessmentType, UserType, QuestionType } from '../utils/enums';
+import { OptionTypes, AssessmentType, TEACHER_ASSESSMENT_TYPES, UserType, QuestionType } from '../utils/enums';
 
 // Utility function to transform monitorings
 function transformMonitorings(monitorings, userId) {
@@ -108,11 +108,10 @@ const loadMonitoringAndAssessments = async (currentUser, setMonitorings, setAsse
           }
         });
 
-        // if the the monitoring is imported, just show the assessment from type student characteristics and student learning outcomes
+        // if the the monitoring is imported, just show the assessments of the types allowed for teachers
         if (monitoring.userId !== currentUser._id && currentUser.userStatus === UserType.TEACHER) {
 
-          const allowedTypes = [AssessmentType.STUDENT_CHARACTERISTICS, AssessmentType.STUDENT_LEARNING_OUTCOMES];
-          transformedAssessments = transformedAssessments.filter(item => allowedTypes.includes(item.type));
+          transformedAssessments = transformedAssessments.filter(item => TEACHER_ASSESSMENT_TYPES.includes(item.type));
         }
 
         // Spread transformed assessments into the main assessments array

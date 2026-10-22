@@ -331,6 +331,11 @@ const SurveyQuestion = ({
             >
               {getMessage('label_enrich_feedback')}
             </LoadingButton>
+            {enrichFeedbackLoading && (
+              <Typography variant="body2" color="text.secondary">
+                {getMessage('label_enrich_feedback_waiting')}
+              </Typography>
+            )}
             {enrichFeedbackError && (
               <Typography variant="body2" color="error">
                 {enrichFeedbackError}

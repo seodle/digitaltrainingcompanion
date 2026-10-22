@@ -584,7 +584,6 @@ const AddLearningQuestions = ({
                 >
                   <Typography
                     component="span"
-                    variant="body2"
                     color="text.secondary"
                     sx={{ whiteSpace: 'nowrap' }}
                   >
@@ -600,7 +599,6 @@ const AddLearningQuestions = ({
                     }}
                   >
                     <Select
-                      size="small"
                       value={aiBeaconOutputLanguage}
                       onChange={handleAiBeaconOutputLanguageChange}
                       disabled={!courseAiBeaconId || aiBeaconLanguageSaving || isLoading}
@@ -683,13 +681,12 @@ const AddLearningQuestions = ({
                     ) : null}
                   </Box>
                 </Box>
-                <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                <Typography sx={{ mb: 1 }}>
                   {getMessage('label_select_your_content')}
                 </Typography>
                 {!isLoadingMoodleCourseContents && moodleCourseContents.length > 0 ? (
                   <TextField
                     fullWidth
-                    size="small"
                     placeholder={getMessage('label_search_content')}
                     value={contentSearchQuery}
                     onChange={(e) => setContentSearchQuery(e.target.value)}
@@ -714,8 +711,8 @@ const AddLearningQuestions = ({
                 ) : filteredMoodleCourseContents.length === 0 ? (
                   <Typography color="text.secondary">{getMessage('label_no_content_matches_search')}</Typography>
                 ) : (
-                  <TableContainer component={Paper} variant="outlined" sx={{ mt: 1, maxHeight: 220 }}>
-                    <Table size="small" stickyHeader>
+                  <TableContainer component={Paper} variant="outlined" sx={{ mt: 1, maxHeight: 320 }}>
+                    <Table stickyHeader>
                       <TableBody>
                         {filteredMoodleCourseContents.map((content, index) => {
                           const contentId =
@@ -726,13 +723,12 @@ const AddLearningQuestions = ({
                             <TableRow key={String(contentId ?? index)}>
                               <TableCell padding="checkbox" sx={{ width: 48 }}>
                                 <Checkbox
-                                  size="small"
                                   checked={contentId != null && selectedMoodleContentIds.includes(contentId)}
                                   disabled={!contentId || isLoading}
                                   onChange={() => toggleMoodleContentSelected(contentId)}
                                 />
                               </TableCell>
-                              <TableCell>{content.name || '-'}</TableCell>
+                              <TableCell sx={{ typography: 'body1' }}>{content.name || '-'}</TableCell>
                             </TableRow>
                           );
                         })}

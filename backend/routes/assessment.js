@@ -6,7 +6,7 @@ const {
 } = require('../middleware/authorization');
 const Monitoring = require('../models/monitoringModel');
 
-const { createAssessment, updateAssessment, deleteAssessment, updateAssessmentSurvey, copyAssessmentsByMonitoringId, resequenceAssessments, getAssessmentsByMonitoringId } = require('../services/assessmentService');
+const { createAssessment, ForbiddenAssessmentTypeError, updateAssessment, deleteAssessment, updateAssessmentSurvey, copyAssessmentsByMonitoringId, resequenceAssessments, getAssessmentsByMonitoringId } = require('../services/assessmentService');
 
 
 const path = require('path');
@@ -23,12 +23,15 @@ require("dotenv").config();
 router.post("/", async (req, res) => {
   const assessmentData = req.body;
   const requesterId = req.user && req.user._id;
+  const userStatus = req.user && req.user.userStatus;
 
   try {
-    const result = await createAssessment(assessmentData, { requesterId });
+    const result = await createAssessment(assessmentData, { requesterId, userStatus });
     res.json(result);
   } catch (error) {
-    const statusCode = error.message === "Assessment not found" ? 404 : 500;
+    let statusCode = 500;
+    if (error instanceof ForbiddenAssessmentTypeError) statusCode = 403;
+    else if (error.message === "Assessment not found") statusCode = 404;
     res.status(statusCode).json({ error: error.message });
   }
 });
