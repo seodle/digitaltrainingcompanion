@@ -18,7 +18,7 @@ require('dotenv').config();
 const authenticateUser = async (email, password) => {
 
     try {
-        const user = await User.findOne({ email }).select("+password");
+        const user = await User.findByEmail(email).select("+password");
         if (!user) {
             return { status: 'error', message: 'Invalid email or password' };
         }
@@ -57,7 +57,7 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
         }
 
         // check if the email already exist
-        const existingUser = await User.findOne({ email: userData.email });
+        const existingUser = await User.findByEmail(userData.email);
         if (existingUser) {
             return { status: 409, message: "User with given email already exists" };
         }
@@ -76,7 +76,15 @@ const registerUser = async (userData, sendEmailForVerification = true) => {
             verificationToken,
             isVerified: false,
         });
-        await newUser.save();
+        try {
+            await newUser.save();
+        } catch (saveError) {
+            // Duplicate key: a concurrent request registered the same email after our check above
+            if (saveError.code === 11000) {
+                return { status: 409, message: "User with given email already exists" };
+            }
+            throw saveError;
+        }
 
         if (sendEmailForVerification) {
             const lang = userData.language || "en";
@@ -109,7 +117,7 @@ const initiatePasswordReset = async (email, language) => {
 
     try {
         // get the user associated to the given email address
-        const user = await User.findOne({ email }).select("+passwordResetToken +passwordResetExpires");
+        const user = await User.findByEmail(email).select("+passwordResetToken +passwordResetExpires");
 
         if (!user) {
             return { status: 'error', message: "No user registered with this email" };

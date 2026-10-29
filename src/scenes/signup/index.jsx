@@ -188,6 +188,7 @@ const LegalTermsContent = React.memo(function LegalTermsContent({ onScrollToBott
 const Signup = () => {
   const [message, setMessage] = useState(null);
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
@@ -282,6 +283,8 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
     try {
       // Validate form data using memoized schema
       await signupSchema.validate(data, { abortEarly: false });
@@ -304,6 +307,8 @@ const Signup = () => {
       } else {
         setError(getMessage("signup_error"));
       }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -532,7 +537,7 @@ const Signup = () => {
               </Box>
 
               <Box mt={5} display="flex" justifyContent="center">
-                <Button type="submit" variant="contained" sx={{ ...buttonStyle, width: { xs: '100%', sm: '40%' }, mr: { xs: 0, sm: 2 } }}>
+                <Button type="submit" variant="contained" disabled={submitting} sx={{ ...buttonStyle, width: { xs: '100%', sm: '40%' }, mr: { xs: 0, sm: 2 } }}>
                   <Typography variant="h5">{getMessage('label_next')}</Typography>
                 </Button>
               </Box>

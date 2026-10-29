@@ -46,7 +46,9 @@ function decrypt(text) {
 const userSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    email: { type: String, required: true },
+    // Uniqueness is enforced case-insensitively by the collation index below, so existing documents
+    // keep their stored casing. Always look users up with `User.findByEmail`.
+    email: { type: String, required: true, trim: true },
     password: { type: String, required: true, select: false },
     sandbox: { type: Boolean, default: false },
     userStatus: { type: String },
@@ -141,6 +143,14 @@ userSchema.methods.generateAuthToken = function () {
         }
     );
     return token;
+};
+
+// Case-insensitive collation: "John@x.com" and "john@x.com" are the same email.
+const EMAIL_COLLATION = { locale: "en", strength: 2 };
+userSchema.index({ email: 1 }, { unique: true, collation: EMAIL_COLLATION });
+
+userSchema.statics.findByEmail = function (email) {
+    return this.findOne({ email }).collation(EMAIL_COLLATION);
 };
 
 const model = mongoose.model("Users", userSchema);
