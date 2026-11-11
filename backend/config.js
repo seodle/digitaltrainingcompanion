@@ -15,6 +15,8 @@ const BACKEND_URL = process.env.NODE_ENV === "production"
 
 console.log("BACKEND URL NODE_ENV:", BACKEND_URL)
 
+// LLM model used for all Infomaniak AI calls (must match an ID from the /models endpoint)
+const INFOMANIAK_MODEL = 'Qwen/Qwen3.8-27B-FP8';
 
 // Using ES6 syntax for module export if you are using ES Modules
-module.exports = { FRONTEND_URL, BACKEND_URL };
+module.exports = { FRONTEND_URL, BACKEND_URL, INFOMANIAK_MODEL };

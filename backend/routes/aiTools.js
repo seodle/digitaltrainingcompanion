@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const { INFOMANIAK_MODEL } = require('../config');
 
 // Get Infomaniak AI endpoint ID from environment variable
 const INFOMANIAK_AI_ENDPOINT_ID = process.env.INFOMANIAK_AI_ENDPOINT_ID;
@@ -32,7 +33,7 @@ router.post('/infomaniak/chat', async (req, res) => {
         }
         // Combine the incoming request with our configuration
         const requestBody = {
-            model: 'qwen3',
+            model: INFOMANIAK_MODEL,
             messages: req.body.messages,
             temperature: 0.1,
             reasoning_effort: 'none'
@@ -91,7 +92,7 @@ router.post('/suggest-options', async (req, res) => {
 
         // Prepare the request to the LLM API
         const requestBody = {
-            model: 'qwen3',
+            model: INFOMANIAK_MODEL,
             messages: [
                 {
                     role: 'system',
@@ -204,7 +205,7 @@ router.post('/generate-text-summary', async (req, res) => {
 
         // Call Infomaniak API with the exact same prompt as PDF/DOCX exports
         const requestBody = {
-            model: 'qwen3',
+            model: INFOMANIAK_MODEL,
             messages: [{
                 role: "user",
                 content: `
