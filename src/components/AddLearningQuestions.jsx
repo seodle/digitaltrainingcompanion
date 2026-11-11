@@ -489,7 +489,7 @@ const AddLearningQuestions = ({
 
           <Formik
             initialValues={initialQuestionValues}
-            validationSchema={Yup.lazy(values => addQuestionsSchema(splitWorkshops, helpWithAI, values.questionType))}
+            validationSchema={Yup.lazy(values => addQuestionsSchema(splitWorkshops, helpWithAI || helpWithAiBeacon, values.questionType))}
             onSubmit={onSubmit}
           >   
 
