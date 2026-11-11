@@ -3987,6 +3987,15 @@
         "fuzzy": 0
     },
     {
+        "term": "label_ai_summary_count",
+        "definition": "Résumé des réponses ({{n}})",
+        "context": "Title of AI summary once generated; {{n}} = number of responses summarized",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 0
+    },
+    {
         "term": "label_all_responses",
         "definition": "Détail des réponses",
         "context": " label_all_responses:",

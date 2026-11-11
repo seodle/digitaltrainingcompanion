@@ -39,7 +39,9 @@ const DisplayTextQuestion = ({ title, content, displayName, comment = false, aiS
                         fontWeight="bold" 
                         gutterBottom
                     >
-                        {getMessage('label_ai_summary') || 'AI Summary'}
+                        {aiSummary
+                            ? getMessage('label_ai_summary_count').replace('{{n}}', content.length)
+                            : getMessage('label_ai_summary') || 'AI Summary'}
                     </Typography>
                     
                     {currentUser?.sandbox ? (
