@@ -6,6 +6,7 @@ import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import draftToHtml from 'draftjs-to-html';
 import { useMessageService } from '../services/MessageService';
 import { buttonStyle } from './styledComponents';
+import { LEARNING_ASSESSMENT_TYPES } from '../utils/enums';
 import MatrixQuestion from './MatrixQuestion';
 
 const SurveyQuestion = ({
@@ -52,13 +53,14 @@ const SurveyQuestion = ({
   const [showValidateButton, setShowValidateButton] = useState(false); // Controls visibility of validate button
   const [isValidated, setIsValidated] = useState(false); // Tracks if question has been validated
 
+  const isLearningAssessment = LEARNING_ASSESSMENT_TYPES.includes(assessmentType);
+  const hasExplanation = explanation != null && String(explanation).trim() !== '';
+  // Open questions have no right/wrong answer, so their explanation is shown neutrally
+  const explanationColor = disabled || type === "text" ? "#666666" : (isAnswerCorrect ? "green" : "red");
+
   const isOptionDisabled = useCallback(() => {
-    const assessmentTypesToDisable = ["Learning", "Student learning outcomes"];
-    return Boolean(
-      disabled ||
-      (assessmentTypesToDisable.includes(assessmentType) && isValidated)
-    );
-  }, [disabled, assessmentType, isValidated]);
+    return Boolean(disabled || (isLearningAssessment && isValidated));
+  }, [disabled, isLearningAssessment, isValidated]);
 
   const handleAnswerSelect = useCallback((event, option) => {
     if (!isOptionDisabled()) {
@@ -79,7 +81,7 @@ const SurveyQuestion = ({
             
             setIsAnswerCorrect(hasAllCorrectAnswers);
             
-            if (assessmentType === "Learning" || assessmentType === "Student learning outcomes") {
+            if (isLearningAssessment) {
               setShowValidateButton(true);
               setShowExplanation(false);
             }
@@ -94,14 +96,14 @@ const SurveyQuestion = ({
             const isCorrect = answers.includes(value);
             setIsAnswerCorrect(isCorrect);
 
-            if (assessmentType === "Learning" || assessmentType === "Student learning outcomes") {
+            if (isLearningAssessment) {
               setShowValidateButton(true);
               setShowExplanation(false);
             }
         }
         setIsAnswered(true);
     }
-}, [isOptionDisabled, correctAnswer, selectedAnswers, type, assessmentType]);
+}, [isOptionDisabled, isLearningAssessment, correctAnswer, selectedAnswers, type]);
 
   const handleValidateAnswer = useCallback(() => {
     setShowValidateButton(false);
@@ -305,6 +307,9 @@ const SurveyQuestion = ({
                 value={disabled ? "" : field.value}
                 onChange={(event) => {
                   field.onChange(event);
+                  if (hasExplanation && isLearningAssessment) {
+                    setShowValidateButton(event.target.value.trim() !== '');
+                  }
                   if (onFeedbackTextChange) {
                     onFeedbackTextChange(fieldName);
                   }
@@ -366,7 +371,7 @@ const SurveyQuestion = ({
         )}
 
         {/* Display validate button for Learning and Student learning outcomes type assessments */}
-        {showValidateButton && (assessmentType === "Learning" || assessmentType === "Student learning outcomes") && (
+        {showValidateButton && isLearningAssessment && (
           <Box display="flex" gap="10px" marginTop="20px">
             <Button 
               variant="contained"
@@ -374,7 +379,7 @@ const SurveyQuestion = ({
               onClick={handleValidateAnswer}
               sx={buttonStyle}
             >
-              {getMessage('label_validate')}
+              {getMessage('label_validate_and_read_explanation')}
             </Button>
           </Box>
         )}
@@ -388,16 +393,16 @@ const SurveyQuestion = ({
                   variant="outlined"
                   size="small"
                   style={{
-                    color: disabled ? "#666666" : (isAnswerCorrect ? "green" : "red"),
-                    borderColor: disabled ? "#666666" : (isAnswerCorrect ? "green" : "red"),
+                    color: explanationColor,
+                    borderColor: explanationColor,
                     backgroundColor: "white",  
                     borderRadius: '20px',
                     padding: '5px 10px',
                   }}
                   aria-label="explanation"
                 >
-                  <TipsAndUpdatesIcon style={{ color: disabled ? "#666666" : (isAnswerCorrect ? "green" : "red"), marginRight: '5px' }} />
-                  <Typography style={{ fontSize: optionFontSize, color: disabled ? "#666666" : (isAnswerCorrect ? "green" : "red") }}>
+                  <TipsAndUpdatesIcon style={{ color: explanationColor, marginRight: '5px' }} />
+                  <Typography style={{ fontSize: optionFontSize, color: explanationColor }}>
                     {explanation}
                   </Typography>
                 </Button>

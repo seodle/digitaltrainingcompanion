@@ -810,18 +810,16 @@ const AddLearningQuestions = ({
                 <OptionsWithAutoSuggestions />
               )}
               
-              {values.questionType !== QuestionType.TEXT && (
-                /* give the explanation */
-                <TextFieldWrapper
-                  name="explanation"
-                  label="label_give_explanation"
-                  getMessage={getMessage}
-                  fullWidth
-                  multiline
-                  rows={5}
-                  sx={{ mb: '15px' }}
-                />
-              )}
+              {/* give the explanation (optional for open questions) */}
+              <TextFieldWrapper
+                name="explanation"
+                label="label_give_explanation"
+                getMessage={getMessage}
+                fullWidth
+                multiline
+                rows={5}
+                sx={{ mb: '15px' }}
+              />
 
               {/* choose the framework */}
               <Box display="flex" alignItems="center" sx={{ mb: "15px" }}>

@@ -288,6 +288,15 @@
         "fuzzy": 1
     },
     {
+        "term": "label_validate_and_read_explanation",
+        "definition": "Valider la réponse et lire l'explication",
+        "context": "button letting a student validate an answer in a learning assessment to reveal the explanation",
+        "term_plural": "",
+        "reference": "",
+        "comment": "",
+        "fuzzy": 1
+    },
+    {
         "term": "label_save",
         "definition": "Enregistrer",
         "context": "button to save a form",

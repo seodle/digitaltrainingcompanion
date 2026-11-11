@@ -5,6 +5,7 @@ import { Box, Button, Typography, TextField, Tooltip } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
 import SurveyQuestion from '../../components/SurveyQuestion';
+import { isValidatableQuestion } from '../../utils/QuestionUtils';
 import DTCLogo from '../../components/DTCLogo';
 import { BACKEND_URL } from "../../config";
 import { buttonStyle } from '../../components/styledComponents'
@@ -333,11 +334,7 @@ const CompleteSurvey = () => {
         }
 
         const fieldNamesToValidate = surveyData
-            .filter((q) =>
-                !q.matrixId &&
-                q.questionType !== "text" &&
-                q.questionType !== "single-text"
-            )
+            .filter(isValidatableQuestion)
             .map((q) => `q${q.questionId}`);
 
         return fieldNamesToValidate.every((fieldName) => validatedQuestions.has(fieldName));
@@ -714,13 +711,8 @@ const CompleteSurvey = () => {
                                         <Box mt={2} display="flex" justifyContent="center">
                                             <Typography variant="body2" color="textSecondary">
                                             {(() => {
-                                                    // Only validateable questions with an explanation have a Validate button
                                                     const fieldNamesToValidate = surveyData
-                                                        .filter((q) =>
-                                                            !q.matrixId &&
-                                                            q.questionType !== "text" &&
-                                                            q.questionType !== "single-text"
-                                                        )
+                                                        .filter(isValidatableQuestion)
                                                         .map((q) => `q${q.questionId}`);
                                                     const totalQuestions = fieldNamesToValidate.length;
                                                     const validatedCount = fieldNamesToValidate.filter((name) =>

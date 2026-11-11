@@ -520,21 +520,21 @@ const EditQuestionView = ({
                                         </Select>
                                     </FormControl>
                                 </Grid>
-
-                                <Grid item xs={12}>
-                                    <TextField
-                                        fullWidth
-                                        label={getMessage("label_explanation")}
-                                        variant="outlined"
-                                        multiline
-                                        rows={4}
-                                        InputProps={{style: { backgroundColor: 'white' }}}
-                                        value={question.explanation}
-                                        onChange={e => handleChange('explanation', e.target.value)}
-                                    />
-                                </Grid>
                             </>
                         )}
+
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                label={getMessage("label_explanation")}
+                                variant="outlined"
+                                multiline
+                                rows={4}
+                                InputProps={{style: { backgroundColor: 'white' }}}
+                                value={question.explanation}
+                                onChange={e => handleChange('explanation', e.target.value)}
+                            />
+                        </Grid>
                     </>
                 )}
 

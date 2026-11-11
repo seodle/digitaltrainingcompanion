@@ -1032,3 +1032,12 @@ export {
   processMessageToAPI, addQuestionsSchema, handleAutomaticEncodingChange, updateCompetenciesForQuestion,
   handleSubmit, initialQuestionValues, getCompetencies, getActivities, findCompetencies,
 };
+/**
+ * Whether a learning-assessment question has a "Validate" step for the student.
+ * Choice questions always do; open ("text") questions only when they have an explanation to reveal.
+ */
+export const isValidatableQuestion = (question) => {
+  if (question.matrixId || question.questionType === "single-text") return false;
+  if (question.questionType === "text") return String(question.explanation || "").trim() !== "";
+  return true;
+};
