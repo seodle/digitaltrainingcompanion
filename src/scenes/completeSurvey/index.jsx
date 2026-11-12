@@ -141,6 +141,15 @@ const CompleteSurvey = () => {
     }, [nameSubmitted, currentAssessmentIndex]);
 
 
+    // Scroll to top once the next assessment's questions have actually rendered.
+    // Scrolling at submit time races with the async fetch: the page height changes mid-scroll
+    // and the browser clamps the position to the bottom.
+    useEffect(() => {
+        if (surveyData.length > 0) {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        }
+    }, [surveyData]);
+
     const handleSubmitName = (event) => {
         event.preventDefault();
         setNameSubmitted(true); // Proceed to the survey
@@ -296,12 +305,9 @@ const CompleteSurvey = () => {
                 setEnrichFeedbackErrors({});
                 setFeedbackHistoryByField({});
                 setPendingEnrichedFeedbackByField({});
-                
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: 'smooth'
-                });
+                // Drop the previous assessment's questions so the new ones are scrolled to top once rendered
+                // (see the surveyData effect below) instead of scrolling while the old long page is still displayed.
+                setSurveyData([]);
             } else {
                 navigate(`/endSurvey?lng=${languageCode}`);
             }
